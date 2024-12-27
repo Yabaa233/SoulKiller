@@ -71,3 +71,19 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+
+
+# Unity 临时文件和目录
+Library/
+Logs/
+Temp/
+obj/
+*.csproj
+*.sln
+.vscode/
+.idea/
+
+# 缓存文件和大文件
+Assets/AmplifyShaderEditor/Examples/Sample Resources.unitypackage
+Assets/Plugins/FMOD/platforms/ios/lib/
+Assets/StreamingAssets/
