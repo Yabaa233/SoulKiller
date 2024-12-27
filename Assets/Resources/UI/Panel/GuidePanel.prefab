@@ -66,7 +66,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: e6a3a54eb64c62245bcd15dc81aaa433, type: 3}
+    m_Font: {fileID: 12800000, guid: 5fd8c95d5d8770f4c9833c3fb5a0a334, type: 3}
     m_FontSize: 25
     m_FontStyle: 0
     m_BestFit: 0
@@ -78,7 +78,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u6309 Q \u8FDB\u884C\u91CD\u51FB"
+  m_Text: "Q\u3092\u62BC\u3057\u3066\u5263\u3067\u5F37\u653B\u6483"
 --- !u!1 &108777908193894084
 GameObject:
   m_ObjectHideFlags: 0
@@ -145,7 +145,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: e6a3a54eb64c62245bcd15dc81aaa433, type: 3}
+    m_Font: {fileID: 12800000, guid: 5fd8c95d5d8770f4c9833c3fb5a0a334, type: 3}
     m_FontSize: 25
     m_FontStyle: 0
     m_BestFit: 0
@@ -157,7 +157,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u6309 ESC \u6682\u505C/\u8FD4\u56DE"
+  m_Text: "ESC\u3092\u62BC\u3057\u3066\u30DD\u30FC\u30BA"
 --- !u!1 &228765494730318948
 GameObject:
   m_ObjectHideFlags: 0
@@ -404,7 +404,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: e6a3a54eb64c62245bcd15dc81aaa433, type: 3}
+    m_Font: {fileID: 12800000, guid: 5fd8c95d5d8770f4c9833c3fb5a0a334, type: 3}
     m_FontSize: 25
     m_FontStyle: 0
     m_BestFit: 0
@@ -416,7 +416,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u957F\u6309 E ,\u84C4\u529B\u5B8C\u6BD5\u540E\u9020\u6210\u8303\u56F4\u4F24\u5BB3"
+  m_Text: "E\u3092\u9577\u62BC\u3057\u3057\u3066\u6756\u3067\u7BC4\u56F2\u653B\u6483"
 --- !u!1 &428191215930168470
 GameObject:
   m_ObjectHideFlags: 0
@@ -725,7 +725,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: e6a3a54eb64c62245bcd15dc81aaa433, type: 3}
+    m_Font: {fileID: 12800000, guid: 5fd8c95d5d8770f4c9833c3fb5a0a334, type: 3}
     m_FontSize: 25
     m_FontStyle: 0
     m_BestFit: 0
@@ -737,7 +737,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u957F\u6309 E ,\u84C4\u529B\u5B8C\u6BD5\u540E\u9020\u6210\u8303\u56F4\u4F24\u5BB3"
+  m_Text: "E\u3092\u9577\u62BC\u3057\u3057\u3066\u6756\u3067\u7BC4\u56F2\u653B\u6483"
 --- !u!1 &752352198641616067
 GameObject:
   m_ObjectHideFlags: 0
@@ -804,7 +804,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: e6a3a54eb64c62245bcd15dc81aaa433, type: 3}
+    m_Font: {fileID: 12800000, guid: 5fd8c95d5d8770f4c9833c3fb5a0a334, type: 3}
     m_FontSize: 25
     m_FontStyle: 0
     m_BestFit: 0
@@ -816,7 +816,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u6309 \u7A7A\u683C \u8FDB\u884C\u51B2\u523A"
+  m_Text: "Space\u3092\u62BC\u3057\u3066\u30C0\u30C3\u30B7\u30E5"
 --- !u!1 &755181350780019090
 GameObject:
   m_ObjectHideFlags: 0
@@ -1705,7 +1705,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: e6a3a54eb64c62245bcd15dc81aaa433, type: 3}
+    m_Font: {fileID: 12800000, guid: 5fd8c95d5d8770f4c9833c3fb5a0a334, type: 3}
     m_FontSize: 25
     m_FontStyle: 0
     m_BestFit: 0
@@ -1717,7 +1717,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u6309\u9F20\u6807\u5DE6\u952E\u8FDB\u884C\u653B\u51FB"
+  m_Text: "\u5DE6\u30AF\u30EA\u30C3\u30AF\u3057\u3066\u5263\u3067\u653B\u6483"
 --- !u!1 &1790456803008703569
 GameObject:
   m_ObjectHideFlags: 0
@@ -1976,7 +1976,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: e6a3a54eb64c62245bcd15dc81aaa433, type: 3}
+    m_Font: {fileID: 12800000, guid: 5fd8c95d5d8770f4c9833c3fb5a0a334, type: 3}
     m_FontSize: 25
     m_FontStyle: 0
     m_BestFit: 0
@@ -1988,7 +1988,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u6309 ESC \u6682\u505C/\u8FD4\u56DE"
+  m_Text: "ESC\u3092\u62BC\u3057\u3066\u30DD\u30FC\u30BA"
 --- !u!1 &2035488006157020906
 GameObject:
   m_ObjectHideFlags: 0
@@ -2221,7 +2221,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: e6a3a54eb64c62245bcd15dc81aaa433, type: 3}
+    m_Font: {fileID: 12800000, guid: 5fd8c95d5d8770f4c9833c3fb5a0a334, type: 3}
     m_FontSize: 25
     m_FontStyle: 0
     m_BestFit: 0
@@ -2233,7 +2233,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u6309 B \u6253\u5F00\u80FD\u529B\u9762\u677F"
+  m_Text: "B\u3092\u62BC\u3057\u3066\u30D0\u30D5\u753B\u9762\u3092\u958B\u304F"
 --- !u!1 &2089061999870394567
 GameObject:
   m_ObjectHideFlags: 0
@@ -2528,7 +2528,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: e6a3a54eb64c62245bcd15dc81aaa433, type: 3}
+    m_Font: {fileID: 12800000, guid: 5fd8c95d5d8770f4c9833c3fb5a0a334, type: 3}
     m_FontSize: 25
     m_FontStyle: 0
     m_BestFit: 0
@@ -2540,7 +2540,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u6309WASD\u8FDB\u884C\u79FB\u52A8"
+  m_Text: "WASA\u3092\u62BC\u3057\u3066\u79FB\u52D5"
 --- !u!1 &2501662777283287126
 GameObject:
   m_ObjectHideFlags: 0
@@ -3319,7 +3319,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: e6a3a54eb64c62245bcd15dc81aaa433, type: 3}
+    m_Font: {fileID: 12800000, guid: 5fd8c95d5d8770f4c9833c3fb5a0a334, type: 3}
     m_FontSize: 25
     m_FontStyle: 0
     m_BestFit: 0
@@ -3331,7 +3331,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u6309WASD\u8FDB\u884C\u79FB\u52A8"
+  m_Text: "WASD\u3092\u62BC\u3057\u3066\u79FB\u52D5"
 --- !u!1 &3995102579244877753
 GameObject:
   m_ObjectHideFlags: 0
@@ -3798,7 +3798,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: e6a3a54eb64c62245bcd15dc81aaa433, type: 3}
+    m_Font: {fileID: 12800000, guid: 5fd8c95d5d8770f4c9833c3fb5a0a334, type: 3}
     m_FontSize: 25
     m_FontStyle: 0
     m_BestFit: 0
@@ -3810,7 +3810,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u6309\u9F20\u6807\u5DE6\u952E\u8FDB\u884C\u653B\u51FB"
+  m_Text: "\u5DE6\u30AF\u30EA\u30C3\u30AF\u3057\u3066\u5263\u3067\u653B\u6483"
 --- !u!1 &4561402666947857926
 GameObject:
   m_ObjectHideFlags: 0
@@ -3877,7 +3877,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: e6a3a54eb64c62245bcd15dc81aaa433, type: 3}
+    m_Font: {fileID: 12800000, guid: 5fd8c95d5d8770f4c9833c3fb5a0a334, type: 3}
     m_FontSize: 25
     m_FontStyle: 0
     m_BestFit: 0
@@ -3889,7 +3889,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u6309 \u7A7A\u683C \u8FDB\u884C\u51B2\u523A"
+  m_Text: "Space\u3092\u62BC\u3057\u3066\u30C0\u30C3\u30B7\u30E5"
 --- !u!1 &4569377823073193574
 GameObject:
   m_ObjectHideFlags: 0
@@ -4046,7 +4046,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: e6a3a54eb64c62245bcd15dc81aaa433, type: 3}
+    m_Font: {fileID: 12800000, guid: 5fd8c95d5d8770f4c9833c3fb5a0a334, type: 3}
     m_FontSize: 25
     m_FontStyle: 0
     m_BestFit: 0
@@ -4058,7 +4058,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u6309 B \u6253\u5F00\u80FD\u529B\u9762\u677F"
+  m_Text: "B\u3092\u62BC\u3057\u3066\u30D0\u30D5\u753B\u9762\u3092\u958B\u304F"
 --- !u!1 &4585939588293557180
 GameObject:
   m_ObjectHideFlags: 0
@@ -5254,7 +5254,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: e6a3a54eb64c62245bcd15dc81aaa433, type: 3}
+    m_Font: {fileID: 12800000, guid: 5fd8c95d5d8770f4c9833c3fb5a0a334, type: 3}
     m_FontSize: 25
     m_FontStyle: 0
     m_BestFit: 0
@@ -5266,7 +5266,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u6309 Q \u8FDB\u884C\u91CD\u51FB"
+  m_Text: "Q\u3092\u62BC\u3057\u3066\u5263\u3067\u5F37\u653B\u6483"
 --- !u!1 &6536638174505012974
 GameObject:
   m_ObjectHideFlags: 0
@@ -5567,7 +5567,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: e6a3a54eb64c62245bcd15dc81aaa433, type: 3}
+    m_Font: {fileID: 12800000, guid: 5fd8c95d5d8770f4c9833c3fb5a0a334, type: 3}
     m_FontSize: 25
     m_FontStyle: 0
     m_BestFit: 0
@@ -5579,7 +5579,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u957F\u6309\u9F20\u6807\u53F3\u952E\u5C04\u51FB"
+  m_Text: "\u53F3\u30AF\u30EA\u30C3\u30AF\u3057\u3066\u9283\u3067\u5C04\u6483"
 --- !u!1 &7373576198833359063
 GameObject:
   m_ObjectHideFlags: 0
@@ -6977,7 +6977,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: e6a3a54eb64c62245bcd15dc81aaa433, type: 3}
+    m_Font: {fileID: 12800000, guid: 5fd8c95d5d8770f4c9833c3fb5a0a334, type: 3}
     m_FontSize: 25
     m_FontStyle: 0
     m_BestFit: 0
@@ -6989,7 +6989,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u957F\u6309\u9F20\u6807\u53F3\u952E\u5C04\u51FB"
+  m_Text: "\u53F3\u30AF\u30EA\u30C3\u30AF\u3057\u3066\u9283\u3067\u5C04\u6483"
 --- !u!1 &8850142520872092035
 GameObject:
   m_ObjectHideFlags: 0

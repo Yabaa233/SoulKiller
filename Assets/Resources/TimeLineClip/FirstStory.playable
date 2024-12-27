@@ -2230,8 +2230,8 @@ MonoBehaviour:
   m_Name: DialogueClip
   m_EditorClassIdentifier: 
   template:
-    characterName: "\u672A\u77E5\u7684\u58F0\u97F3"
-    dialogueLine: "\u8BF7\u5F80\u524D\u8D70"
+    characterName: "\u672A\u77E5\u306E\u58F0"
+    dialogueLine: "\u524D\u306B\u9032\u3093\u3067\u304F\u3060\u3055\u3044"
     dialogueSize: 27
     characterNameSize: 40
     positionBias: {x: 0, y: 0}
@@ -2700,8 +2700,8 @@ MonoBehaviour:
   m_Name: DialogueClip
   m_EditorClassIdentifier: 
   template:
-    characterName: "\u201C\u6211\u201D"
-    dialogueLine: "\u8FD9\u662F\u54EA\u91CC"
+    characterName: "\u201C\u79C1\u201D"
+    dialogueLine: "\u3053\u3053\u306F\u3069\u3053\uFF1F"
     dialogueSize: 27
     characterNameSize: 40
     positionBias: {x: 0, y: 0}
@@ -3120,8 +3120,8 @@ MonoBehaviour:
   m_Name: DialogueClip
   m_EditorClassIdentifier: 
   template:
-    characterName: "\"\u6211\""
-    dialogueLine: "\u597D\u538B\u6291\uFF0C\u5C31\u5FEB\u5598\u4E0D\u4E0A\u6C14"
+    characterName: "\u201C\u79C1\u201D"
+    dialogueLine: "\u606F\u82E6\u3057\u304F\u3066\u3001\u3082\u3046\u3059\u3050\u606F\u304C\u3067\u304D\u306A\u304F\u306A\u308A\u305D\u3046"
     dialogueSize: 27
     characterNameSize: 40
     positionBias: {x: 0, y: 0}
@@ -3322,8 +3322,8 @@ MonoBehaviour:
   m_Name: DialogueClip
   m_EditorClassIdentifier: 
   template:
-    characterName: "\u672A\u77E5\u7684\u58F0\u97F3"
-    dialogueLine: "\u8BF7\u76F4\u9762\u5185\u5FC3\u7684\u6B32\u671B"
+    characterName: "\u672A\u77E5\u306E\u58F0"
+    dialogueLine: "\u81EA\u5206\u306E\u5185\u306A\u308B\u6B32\u671B\u3068\u5411\u304D\u5408\u3063\u3066\u304F\u3060\u3055\u3044"
     dialogueSize: 27
     characterNameSize: 40
     positionBias: {x: 0, y: 0}
