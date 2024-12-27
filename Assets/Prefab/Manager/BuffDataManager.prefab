@@ -1,0 +1,105 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4776489863867693631
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4776489863867693601}
+  - component: {fileID: 4776489863867693600}
+  m_Layer: 0
+  m_Name: BuffDataManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4776489863867693601
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4776489863867693631}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4776489863867693600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4776489863867693631}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0739ea67819946c4b8bf0d491b921726, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerCurrentBuff: []
+  enemyCurrentBuff: []
+  bossCurrentBuff: []
+  playerShield: {fileID: 1567425002763683468, guid: 593308453fbf2964abfb890f1ec8b2c1, type: 3}
+  enemyShield: {fileID: 3880350069634166441, guid: 71aeeb04bb6a3f44997c4324b8412bfd, type: 3}
+  playerRaiseHealthy: 100
+  playerHpReduce: 1.2
+  playerStaffStoragePercent: 0.5
+  playerStaffAoeUpPercent: 2
+  playerBulletUpNum: 10
+  playerShieldStartHp: 50
+  playerAoeTimeBtw: 2
+  damageReflectPercent: 1
+  enemyShieldStartHp: 100
+  enemyShieldlevel2Up: 100
+  enemyShieldlevel3Up: 100
+  enemyShieldlevel4Up: 300
+  bossShieldStartHp: 500
+  bossShieldlevel2Up: 200
+  bossShieldlevel3Up: 300
+  bossShieldlevel4Up: 500
+  playerlevel1SpeedUp: 2
+  playerlevel2SpeedUp: 2
+  playerlevel3SpeedUp: 2
+  playerlevel4SpeedUp: 2
+  enemyleve1SpeedUp: 1.9
+  enemyleve2SpeedUp: 1.9
+  enemylevel3SpeedUp: 1.9
+  enemylevel4SpeedUp: 1.9
+  bossleve1SpeedUp: 7
+  bossleve2SpeedUp: 7
+  bosslevel3SpeedUp: 7
+  bosslevel4SpeedUp: 10
+  level1Critical: 0.2
+  level1CriticalDamage: 0.5
+  level2Critical: 0.2
+  level3Critical: 0.2
+  level4Critical: 0.5
+  emylevel1Critical: 0.1
+  emylevel1CriticalDamage: 0.1
+  emylevel2Critical: 0.05
+  emylevel3Critical: 0.05
+  emylevel4Critical: 0.1
+  bosslevel1Critical: 0.2
+  bosslevel1CriticalDamage: 0.3
+  bosslevel2Critical: 0.1
+  bosslevel3Critical: 0.1
+  bosslevel4Critical: 0.3
+  playerlevel1HpUp: 50
+  playerlevel2HpUp: 50
+  playerlevel3HpSteal: 0.01
+  playerlevel4HpSteal: 0.02
+  enemylevel1HpUp: 50
+  enemylevel2HpUp: 50
+  enemylevel3HpUp: 100
+  enemylevel4HpUp: 100
+  bosslevel1HpUp: 100
+  bosslevel2HpUp: 100
+  bosslevel3HpUp: 300
+  bosslevel4HpUp: 500

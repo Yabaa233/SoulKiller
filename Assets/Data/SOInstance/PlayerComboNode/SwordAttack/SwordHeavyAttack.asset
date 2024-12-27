@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2f7aff9835693c4e99919262eeade65, type: 3}
+  m_Name: SwordHeavyAttack
+  m_EditorClassIdentifier: 
+  attackEffect: {fileID: 7045347217553740147, guid: 7bc96c408782c774d981ea6d2278fa52, type: 3}
+  baseDamage: 10
+  attackRange: {x: 17, y: 10, z: 17}
+  attackRangeDeviation: -2
+  forceAnimProgress: 0.6
+  attackSound:
+    Guid:
+      Data1: 1034543703
+      Data2: 1185988479
+      Data3: -963039350
+      Data4: 1591309226
+    Path: event:/Player/Sword/HaveayAtt
+  criticalSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  forceDir: {x: 5, y: 5}
+  forcePower: 10
+  type: 0
+  shake_time: 0.5
+  amp: 2
+  fre: 3
+  compensateSpeed: 0
+  forceSpeed: {x: 5, y: 5}
+  halfPlungeBoxSize: {x: 4, y: 2, z: 6}
+  plungePower: 3

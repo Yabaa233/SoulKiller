@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: WhiteKing
+  m_Shader: {fileID: 4800000, guid: 5bb97bdb60b439848ac6eb6693a8377e, type: 3}
+  m_ShaderKeywords: _ABSORB_ON _ADD_LIGHT_ON
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _BaseColor:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NormalTex:
+        m_Texture: {fileID: 2800000, guid: 5344828ae6c2e1947b61cd39dbd5470c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _RampTex:
+        m_Texture: {fileID: 2800000, guid: 5a1ced5455ae5dc4682239d81361eb27, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _ADD_LIGHT: 0
+    - _Absorb: 0
+    - _AbsorbHardness: 1
+    - _AbsorbMaskSmoothness: 1
+    - _AbsorbRadius: 0
+    - _AbsorbRotateScale: 20
+    - _ColorOr: 1
+    - _ColorOrTex: 1
+    - _MidDownInterval: 0.46
+    - _NormalScale: 0.9
+    - _ShadowReceive: 1
+    - _SpeOrNot: 1
+    - _SpecOrNot: 1
+    - _SpecularRange: 200
+    - _TexBlend: 0
+    - _UpMidInterval: 0.94
+    m_Colors:
+    - _AbsorbPoint: {r: 20, g: 1, b: 0, a: 0}
+    - _BaseColor: {r: 0, g: 0, b: 0, a: 1}
+    - _DownColor: {r: 0.06622222, g: 0.099333316, b: 0.14899999, a: 1}
+    - _MidColor: {r: 0.25915998, g: 0.297352, b: 0.341, a: 1}
+    - _SpecularColor: {r: 0, g: 0, b: 0, a: 1}
+    - _UpColor: {r: 0.8, g: 0.67499995, b: 0.56874996, a: 1}
+  m_BuildTextureStacks: []

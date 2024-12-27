@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2f7aff9835693c4e99919262eeade65, type: 3}
+  m_Name: SwordAttack1
+  m_EditorClassIdentifier: 
+  attackEffect: {fileID: 2942636774708312173, guid: d20f9f0097839c64bbd0abf763e610a9, type: 3}
+  baseDamage: 1.5
+  attackRange: {x: 8, y: 4, z: 7}
+  attackRangeDeviation: 0
+  forceAnimProgress: 0.15
+  attackSound:
+    Guid:
+      Data1: 356661758
+      Data2: 1232962140
+      Data3: 1655966359
+      Data4: -1400448668
+    Path: event:/Player/Sword/sword1
+  criticalSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  forceDir: {x: 1, y: 1}
+  forcePower: 100
+  type: 1
+  shake_time: 0.5
+  amp: 0.25
+  fre: 0.25
+  compensateSpeed: 0
+  forceSpeed: {x: 0, y: 0}
+  halfPlungeBoxSize: {x: 4, y: 2, z: 6}
+  plungePower: 2

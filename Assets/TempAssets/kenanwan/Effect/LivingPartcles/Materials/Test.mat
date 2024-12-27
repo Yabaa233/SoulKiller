@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Test
+  m_Shader: {fileID: 4800000, guid: 449b397d2e818f346bb207e707eeddf1, type: 3}
+  m_ShaderKeywords: _CENTERMASKENABLED_ON _FLIPEMISSIONMASK_ON _FLIPMORPHMASK_ON
+    _RAMPENABLED_ON
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _Albedo:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Emission:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MorphMain:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MorphNormal:
+        m_Texture: {fileID: 2800000, guid: 1907be61dc1275646a5371e60d4d6939, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _PositionMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _CenterMaskMultiply: 0
+    - _CenterMaskSubtract: 0
+    - _Distance: 10
+    - _DistancePower: 1
+    - _DistanceRemap: 2
+    - _FinalMaskMultiply: 1
+    - _FinalPower: 0.5
+    - _FlipEmissionMask: 1
+    - _FlipMorphMask: 1
+    - _FlipOffsetMask: 0
+    - _OffsetPower: 0
+    - _PositionClip: 0
+    - _UseGammaRendering: 0
+    m_Colors:
+    - _ColorTint: {r: 1, g: 1, b: 1, a: 1}
+    - _FinalColorOne: {r: 0.43851322, g: 1, b: 0.32941175, a: 1}
+    - _FinalColorTwo: {r: 0, g: 0, b: 0, a: 0}
+    - _PositionRange: {r: 0, g: 0, b: 0, a: 0}
+  m_BuildTextureStacks: []

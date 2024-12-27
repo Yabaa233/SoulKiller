@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cc1e7c77de4c9749a5e21d75d92530c, type: 3}
+  m_Name: HatcheryEnemyData
+  m_EditorClassIdentifier: 
+  baseHealth: 350
+  baseAttack: 1
+  baseDefend: 0
+  baseCritical: 0
+  baseCriticalDamage: 0.25
+  baseCriticalDefend: 0
+  baseStopTime: 0.06
+  getHitSound:
+    Guid:
+      Data1: -188918225
+      Data2: 1273189803
+      Data3: 2101017473
+      Data4: 638800181
+    Path: event:/Monster/NorMal/noHumanHitNormal
+  getCriticalSound:
+    Guid:
+      Data1: 521022449
+      Data2: 1255661339
+      Data3: 2016991885
+      Data4: 663063990
+    Path: event:/Monster/NorMal/hitPro4Alina

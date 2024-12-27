@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: LaserShader01
+  m_Shader: {fileID: 4800000, guid: 7889ddf87259b0a4ea55e388a3d04d94, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap:
+    MotionVector: User
+  disabledShaderPasses:
+  - MOTIONVECTORS
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - Texture2D_7AE562E0:
+        m_Texture: {fileID: 2800000, guid: 03e4ee8d0b5f45045bb12e2930ed4058, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_84F4B744:
+        m_Texture: {fileID: 2800000, guid: 06008c46a00877248a6676671406e977, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_B2C87336:
+        m_Texture: {fileID: 2800000, guid: 03e4ee8d0b5f45045bb12e2930ed4058, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_C43CADD0:
+        m_Texture: {fileID: 2800000, guid: 06008c46a00877248a6676671406e977, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Texture2DAsset_736349B0_Out:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - Vector1_26BEF21: 0.85
+    - Vector1_27C8887F: 0.05
+    - Vector1_27FEF820: 2.5
+    - Vector1_34C22F5F: 5
+    - Vector1_35254AB9: 5
+    - Vector1_3FF43752: 2.5
+    - Vector1_4F8D0CBD: 0.05
+    - Vector1_8863D43B: 0.85
+    - Vector1_CC4D133: 2.5
+    - Vector1_F2A3261B: 2.5
+    m_Colors:
+    - Color_5C2993F7: {r: 61.04966, g: 122.09932, b: 362.03867, a: 1}
+    - Color_7612F6F3: {r: 66.25883, g: 130.50981, b: 383.49805, a: 1}
+    - Vector2_107DE178: {r: -1, g: 0, b: 0, a: 0}
+    - Vector2_454EBB23: {r: -0.6, g: 0, b: 0, a: 0}
+    - Vector2_667D9704: {r: -1, g: 0, b: 0, a: 0}
+    - Vector2_FFCD1517: {r: -0.6, g: 0, b: 0, a: 0}

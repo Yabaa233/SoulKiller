@@ -1,0 +1,182 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3015256108117942757
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3015256108117942754}
+  - component: {fileID: 3015256108117942753}
+  - component: {fileID: 3015256108117942755}
+  - component: {fileID: 3015256108117942752}
+  - component: {fileID: 3015256108117942759}
+  - component: {fileID: 3015256108117942758}
+  - component: {fileID: 3015256108117942764}
+  m_Layer: 0
+  m_Name: Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3015256108117942754
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3015256108117942757}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.62853676, y: 1, z: 90.03314}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3015256108117942753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3015256108117942757}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9271f6543b80cd45a6a9cccb778f54c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3015256108117942755
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3015256108117942757}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 049bab647cb1f144eaf227cb341dc525, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  statePanel: {fileID: 2401458937607509433, guid: b7739bd384dd17d4181c67ba797e7eb5, type: 3}
+  battleUIParent: {fileID: 0}
+  UICamera: {fileID: 0}
+--- !u!114 &3015256108117942752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3015256108117942757}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca6522547d3eabb40977c0d16033aa13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CDList: []
+  comboInterCD:
+    curTime: 0
+    maxCDTime: 0
+    flag: 0
+  currentPlayer: {fileID: 0}
+  currentBoss: {fileID: 0}
+--- !u!114 &3015256108117942759
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3015256108117942757}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7f450764d2a9334191c98cf91db91b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AttackEffectParent: {fileID: 3015256108117942754}
+  currentAttackEffect: {fileID: 0}
+--- !u!114 &3015256108117942758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3015256108117942757}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0739ea67819946c4b8bf0d491b921726, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerCurrentBuff: []
+  enemyCurrentBuff: []
+  playerShield: {fileID: 1567425002763683468, guid: 593308453fbf2964abfb890f1ec8b2c1, type: 3}
+  enemyShield: {fileID: 3880350069634166441, guid: 71aeeb04bb6a3f44997c4324b8412bfd, type: 3}
+  playerStaffStoragePercent: 0.3
+  playerStaffAoeUpPercent: 2
+  playerBulletUpNum: 60
+  playerShieldStartHp: 1
+  playerAoeTimeBtw: 2
+  damageReflectPercent: 0.1
+  enemyShieldStartHp: 20
+  enemyShieldlevel2Up: 10
+  enemyShieldlevel3Up: 10
+  enemyShieldlevel4Up: 10
+  bossShieldStartHp: 1
+  bossShieldlevel2Up: 10
+  bossShieldlevel3Up: 10
+  bossShieldlevel4Up: 10
+  playerlevel1SpeedUp: 10
+  playerlevel2SpeedUp: 0
+  playerlevel3SpeedUp: 0
+  playerlevel4SpeedUp: 0
+  enemyleve1SpeedUp: 5
+  enemyleve2SpeedUp: 5
+  enemylevel3SpeedUp: 5
+  enemylevel4SpeedUp: 5
+  bossleve1SpeedUp: 5
+  bossleve2SpeedUp: 5
+  bosslevel3SpeedUp: 5
+  bosslevel4SpeedUp: 5
+  level1Critical: 0.2
+  level1CriticalDamage: 1
+  level2Critical: 0.1
+  level3Critical: 0.1
+  level4Critical: 0.1
+  emylevel1Critical: 0.1
+  emylevel1CriticalDamage: 0
+  emylevel2Critical: 0.05
+  emylevel3Critical: 0.05
+  emylevel4Critical: 0.25
+  bosslevel1Critical: 0.15
+  bosslevel1CriticalDamage: 0.5
+  bosslevel2Critical: 0.1
+  bosslevel3Critical: 0.1
+  bosslevel4Critical: 0.5
+  playerlevel1HpUp: 50
+  playerlevel2HpSteal: 0.1
+  playerlevel3HpUp: 50
+  playerlevel4ControlReduce: 0.3
+  enemylevel1HpUp: 10
+  enemylevel2HpSteal: 0.1
+  enemylevel3HpUp: 10
+  enemylevel4ControlReduce: 0.3
+  bosslevel1HpUp: 10
+  bosslevel2HpSteal: 0.1
+  bosslevel3HpUp: 10
+  bosslevel4ControlReduce: 0.3
+--- !u!114 &3015256108117942764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3015256108117942757}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd9078e157c9c8844913f414005c5a82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  storyMode: 0
+  dialoguePanel: {fileID: 0}
+  dialoguePanelScript: {fileID: 0}

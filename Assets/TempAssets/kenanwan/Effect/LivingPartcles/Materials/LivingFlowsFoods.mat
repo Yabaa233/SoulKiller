@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: LivingFlowsFoods
+  m_Shader: {fileID: 4800000, guid: f81c019914908674a876d9ba2ad0986b, type: 3}
+  m_ShaderKeywords: _CLOSEFADEENABLED_ON _KEYWORD0_ON _LOCKYOFFSET_ON _USEPIXELDISTANCE_ON
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _Albedo:
+        m_Texture: {fileID: 2800000, guid: 82913924c7e5e3448b8712ae920a3fbe, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Emission:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Ramp:
+        m_Texture: {fileID: 2800000, guid: c4be6047d005df241bafef31cb408f01, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _AlphaClipThreshold: 0.5
+    - _BrightMaskMultiply: 2
+    - _BrightPower: 1
+    - _CenterMaskEnabled: 0
+    - _CenterMaskMultiply: 8
+    - _CenterMaskSubtract: 0.85
+    - _Distance: 3
+    - _DistancePower: 2
+    - _FinalMaskMultiply: 1
+    - _FinalPower: 6
+    - _OffsetPower: 2
+    - _OffsetYLock: 0
+    - _RampEnabled: 0
+    m_Colors:
+    - _BrightColor: {r: 1, g: 0.76456213, b: 0.015686274, a: 1}
+    - _ColorTint: {r: 0.6320754, g: 0.6320754, b: 0.6320754, a: 1}
+    - _DarkColor: {r: 0, g: 0, b: 0, a: 0}
+    - _FinalColor: {r: 0.81960785, g: 1, b: 0, a: 1}
+    - _FinalColor2: {r: 0.07054975, g: 0.08490563, b: 0, a: 1}
+  m_BuildTextureStacks: []

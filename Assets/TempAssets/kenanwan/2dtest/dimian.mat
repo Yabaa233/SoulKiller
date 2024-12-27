@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: dimian
+  m_Shader: {fileID: 4800000, guid: 5bb97bdb60b439848ac6eb6693a8377e, type: 3}
+  m_ShaderKeywords: _ABSORB_OFF _ADD_LIGHT_ON
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _BaseColor:
+        m_Texture: {fileID: 2800000, guid: 8f23592d90fa9934aa2e0d3874db14e2, type: 3}
+        m_Scale: {x: 2, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: 6727b21bde1b54f45a61b27cd69de8c4, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NormalTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 0.4, y: 0.4}
+        m_Offset: {x: 0.2, y: 0.2}
+    m_Floats:
+    - _ADD_LIGHT: 0
+    - _Absorb: 1
+    - _AbsorbHardness: 0.5
+    - _AbsorbMaskSmoothness: 1
+    - _AbsorbRadius: 0
+    - _AbsorbRotateScale: 20
+    - _MidDownInterval: 0.3
+    - _NormalScale: 0.836
+    - _ShadowReceive: 1
+    - _SpeOrNot: 1
+    - _SpecOrNot: 1
+    - _SpecularRange: 200
+    - _TexBlend: 1
+    - _UpMidInterval: 0.8
+    m_Colors:
+    - _AbsorbPoint: {r: 0, g: 0, b: 0, a: 0}
+    - _BaseColor: {r: 0.9622642, g: 0.9622642, b: 0.9622642, a: 1}
+    - _DownColor: {r: 1, g: 1, b: 1, a: 1}
+    - _MidColor: {r: 1, g: 1, b: 1, a: 1}
+    - _SpecularColor: {r: 0, g: 0, b: 0, a: 1}
+    - _UpColor: {r: 1, g: 1, b: 1, a: 1}
+  m_BuildTextureStacks: []
