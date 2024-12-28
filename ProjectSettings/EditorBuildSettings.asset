@@ -11,11 +11,35 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/StartScene.unity
     guid: acd7b3568367b6f4594d31c5825d2809
+  - enabled: 0
+    path: Assets/Scenes/WanZhangYuan.unity
+    guid: be19f57e90b96554cbffca9d9800030a
+  - enabled: 0
+    path: Assets/Scenes/xushi.unity
+    guid: 92eb6d6bea3e3ac4bba005f0670b6ec1
   - enabled: 1
     path: Assets/Scenes/Eden.unity
     guid: 9152f43000490484fb56382d60cae003
   - enabled: 1
     path: Assets/Scenes/EndScene.unity
     guid: 669d90052a8da7f4fb984a209ab6ec09
+  - enabled: 0
+    path: Assets/Scenes/Envy.unity
+    guid: f78716a4d35044d40bc4ddffc95bc9b2
+  - enabled: 0
+    path: Assets/Scenes/FeiZhai.unity
+    guid: 6a7ca7ef8182b2840858d74115b6806b
+  - enabled: 0
+    path: Assets/Scenes/Gluttony.unity
+    guid: 2b6557de18ffdf94abd5675a037ba434
+  - enabled: 0
+    path: Assets/Scenes/GluttonyRebuild.unity
+    guid: 817629d4a61af0b4f92f0d67621a86ca
+  - enabled: 0
+    path: Assets/Scenes/KB.unity
+    guid: ce36dbd82d120744b95307785773595b
+  - enabled: 0
+    path: Assets/Scenes/kenanwan.unity
+    guid: 746a674483de28d41a42d27cc2fbf624
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 131d36c546048e4489a88950b9e76335, type: 2}

@@ -40,7 +40,7 @@ Material:
     - _DepthOffset: 0
     - _Float0: 1
     - _MainColor: 1
-    - _dissolve: 0
+    - _dissolve: -0.023922281
     m_Colors:
     - Color0: {r: 1, g: 1, b: 1, a: 1}
     - _Color0: {r: 1, g: 1, b: 1, a: 1}
