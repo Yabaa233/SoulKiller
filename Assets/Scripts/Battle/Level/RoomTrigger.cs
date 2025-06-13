@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Events;
 
 /// <summary>
-/// 场景类型
+/// 部屋のトリガー
 /// </summary>
 public enum E_RoomType
 {

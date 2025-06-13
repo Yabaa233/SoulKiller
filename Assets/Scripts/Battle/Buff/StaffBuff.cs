@@ -56,7 +56,9 @@ public class StaffBuff : I_BuffBase
         }
     }
 
-
+    /// <summary>
+    /// バフの更新
+    /// </summary>
     public void OnUpdate(float deltaTime)
     {
 
@@ -82,9 +84,8 @@ public class StaffBuff : I_BuffBase
         return currentLevel;
     }
 
-
     /// <summary>
-    /// 初始化应该调用的函数
+    /// バフの初期化
     /// </summary>
     public void Init()
     {

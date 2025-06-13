@@ -6,7 +6,7 @@ using UnityEngine.AI;
 
 
 /// <summary>
-/// 所有远程角色的状态
+/// 長距離敵の状態
 /// </summary>
 public class long_DistanceState : IState
 {

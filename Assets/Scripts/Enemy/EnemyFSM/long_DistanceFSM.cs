@@ -10,7 +10,7 @@ public enum E_EnemyType
     STAFF,
 }
 
-//远程类敌人的所有参数
+//長距離敵の所有参数
 [System.Serializable]
 public class longEnemyParameter
 {
@@ -33,7 +33,7 @@ public class longEnemyParameter
 }
 
 /// <summary>
-/// 将所有远程攻击角色的状态机统合到一块
+/// 長距離敵のFSM
 /// </summary>
 public class long_DistanceFSM : BaseEnemyFSM
 {

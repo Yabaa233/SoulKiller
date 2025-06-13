@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// シールド
+/// </summary>
 public class Sheild : MonoBehaviour
 {
     public GameObject ShieldVFX;
@@ -10,12 +13,15 @@ public class Sheild : MonoBehaviour
     public GameObject BreakVFX;
     private Material mat;
 
-    public Transform parent;//存放位置
+    public Transform parent;//配置位置
     new SphereCollider collider;
-    //数据部分
-    public float sheildHealthy;//护盾生命值
+    //データ部分
+    public float sheildHealthy;//シールドの耐久値
     public bool IsBreak;
 
+    /// <summary>
+    /// シールドの初期化
+    /// </summary>
     private void Awake() {
         GameObject shield = Instantiate(ShieldVFX,transform) as GameObject;
         shield.transform.GetChild(0).GetComponent<ParticleSystem>().Play();
@@ -23,5 +29,13 @@ public class Sheild : MonoBehaviour
         // shield.transform.position = new Vector3(shield.transform.position.x,shield.transform.position.y + collider.radius/2,shield.transform.position.z);
     }
 
+    /// <summary>
+    /// シールドの更新
+    /// </summary>
+    // ... existing code ...
 
+    /// <summary>
+    /// シールドの終了
+    /// </summary>
+    // ... existing code ...
 }

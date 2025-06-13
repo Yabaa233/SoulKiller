@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+/// <summary>
+/// 剣の敵の状態
+/// </summary>
 public class SwordEnemyState : IState
 {
     public void OnEnter()
@@ -25,6 +28,9 @@ public class SwordEnemyState : IState
     }
 }
 
+/// <summary>
+/// 状態の初期化
+/// </summary>
 public class SwordEnemy_IdleState : IState
 {
     private SwordEnemyFSM manager;
@@ -71,6 +77,9 @@ public class SwordEnemy_IdleState : IState
     }
 }
 
+/// <summary>
+/// 状態の更新
+/// </summary>
 public class SwordEnemy_ChaseState : IState
 {
     private SwordEnemyFSM manager;
@@ -137,6 +146,9 @@ public class SwordEnemy_ChaseState : IState
     }
 }
 
+/// <summary>
+/// 状態の終了
+/// </summary>
 public class SwordEnemy_StorageState :IState
 {
     private SwordEnemyFSM manager;
@@ -189,6 +201,9 @@ public class SwordEnemy_StorageState :IState
     }
 }
 
+/// <summary>
+/// 状態の終了
+/// </summary>
 public class SwordEnemy_AttackState : IState
 {
     private SwordEnemyFSM manager;
@@ -241,6 +256,9 @@ public class SwordEnemy_AttackState : IState
     }
 }
 
+/// <summary>
+/// 状態の終了
+/// </summary>
 public class SwordEnemy_GetHitState : IState
 {
     private SwordEnemyFSM manager;
@@ -292,6 +310,9 @@ public class SwordEnemy_GetHitState : IState
     }
 }
 
+/// <summary>
+/// 状態の終了
+/// </summary>
 public class SwordEnemy_DeadState : IState
 {
     private SwordEnemyFSM manager;

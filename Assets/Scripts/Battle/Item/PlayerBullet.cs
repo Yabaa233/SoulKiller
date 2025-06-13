@@ -2,9 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// プレイヤーの弾
+/// </summary>
 public class PlayerBullet : MonoBehaviour
 {
-    [Tooltip("子弹速度")] public float speed = 2;
+    [Tooltip("弾の速度")] public float speed = 2;
     public float recycleTime = 3.0f;
     public float hitEffectRecycleTime = 1.5f;
     private Vector3 dir;
@@ -18,7 +21,7 @@ public class PlayerBullet : MonoBehaviour
     }
 
     /// <summary>
-    /// 检测到碰撞到物体就回收自己
+    /// 物体との衝突を検出したら自身を回収
     /// </summary>
     /// <param name="other"></param>
     private void OnTriggerEnter(Collider other)
@@ -37,7 +40,7 @@ public class PlayerBullet : MonoBehaviour
             EffectManager.Instance.SetBulletHit(transform.position, hitEffectRecycleTime);
             GameManager.Instance.currentPlayer.SetSpecifyComboAttack(E_WeaponType.gun, 2f, 0.25f);
             GameManager.Instance.PlayerAttack(other.transform.parent.GetComponent<BaseEnemyControl>(), transform.position);
-            GameManager.Instance.Player_StartShotEffect(this);   //开始打击感流程
+            GameManager.Instance.Player_StartShotEffect(this);   //ヒット感の処理開始
         }
         if (other.tag == "BossBody")
         {
@@ -48,9 +51,13 @@ public class PlayerBullet : MonoBehaviour
             EffectManager.Instance.SetBulletHit(transform.position, hitEffectRecycleTime);
             GameManager.Instance.currentPlayer.SetSpecifyComboAttack(E_WeaponType.gun, 2.0f, 0.25f);
             GameManager.Instance.PlayerAttack(other.GetComponent<BossControl>());
-            GameManager.Instance.Player_StartShotEffect(this);   //开始打击感流程
+            GameManager.Instance.Player_StartShotEffect(this);   //ヒット感の処理開始
         }
     }
+
+    /// <summary>
+    /// 弾の更新
+    /// </summary>
     private void Update()
     {
         curTime += Time.deltaTime;
@@ -59,10 +66,10 @@ public class PlayerBullet : MonoBehaviour
     }
 
     /// <summary>
-    /// 设置子弹移动方向和buff等级，并根据buff等级设置子弹状态
+    /// 弾の初期化
     /// </summary>
-    /// <param name="_dir"> 射击方向 </param>
-    /// <param name="level"> buff等级 </param>
+    /// <param name="_dir"> 発射方向 </param>
+    /// <param name="level"> バフレベル </param>
     public void Shot(Vector3 _dir, int level)
     {
         dir = _dir;
@@ -81,7 +88,7 @@ public class PlayerBullet : MonoBehaviour
     }
 
     /// <summary>
-    /// 回收自己
+    /// 弾の終了
     /// </summary>
     public void RecycleThis()
     {
@@ -90,14 +97,14 @@ public class PlayerBullet : MonoBehaviour
     }
 
     /// <summary>
-    /// 打击感时速度清零
+    /// ヒット感時に速度をゼロに
     /// </summary>
     public void PlayerBulletStop()
     {
         speed = 0;
     }
     /// <summary>
-    /// 打击感时速度恢复
+    /// ヒット感時に速度を回復
     /// </summary>
     public void PlayerBulletReset()
     {

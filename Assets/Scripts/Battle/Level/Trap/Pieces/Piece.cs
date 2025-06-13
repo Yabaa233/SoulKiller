@@ -4,41 +4,41 @@ using UnityEngine;
 
 public class Piece : MonoBehaviour
 {
-    //被玩家攻击不计入战斗系统
+    //プレイヤーの攻撃は戦闘システムにカウントされない
     [Tooltip("最高血量")] public float maxHealth = 100.0f;
-    [Tooltip("当前血量 被攻击固定掉血")] public float curHealth = 100.0f;
-    [Tooltip("受到近战攻击时伤害值")] public float getSwordDamage = 20.0f;
-    [Tooltip("受到子弹攻击时伤害值")] public float getShotDamage = 1.0f;
-    [Tooltip("受到魔法攻击时伤害值")] public float getMagicDamage = 15.0f;
+    [Tooltip("現在の血量 被攻撃固定掉血")] public float curHealth = 100.0f;
+    [Tooltip("近戦攻撃時のダメージ値")] public float getSwordDamage = 20.0f;
+    [Tooltip("弾丸攻撃時のダメージ値")] public float getShotDamage = 1.0f;
+    [Tooltip("魔法攻撃時のダメージ値")] public float getMagicDamage = 15.0f;
 
-    [Tooltip("攻击力")] public float attack = 10;
-    [Tooltip("击退玩家的力度")] public float forcePower = 10;
-    [Header("上升相关参数")]
-    [Tooltip("上升速度")] public float upSpeed = 10.0f;
-    [Tooltip("上升高度")] public float targetY = 3.0f;
-    [Tooltip("上升高度")] public float upWait = 1.5f;
-    [Header("平移相关参数")]
-    [Tooltip("平移速度")] public float mvoeSpeed = 10.0f;
-    [Header("下落相关参数")]
-    [Tooltip("下落速度")] public float downSpeed = 20.0f;
-    [Tooltip("下落等待")] public float downWait = 1.5f;
-    [Tooltip("下落落点位置")] public float downTargetY = 10.0f;
-    [Header("当前状态相关参数")]
+    [Tooltip("攻撃力")] public float attack = 10;
+    [Tooltip("プレイヤーを打ち倒す力")] public float forcePower = 10;
+    [Header("上昇関連パラメータ")]
+    [Tooltip("上昇速度")] public float upSpeed = 10.0f;
+    [Tooltip("上昇高度")] public float targetY = 3.0f;
+    [Tooltip("上昇高度")] public float upWait = 1.5f;
+    [Header("水平移動関連パラメータ")]
+    [Tooltip("水平移動速度")] public float mvoeSpeed = 10.0f;
+    [Header("下降関連パラメータ")]
+    [Tooltip("下降速度")] public float downSpeed = 20.0f;
+    [Tooltip("下降待機")] public float downWait = 1.5f;
+    [Tooltip("下降落点位置")] public float downTargetY = 10.0f;
+    [Header("現在の状態関連パラメータ")]
     public bool isMoveing = false;
     public bool isAttacking = false;
-    [Header("是否是King或者Queen")] public bool isKingOrQueen = false;
-    [Header("是King")] public bool isKing;
-    [Header("是Queen")] public bool isQueen;
-    [Header("是白色方")] public bool isWhite;
+    [Header("KingまたはQueenかどうか")] public bool isKingOrQueen = false;
+    [Header("Kingかどうか")] public bool isKing;
+    [Header("Queenかどうか")] public bool isQueen;
+    [Header("白色方かどうか")] public bool isWhite;
 
-    [Header("棋子受击震动次数")] public float pieceHurtCount;
-    [Header("棋子受击震动单次时间")] public float pieceHurtTime;
-    [Header("棋子受击与伤害值关联反比例系数")] public float pieceHurtPer;
-    [Header("受击时震动与伤害的比例曲线")] public AnimationCurve hurtEffCurve;
-    private IEnumerator moveToTartgetPoint; //存储当前运动协程
+    [Header("棋子受擊震動回数")] public float pieceHurtCount;
+    [Header("棋子受擊震動單次時間")] public float pieceHurtTime;
+    [Header("棋子受擊與傷害值關聯反比例係數")] public float pieceHurtPer;
+    [Header("受擊時震動與傷害的比例曲線")] public AnimationCurve hurtEffCurve;
+    private IEnumerator moveToTartgetPoint; //現在の移動コルーチンを保存
     private bool moveStarted;
-    private Collider weapon;    //攻击范围
-    private CheckerBoard checkerBoard;  //棋盘脚本
+    private Collider weapon;    //攻撃範囲
+    private CheckerBoard checkerBoard;  //チェッカーボードスクリプト
     private StateBar stateBar;
     private Material[] pieceMaterial;
     private bool isDead = false;
@@ -58,21 +58,21 @@ public class Piece : MonoBehaviour
     }
     private void Start()
     {
-        curHealth = maxHealth;  //初始化血量
+        curHealth = maxHealth;  //HP初期化
         if (isKingOrQueen)
         {
             checkerBoard.kingOrQueenCount++;
         }
         checkerBoard.pieceCount++;
         stateBar = PanelManager.Instance.GenerateCommonStatePanel(this.transform);
-        stateBar.SetPositionBias(new Vector3(0, 2, 0)); //设置血条偏移
+        stateBar.SetPositionBias(new Vector3(0, 2, 0)); //HPバーのオフセット設定
         curPlayerTF = GameManager.Instance.currentPlayer.transform;
     }
     private void OnDisable()
     {
         if (moveStarted)
         {
-            Debug.Log("正在移动被摧毁了，恢复canNext");
+            Debug.Log("正在移動被摧毀了，恢復canNext");
             checkerBoard.CanNext(true);
         }
         if (stateBar != null) stateBar.DestroyThis();
@@ -90,9 +90,9 @@ public class Piece : MonoBehaviour
     }
 
     /// <summary>
-    /// 棋子移动
+    /// 駒の移動
     /// </summary>
-    /// <param name="targetPosition"> 移动到的目标点 </param>
+    /// <param name="targetPosition"> 移動先の目標地点 </param>
     public void Move(Vector3 targetPosition)
     {
         moveStarted = true;
@@ -101,30 +101,30 @@ public class Piece : MonoBehaviour
     }
 
     /// <summary>
-    /// 移动控制协程
+    /// 移動制御コルーチン
     /// </summary>
-    /// <param name="target"> 目标点 </param>
+    /// <param name="target"> 目標地点 </param>
     /// <returns></returns>
     IEnumerator MoveToTartgetPoint(Vector3 target)
     {
-        float time = 0; //计时用
+        float time = 0; //時間計測用
         //抬起
         if (pieceDownEff != null) Destroy(pieceDownEff);
-        isMoveing = true;   //开始移动，玩家无法攻击到，也无法攻击玩家
+        isMoveing = true;   //移動開始、プレイヤーは攻撃できず、プレイヤーを攻撃することもできない
         while (transform.position.y < targetY)
         {
             transform.Translate(Vector3.up * Time.deltaTime * upSpeed, Space.World);
             yield return null;
         }
-        while (time < upWait) //等待
+        while (time < upWait) //待機
         {
             time += Time.deltaTime;
             yield return null;
         }
         time = 0;
-        //平移
+        //水平移動
         Vector3 curtarget = target;
-        curtarget.y = targetY;  //防止上下位移
+        curtarget.y = targetY;  //上下の移動を防止
         Vector3 dir = curtarget - transform.position;
         while (dir.magnitude > 0.5f)
         {
@@ -132,24 +132,24 @@ public class Piece : MonoBehaviour
             dir = curtarget - transform.position;
             yield return null;
         }
-        //下落
-        isAttacking = true;     //攻击状态开始
-        while (time < downWait) //下落等待
+        //下降
+        isAttacking = true;     //攻撃状態開始
+        while (time < downWait) //下降待機
         {
             time += Time.deltaTime;
             yield return null;
         }
-        weapon.enabled = true;  //开启碰撞体
-        isMoveing = false;  //玩家可以攻击到了
+        weapon.enabled = true;  //コライダーを有効化
+        isMoveing = false;  //プレイヤーが攻撃可能になる
         while (transform.position.y > downTargetY)
         {
             transform.Translate(Vector3.down * Time.deltaTime * downSpeed, Space.World);
             dir = curtarget - transform.position;
             yield return null;
         }
-        checkerBoard.CanNext(true);    //可以下一步棋子
-        weapon.enabled = false; //关闭碰撞体
-        isAttacking = false;    //攻击状态结束
+        checkerBoard.CanNext(true);    //次の駒に進める
+        weapon.enabled = false; //コライダーを無効化
+        isAttacking = false;    //攻撃状態終了
         pieceDownEff = Instantiate(checkerBoard.pieceDownEff, transform.position, Quaternion.identity, transform);
 
         FMODUnity.RuntimeManager.PlayOneShot("event:/Level/AoMan/qiziGround");
@@ -158,7 +158,7 @@ public class Piece : MonoBehaviour
     }
 
     /// <summary>
-    /// 棋子受伤时的受击震动效果
+    /// 駒がダメージを受けた時のヒットシェイク効果
     /// </summary>
     /// <param name="damage"></param>
     /// <returns></returns>
@@ -192,8 +192,8 @@ public class Piece : MonoBehaviour
     }
 
     /// <summary>
-    /// 棋子可能被玩家摧毁
-    /// 也可以攻击玩家
+    /// 駒はプレイヤーによって破壊される可能性がある
+    /// プレイヤーを攻撃することもできる
     /// </summary>
     /// <param name="other"></param>
     private void OnTriggerEnter(Collider other)
@@ -229,16 +229,16 @@ public class Piece : MonoBehaviour
     }
 
     /// <summary>
-    /// 供weapon脚本调用
+    /// weaponスクリプトから呼び出し用
     /// </summary>
     public void WeaponAttackPlayer()
     {
         GameManager.Instance.TrickAttackPlayer(AttackPlayer);
     }
     /// <summary>
-    /// 攻击玩家逻辑
+    /// プレイヤー攻撃ロジック
     /// </summary>
-    /// <param name="curPlayer"> 获取当前玩家 </param>
+    /// <param name="curPlayer"> 取得現在のプレイヤー </param>
     private void AttackPlayer(PlayerControl curPlayer)
     {
         Vector3 dir = curPlayer.transform.position - transform.position;
@@ -251,7 +251,7 @@ public class Piece : MonoBehaviour
     }
 
     /// <summary>
-    /// 供weapon脚本调用
+    /// weaponスクリプトから呼び出し用
     /// </summary>
     public void WeaponAttackEnemy(BaseEnemyControl baseEnemyControl)
     {
@@ -259,9 +259,9 @@ public class Piece : MonoBehaviour
     }
 
     /// <summary>
-    /// 攻击小怪逻辑
+    /// 攻撃小怪邏輯
     /// </summary>
-    /// <param name="enemy"> 获取当前小怪 </param>
+    /// <param name="enemy"> 取得現在小怪 </param>
     private float AttackEnemy(BaseEnemyControl enemy)
     {
         Vector3 dir = enemy.transform.position - transform.position;
@@ -277,7 +277,7 @@ public class Piece : MonoBehaviour
     }
 
     /// <summary>
-    /// 受击摧毁当前棋子
+    /// 受擊摧毀現在駒
     /// </summary>
     private void BreakThisPiece()
     {
@@ -290,9 +290,9 @@ public class Piece : MonoBehaviour
             return;
         }
         isDead = true;
-        if (stateBar != null) stateBar.DestroyThis();   //关闭血条
+        if (stateBar != null) stateBar.DestroyThis();   //關閉血條
         stateBar = null;
-        gameObject.GetComponent<BoxCollider>().enabled = false; //让玩家可以通过
+        gameObject.GetComponent<BoxCollider>().enabled = false; //讓玩家可以通過
         if (isKingOrQueen)
         {
             BreakKingOrQueen();
@@ -310,7 +310,7 @@ public class Piece : MonoBehaviour
     }
 
     /// <summary>
-    /// 因为King和Queen全部摧毁从而摧毁当前棋子
+    /// 因為King和Queen全部摧毀從而摧毀現在駒
     /// </summary>
     public void BreakAllPiece_One()
     {
@@ -323,9 +323,9 @@ public class Piece : MonoBehaviour
             return;
         }
         isDead = true;
-        if (stateBar != null) stateBar.DestroyThis();   //关闭血条
+        if (stateBar != null) stateBar.DestroyThis();   //關閉血條
         stateBar = null;
-        gameObject.GetComponent<BoxCollider>().enabled = false; //让玩家可以通过
+        gameObject.GetComponent<BoxCollider>().enabled = false; //讓玩家可以通過
         if (isKingOrQueen)
         {
             BreakKingOrQueen();
@@ -339,7 +339,7 @@ public class Piece : MonoBehaviour
     }
 
     /// <summary>
-    /// 调用王和后的摧毁效果
+    /// 調用王和后的摧毀效果
     /// </summary>
     private void BreakKingOrQueen()
     {
@@ -369,7 +369,7 @@ public class Piece : MonoBehaviour
     }
 
     /// <summary>
-    /// 调用摧毁效果
+    /// 調用摧毀效果
     /// </summary>
     public void BreakEffect()
     {
@@ -401,7 +401,7 @@ public class Piece : MonoBehaviour
     }
 
     /// <summary>
-    /// 检查是否死亡,true代表已经死亡
+    /// 檢查是否死亡,true代表已經死亡
     /// </summary>
     /// <returns></returns>
     public bool CheckisDead()

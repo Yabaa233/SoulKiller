@@ -56,14 +56,14 @@ public class HpUp : I_BuffBase
     }
 
     /// <summary>
-    /// 跟随实体每一帧进行更新
+    /// バフの更新
     /// </summary>
     public void OnUpdate(float deltaTime)
     {
 
     }
     /// <summary>
-    /// 当从实体移除时
+    /// バフの終了
     /// </summary>
     public void OnRemove()
     {
@@ -96,7 +96,7 @@ public class HpUp : I_BuffBase
     }
 
     /// <summary>
-    /// 初始化调用的函数
+    /// バフの初期化
     /// </summary>
     public void Init()
     {

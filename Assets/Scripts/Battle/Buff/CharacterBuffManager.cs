@@ -13,20 +13,20 @@ public enum E_ChararcterType
 [System.Serializable]
 public class CharacterBuffManager
 {
-    [Header("当前角色类型")]
+    [Header("現在のキャラクタータイプ")]
     public E_ChararcterType type;
     [SerializeField]
-    [Tooltip("当前角色持有的BUff列表")] public List<I_BuffBase> characterKeepBuffList = new List<I_BuffBase>();
+    [Tooltip("現在のキャラクターが保持するBUffリスト")] public List<I_BuffBase> characterKeepBuffList = new List<I_BuffBase>();
     [SerializeField]
-    [Tooltip("字符和对应索引的数组")] public Dictionary<E_BuffKind, I_BuffBase> indexDictionary = new Dictionary<E_BuffKind, I_BuffBase>();
-    //其实一开始就改用下方这种方式去做所有的Buff存储！
+    [Tooltip("文字と対応するインデックスの配列")] public Dictionary<E_BuffKind, I_BuffBase> indexDictionary = new Dictionary<E_BuffKind, I_BuffBase>();
+    //実際には最初からこの方法を使用してすべてのBuffを保存する！
     // [SerializeField]
-    // [Tooltip("持续性的Buff存储位置")]public Dictionary<E_BuffKind,List<I_BuffBase>> timeBuffDictionary = new Dictionary<E_BuffKind, List<I_BuffBase>>();
+    // [Tooltip("継続的なBuff保存場所")]public Dictionary<E_BuffKind,List<I_BuffBase>> timeBuffDictionary = new Dictionary<E_BuffKind, List<I_BuffBase>>();
 
-    //一些有实体的Buff应该在的位置
-    [Header("护盾实体")] public ShieldRipples shieldRipples;
+    //実体のあるBuffがある場所
+    [Header("シールド実体")] public ShieldRipples shieldRipples;
     /// <summary>
-    /// 从BuffManager中获取所有Buff类型，并初始化Buff列表
+    /// バフマネージャーからすべてのバフタイプを取得し、バフリストを初期化します
     /// </summary>
     public void Init(E_ChararcterType _type)
     {
@@ -36,57 +36,57 @@ public class CharacterBuffManager
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="buff">要添加的Buff</param>
-    /// <param name="gameObject">对象</param>
+    /// <param name="buff">追加するバフ</param>
+    /// <param name="gameObject">オブジェクト</param>
     public void AddBuff(I_BuffBase buff, GameObject gameObject,bool isKeppBuff = false)
     {
-        if(isKeppBuff)//如果是持续性的Buff
+        if(isKeppBuff)//もし継続的なBuffなら
         {
             if (!indexDictionary.ContainsKey(buff.GetBuffType()))
             {
-                buff.OnAdd(gameObject);//一次性添加方法
+                buff.OnAdd(gameObject);//一時的な追加方法
                 characterKeepBuffList.Add(buff);
                 indexDictionary.Add(buff.GetBuffType(), buff);
             }
             else
             {
-                buff.OnAdd(gameObject);//一次性添加方法
+                buff.OnAdd(gameObject);//一時的な追加方法
             }
         }
-        else//如果不是持续性的
+        else//もし継続的でないなら
         {
             if (indexDictionary.ContainsKey(buff.GetBuffType()))
             {
-                Debug.LogWarning("添加失败,你正在尝试添加已有的Buff");
+                Debug.LogWarning("追加失敗、既に存在するBuffを追加しようとしています");
                 return;
             }
-            buff.OnAdd(gameObject);//一次性添加方法
+            buff.OnAdd(gameObject);//一時的な追加方法
             characterKeepBuffList.Add(buff);
             indexDictionary.Add(buff.GetBuffType(), buff);
         }
     }
 
     /// <summary>
-    /// 移除Buff的办法,知道具体是哪个Buff的时候
+    /// バフを削除する方法、具体的にはどのバフか知っているとき
     /// </summary>
-    /// <param name="buff">Buff实例</param>
+    /// <param name="buff">バフインスタンス</param>
     public void RemoveBuff(I_BuffBase buff)
     {
-        // Debug.Log("调用REMOVE1");
+        // Debug.Log("REMOVE1を呼び出し");
         buff.OnRemove();
         characterKeepBuffList.Remove(buff);
         indexDictionary.Remove(buff.GetBuffType());
     }
     /// <summary>
-    /// 移除Buff的办法，只知道Buff类型的时候
+    /// バフを削除する方法、バフのタイプだけ知っているとき
     /// </summary>
-    /// <param name="buffKind">buff类型</param>
+    /// <param name="buffKind">バフタイプ</param>
     public void RemoveBuff(E_BuffKind buffKind)
     {
-        // Debug.Log("调用rEMOVE2");
+        // Debug.Log("rEMOVE2を呼び出し");
         if (!indexDictionary.ContainsKey(buffKind))
         {
-            Debug.LogWarning("没有对应的Buff,无法删除");
+            Debug.LogWarning("対応するバフが存在しないため削除できません");
             return;
         }
         I_BuffBase buff = indexDictionary[buffKind];
@@ -96,9 +96,9 @@ public class CharacterBuffManager
     }
 
     /// <summary>
-    /// 查找当前角色是否有某种Buff
+    /// 現在のキャラクターに特定のバフがあるかどうかを確認します
     /// </summary>
-    /// <param name="buffKind">Buff类型的枚举</param>
+    /// <param name="buffKind">バフタイプの列挙</param>
     /// <returns></returns>
     public bool FindBuff(E_BuffKind buffKind)
     {
@@ -113,7 +113,7 @@ public class CharacterBuffManager
     }
 
     /// <summary>
-    /// 通过反射将对应Buff提升至对应等级
+    /// 反射を使用して対応するBuffを対応するレベルにアップグレードします
     /// </summary>
     /// <param name="buffKind">Buff类型</param>
     /// <param name="level">等级</param>

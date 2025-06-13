@@ -27,9 +27,9 @@ public class States : IState
 
 public class IdleState : IState
 {
-    private FSM manager;    //状态机
-    private Parameter parameter;    //设置的属性
-    private float idleTimer;    //原地等待时间
+    private FSM manager;    //状態マシン
+    private Parameter parameter;    //設定された属性
+    private float idleTimer;    //待機時間
     public IdleState(FSM _manager)
     {
         this.manager = _manager;
@@ -37,7 +37,7 @@ public class IdleState : IState
     }
     public void OnEnter()
     {
-        //播放动画
+        //アニメーション再生
     }
 
     public void OnExit()
@@ -47,7 +47,7 @@ public class IdleState : IState
 
     public void OnLateUpDade()
     {
-        //一帧结束后要做的事情
+        //1フレーム終了後の処理
     }
 
     public void OnUpDate()
@@ -55,18 +55,18 @@ public class IdleState : IState
         idleTimer += Time.deltaTime;
         if (parameter.getHit)
         {
-            manager.TranstionState(StateType.Hit);  //受到攻击，切换到受击状态
+            manager.TranstionState(StateType.Hit);  //攻撃を受けたら被ダメージ状態に切り替え
         }
 
-        //判断是否发现玩家
+        //プレイヤーを発見したかどうかの判定
         if (parameter.target != null &&
         parameter.target.position.x >= parameter.chaseLeftPoint.position.x &&
         parameter.target.position.x <= parameter.chaseRightPoint.position.x)
         {
-            manager.TranstionState(StateType.React);    //发现玩家，切换到反应状态
+            manager.TranstionState(StateType.React);    //プレイヤーを発見したら反応状態に切り替え
         }
 
-        if (idleTimer >= parameter.idleTime) //到达设定时间，切换到巡逻状态
+        if (idleTimer >= parameter.idleTime) //設定時間に達したらパトロール状態に切り替え
         {
             manager.TranstionState(StateType.Patrol);
         }
@@ -74,9 +74,9 @@ public class IdleState : IState
 }
 public class PatrolState : IState
 {
-    private FSM manager;    //状态机
-    private Parameter parameter;    //设置的属性
-    private int patrolPoint;    //当前巡逻点
+    private FSM manager;    //状態マシン
+    private Parameter parameter;    //設定された属性
+    private int patrolPoint;    //現在のパトロールポイント
     public PatrolState(FSM _manager)
     {
         this.manager = _manager;
@@ -84,7 +84,7 @@ public class PatrolState : IState
     }
     public void OnEnter()
     {
-        //播放相应动画
+        //対応するアニメーションを再生
     }
 
     public void OnExit()
@@ -107,18 +107,18 @@ public class PatrolState : IState
 
         if (parameter.getHit)
         {
-            manager.TranstionState(StateType.Hit);  //受到攻击，切换到受击状态
+            manager.TranstionState(StateType.Hit);  //攻撃を受けたら被ダメージ状態に切り替え
         }
 
-        //判断是否发现玩家
+        //プレイヤーを発見したかどうかの判定
         if (parameter.target != null &&
         parameter.target.position.x >= parameter.chaseLeftPoint.position.x &&
         parameter.target.position.x <= parameter.chaseRightPoint.position.x)
         {
-            manager.TranstionState(StateType.React);    //发现玩家，切换到反应状态
+            manager.TranstionState(StateType.React);    //プレイヤーを発見したら反応状態に切り替え
         }
 
-        //朝目标点移动
+        //目標地点に向かって移動
         manager.transform.position = Vector2.MoveTowards(
             manager.transform.position, target.position,
             parameter.moveSpeed * Time.deltaTime);
@@ -131,8 +131,8 @@ public class PatrolState : IState
 }
 public class ChaseState : IState
 {
-    private FSM manager;    //状态机
-    private Parameter parameter;    //设置的属性
+    private FSM manager;    //状態マシン
+    private Parameter parameter;    //設定された属性
     public ChaseState(FSM _manager)
     {
         this.manager = _manager;
@@ -140,7 +140,7 @@ public class ChaseState : IState
     }
     public void OnEnter()
     {
-        //播放动画
+        //アニメーション再生
     }
 
     public void OnExit()
@@ -158,7 +158,7 @@ public class ChaseState : IState
 
         if (parameter.getHit)
         {
-            manager.TranstionState(StateType.Hit);  //受到攻击，切换到受击状态
+            manager.TranstionState(StateType.Hit);  //攻撃を受けたら被ダメージ状態に切り替え
         }
 
         if (parameter.target)
@@ -169,11 +169,11 @@ public class ChaseState : IState
         }
         if (parameter.target == null ||
         parameter.target.position.x < parameter.chaseLeftPoint.position.x ||
-        parameter.target.position.x > parameter.chaseRightPoint.position.x)    //如果目标丢失或者超出最大追踪范围则返回巡逻
+        parameter.target.position.x > parameter.chaseRightPoint.position.x)    //目標を見失ったか最大追跡範囲を超えたらパトロールに戻る
         {
             manager.TranstionState(StateType.Idle);
         }
-        if (Physics2D.OverlapCircle(parameter.attackPoint.position, parameter.attackArea, parameter.targetLayer))   //检测是否进入攻击范围
+        if (Physics2D.OverlapCircle(parameter.attackPoint.position, parameter.attackArea, parameter.targetLayer))   //攻撃範囲に入ったかどうかを検出
         {
             manager.TranstionState(StateType.Attack);
         }
@@ -182,9 +182,9 @@ public class ChaseState : IState
 
 public class ReactState : IState
 {
-    private FSM manager;    //状态机
-    private Parameter parameter;    //设置的属性
-    //获取动画状态
+    private FSM manager;    //状態マシン
+    private Parameter parameter;    //設定された属性
+    //アニメーション状態を取得
     public ReactState(FSM _manager)
     {
         this.manager = _manager;
@@ -192,7 +192,7 @@ public class ReactState : IState
     }
     public void OnEnter()
     {
-        //进入状态时播放反应动画
+        //状態開始時に反応アニメーションを再生
     }
 
     public void OnExit()
@@ -206,36 +206,36 @@ public class ReactState : IState
 
     public void OnUpDate()
     {
-        //获取反应动画播放状态
+        //反応アニメーションの再生状態を取得
 
         if (parameter.getHit)
         {
-            manager.TranstionState(StateType.Hit);  //受到攻击，切换到受击状态
+            manager.TranstionState(StateType.Hit);  //攻撃を受けたら被ダメージ状態に切り替え
         }
 
-        // if(反应动画快播放完了)
+        // if(反応アニメーションが終わりそう)
         // {
         //     if(parameter.target != null)
         //     {
-        //         manager.TranstionState(StateType.Chase);    //如果目标未丢失则开始追击
+        //         manager.TranstionState(StateType.Chase);    //目標がまだあれば追跡開始
         //     }
         //     else
         //     {
-        //         manager.TranstionState(StateType.Idle); //如果目标丢失则静止
+        //         manager.TranstionState(StateType.Idle); //目標を見失ったら静止
         //     }
         // }
         if (parameter.target != null)
         {
-            manager.FlipTo(parameter.target);   //如果还有目标就朝向目标
+            manager.FlipTo(parameter.target);   //目標がまだあれば向きを変える
         }
     }
 }
 
 public class AttackState : IState
 {
-    private FSM manager;    //状态机
-    private Parameter parameter;    //设置的属性
-    //获取动画状态
+    private FSM manager;    //状態マシン
+    private Parameter parameter;    //設定された属性
+    //アニメーション状態を取得
     public AttackState(FSM _manager)
     {
         this.manager = _manager;
@@ -243,7 +243,7 @@ public class AttackState : IState
     }
     public void OnEnter()
     {
-        //播放动画
+        //アニメーション再生
     }
 
     public void OnExit()
@@ -253,14 +253,14 @@ public class AttackState : IState
 
     public void OnUpDate()
     {
-        //获取攻击动画播放状态
+        //攻撃アニメーションの再生状態を取得
 
         if (parameter.getHit)
         {
-            manager.TranstionState(StateType.Hit);  //受到攻击，切换到受击状态
+            manager.TranstionState(StateType.Hit);  //攻撃を受けたら被ダメージ状態に切り替え
         }
 
-        // if(动画快播放完成了)
+        // if(アニメーションが終わりそう)
         // {
         //     manager.TranstionState(StateType.Chase);
         // }
@@ -272,9 +272,9 @@ public class AttackState : IState
 
 public class HitState : IState
 {
-    private FSM manager;    //状态机
-    private Parameter parameter;    //设置的属性
-    //获取动画播放进度
+    private FSM manager;    //状態マシン
+    private Parameter parameter;    //設定された属性
+    //アニメーション再生の進捗を取得
     public HitState(FSM _manager)
     {
         this.manager = _manager;
@@ -282,7 +282,7 @@ public class HitState : IState
     }
     public void OnEnter()
     {
-        //播放受伤动画
+        //被ダメージアニメーションを再生
     }
 
     public void OnExit()
@@ -292,17 +292,17 @@ public class HitState : IState
 
     public void OnUpDate()
     {
-        //获取受伤动画播放状态
+        //被ダメージアニメーションの再生状態を取得
         if (parameter.health <= 0)
         {
             manager.TranstionState(StateType.Dead);
         }
         else
         {
-            parameter.target = GameObject.FindWithTag("Player").transform;  //TODO:根据攻击发出的对象锁定将要追击的对象
-            // if(受伤动画快要播放完)
+            parameter.target = GameObject.FindWithTag("Player").transform;  //TODO:攻撃を発したオブジェクトに基づいて追跡対象をロック
+            // if(受傷アニメーションが終わりそう)
             // {
-            //     manager.TranstionState(StateType.Chase);    //进入追击状态
+            //     manager.TranstionState(StateType.Chase);    //追跡状態に移行
             // }
         }
     }
@@ -314,8 +314,8 @@ public class HitState : IState
 
 public class DeadState : IState
 {
-    private FSM manager;    //状态机
-    private Parameter parameter;    //设置的属性
+    private FSM manager;    //状態マシン
+    private Parameter parameter;    //設定された属性
     public DeadState(FSM _manager)
     {
         this.manager = _manager;
@@ -323,7 +323,7 @@ public class DeadState : IState
     }
     public void OnEnter()
     {
-        //播放死亡动画
+        //アニメーション再生
     }
 
     public void OnExit()
@@ -333,7 +333,7 @@ public class DeadState : IState
 
     public void OnUpDate()
     {
-        //TODO:在一段时间后销毁敌人
+        //TODO:一定時間後に敵を破壊
     }
     public void OnLateUpDade()
     {

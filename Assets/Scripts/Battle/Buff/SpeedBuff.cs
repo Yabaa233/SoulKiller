@@ -64,6 +64,9 @@ public class SpeedBuff : I_BuffBase
         }
     }
 
+    /// <summary>
+    /// バフの更新
+    /// </summary>
     public void OnUpdate(float deltaTime)
     {
         
@@ -90,7 +93,7 @@ public class SpeedBuff : I_BuffBase
     }
 
 /// <summary>
-/// 初始化应该调用的函数
+/// バフの初期化
 /// </summary>
     public void Init()
     {
@@ -141,8 +144,9 @@ public class SpeedBuff : I_BuffBase
         //TODO 速度还没存
     } 
 
-///
-/// //////Buff移除的时候还原状态
+/// <summary>
+/// バフの終了
+/// </summary>
     private void PlayerSpeedBuffRemove()
     {
         playerControl.speed = storeSpeed;

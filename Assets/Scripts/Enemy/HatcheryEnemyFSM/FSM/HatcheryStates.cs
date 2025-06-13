@@ -37,7 +37,7 @@ public class HatcheryEnemy_IdleState : IState
     {
         parameter.animator.Play("Idle");
         /*parameter.intervalTime = Time.time;*/
-        ///����״̬,��һ״̬����Ϊ:1.���� 2.�ܻ�
+        ///待機状態、第一状態として設定:1.待機 2.逃走
     }
     public void OnUpDate()
     {
@@ -59,22 +59,22 @@ public class HatcheryEnemy_IdleState : IState
     }
     public void OnLateUpDade()
     {
-        ///��һִ֡��
+        ///最初のフレーム実行
     }
     public void OnExit()
     {
-        ///�˳�״̬
+        ///状態終了
     }
 }
 /// <summary>
-/// ��������״̬���������ܻ�����������������
+/// 敵の状態、攻撃を受けると逃走状態に切り替わる
 /// </summary>
 public class HatcheryEnemy_ProductionState : IState
 {
     private HatcheryEnemyFSM manager;
     private HatcheryEnemyParameter parameter;
-    private float beginProductionTime;///��ʼ������ʱ��
-    private float needTime = 2f;///�������̵�ʱ�䣬�ɱ����
+    private float beginProductionTime;///生産開始時間
+    private float needTime = 2f;///生産プロセスの時間、変更可能
     public HatcheryEnemy_ProductionState(HatcheryEnemyFSM _manager)
     {
         manager = _manager;
@@ -83,12 +83,12 @@ public class HatcheryEnemy_ProductionState : IState
     public void OnEnter()
     {
         parameter.animator.Play("Attack");
-        beginProductionTime = Time.time;///��¼��ʼ����ʱ��
+        beginProductionTime = Time.time;///生産開始時間を記録
         
     }
     public void OnUpDate()
     {
-        if (parameter.getHit)///���������ܻ��������ᱻ��ϡ�
+        if (parameter.getHit)///攻撃を受けると逃走状態に切り替わる
         {
             manager.TranstionState(E_EnemyStateType.Hit);
             return;
@@ -96,9 +96,9 @@ public class HatcheryEnemy_ProductionState : IState
         if (Time.time >= needTime + beginProductionTime)
         {
             
-            ///����һ��1������
-            GameObject son = manager.SonProduction(parameter.sonBorn);///���ɵ�λ�þ�������֮ǰԤ��׼���õ�����        
-            /*FMODUnity.RuntimeManager.PlayOneShot("event:/Monster/NorMal/duiduiBorn");                                                                        ///���Զ����ɵĶ��ӽ��в���*/
+            ///1体の敵を生成
+            GameObject son = manager.SonProduction(parameter.sonBorn);///生成位置は事前に設定された位置を使用        
+            /*FMODUnity.RuntimeManager.PlayOneShot("event:/Monster/NorMal/duiduiBorn");                                                                        ///敵を生成した後に敵の音を再生*/
             son.transform.parent = manager.transform.parent;
             manager.gameObject.GetComponent<HatcheryEnemyControl>().room.enemyCount++;
             son.SetActive(true);
@@ -108,11 +108,11 @@ public class HatcheryEnemy_ProductionState : IState
     }
     public void OnLateUpDade()
     {
-        ///��һִ֡��
+        ///最初のフレーム実行
     }
     public void OnExit()
     {
-        ///������˳��������Է���Idle����
+        ///生産が終了したらIdle状態に戻る
     }
 
 }
@@ -121,7 +121,7 @@ public class HatcheryEnemy_HitState : IState
     private HatcheryEnemyFSM manager;
     private HatcheryEnemyParameter parameter;
     private float nextTime;
-    private float timeBtwState = 0.5f;///Ӳֱͣ��ʱ��
+    private float timeBtwState = 0.5f;///硬直停止時間
     public HatcheryEnemy_HitState(HatcheryEnemyFSM _manager)
     {
         manager = _manager;
@@ -131,7 +131,7 @@ public class HatcheryEnemy_HitState : IState
     {
         parameter.animator.Play("Hit");
         nextTime = Time.time;
-        ///�˺����������Ѿ�Ų����control�ű�������ʡ�ԣ�parameter.enemyData.currentHealth -= 1;///�����������Ӧ�滻Ϊplayer��Attack��ֵ
+        ///ダメージ処理は既にcontrolスクリプトに移動したため省略、parameter.enemyData.currentHealth -= 1;///この部分はplayerのAttack値に置き換える必要がある
     }
     public void OnUpDate()
     {
@@ -155,7 +155,7 @@ public class HatcheryEnemy_HitState : IState
     }
     public void OnLateUpDade()
     {
-        //��һִ֡��
+        //最初のフレーム実行
     }
     public void OnExit()
     {
@@ -171,7 +171,7 @@ public class HatcheryEnemy_DeadState : IState
         manager = _manager;
         parameter = _manager.parameter;
     }
-    //TODO:ĸ����������
+    //TODO:母体の死亡処理
     public void OnEnter()
     {
         parameter.isDead = true;

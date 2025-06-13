@@ -83,7 +83,7 @@ public class Damage : I_BuffBase
     }
 
 /// <summary>
-/// 初始化应该调用的函数
+/// ダメージバフ
 /// </summary>
     public void Init()
     {

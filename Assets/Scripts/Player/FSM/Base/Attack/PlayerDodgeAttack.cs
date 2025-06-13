@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class PlayerDodgeAttack : StateMachineBehaviour
 {
-    private PlayerControl currentPlayer;    //当前角色
-    public ComboNode curComboNode;    //当前攻击的连招
-    [Header("冲刺开始的时间点")]
+    private PlayerControl currentPlayer;    //現在のキャラクター
+    public ComboNode curComboNode;    //現在の攻撃のコンボ
+    [Header("ステップ開始の時間点")]
     public float dodgeStartPer = 0.4f;
-    [Header("冲刺速度")]
+    [Header("ステップ速度")]
     public float dodgeSpeed = 1.0f;
     private bool dodged = false;
     private Vector3 resDir = new Vector3();
-    [Header("可以移动的百分比")] public float movePercent = 0.95f;  //动画播放结束的百分比
-    [Header("可以衔接攻击的百分比")] public float attackPercent = 0.5f;  //动画播放结束的百分比
+    [Header("移動可能なパーセンテージ")] public float movePercent = 0.95f;  //アニメーション終了のパーセンテージ
+    [Header("攻撃に繋げられるパーセンテージ")] public float attackPercent = 0.5f;  //アニメーション終了のパーセンテージ
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -22,7 +22,7 @@ public class PlayerDodgeAttack : StateMachineBehaviour
             currentPlayer = animator.gameObject.GetComponent<PlayerControl>();
         }
         currentPlayer.PlayerAttackMove_Plunge();
-        currentPlayer.ChangeCombo(curComboNode);    //切换Player的ComboNode
+        currentPlayer.ChangeCombo(curComboNode);    //PlayerのComboNodeを切り替え
         dodged = false;
     }
 
@@ -32,17 +32,17 @@ public class PlayerDodgeAttack : StateMachineBehaviour
         {
             dodged = true;
             resDir = (currentPlayer.targetPoint - currentPlayer.transform.position).normalized * dodgeSpeed;
-            currentPlayer.PlayerAttackMove_Plunge();    //重新设置朝向
+            currentPlayer.PlayerAttackMove_Plunge();    //向きを再設定
             currentPlayer.OpenTrigger();
             currentPlayer.CreateEffect();
             currentPlayer.PlayerForceMove(resDir);
         }
         if (stateInfo.normalizedTime > attackPercent)
         {
-            //恢复各状态
+            //各状態を回復
             animator.SetBool("canAttack", true);
         }
-        if (stateInfo.normalizedTime > movePercent) //留一点硬直时间
+        if (stateInfo.normalizedTime > movePercent) //少し硬直時間を残す
         {
             animator.SetBool("canDodge", true);
             animator.SetBool("canMove", true);

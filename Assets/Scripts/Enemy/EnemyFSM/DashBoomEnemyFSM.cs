@@ -7,36 +7,36 @@ using UnityEngine.AI;
 public class DashBoomEnemyParameter
 {
     public CharacterData enemyData;
-    public Animator animator;//动画控制器
-    public GameObject _mainCamera;//相机位置
+    public Animator animator;//アニメーションコントローラー
+    public GameObject _mainCamera;//カメラの位置
     public Transform body;//身体部分
     public DBoomEmyStateData_SO enemyStateData;
     public Transform target;
     public bool ableAttact;
     public bool getHit;
-    public NavMeshAgent agent;//导航组件
-    public Transform enemyPos;//自己的位置
+    public NavMeshAgent agent;//ナビゲーションコンポーネント
+    public Transform enemyPos;//自分の位置
     public float moveSpeed;
-    public bool isDead;//是否已经死亡
-    public bool isDash;//是否施加过冲刺
-    public bool isDizzy;//是否撞到了墙体
-    public bool isBoom;//是否开启自爆
-    public bool playerIsStay;//玩家是否还在爆炸区域内
+    public bool isDead;//死亡しているかどうか
+    public bool isDash;//スティックを押したかどうか
+    public bool isDizzy;//壁に衝突したかどうか
+    public bool isBoom;//自爆を開始したかどうか
+    public bool playerIsStay;//プレイヤーが爆発範囲内にいるかどうか
 }
 public class DashBoomEnemyFSM : BaseEnemyFSM
 {
     public DashBoomEnemyParameter parameter;
     // private IState currentState;
     // private Dictionary<E_EnemyStateType, IState> states = new Dictionary<E_EnemyStateType, IState>();
-    //需要获取的组件
+    //必要なコンポーネントを取得
     public Rigidbody rb;
 
-    //辅助计算的属性
+    //補助計算の属性
     private Vector3 lastDir;
     
     private void Start()
     {
-        //得到相应的组件
+        //必要なコンポーネントを取得
         rb = GetComponent<Rigidbody>();
 
         states.Add(E_EnemyStateType.Idle,new DBoomEnemy_IdleState(this));
@@ -48,29 +48,29 @@ public class DashBoomEnemyFSM : BaseEnemyFSM
         states.Add(E_EnemyStateType.Boom,new DBoomEnemy_BoomState(this));
 
 
-        TranstionState(E_EnemyStateType.Idle); //初始化状态为Idle，设置初始状态为待机状态
+        TranstionState(E_EnemyStateType.Idle); //初期化状態をIdleに設定し、初期状態を待機状態にする
     }
 
-    private void Update() {//在这里执行当前的状态机Update
+    private void Update() {//ここで現在の状態機のUpdateを実行
         currentState.OnUpDate();
         FaceToCamera();
     }
     private void FixedUpdate() {
         lastDir = rb.velocity;
-        // Debug.Log("BoomDash的速度为:"+ lastDir.magnitude);
+        // Debug.Log("BoomDashの速度は:"+ lastDir.magnitude);
     }
-    // public void TranstionState(E_EnemyStateType state)//转换方法
+    // public void TranstionState(E_EnemyStateType state)//変換方法
     // {
     //     if (currentState != null)
     //     {
-    //         currentState.OnExit();  //切换状态先退出当前状态
+    //         currentState.OnExit();  //状態を切り替える前に現在の状態を終了
     //     }
     //     currentState = states[state];
     //     currentState.OnEnter();
     // }
 
     /// <summary>
-    /// 让敌人朝向玩家的左右
+    /// 敵をプレイヤーの左右に向ける
     /// </summary>
     public void RotateToTarget()
     {
@@ -89,7 +89,7 @@ public class DashBoomEnemyFSM : BaseEnemyFSM
     }
 
     /// <summary>
-    /// 让物体指向玩家方向
+    /// 物体をプレイヤーの方向に向ける
     /// </summary>
     /// <param name="other"></param>
     public void FaceToTarget()
@@ -100,7 +100,7 @@ public class DashBoomEnemyFSM : BaseEnemyFSM
     }
 
     /// <summary>
-    /// 自爆类敌人需要特殊处理
+    /// 自爆クラスの敵は特殊処理が必要
     /// </summary>
     public void RecycleStatePanel()
     {
@@ -149,7 +149,7 @@ public class DashBoomEnemyFSM : BaseEnemyFSM
     private void OnCollisionEnter(Collision other) {
         if(other.transform.tag == "Wall")
         {
-            //碰撞时速度进行反弹
+            //衝突時の速度を反転させる
             Vector3 reflexAngle = Vector3.Reflect(lastDir,other.contacts[0].normal);
             rb.velocity = reflexAngle.normalized * lastDir.magnitude;
             parameter.isDizzy = true;

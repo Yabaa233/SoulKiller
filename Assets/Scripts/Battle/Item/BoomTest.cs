@@ -24,6 +24,9 @@ public class BoomTest : MonoBehaviour
             pointA = transform;
             pointB = GameObject.Find("Player").transform;
         }*/
+    /// <summary>
+    /// 爆発テスト
+    /// </summary>
     void Start()
     {
         // rb = GetComponent<Rigidbody>();
@@ -42,6 +45,9 @@ public class BoomTest : MonoBehaviour
         // rb.AddForce(speed, ForceMode.Impulse);
     }
 
+    /// <summary>
+    /// テストの初期化
+    /// </summary>
     private void OnEnable() 
     {
         rb = GetComponent<Rigidbody>();
@@ -63,6 +69,9 @@ public class BoomTest : MonoBehaviour
             rb.AddForce(speed, ForceMode.Impulse);
         }
     }
+    /// <summary>
+    /// テストの更新
+    /// </summary>
     void FixedUpdate()
     {
         // 重力模拟
@@ -149,4 +158,7 @@ public class BoomTest : MonoBehaviour
     {
         shotter = gameObject;
     }
+    /// <summary>
+    /// テストの終了
+    /// </summary>
 }

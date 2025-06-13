@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// ダッシュ敵の状態
+/// </summary>
 public class DashEnemyState : IState
 {
     public void OnEnter()
@@ -25,6 +28,9 @@ public class DashEnemyState : IState
     }
 }
 
+/// <summary>
+/// 状態の初期化
+/// </summary>
 public class DashEnemy_IdleState : IState
 {
     private DashEnemyFSM manager;
@@ -73,6 +79,9 @@ public class DashEnemy_IdleState : IState
 }
 
 
+/// <summary>
+/// 状態の更新
+/// </summary>
 public class DashEnemy_FindState : IState
 {
     private DashEnemyFSM manager;
@@ -124,6 +133,9 @@ public class DashEnemy_FindState : IState
     }
 }
 
+/// <summary>
+/// 状態の終了
+/// </summary>
 public class DashEnemy_ChaseState : IState
 {
     private DashEnemyFSM manager;
@@ -207,6 +219,9 @@ public class DashEnemy_ChaseState : IState
 
 
 //眩晕状态要做的只是单纯停留一段时间
+/// <summary>
+/// 眩晕状态
+/// </summary>
 public class DashEnemy_DizzyState : IState
 {
     private DashEnemyFSM manager;
@@ -253,6 +268,9 @@ public class DashEnemy_DizzyState : IState
     }
 }
 
+/// <summary>
+/// 受击状态
+/// </summary>
 public class DashEnemy_GetHitState : IState
 {
     private DashEnemyFSM manager;
@@ -322,6 +340,9 @@ public class DashEnemy_GetHitState : IState
     }
 }
 
+/// <summary>
+/// 死亡状态
+/// </summary>
 public class DashEnemy_DeadState :IState
 {
     private DashEnemyFSM manager;

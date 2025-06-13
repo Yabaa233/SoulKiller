@@ -6,23 +6,23 @@ using BehaviorDesigner.Runtime;
 [System.Serializable]
 public class BossCD
 {
-    [Header("普通攻击CD")]
+    [Header("普通攻撃CD")]
     public CDClass canNormalAttack = new CDClass();
-    [Header("技能攻击CD")]
+    [Header("スキル攻撃CD")]
     public CDClass canSkillAttack = new CDClass();
-    [Header("枪技能1攻击CD")]
+    [Header("槍スキル1攻撃CD")]
     public CDClass canGunAttack1 = new CDClass();
-    [Header("枪技能2攻击CD")]
+    [Header("槍スキル2攻撃CD")]
     public CDClass canGunAttack2 = new CDClass();
-    [Header("杖技能攻击CD")]
+    [Header("杖スキル攻撃CD")]
     public CDClass canStaffAttack = new CDClass();
-    [Header("召唤技能攻击CD")]
+    [Header("召喚スキル攻撃CD")]
     public CDClass canSummonAttack = new CDClass();
-    [Header("冲刺CD")]
+    [Header("ステップCD")]
     public CDClass canDodge = new CDClass();
-    [Header("闪现CD")]
+    [Header("フラッシュCD")]
     public CDClass canFlash = new CDClass();
-    [Header("反向闪现CD")]
+    [Header("逆フラッシュCD")]
     public CDClass canBackFlash = new CDClass();
     [Header("回血CD")]
     public CDClass canRestoreHealth = new CDClass();
@@ -37,35 +37,35 @@ public class BossCD
         canNormalAttack.curTime = 0;
         canNormalAttack.flag = false;
 
-        GameManager.Instance.CDList.Add(canSkillAttack);    //近战连击
+        GameManager.Instance.CDList.Add(canSkillAttack);    //近戦連撃
         canSkillAttack.curTime = 0;
         canSkillAttack.flag = false;
 
-        GameManager.Instance.CDList.Add(canGunAttack1);     //射击1
+        GameManager.Instance.CDList.Add(canGunAttack1);     //射撃1
         canGunAttack1.curTime = 0;
         canGunAttack1.flag = false;
 
-        GameManager.Instance.CDList.Add(canGunAttack2);     //射击2
+        GameManager.Instance.CDList.Add(canGunAttack2);     //射撃2
         canGunAttack2.curTime = 0;
         canGunAttack2.flag = false;
 
-        GameManager.Instance.CDList.Add(canStaffAttack);    //法杖
+        GameManager.Instance.CDList.Add(canStaffAttack);    //杖
         canStaffAttack.curTime = 0;
         canStaffAttack.flag = false;
 
-        GameManager.Instance.CDList.Add(canSummonAttack);   //召唤
+        GameManager.Instance.CDList.Add(canSummonAttack);   //召喚
         canSummonAttack.curTime = 0;
         canSummonAttack.flag = false;
 
-        GameManager.Instance.CDList.Add(canDodge);          //冲刺
+        GameManager.Instance.CDList.Add(canDodge);          //ステップ
         canDodge.curTime = 0;
         canDodge.flag = false;
 
-        GameManager.Instance.CDList.Add(canFlash);          //闪现
+        GameManager.Instance.CDList.Add(canFlash);          //フラッシュ
         canFlash.curTime = 0;
         canFlash.flag = false;
 
-        GameManager.Instance.CDList.Add(canBackFlash);      //反向闪现
+        GameManager.Instance.CDList.Add(canBackFlash);      //逆フラッシュ
         canBackFlash.curTime = 0;
         canBackFlash.flag = false;
 
@@ -86,21 +86,21 @@ public class BossCD
         if (GameManager.Instance == null) return;
         GameManager.Instance.CDList.Remove(canNormalAttack);   //普攻
 
-        GameManager.Instance.CDList.Remove(canSkillAttack);    //近战连击
+        GameManager.Instance.CDList.Remove(canSkillAttack);    //近戦連撃
 
-        GameManager.Instance.CDList.Remove(canGunAttack1);     //射击1
+        GameManager.Instance.CDList.Remove(canGunAttack1);     //射撃1
 
-        GameManager.Instance.CDList.Remove(canGunAttack2);     //射击2
+        GameManager.Instance.CDList.Remove(canGunAttack2);     //射撃2
 
-        GameManager.Instance.CDList.Remove(canStaffAttack);    //法杖
+        GameManager.Instance.CDList.Remove(canStaffAttack);    //杖
 
-        GameManager.Instance.CDList.Remove(canSummonAttack);   //召唤 
+        GameManager.Instance.CDList.Remove(canSummonAttack);   //召喚 
 
-        GameManager.Instance.CDList.Remove(canDodge);          //冲刺
+        GameManager.Instance.CDList.Remove(canDodge);          //ステップ
 
-        GameManager.Instance.CDList.Remove(canFlash);          //闪现
+        GameManager.Instance.CDList.Remove(canFlash);          //フラッシュ
 
-        GameManager.Instance.CDList.Remove(canBackFlash);      //反向闪现
+        GameManager.Instance.CDList.Remove(canBackFlash);      //逆フラッシュ
 
         GameManager.Instance.CDList.Remove(canRestoreHealth);  //回血
 

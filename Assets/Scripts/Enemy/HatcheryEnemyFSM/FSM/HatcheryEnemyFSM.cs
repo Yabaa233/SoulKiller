@@ -4,18 +4,18 @@ using System.Collections.Generic;
 using UnityEngine;
 public enum E_HatcheryStateType
 {
-    Idle,//��ֹ
-    Production,//����
-    Hit,//�ܻ�
-    Dead,//����
+    Idle,//待機
+    Production,//生産
+    Hit,//被ダメージ
+    Dead,//死亡
 }
 public class HatcheryEnemeyCD
 {
-    [Header("�������")]
+    [Header("登録")]
     public CDClass canProduction=new CDClass();
     public void CDInit()
     {
-        GameManager.Instance.CDList.Add(canProduction);   //�չ�
+        GameManager.Instance.CDList.Add(canProduction);   //登録
         canProduction.flag = false;
     }
 }
@@ -23,14 +23,14 @@ public class HatcheryEnemeyCD
 public class HatcheryEnemyParameter
 {
     public HatcheryEmyStateData_SO enemyStateData;
-    public Animator animator;//����������
-    public GameObject _mainCamera;//���
-    public CharacterData enemyData;//��������
-    public Transform body;//����λ��
-    public float intervalTime;//�������ʱ��
+    public Animator animator;//アニメーター
+    public GameObject _mainCamera;//カメラ
+    public CharacterData enemyData;//敵データ
+    public Transform body;//本体位置
+    public float intervalTime;//インターバル時間
     public bool getHit;
     public bool isDead;
-    public Transform sonBorn;//С�ֳ�����
+    public Transform sonBorn;//子の生成位置
     public int nowSonCount=0;
 }
 public class HatcheryEnemyFSM : BaseEnemyFSM
@@ -49,9 +49,9 @@ public class HatcheryEnemyFSM : BaseEnemyFSM
         states.Add(E_EnemyStateType.Attack, new HatcheryEnemy_ProductionState(this));
         states.Add(E_EnemyStateType.Hit, new HatcheryEnemy_HitState(this));
         states.Add(E_EnemyStateType.Dead, new HatcheryEnemy_DeadState(this));
-        TranstionState(E_EnemyStateType.Idle);//��ʼ��״̬ΪIdle
+        TranstionState(E_EnemyStateType.Idle);//初期状態をIdleに設定
     }
-    private void Update()//ִ��״̬����״̬��������
+    private void Update()//状態更新と状態遷移の実行
     {
         FaceToCamera();
         currentState.OnUpDate();

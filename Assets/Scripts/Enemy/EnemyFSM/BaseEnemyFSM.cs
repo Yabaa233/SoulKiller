@@ -2,11 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 基本敵のFSM
+/// </summary>
 public class BaseEnemyFSM : MonoBehaviour
 {
     public IState currentState;
     public Dictionary<E_EnemyStateType, IState> states = new Dictionary<E_EnemyStateType, IState>();
     public AnimatorStateInfo animatorInfo;//缓存动画信息的位置，这样就不用重复创建了
+
+    /// <summary>
+    /// FSMの初期化
+    /// </summary>
     public void TranstionState(E_EnemyStateType state)//转换方法
     {
         if (currentState != null)
@@ -28,5 +35,19 @@ public class BaseEnemyFSM : MonoBehaviour
         IsVisableInCamera = false;
     }
     
+    /// <summary>
+    /// FSMの更新
+    /// </summary>
+    private void Update()
+    {
+        // 更新逻辑
+    }
 
+    /// <summary>
+    /// FSMの終了
+    /// </summary>
+    private void OnDestroy()
+    {
+        // 清理逻辑
+    }
 }

@@ -23,6 +23,9 @@ public class DashEnemyParameter
     public bool isDash;//是否施加过冲刺
     public bool isDizzy;//是否撞到了墙体
 }
+/// <summary>
+/// ダッシュ敵のFSM
+/// </summary>
 public class DashEnemyFSM : BaseEnemyFSM
 {
     public DashEnemyParameter parameter;
@@ -35,6 +38,9 @@ public class DashEnemyFSM : BaseEnemyFSM
 
     //辅助计算的属性
     private Vector3 lastDir;
+    /// <summary>
+    /// FSMの初期化
+    /// </summary>
     private void Start()
     {
         //得到相应的组件
@@ -53,6 +59,9 @@ public class DashEnemyFSM : BaseEnemyFSM
 
         TranstionState(E_EnemyStateType.Idle); //初始化状态为Idle，设置初始状态为待机状态
     }
+    /// <summary>
+    /// FSMの更新
+    /// </summary>
     private void Update() {//在这里执行当前的状态机Update
         currentState.OnUpDate();
         FaceToCamera();

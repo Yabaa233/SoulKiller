@@ -83,7 +83,7 @@ public class SwordBuff : I_BuffBase
     }
 
 /// <summary>
-/// 初始化应该调用的函数
+/// ソードバフ
 /// </summary>
     public void Init()
     {

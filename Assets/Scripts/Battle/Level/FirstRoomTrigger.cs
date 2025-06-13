@@ -13,6 +13,9 @@ public class FirstRoomTrigger : RoomTrigger
         enemyCount = enemys.childCount;
     }
 
+    /// <summary>
+    /// 最初の部屋のトリガー
+    /// </summary>
     override protected void OnTriggerEnter(Collider other)
     {
         if (!lorded && other.tag == "Player")
@@ -25,7 +28,7 @@ public class FirstRoomTrigger : RoomTrigger
     }
 
     /// <summary>
-    /// 玩家离开初始房间 清空玩家Buff
+    /// トリガーの初期化
     /// </summary>
     /// <param name="other"></param>
     protected void OnTriggerExit(Collider other)
@@ -57,6 +60,9 @@ public class FirstRoomTrigger : RoomTrigger
         }
     }
 
+    /// <summary>
+    /// トリガーの更新
+    /// </summary>
     override public void EnemyDie()
     {
         enemyCount--;
@@ -82,4 +88,8 @@ public class FirstRoomTrigger : RoomTrigger
             TimelineManager.Instance.PlayCurrentPlayableDirector();
         }
     }
+
+    /// <summary>
+    /// トリガーの終了
+    /// </summary>
 }

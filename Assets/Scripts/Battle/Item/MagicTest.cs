@@ -5,19 +5,22 @@ using UnityEngine;
 public class MagicTest : MonoBehaviour
 {
     /// <summary>
-    /// speed �ٶ�
-    /// shotter:������
-    /// target:Ŀ��
+    /// 魔法テスト
+    /// </summary>
+    /// <summary>
+    /// speed 速度
+    /// shotter:発射者
+    /// target:目標
     /// </summary>
     [Header("速度")]
     public float speed;
-    [Header("发射者")]
+    [Header("発射者")]
     public GameObject shotter;
     [Header("下落速度")]
     public float downVelocity = 0.2f;
     private Vector3 startPos, lastTargetPos, beforePos;
     private float beginTime;
-    //����
+    //発射
     private Rigidbody myRigidbody;
     private Transform target;
     /*    Vector3 GetMiddlePosition(Vector3 startPos,Vector3 lastTargetPos)
@@ -48,7 +51,7 @@ public class MagicTest : MonoBehaviour
     private void OnEnable()
     {
         Init();
-        //��ǰ�ƶ�
+        //前移動
         myRigidbody.velocity = transform.forward * speed;
         beginTime = Time.time;
 
