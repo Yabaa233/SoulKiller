@@ -23,7 +23,7 @@ public class ShieldRipples : MonoBehaviour
     public bool ableAoe = false;
     public bool ableBoom = false;
 
-    public bool isTrue = true;//有效
+    public bool isTrue = true;//有効
     public E_ChararcterType chararcterType;
 
     private float timer;
@@ -122,7 +122,7 @@ public class ShieldRipples : MonoBehaviour
     }
 
 /// <summary>
-/// 盾破碎造成伤害
+/// シールド破壊によるダメージ
 /// </summary>
     public void ShieldDamage()
     {
@@ -134,7 +134,7 @@ public class ShieldRipples : MonoBehaviour
     }
 
 /// <summary>
-/// 销毁当前盾牌
+/// 現在のシールドを破壊
 /// </summary>
     public void DestroyShield()
     {
@@ -142,7 +142,7 @@ public class ShieldRipples : MonoBehaviour
     }
 
 /// <summary>
-/// 设置激活
+/// アクティブ化の設定
 /// </summary>
     public void SetShieldVisble(bool state)
     {

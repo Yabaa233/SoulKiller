@@ -15224,7 +15224,7 @@ MonoBehaviour:
   Path: Assets/StreamingAssets/Desktop/UI.bank
   Name: UI
   StudioPath: bank:/UI
-  lastModified: 637967684230000000
+  lastModified: 638709098151379163
   FileSizes: []
   Exists: 1
 --- !u!114 &-4843255757651160939
@@ -17319,7 +17319,7 @@ MonoBehaviour:
   Path: Assets/StreamingAssets/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 637967684230000000
+  lastModified: 638709098144510573
   FileSizes:
   - Name: 
     Value: 4710
@@ -17717,7 +17717,7 @@ MonoBehaviour:
   Path: Assets/StreamingAssets/Desktop/Music.bank
   Name: Music
   StudioPath: bank:/Music
-  lastModified: 637967198800000000
+  lastModified: 638709098151304258
   FileSizes: []
   Exists: 1
 --- !u!114 &-4160471011527281413
@@ -32872,7 +32872,7 @@ MonoBehaviour:
   - {fileID: 6625363478398423374}
   StringsBanks:
   - {fileID: -4280509904968894253}
-  cacheTime: 637968063080000000
+  cacheTime: 638709098151379163
   cacheVersion: 131591
 --- !u!114 &1497936112224745
 MonoBehaviour:
@@ -37652,7 +37652,7 @@ MonoBehaviour:
   Path: Assets/StreamingAssets/Desktop/BOSS.bank
   Name: BOSS
   StudioPath: bank:/BOSS
-  lastModified: 637967113150000000
+  lastModified: 638709098144460721
   FileSizes: []
   Exists: 1
 --- !u!114 &1531410417461302718
@@ -50818,7 +50818,7 @@ MonoBehaviour:
   Path: Assets/StreamingAssets/Desktop/Level.bank
   Name: Level
   StudioPath: bank:/Level
-  lastModified: 637968063080000000
+  lastModified: 638709098144500599
   FileSizes: []
   Exists: 1
 --- !u!114 &5050425709432391380
@@ -51846,7 +51846,7 @@ MonoBehaviour:
   Path: Assets/StreamingAssets/Desktop/Monster.bank
   Name: Monster
   StudioPath: bank:/Monster
-  lastModified: 637964502050000000
+  lastModified: 638709098144555511
   FileSizes: []
   Exists: 1
 --- !u!114 &5361129900016771467
@@ -55263,7 +55263,7 @@ MonoBehaviour:
   Path: Assets/StreamingAssets/Desktop/Player.bank
   Name: Player
   StudioPath: bank:/Player
-  lastModified: 637967198800000000
+  lastModified: 638709098151359214
   FileSizes: []
   Exists: 1
 --- !u!114 &6306912765524808794
@@ -56597,7 +56597,7 @@ MonoBehaviour:
   Path: Assets/StreamingAssets/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 637965295090000000
+  lastModified: 638709098144510573
   FileSizes: []
   Exists: 1
 --- !u!114 &6661489302568814860

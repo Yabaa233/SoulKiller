@@ -16,14 +16,23 @@ public enum E_BuffKind //属于哪一种Buff
 public interface I_BuffBase
 {
     /// <summary>
+    /// バフの基本クラス
+    /// </summary>
+    /// <summary>
     /// 添加到实体的时候的逻辑
     /// </summary>
     public void OnAdd(GameObject _buffKeeper);
         
     /// <summary>
+    /// バフの初期化
+    /// </summary>
+    /// <summary>
     /// 跟随实体每一帧进行更新
     /// </summary>
     public void OnUpdate(float deltaTime);//需要时间变量
+    /// <summary>
+    /// バフの更新
+    /// </summary>
     /// <summary>
     /// 当从实体移除时
     /// </summary>
@@ -48,5 +57,7 @@ public interface I_BuffBase
     /// </summary>
     /// <returns></returns>
     public int GetLevel();
-
+    /// <summary>
+    /// バフの終了
+    /// </summary>
 }

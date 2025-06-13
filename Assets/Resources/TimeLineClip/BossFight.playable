@@ -14,13 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   template:
     characterName: 
-    dialogueLine: "WSAD\u63A7\u5236\u4EBA\u7269\u79FB\u52A8"
+    dialogueLine: "WSAD\u3067\u30AD\u30E3\u30E9\u30AF\u30BF\u30FC\u3092\u79FB\u52D5\u3055\u305B\u308B"
     dialogueSize: 0
+    characterNameSize: 0
     positionBias: {x: 0, y: 0}
     sprite: {fileID: 0}
     isCenterPanel: 0
     isDescribePanel: 0
     buffKind: 0
+    isSkipButton: 0
     dialogueTestCenter: 1
     characterNameCenter: 0
     requirePause: 0
@@ -43,13 +45,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   template:
     characterName: Q
-    dialogueLine: "\u6309\u4E0BQ\u8FDB\u884C\u91CD\u51FB"
+    dialogueLine: "Q\u30AD\u30FC\u3092\u62BC\u3057\u3066\u5F37\u6253\u3092\u884C\u3046"
     dialogueSize: 0
+    characterNameSize: 0
     positionBias: {x: 0, y: 0}
     sprite: {fileID: 0}
     isCenterPanel: 0
     isDescribePanel: 0
     buffKind: 0
+    isSkipButton: 0
     dialogueTestCenter: 1
     characterNameCenter: 0
     requirePause: 0
@@ -95,13 +99,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   template:
     characterName: 
-    dialogueLine: "\u6309\u4E0B\u9F20\u6807\u5DE6\u952E\u653B\u51FB"
+    dialogueLine: "\u30DE\u30A6\u30B9\u306E\u5DE6\u30DC\u30BF\u30F3\u3092\u62BC\u3057\u3066\u653B\u6483\u3059\u308B"
     dialogueSize: 0
+    characterNameSize: 0
     positionBias: {x: 0, y: 0}
     sprite: {fileID: 21300000, guid: da0a286f1a9b6294aa61d938b03a0624, type: 3}
     isCenterPanel: 0
     isDescribePanel: 0
     buffKind: 0
+    isSkipButton: 0
     dialogueTestCenter: 1
     characterNameCenter: 0
     requirePause: 0
@@ -124,13 +130,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   template:
     characterName: 
-    dialogueLine: "\u957F\u6309\u9F20\u6807\u53F3\u952E\u8FDB\u884C\u5C04\u51FB"
+    dialogueLine: "\u30DE\u30A6\u30B9\u306E\u53F3\u30DC\u30BF\u30F3\u3092\u9577\u62BC\u3057\u3057\u3066\u5C04\u6483\u3059\u308B"
     dialogueSize: 0
+    characterNameSize: 0
     positionBias: {x: 0, y: 0}
     sprite: {fileID: 21300000, guid: 44add3879a262ba48a7d9106336c1024, type: 3}
     isCenterPanel: 0
     isDescribePanel: 0
     buffKind: 0
+    isSkipButton: 0
     dialogueTestCenter: 1
     characterNameCenter: 0
     requirePause: 0
@@ -174,13 +182,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   template:
     characterName: 
-    dialogueLine: "\u6309\u4E0B\u7A7A\u683C\u952E\u8FDB\u884C\u51B2\u523A"
+    dialogueLine: "\u30B9\u30DA\u30FC\u30B9\u30AD\u30FC\u3092\u62BC\u3057\u3066\u30C0\u30C3\u30B7\u30E5\u3059\u308B"
     dialogueSize: 0
+    characterNameSize: 0
     positionBias: {x: 0, y: 0}
     sprite: {fileID: -1488239573105749586, guid: 4a264ea52f192a746ac5ecd999209718, type: 3}
     isCenterPanel: 0
     isDescribePanel: 0
     buffKind: 0
+    isSkipButton: 0
     dialogueTestCenter: 1
     characterNameCenter: 0
     requirePause: 0
@@ -203,13 +213,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   template:
     characterName: E
-    dialogueLine: "\u957F\u6309E\u8FDB\u884C\u6CD5\u672F\u84C4\u529B"
+    dialogueLine: "E\u30AD\u30FC\u3092\u9577\u62BC\u3057\u3057\u3066\u9B54\u6CD5\u3092\u30C1\u30E3\u30FC\u30B8\u3059\u308B"
     dialogueSize: 0
+    characterNameSize: 0
     positionBias: {x: 0, y: 0}
     sprite: {fileID: 0}
     isCenterPanel: 0
     isDescribePanel: 0
     buffKind: 0
+    isSkipButton: 0
     dialogueTestCenter: 1
     characterNameCenter: 0
     requirePause: 0
@@ -540,13 +552,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   template:
     characterName: 
-    dialogueLine: "\u64CD\u4F5C\u53EF\u4EE5\u5728\u64CD\u4F5C\u9762\u677F\u67E5\u770B"
+    dialogueLine: "\u64CD\u4F5C\u65B9\u6CD5\u306F\u64CD\u4F5C\u65B9\u6CD5\u30D1\u30CD\u30EB\u3067\u78BA\u8A8D\u3067\u304D\u308B"
     dialogueSize: 0
+    characterNameSize: 0
     positionBias: {x: 0, y: 0}
     sprite: {fileID: 0}
     isCenterPanel: 0
     isDescribePanel: 0
     buffKind: 0
+    isSkipButton: 0
     dialogueTestCenter: 1
     characterNameCenter: 0
     requirePause: 0

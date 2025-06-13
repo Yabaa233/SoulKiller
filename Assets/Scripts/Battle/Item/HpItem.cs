@@ -2,8 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// HPアイテム
+/// </summary>
 public class HpItem : MonoBehaviour
 {
+    /// <summary>
+    /// アイテムの初期化
+    /// </summary>
     private void OnTriggerEnter(Collider other) {
         if(other.tag == "Player")
         {
@@ -13,4 +19,14 @@ public class HpItem : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
+
+    /// <summary>
+    /// アイテムの更新
+    /// </summary>
+    // ... existing code ...
+
+    /// <summary>
+    /// アイテムの終了
+    /// </summary>
+    // ... existing code ...
 }

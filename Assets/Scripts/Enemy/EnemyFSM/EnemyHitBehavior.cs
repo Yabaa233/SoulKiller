@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+/// <summary>
+/// 敵のヒット動作
+/// </summary>
 public class EnemyHitBehavior : StateMachineBehaviour
 {
     public float startTime = 0.3f;//卡肉开始时间
@@ -12,6 +15,9 @@ public class EnemyHitBehavior : StateMachineBehaviour
     private CDClass HitTime = new CDClass();
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
+    /// <summary>
+    /// 動作の初期化
+    /// </summary>
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
        isHitStop = true;
@@ -23,6 +29,9 @@ public class EnemyHitBehavior : StateMachineBehaviour
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
+    /// <summary>
+    /// 動作の更新
+    /// </summary>
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
        if(stateInfo.normalizedTime > startTime && isHitStop)
@@ -37,6 +46,9 @@ public class EnemyHitBehavior : StateMachineBehaviour
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
+    /// <summary>
+    /// 動作の終了
+    /// </summary>
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
        animator.speed = storageSpeed;

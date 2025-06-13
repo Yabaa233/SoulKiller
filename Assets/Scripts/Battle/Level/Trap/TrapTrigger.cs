@@ -8,7 +8,7 @@ public class TrapTrigger : MonoBehaviour
     public Action openTarp;
     private void OnTriggerEnter(Collider other)
     {
-        // Debug.Log("进入");
+        // デバッグログ("進入");
         openTarp();
     }
 }

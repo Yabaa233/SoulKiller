@@ -83,7 +83,10 @@ public class GunBuff : I_BuffBase
     }
 
     /// <summary>
-    /// 初始化应该调用的函数
+    /// ガンバフ
+    /// </summary>
+    /// <summary>
+    /// バフの初期化
     /// </summary>
     public void Init()
     {

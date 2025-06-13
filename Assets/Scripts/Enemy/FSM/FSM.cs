@@ -29,11 +29,17 @@ public class Parameter
     public bool getHit; //受到攻击
     // public Animator Animator;   //获取动画器组件控制动画
 }
+/// <summary>
+/// 敵のFSM
+/// </summary>
 public class FSM : MonoBehaviour
 {
     public Parameter parameter;
     private IState currentState;
     private Dictionary<StateType, IState> states = new Dictionary<StateType, IState>();
+    /// <summary>
+    /// FSMの初期化
+    /// </summary>
     void Start()
     {
         states.Add(StateType.Idle, new IdleState(this));
@@ -49,6 +55,9 @@ public class FSM : MonoBehaviour
         //获取动画控制器到parameter
     }
 
+    /// <summary>
+    /// FSMの更新
+    /// </summary>
     // Update is called once per frame
     void Update()
     {
@@ -104,4 +113,7 @@ public class FSM : MonoBehaviour
     {
         Gizmos.DrawSphere(parameter.attackPoint.position, parameter.attackArea);
     }
+    /// <summary>
+    /// FSMの終了
+    /// </summary>
 }

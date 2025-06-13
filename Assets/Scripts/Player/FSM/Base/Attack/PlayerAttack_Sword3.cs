@@ -2,9 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// プレイヤー剣攻撃3
+/// </summary>
 public class PlayerAttack_Sword3 : StateMachineBehaviour
 {
-    private PlayerControl currentPlayer;    //当前角色
+    private PlayerControl currentPlayer;    //現在のキャラクター
     [Header("冲刺开始的时间点")]
     public float dodgeStartPer = 0.4f;
     [Header("冲刺速度")]

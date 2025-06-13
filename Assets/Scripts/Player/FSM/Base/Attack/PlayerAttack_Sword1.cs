@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// プレイヤー剣攻撃1
+/// </summary>
 public class PlayerAttack_Sword1 : StateMachineBehaviour
 {
     private PlayerControl currentPlayer;    //当前角色

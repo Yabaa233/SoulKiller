@@ -68,9 +68,9 @@ crashlytics-build.properties
 # Packed Addressables
 /[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*/*.bin*
 
-# Temporary auto-generated Android Assets
-/[Aa]ssets/[Ss]treamingAssets/aa.meta
-/[Aa]ssets/[Ss]treamingAssets/aa/*
+# # Temporary auto-generated Android Assets
+# /[Aa]ssets/[Ss]treamingAssets/aa.meta
+# /[Aa]ssets/[Ss]treamingAssets/aa/*
 
 
 # Unity 临时文件和目录
@@ -86,4 +86,4 @@ obj/
 # 缓存文件和大文件
 Assets/AmplifyShaderEditor/Examples/Sample Resources.unitypackage
 Assets/Plugins/FMOD/platforms/ios/lib/
-Assets/StreamingAssets/
+# Assets/StreamingAssets/

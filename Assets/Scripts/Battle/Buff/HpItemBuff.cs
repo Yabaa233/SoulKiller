@@ -6,6 +6,9 @@ using System;
 
 
 //Hp道具给予的Buff
+/// <summary>
+/// HPアイテムバフ
+/// </summary>
 [Serializable]
 public class HpItemBuff : I_BuffBase
 {
@@ -79,6 +82,9 @@ public class HpItemBuff : I_BuffBase
     }
 
     //更新CD
+    /// <summary>
+    /// バフの更新
+    /// </summary>
     public void CDUpdate()
     {
         List<CDClass> HpItemFuzhu = new List<CDClass>(HpItemBuffKeepCDList); //遍历辅助数组，移除原数组的元素
@@ -122,6 +128,9 @@ public class HpItemBuff : I_BuffBase
     }
 
 ////////////
+    /// <summary>
+    /// バフの初期化
+    /// </summary>
     public void PlayerHpItemBuff()//OnAdd
     {
         
@@ -135,6 +144,9 @@ public class HpItemBuff : I_BuffBase
         }
     }
 
+    /// <summary>
+    /// バフの更新
+    /// </summary>
     public void UpdatePlayerHpItemBuff()//Update
     {
         PlayerControl playerControl = buffKeeper.GetComponent<PlayerControl>();
@@ -148,6 +160,9 @@ public class HpItemBuff : I_BuffBase
         GameManager.Instance.PlayerHealthCheck();//检查玩家血量
     }
 
+    /// <summary>
+    /// バフの終了
+    /// </summary>
     //自动移除方法
     public void SelfRemove()
     {

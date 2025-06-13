@@ -1101,3 +1101,4 @@ public class BossBuffCD_Rage : BossCDConditional
 }
 #endregion
 
+/// <summary>

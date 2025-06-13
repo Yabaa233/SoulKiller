@@ -2,34 +2,37 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// プレイヤー回避状態
+/// </summary>
 public class PlayerState_Dodge : StateMachineBehaviour
 {
-    private PlayerControl currentPlayer; //当前角色
-    [Header("可以衔接攻击的百分比")] public float attackPercent = 0.5f;  //动画播放结束的百分比
-    [Header("可以移动的百分比")] public float movePercent = 0.95f;  //动画播放结束的百分比
-    [Tooltip("冲刺力度")] public float dodgePower = 80f;    //冲刺力度
+    private PlayerControl currentPlayer; //現在のキャラクター
+    [Header("攻撃に繋げられるパーセンテージ")] public float attackPercent = 0.5f;  //アニメーション終了のパーセンテージ
+    [Header("移動可能なパーセンテージ")] public float movePercent = 0.95f;  //アニメーション終了のパーセンテージ
+    [Tooltip("ダッシュ力")] public float dodgePower = 80f;    //ダッシュ力
     [Range(0.0f, 10f)]
-    [Tooltip("此值越大制动速度越快")] public float dodgeStopLerpValue = 0.0075f; //用于冲刺制动插值
+    [Tooltip("この値が大きいほど制動速度が速い")] public float dodgeStopLerpValue = 0.0075f; //ダッシュ制動補間用
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         if (currentPlayer == null)
         {
             currentPlayer = animator.gameObject.GetComponent<PlayerControl>();
         }
-        //开冲
+        //ダッシュ開始
         currentPlayer.PlayerBaseMove_Dodge(dodgePower);
-        currentPlayer.CloseTrigger();   //关闭攻击触发器
-        //闪避时禁止运动
+        currentPlayer.CloseTrigger();   //攻撃トリガーを閉じる
+        //ダッシュ中は移動禁止
         animator.SetBool("canMove", false);
-        //闪避时禁止攻击
+        //ダッシュ中は攻撃禁止
         animator.SetBool("canAttack", false);
-        //闪避时禁止再次闪避
+        //ダッシュ中は再度ダッシュ禁止
         animator.SetBool("canDodge", false);
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        currentPlayer.PlayerStopMove(dodgeStopLerpValue);   //闪避制动
+        currentPlayer.PlayerStopMove(dodgeStopLerpValue);   //ダッシュ制動
         currentPlayer.GetPlayerInput_MouseRotate();
         // if ( && Input.GetKeyDown(KeyCode.Space))
         // {
@@ -42,10 +45,10 @@ public class PlayerState_Dodge : StateMachineBehaviour
         // }
         if (stateInfo.normalizedTime > attackPercent)
         {
-            //恢复各状态
+            //各状態を回復
             animator.SetBool("canAttack", true);
         }
-        if (stateInfo.normalizedTime > movePercent) //留一点硬直时间
+        if (stateInfo.normalizedTime > movePercent) //少し硬直時間を残す
         {
             animator.SetBool("canDodge", true);
             animator.SetBool("canMove", true);

@@ -23,12 +23,12 @@ public class HatcheryEnemyControl : BaseEnemyControl
     }
 
     protected new void Start() {
-        // Debug.Log("已经运行");
+        // デバッグログ("既に実行中");
         base.Start();
     }
     void EnemyInit(string strTag)
     {
-        //组件获取
+        //コンポーネントの取得
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
         enemyFSM = transform.GetComponent<HatcheryEnemyFSM>();
@@ -37,17 +37,17 @@ public class HatcheryEnemyControl : BaseEnemyControl
         baseEnemyFSM = enemyFSM;
         agent = GetComponent<NavMeshAgent>();
         /*print("组件初始化");*/
-        //设置自身属性
-        enemyData.currentComboAttack = 1;//设置攻击倍率
+        //自身の属性を設定
+        enemyData.currentComboAttack = 1;//攻撃倍率を設定
         transform.tag = strTag;
         enemyData = new CharacterData(Instantiate(tempCharaterData));
         room = transform.parent.parent.parent.GetComponent<FirstRoomTrigger>();
-        //初始化一些相关状态
+        //関連状態の初期化
         characterBuffManager = new CharacterBuffManager();
         enemyData = new CharacterData(Instantiate(tempCharaterData));
         characterBuffManager.Init(E_ChararcterType.enemy);
         /*print("自身属性初始化");*/
-        //做数据同步
+        //データの同期
         enemyFSM.parameter.enemyData = enemyData;
         enemyFSM.parameter.enemyStateData = tempEnemyStateData;
         enemyFSM.parameter.animator = animator;
@@ -59,7 +59,7 @@ public class HatcheryEnemyControl : BaseEnemyControl
         base.Update();
         characterBuffManager.OnUpdate(Time.deltaTime);
     }
-    public override void Damaged(float damage,bool isCritical = false)//受击标记
+    public override void Damaged(float damage,bool isCritical = false)//被ダメージマーク
     {
         base.Damaged(damage,isCritical);
         enemyFSM.parameter.getHit = true;

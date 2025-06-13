@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 移动状态
+/// プレイヤー移動状態
 /// </summary>
 public class PlayerState_Move : StateMachineBehaviour
 {
-    private PlayerControl currentPlayer;    //当前角色
+    private PlayerControl currentPlayer;    //現在のキャラクター
     [Range(0.0f, 10.0f)]
-    [Tooltip("此值越大速度提升越快")] public float velocityLerpValue = 0.02f; //用于速度插值
+    [Tooltip("この値が大きいほど速度上昇が速い")] public float velocityLerpValue = 0.02f; //速度補間用
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         if (currentPlayer == null)
@@ -21,8 +21,8 @@ public class PlayerState_Move : StateMachineBehaviour
 
     public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        currentPlayer.PlayerBaseMove(velocityLerpValue); //移动
+        currentPlayer.PlayerBaseMove(velocityLerpValue); //移動
         currentPlayer.PlayerBaseRotate_Move();
-        currentPlayer.GetPlayerInput_MouseRotate();    //光圈旋转
+        currentPlayer.GetPlayerInput_MouseRotate();    //オーラ回転
     }
 }

@@ -24,6 +24,9 @@ public class SwordEnemyParameter
     public bool isDash;//是否施加过冲刺
     public bool isDizzy;//是否撞到了墙体
 }
+/// <summary>
+/// 剣の敵のFSM
+/// </summary>
 public class SwordEnemyFSM : BaseEnemyFSM
 {
     public SwordEnemyParameter parameter;
@@ -31,6 +34,9 @@ public class SwordEnemyFSM : BaseEnemyFSM
     public CDClass AttackCD = new CDClass();
     // private IState currentState;
     // private Dictionary<E_EnemyStateType, IState> states = new Dictionary<E_EnemyStateType, IState>();
+    /// <summary>
+    /// FSMの初期化
+    /// </summary>
     private void Start()
     {
         AttackCD.maxCDTime = 1.5f;
@@ -49,6 +55,9 @@ public class SwordEnemyFSM : BaseEnemyFSM
 
         TranstionState(E_EnemyStateType.Idle); //初始化状态为Idle，设置初始状态为待机状态
     }
+    /// <summary>
+    /// FSMの更新
+    /// </summary>
     private void Update() {//在这里执行当前的状态机Update
         FaceToCamera();
         currentState.OnUpDate();
@@ -109,4 +118,7 @@ public class SwordEnemyFSM : BaseEnemyFSM
     private void OnCollisionEnter(Collision other) {
         
     }
+    /// <summary>
+    /// FSMの終了
+    /// </summary>
 }

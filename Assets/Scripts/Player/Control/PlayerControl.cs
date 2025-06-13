@@ -11,6 +11,9 @@ public enum E_WeaponType
 }
 
 [RequireComponent(typeof(Rigidbody))]
+/// <summary>
+/// プレイヤー制御
+/// </summary>
 public class PlayerControl : MonoBehaviour
 {
     [Header("战斗相关")]

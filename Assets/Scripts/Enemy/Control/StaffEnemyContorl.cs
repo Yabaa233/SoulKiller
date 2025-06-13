@@ -6,11 +6,11 @@ using UnityEngine.AI;
 
 public class StaffEnemyContorl : BaseEnemyControl
 {
-    [Header("敌人状态机相关")]
+    [Header("敵の状態機関連")]
     public long_DistanceFSM enemyFSM;
     public Transform firePoint;
 
-    [Header("敌人攻击状态SO模板")]
+    [Header("敵の攻撃状態SOテンプレート")]
     public StaffEmyStateData_SO tempEnemyStateData; 
     public StaffEmyStateData_SO TempEnemyStateData 
     {
@@ -30,7 +30,7 @@ public class StaffEnemyContorl : BaseEnemyControl
 
     private void EnemyInit(string tagStr)
     {
-        //组件获取
+        //コンポーネントの取得
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
         enemyFSM = transform.GetComponent<long_DistanceFSM>();
@@ -42,23 +42,23 @@ public class StaffEnemyContorl : BaseEnemyControl
         orientationObject = transform.Find("OrientationObject");
         firePoint = transform.Find("firepoint");
 
-        //设置自身属性
+        //自身の属性の設定
         transform.tag = tagStr;
 
-        //初始化一些相关状态
+        //初期化いくつかの関連状態
         characterBuffManager = new CharacterBuffManager();
         enemyData = new CharacterData(Instantiate(tempCharaterData));
         characterBuffManager.Init(E_ChararcterType.enemy);
         baseEnemyFSM  = enemyFSM;
-        enemyData.currentComboAttack = 1;//设置攻击倍率
+        enemyData.currentComboAttack = 1;//攻撃倍率の設定
         moveSpeed = tempEnemyStateData.moveSpeed;
-        agent.speed = tempEnemyStateData.moveSpeed;//设置移动速度
+        agent.speed = tempEnemyStateData.moveSpeed;//移動速度の設定
 
         baseEnemyFSM  = enemyFSM;
 
 
 
-        //做数据同步
+        //データの同期
         enemyFSM.parameter.enemyData = enemyData;
         enemyFSM.parameter.enemyStateData = tempEnemyStateData;
         enemyFSM.parameter.enemyType = E_EnemyType.STAFF;
@@ -73,7 +73,7 @@ public class StaffEnemyContorl : BaseEnemyControl
     }
     protected new void Update() {
         base.Update();
-        //各个管理类的Update方法
+        //各管理クラスのUpdateメソッド
         characterBuffManager.OnUpdate(Time.deltaTime);
         // characterBuffManager.AddBuff(new HpUp(gameObject,characterBuffManager.type));//加血方法
         if(enemyFSM.parameter.ableAttact)
@@ -97,7 +97,7 @@ public class StaffEnemyContorl : BaseEnemyControl
         enemyFSM.parameter.isDead = true;
     }
 /// <summary>
-/// 设置追踪目标
+/// 追跡目標の設定
 /// </summary>
 /// <param name="transform"></param>
     public override void SetTarget(Transform transform)

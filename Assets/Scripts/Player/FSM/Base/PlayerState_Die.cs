@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// プレイヤー死亡状態
 public class PlayerState_Die : StateMachineBehaviour
 {
-    private PlayerControl currentPlayer; //当前角色
+    private PlayerControl currentPlayer; //現在のキャラクター
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         if (currentPlayer == null)

@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+/// <summary>
+/// ダッシュ爆発敵の制御
+/// </summary>
 public class DashBoomEnemControl : BaseEnemyControl
 {
     

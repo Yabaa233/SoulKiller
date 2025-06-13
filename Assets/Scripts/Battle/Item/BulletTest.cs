@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 弾のテスト
+/// </summary>
 public class BulletTest : MonoBehaviour
 {
     //移动速度
@@ -20,6 +23,10 @@ public class BulletTest : MonoBehaviour
         myRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
         myRigidbody.useGravity = false;
     }
+
+    /// <summary>
+    /// テストの初期化
+    /// </summary>
     public void Init()
     {
         
@@ -67,6 +74,9 @@ public class BulletTest : MonoBehaviour
         myRigidbody.useGravity = false;
     }
 
+    /// <summary>
+    /// テストの更新
+    /// </summary>
     private void Update() {
         transform.Translate(transform.forward * speed * Time.deltaTime, Space.World);
     }
@@ -137,8 +147,9 @@ public class BulletTest : MonoBehaviour
         StartCoroutine(DestroyParticle(0f));
     }
 
-
-
+    /// <summary>
+    /// テストの終了
+    /// </summary>
     public IEnumerator DestroyParticle (float waitTime) {
 
 		if (transform.childCount > 0 && waitTime != 0) {

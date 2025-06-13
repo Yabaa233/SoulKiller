@@ -84,7 +84,10 @@ public class ShieldBuff : I_BuffBase
     }
 
 /// <summary>
-/// 初始化应该调用的函数
+/// シールドバフ
+/// </summary>
+/// <summary>
+/// バフの初期化
 /// </summary>
     public void Init()
     {

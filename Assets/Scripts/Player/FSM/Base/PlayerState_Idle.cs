@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerState_Idle : StateMachineBehaviour
 {
-    public PlayerControl currentPlayer;    //当前角色
+    public PlayerControl currentPlayer;    //現在のキャラクター
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         if (currentPlayer == null)
@@ -20,7 +20,7 @@ public class PlayerState_Idle : StateMachineBehaviour
 
     public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        // Debug.Log("OnUpDate Idle");
-        currentPlayer.GetPlayerInput_MouseRotate();    //光圈旋转
+        // デバッグログ("OnUpDate Idle");
+        currentPlayer.GetPlayerInput_MouseRotate();    //オーラ回転
     }
 }

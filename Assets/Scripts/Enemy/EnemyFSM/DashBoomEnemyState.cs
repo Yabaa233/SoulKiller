@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// ダッシュ爆発敵の状態
+/// </summary>
 public class DashBoomEnemyState : IState
 {
     public void OnEnter()
@@ -25,6 +28,9 @@ public class DashBoomEnemyState : IState
     }
 }
 
+/// <summary>
+/// 状態の初期化
+/// </summary>
 public class DBoomEnemy_IdleState : IState
 {
     private DashBoomEnemyFSM manager;
@@ -73,6 +79,9 @@ public class DBoomEnemy_IdleState : IState
     }
 }
 
+/// <summary>
+/// 状態の更新
+/// </summary>
 public class DBoomEnemy_FindState : IState
 {
     private DashBoomEnemyFSM manager;
@@ -126,6 +135,9 @@ public class DBoomEnemy_FindState : IState
 }
 
 
+/// <summary>
+/// 状態の終了
+/// </summary>
 public class DBoomEnemy_ChaseState : IState
 {
     private DashBoomEnemyFSM manager;
@@ -219,6 +231,9 @@ public class DBoomEnemy_ChaseState : IState
 }
 
 //眩晕状态要做的只是单纯停留一段时间
+/// <summary>
+/// 眩晕状態
+/// </summary>
 public class DBoomEnemy_DizzyState : IState
 {
     private DashBoomEnemyFSM manager;
@@ -263,6 +278,9 @@ public class DBoomEnemy_DizzyState : IState
 }
 
 
+/// <summary>
+/// 受擊狀態
+/// </summary>
 public class  DBoomEnemy_GetHitState: IState
 {
     private DashBoomEnemyFSM manager;
@@ -318,6 +336,9 @@ public class  DBoomEnemy_GetHitState: IState
 }
 
 
+/// <summary>
+/// 爆炸狀態
+/// </summary>
 public class DBoomEnemy_BoomState : IState
 {
     private DashBoomEnemyFSM manager;
@@ -366,6 +387,9 @@ public class DBoomEnemy_BoomState : IState
 }
 
 
+/// <summary>
+/// 死亡狀態
+/// </summary>
 public class DBoomEnemy_DeadState :IState
 {
     private DashBoomEnemyFSM manager;

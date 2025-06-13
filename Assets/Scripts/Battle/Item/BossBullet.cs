@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// ボスの弾
+/// </summary>
 public class BossBullet : MonoBehaviour
 {
     [Tooltip("子弹速度")] public float speed = 50.0f;
@@ -24,6 +27,9 @@ public class BossBullet : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 弾の初期化
+    /// </summary>
     private void Update()
     {
         curTime += Time.deltaTime;
@@ -40,8 +46,17 @@ public class BossBullet : MonoBehaviour
         dir = _dir;
     }
 
+    ///// <summary>
+    ///// 回收自己
+    ///// </summary>
+    //public void RecycleThis()
+    //{
+    //    curTime = 0;
+    //    ObjectPool.Instance.RecycleObj("BossBullet", gameObject);
+    //}
+
     /// <summary>
-    /// 回收自己
+    /// 弾の終了
     /// </summary>
     public void RecycleThis()
     {
