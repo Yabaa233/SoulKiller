@@ -2,21 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// 敵の被撃状態
-/// </summary>
+///<summary>
+
+
+////// 敵の被弾状況
+
+
+///</summary>
 public class EnemyState_GetHit : StateMachineBehaviour
 {
-    [Header("卡肉暂停开始时间")]
+    [Header("カード肉の一時停止開始時間")]
     public float pauseTime = 0.2f;
     private BaseEnemyControl baseEnemyControl;
     private float stopTime;
     private float curTime;
     private bool paused;
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
-    /// <summary>
-    /// 状態の初期化
-    /// </summary>
+    ///<summary>
+
+    ////// 状態の初期化
+
+    ///</summary>
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         if (baseEnemyControl == null)
@@ -27,9 +33,11 @@ public class EnemyState_GetHit : StateMachineBehaviour
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
-    /// <summary>
-    /// 状態の更新
-    /// </summary>
+    ///<summary>
+
+    ////// 状態の更新
+
+    ///</summary>
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         if (!paused && stateInfo.normalizedTime > pauseTime)
@@ -49,7 +57,7 @@ public class EnemyState_GetHit : StateMachineBehaviour
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     /// <summary>
-    /// 状態の終了
+    /// ステータスの終了
     /// </summary>
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {

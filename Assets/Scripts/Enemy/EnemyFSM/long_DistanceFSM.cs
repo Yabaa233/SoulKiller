@@ -10,31 +10,35 @@ public enum E_EnemyType
     STAFF,
 }
 
-//長距離敵の所有参数
+//長距離敵の所有パラメータ
 [System.Serializable]
 public class longEnemyParameter
 {
     public E_EnemyType enemyType;
     public CharacterData enemyData;
-    public Animator animator;//动画控制器
-    public GameObject _mainCamera;//相机位置
-    public Transform body;//身体部分
+    public Animator animator;//アニメーションコントローラー
+    public GameObject _mainCamera;//カメラの位置
+    public Transform body;//身体の部分
     public Transform orientationObject;
-    public Transform outPos;//闪烁点
+    public Transform outPos;//点滅点
     public longEmyStateData_SO enemyStateData;
     public Transform target;
     public float moveSpeed;
     public bool ableAttact;
     public bool getHit;
-    public NavMeshAgent agent;//导航组件
-    public Transform enemyPos;//自己的位置
-    public Transform firePoint;//开火点
-    public bool isDead;//是否已经死亡
+    public NavMeshAgent agent;//ナビゲーションコンポーネント
+    public Transform enemyPos;//自分の位置
+    public Transform firePoint;//発火点
+    public bool isDead;//すでに死亡していますか？
 }
 
-/// <summary>
-/// 長距離敵のFSM
-/// </summary>
+///<summary>
+
+
+////// 長距離敵のFSM
+
+
+///</summary>
 public class long_DistanceFSM : BaseEnemyFSM
 {
     public longEnemyParameter parameter;
@@ -43,8 +47,8 @@ public class long_DistanceFSM : BaseEnemyFSM
     public CDClass jumpCD = new CDClass();
     // private IState currentState;
     // private Dictionary<E_EnemyStateType, IState> states = new Dictionary<E_EnemyStateType, IState>();
-    private void Start() {//在这里注册所有的状态机
-        //一些数据初始化
+    private void Start() {//ここで全ての状態機械を登録してください。
+        //いくつかのデータの初期化
         BoomCD.maxCDTime = 4f;
         BoomCD.flag = true;
         GameManager.Instance.CDList.Add(BoomCD);
@@ -53,7 +57,7 @@ public class long_DistanceFSM : BaseEnemyFSM
         jumpCD.flag = true;
         GameManager.Instance.CDList.Add(jumpCD);
 
-        //初始化状态机
+        //ステートマシンの初期化
         states.Add(E_EnemyStateType.Idle,new longEnemy_IdleState(this));
         states.Add(E_EnemyStateType.Chase,new longEnemy_ChaseState(this));
         states.Add(E_EnemyStateType.Shot,new longEnemy_ShootState(this));
@@ -63,30 +67,34 @@ public class long_DistanceFSM : BaseEnemyFSM
         states.Add(E_EnemyStateType.Hit,new longEnemy_GetHitState(this));
         states.Add(E_EnemyStateType.Dead,new longEnemy_DeadState(this));
 
-        TranstionState(E_EnemyStateType.Idle); //初始化状态为Idle，设置初始状态为待机状态
+        TranstionState(E_EnemyStateType.Idle); //初期状態はIdleに設定し、初期状態を待機状態に設定します。
     }
 
-    //其它属性
-    private void Update() {//在这里执行当前的状态机Update
+    //その他の属性
+    private void Update() {//ここで現在のステートマシンの更新を実行します。
         FaceToTarget();
         RotateToTarget();
         FaceToCamera();
         currentState.OnUpDate();
     }
 
-    // public void TranstionState(E_EnemyStateType state)//转换方法
+    // public void TranstionState(E_EnemyStateType state) //変換メソッド
     // {
     //     if (currentState != null)
     //     {
-    //         currentState.OnExit();  //切换状态先退出当前状态
+    //         currentState.OnExit();  //現在の状態を終了してから状態を切り替えます
     //     }
     //     currentState = states[state];
     //     currentState.OnEnter();
     // }
 
-    /// <summary>
-    /// 让敌人朝向玩家的左右
-    /// </summary>
+    ///<summary>
+
+
+    ////// 敵をプレイヤーの左右に向けてください。
+
+
+    ///</summary>
     public void RotateToTarget()
     {
         Vector3 lastScale = transform.localScale;
@@ -104,9 +112,13 @@ public class long_DistanceFSM : BaseEnemyFSM
         parameter.body.transform.rotation = rotation;
     }
 
-    /// <summary>
-    /// 让父物体指向玩家方向
-    /// </summary>
+    ///<summary>
+
+
+    ////// 親オブジェクトをプレイヤーの方向に向けます
+
+
+    ///</summary>
     /// <param name="other"></param>
     public void FaceToTarget()
     {
@@ -116,9 +128,13 @@ public class long_DistanceFSM : BaseEnemyFSM
         transform.rotation = Quaternion.LookRotation(lookVector);
     }
 
-    /// <summary>
-    /// 开枪方法
-    /// </summary>
+    ///<summary>
+
+
+    ////// 発砲方法
+
+
+    ///</summary>
     public void Shot(E_EnemyType enemyType)
     {
         switch(enemyType)
@@ -129,9 +145,9 @@ public class long_DistanceFSM : BaseEnemyFSM
         }
     }
 
-    ///私有属性
+    ///プライベート属性
     private void OnTriggerEnter(Collider other) {
-        // Debug.Log("产生了触发");
+        // Debug.Log("トリガーが発動されました");
         if(other.tag == "Player")
         {
             parameter.ableAttact = true;
@@ -143,16 +159,22 @@ public class long_DistanceFSM : BaseEnemyFSM
     }
 
 
-    // private void OnDrawGizmos() //在这里绘制距离相关的支持
+    // private void OnDrawGizmos() //ここで距離関連のサポートを描画します
     // {
     //     Gizmos.color = Color.red;
     //     Gizmos.DrawSphere(transform.position,10f);
     // }
 
 
-/// <summary>
-/// 发射子弹
-/// </summary>
+///<summary>
+
+
+
+////// 弾を発射する
+
+
+
+///</summary>
     private void BulletShot()
     {
         for(int i = 0;i<3;i++)
@@ -180,13 +202,17 @@ public class long_DistanceFSM : BaseEnemyFSM
         bullet.SetActive(true);
         bullet.transform.position = firePoint.position;
         bullet.transform.rotation = parameter.enemyPos.transform.rotation;
-        bullet.transform.forward = firePoint.forward;//将前方向矫正
+        bullet.transform.forward = firePoint.forward;//前方向を修正します
         bullet.GetComponent<BulletTest>().SetShotter(parameter.enemyPos.gameObject);
     }
 
-/// <summary>
-/// 发射炮弹
-/// </summary>
+///<summary>
+
+
+////// 砲弾を発射する
+
+
+///</summary>
     private void BoomShot()
     {
         Transform firePoint = parameter.firePoint;
@@ -200,9 +226,11 @@ public class long_DistanceFSM : BaseEnemyFSM
         boom.SetActive(true);
         // Destroy(boom,10);
     }
-/// <summary>
-/// 发射法球
-/// </summary>
+///<summary>
+
+////// 発射法球
+
+///</summary>
     private void  MagicballShot()
     {
         Transform firePoint = parameter.firePoint;

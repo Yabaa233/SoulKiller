@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 public enum E_HatcheryStateType
 {
-    Idle,//待機
+    Idle,//スタンバイ
     Production,//生産
-    Hit,//被ダメージ
+    Hit,//ダメージを受ける
     Dead,//死亡
 }
 public class HatcheryEnemeyCD
@@ -25,9 +25,9 @@ public class HatcheryEnemyParameter
     public HatcheryEmyStateData_SO enemyStateData;
     public Animator animator;//アニメーター
     public GameObject _mainCamera;//カメラ
-    public CharacterData enemyData;//敵データ
-    public Transform body;//本体位置
-    public float intervalTime;//インターバル時間
+    public CharacterData enemyData;//敵のデータ
+    public Transform body;//本体の位置
+    public float intervalTime;//間隔時間
     public bool getHit;
     public bool isDead;
     public Transform sonBorn;//子の生成位置
@@ -49,9 +49,9 @@ public class HatcheryEnemyFSM : BaseEnemyFSM
         states.Add(E_EnemyStateType.Attack, new HatcheryEnemy_ProductionState(this));
         states.Add(E_EnemyStateType.Hit, new HatcheryEnemy_HitState(this));
         states.Add(E_EnemyStateType.Dead, new HatcheryEnemy_DeadState(this));
-        TranstionState(E_EnemyStateType.Idle);//初期状態をIdleに設定
+        TranstionState(E_EnemyStateType.Idle);//初期状態をIdleに設定します
     }
-    private void Update()//状態更新と状態遷移の実行
+    private void Update()//状態の更新と状態遷移の実行
     {
         FaceToCamera();
         currentState.OnUpDate();

@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class BossAttack_Sword1 : StateMachineBehaviour
 {
-    [Header("抬手动作占比")]
+    [Header("手を挙げる動作の割合")]
     public float speedUpPer = 0.5f;
-    [Header("实际攻击期望播放速度")]
+    [Header("実際の攻撃が期待する再生速度")]
     public float animSpeed = 1.5f;
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

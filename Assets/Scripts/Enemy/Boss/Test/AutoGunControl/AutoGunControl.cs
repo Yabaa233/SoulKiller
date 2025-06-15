@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AutoGunControl : MonoBehaviour
 {
-    private Transform[] gunBody = new Transform[4]; //浮游炮体，控制炮体旋转
+    private Transform[] gunBody = new Transform[4]; //浮遊砲身、砲身の回転を制御します
     private Transform gunBodyTF;
     private Transform[] normalModePos = new Transform[4];
     private Transform[] swordSkillModePos = new Transform[4];
@@ -15,40 +15,40 @@ public class AutoGunControl : MonoBehaviour
     private Transform[] staffModePos = new Transform[4];
     private Transform[] changeStageModePos = new Transform[4];
     private E_BossAttackMode bossAttackMode;
-    private bool lockShotDir;   //是否锁定方向
-    private int modeChangeOver = 0; //模式切换进度，为0切换完毕
+    private bool lockShotDir;   //方向をロックしますか？
+    private int modeChangeOver = 0; //モード切替進行状況、0で切替完了
     public int ModeChangeOver { get { return modeChangeOver; } }
-    [SerializeReference] public BossControl bossControl;    //Boss脚本引用，用于设置一些动画状态机中状态
-    [Header("剑模式转向速度")] public float swordRSpeed = 0.2f;
-    [Header("枪模式转向速度")] public float gunRSpeed = 0.05f;
+    [SerializeReference] public BossControl bossControl;    //ボススクリプト参照、アニメーションステートマシンの状態設定に使用されます。
+    [Header("剣モードの旋回速度")] public float swordRSpeed = 0.2f;
+    [Header("ガンモードの旋回速度")] public float gunRSpeed = 0.05f;
 
-    [Header("枪攻击模式1瞄准时间")] public float gunMode1AimingTime = 1.5f;
-    [Header("枪攻击模式1范围提示时间")] public float gunMode1HintTime = 1.0f;
-    [Header("枪攻击模式1射击次数")] public int gun1ShotCount = 10;
-    [Header("枪攻击模式1射击间隔")] public float gun1ShotInterval = 0.2f;
+    [Header("ガンアタックモード1の照準時間")] public float gunMode1AimingTime = 1.5f;
+    [Header("ガンアタックモード1の範囲提示時間")] public float gunMode1HintTime = 1.0f;
+    [Header("銃攻撃モード1の射撃回数")] public int gun1ShotCount = 10;
+    [Header("ガンアタックモード1射撃間隔")] public float gun1ShotInterval = 0.2f;
 
-    [Header("枪攻击模式2瞄准时间")] public float gunMode2AimingTime = 2.0f;
-    [Header("枪攻击模式2范围提示时间")] public float gunMode2HintTime = 1.0f;
-    [Header("枪攻击模式2射击次数")] public int gun2ShotCount = 20;
-    [Header("枪攻击模式2转速")] public float gun2ShotRotateSpeed = 5.0f;
-    [Header("枪攻击模式2射击间隔")] public float gun2ShotInterval = 0.2f;
+    [Header("ガンアタックモード2の照準時間")] public float gunMode2AimingTime = 2.0f;
+    [Header("ガンアタックモード2の範囲提示時間")] public float gunMode2HintTime = 1.0f;
+    [Header("銃攻撃モード2の射撃回数")] public int gun2ShotCount = 20;
+    [Header("ガンアタックモード2回転速度")] public float gun2ShotRotateSpeed = 5.0f;
+    [Header("ガンアタックモード2射撃間隔")] public float gun2ShotInterval = 0.2f;
 
-    [Header("杖攻击模式瞄准时间")] public float staffModeAimingTime = 4.0f;
-    [Header("杖攻击模式射击次数")] public int staffShotCount = 1;
-    [Header("杖攻击模式射击间隔")] public float staffModeShotInterval = 0.75f;
-    [Header("杖攻击模式随机范围")] public float staffModeShotRange = 5.0f;
+    [Header("スティック攻撃モードの照準時間")] public float staffModeAimingTime = 4.0f;
+    [Header("スティック攻撃モードの射撃回数")] public int staffShotCount = 1;
+    [Header("スティック攻撃モードの射撃間隔")] public float staffModeShotInterval = 0.75f;
+    [Header("スタッフ攻撃モードはランダム範囲です")] public float staffModeShotRange = 5.0f;
 
-    [Header("杖模式转向速度")] public float staffRSpeed = 0.1f;
-    [Header("模式切换移动速度")] public float modeTranstionSpeed = 5f;
-    [Header("模式切换旋转速度")] public float modeTranstionRSpeed = 0.2f;
+    [Header("スティックモードの旋回速度")] public float staffRSpeed = 0.1f;
+    [Header("パターン切替移動速度")] public float modeTranstionSpeed = 5f;
+    [Header("パターン切替回転速度")] public float modeTranstionRSpeed = 0.2f;
 
     /// <summary>
-    /// 初始化浮游炮
+    /// フロート砲の初期化
     /// </summary>
     public void AutoGunInit()
     {
         gunBodyTF = transform.Find("Rotate").Find("GunBodys");
-        //获取攻击范围 先隐藏
+        //攻撃範囲を取得し、まず隠す
         gun01ModeGO = transform.Find("Rotate").Find("Gun01ModePos").gameObject;
         gun01ModeGO.SetActive(false);
         gun02ModeGO = transform.Find("Rotate").Find("Gun02ModePos").gameObject;
@@ -66,10 +66,10 @@ public class AutoGunControl : MonoBehaviour
     }
     #region 基础控制
     /// <summary>
-    /// 根据模式按照不同速率调整浮游炮朝向
+    /// パターンに従って、浮遊砲の向きを異なる速度で調整します。
     /// </summary>
-    /// <param name="targetPoint"> 目标点 </param>
-    /// <param name="_BossAttackMode"> 攻击类型 </param>
+    /// <param name="targetPoint"> ターゲットポイント </param>
+    /// <param name="_BossAttackMode"> 攻撃タイプ </param>
     public void ModeLookAt(Vector3 targetPoint, E_BossAttackMode _BossAttackMode)
     {
         if (lockShotDir) return;
@@ -95,24 +95,32 @@ public class AutoGunControl : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 转向
-    /// </summary>
-    /// <param name="targetPoint">目标点</param>
-    /// <param name="rSpeed"> 旋转速度 </param>
-    /// <param name="bodyRotate"> 是否需要子浮游炮朝向目标点 </param>
+    ///<summary>
+
+
+    ////// 方向変更
+
+
+    ///</summary>
+    /// <param name="targetPoint">目標点</param>
+    /// <param name="rSpeed"> 回転速度 </param>
+    /// <param name="bodyRotate"> ターゲットポイントに向かって子浮遊砲が必要かどうか </param>
     private void LookAt(Vector3 targetPoint, float rSpeed)
     {
-        if (modeChangeOver != 0) return; //说明模式没有切换完成
+        if (modeChangeOver != 0) return; //モードの切り替えが完了していません
         targetPoint.y = transform.position.y;
         Quaternion targetRotation = Quaternion.LookRotation(targetPoint - transform.position, Vector3.up);
         transform.localRotation = Quaternion.Lerp(transform.localRotation, targetRotation, rSpeed);
     }
 
-    /// <summary>
-    /// 切换武器模式
-    /// </summary>
-    /// <param name="_weaponType"> 目标武器模式 </param>
+    ///<summary>
+
+
+    ////// 武器モードを切り替える
+
+
+    ///</summary>
+    /// <param name="_weaponType"> 目標の武器モード </param>
     public void ChangeMode(E_BossAttackMode _bossAttackMode)
     {
         bossAttackMode = _bossAttackMode;
@@ -160,15 +168,19 @@ public class AutoGunControl : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 浮游炮进入转阶段模式
-    /// </summary>
+    ///<summary>
+
+
+    ////// 浮遊砲は転換フェーズモードに入ります
+
+
+    ///</summary>
     public void ChangeMode_ChangeStage()
     {
         StopAllCoroutines();
         gun01ModeGO.SetActive(false);
         gun02ModeGO.SetActive(false);
-        lockShotDir = false;    //允许朝向玩家（有种躲避的感觉）
+        lockShotDir = false;    //プレイヤーに向かって許可する（避ける感じがある）
         modeChangeOver = 0;
         for (int i = 0; i < gunBody.Length; i++)
         {
@@ -177,34 +189,38 @@ public class AutoGunControl : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 浮游炮进入死亡状态
-    /// </summary>
+    ///<summary>
+
+
+    ////// フローティング砲が死亡状態に入ります。
+
+
+    ///</summary>
     public void ChangeMode_Dead()
     {
-        Debug.Log("浮游炮进入死亡状态");
+        Debug.Log("浮遊砲が死亡状態に入ります");
     }
     #endregion
 
     #region 攻击相关
     /// <summary>
-    /// 枪模式攻击
+    /// ガンモード攻撃
     /// </summary>
-    /// <param name="type"> 攻击模式1或2 </param>
+    /// <param name="type"> 攻撃モード1または2 </param>
     public void GunAttack(int type)
     {
-        if (type == 1)  //攻击模式1
+        if (type == 1)  //攻撃モード1
         {
             StartCoroutine(IE_GunAttack01());
         }
-        else        //攻击模式2
+        else        //攻撃モード2
         {
             StartCoroutine(IE_GunAttack02());
         }
     }
 
     /// <summary>
-    /// 杖模式攻击
+    /// スティックモード攻撃
     /// </summary>
     public void StaffAttack()
     {
@@ -212,22 +228,22 @@ public class AutoGunControl : MonoBehaviour
     }
 
     /// <summary>
-    /// 枪攻击模式01协程
+    /// ガンアタックモード01コルーチン
     /// </summary>
     IEnumerator IE_GunAttack01()
     {
         float time = 0;
-        //显示蓄力 追踪玩家
+        //プレイヤーを追跡する力を蓄えるを表示します
         while (time < gunMode1AimingTime)
         {
             time += Time.deltaTime;
             yield return null;
         }
         time = 0;
-        bossControl.BossAttack_Gun_End(); //关闭射击吟唱特效
-        //锁定方向
+        bossControl.BossAttack_Gun_End(); //ショットチャント特殊効果をオフにする
+        //方向を固定する
         // lockShotDir = true;
-        //显示提示范围
+        //表示範囲のヒント
         gun01ModeGO.SetActive(true);
         while (time < gunMode1HintTime)
         {
@@ -235,7 +251,7 @@ public class AutoGunControl : MonoBehaviour
             yield return null;
         }
         time = 0;
-        //关闭提示范围 && 发射
+        //ヒント範囲を閉じる && 発射
         gun01ModeGO.SetActive(false);
         for (int i = 0; i < gun1ShotCount; i++)
         {
@@ -244,20 +260,20 @@ public class AutoGunControl : MonoBehaviour
                 EffectManager.Instance.Boss_SetBullet(gunBody[j], bossControl);
                 FMODUnity.RuntimeManager.PlayOneShot("event:/BOSS/gunFire");
             }
-            while (time < gun1ShotInterval)  //等待发射完成
+            while (time < gun1ShotInterval)  //発射完了を待つ
             {
                 time += Time.deltaTime;
                 yield return null;
             }
             time = 0;
         }
-        while (time < 1.0f)  //等待发射完成
+        while (time < 1.0f)  //発射完了を待つ
         {
             time += Time.deltaTime;
             yield return null;
         }
         time = 0;
-        //发射完毕
+        //発射完了
         // lockShotDir = false;
         bossControl.SetAnimatorBool("attacking", false);
         bossControl.SetAnimatorBool("move", true);
@@ -266,22 +282,22 @@ public class AutoGunControl : MonoBehaviour
     }
 
     /// <summary>
-    /// 枪攻击模式02协程
+    /// ガンアタックモード02コルーチン
     /// </summary>
     IEnumerator IE_GunAttack02()
     {
         float time = 0;
-        //锁定方向
+        //方向を固定する
         lockShotDir = true;
-        //显示蓄力
+        //チャージ表示
         while (time < gunMode2AimingTime)
         {
             time += Time.deltaTime;
             yield return null;
         }
         time = 0;
-        bossControl.BossAttack_Gun_End(); //关闭射击吟唱特效
-        //显示提示范围
+        bossControl.BossAttack_Gun_End(); //ショットチャント特殊効果をオフにする
+        //表示範囲のヒント
         gun02ModeGO.SetActive(true);
         while (time < gunMode2HintTime)
         {
@@ -289,7 +305,7 @@ public class AutoGunControl : MonoBehaviour
             yield return null;
         }
         time = 0;
-        //关闭提示范围 && 发射
+        //ヒント範囲を閉じる && 発射
         gun02ModeGO.SetActive(false);
         for (int i = 0; i < gun2ShotCount; i++)
         {
@@ -298,7 +314,7 @@ public class AutoGunControl : MonoBehaviour
                 EffectManager.Instance.Boss_SetBullet(gunBody[j], bossControl);
                 FMODUnity.RuntimeManager.PlayOneShot("event:/BOSS/gunFire");
             }
-            while (time < gun2ShotInterval)  //等待发射完成
+            while (time < gun2ShotInterval)  //発射完了を待つ
             {
                 time += Time.deltaTime;
                 gunBodyTF.Rotate(Vector3.up * gun2ShotRotateSpeed * Time.deltaTime, Space.World);
@@ -306,13 +322,13 @@ public class AutoGunControl : MonoBehaviour
             }
             time = 0;
         }
-        while (time < 1.0f)  //等待发射完成
+        while (time < 1.0f)  //発射完了を待つ
         {
             time += Time.deltaTime;
             yield return null;
         }
         time = 0;
-        //发射完毕
+        //発射完了
         lockShotDir = false;
         bossControl.SetAnimatorBool("attacking", false);
         bossControl.SetAnimatorBool("move", true);
@@ -321,16 +337,16 @@ public class AutoGunControl : MonoBehaviour
     }
 
     /// <summary>
-    /// 杖攻击模式协程
+    /// スティックアタックモードのコルーチン
     /// </summary>
     IEnumerator IE_StaffAttack()
     {
-        PlayerControl curPlayer = GameManager.Instance.currentPlayer; //获取玩家引用
+        PlayerControl curPlayer = GameManager.Instance.currentPlayer; //プレイヤーの参照を取得する
         Vector3 shotPostion;
         float time = 0;
-        //锁定方向
+        //方向を固定する
         lockShotDir = true;
-        //显示蓄力
+        //チャージ表示
         for (int j = 0; j < gunBody.Length; j++)
         {
             EffectManager.Instance.Boss_SetMagic_Start(gunBody[j]);
@@ -341,16 +357,16 @@ public class AutoGunControl : MonoBehaviour
             yield return null;
         }
         time = 0;
-        bossControl.BossAttack_Staff_End(); //关闭法术吟唱特效
-        //发射
+        bossControl.BossAttack_Staff_End(); //スペルキャスティングエフェクトをオフにする
+        //発射
         for (int i = 0; i < staffShotCount; i++)
         {
             for (int j = 0; j < gunBody.Length; j++)
             {
                 shotPostion = curPlayer.transform.position + new Vector3(Random.Range(-staffModeShotRange, staffModeShotRange), 0, Random.Range(-staffModeShotRange, staffModeShotRange));
                 EffectManager.Instance.Boss_SetMagic_Shot(shotPostion, bossControl);
-                // Debug.Log("发射一个法术");
-                while (time < staffModeShotInterval)  //等待发射完成
+                // Debug.Log("スペルを発射する");
+                while (time < staffModeShotInterval)  //発射完了を待つ
                 {
                     time += Time.deltaTime;
                     yield return null;
@@ -358,14 +374,14 @@ public class AutoGunControl : MonoBehaviour
                 time = 0;
             }
         }
-        //等待发射完成
+        //発射完了を待つ
         while (time < 1.0f)
         {
             time += Time.deltaTime;
             yield return null;
         }
         time = 0;
-        //发射完毕
+        //発射完了
         lockShotDir = false;
         bossControl.SetAnimatorBool("attacking", false);
         bossControl.SetAnimatorBool("move", true);
@@ -376,7 +392,7 @@ public class AutoGunControl : MonoBehaviour
     #endregion
 
     /// <summary>
-    /// 停止各种状态，让浮游炮进入转阶段状态
+    /// すべての状態を停止し、浮遊砲を転移段階の状態に入れてください。
     /// </summary>
     public void my_StopAllCoroutines()
     {
@@ -384,36 +400,40 @@ public class AutoGunControl : MonoBehaviour
         ChangeMode_ChangeStage();
     }
 
-    /// <summary>
-    /// 重置各种状态
-    /// </summary>
+    ///<summary>
+
+
+    ////// さまざまな状態をリセットする
+
+
+    ///</summary>
     public void ResetStates()
     {
         ChangeMode(bossAttackMode);
     }
 
     /// <summary>
-    /// 协程控制模式转换时的浮游炮位移效果
+    /// コルーチン制御モード切替時の浮遊砲の位移効果
     /// </summary>
-    /// <param name="gun"> 需要位移的浮游炮 </param>
-    /// <param name="target"> 目标位置 </param>
+    /// <param name="gun"> 移動が必要な浮遊砲 </param>
+    /// <param name="target"> 目標位置 </param>
     /// <returns></returns>
     IEnumerator IE_GunTransform(Transform gun, Transform target)
     {
         Vector3 dir = gun.transform.position - target.position;
         float dis = dir.magnitude;
-        //先调整角度
+        //まず角度を調整してください。
         while (Mathf.Abs(Quaternion.Dot(gun.rotation, target.rotation)) < 0.95f)
         {
-            // Debug.Log("正在旋转");
+            // Debug.Log("回転中");
             gun.rotation = Quaternion.Lerp(gun.rotation, target.rotation, modeTranstionRSpeed);
             yield return null;
         }
         gun.rotation = target.rotation;
-        //在调整位置
+        //位置を調整しています
         while (dis > 0.1f)
         {
-            // Debug.Log("正在位移");
+            // Debug.Log("移動中");
             gun.Translate(dir * modeTranstionSpeed * Time.deltaTime, Space.World);
             dir = target.position - gun.transform.position;
             dis = dir.magnitude;

@@ -9,7 +9,7 @@ public class DashBoomEnemyParameter
     public CharacterData enemyData;
     public Animator animator;//アニメーションコントローラー
     public GameObject _mainCamera;//カメラの位置
-    public Transform body;//身体部分
+    public Transform body;//身体の部分
     public DBoomEmyStateData_SO enemyStateData;
     public Transform target;
     public bool ableAttact;
@@ -17,10 +17,10 @@ public class DashBoomEnemyParameter
     public NavMeshAgent agent;//ナビゲーションコンポーネント
     public Transform enemyPos;//自分の位置
     public float moveSpeed;
-    public bool isDead;//死亡しているかどうか
+    public bool isDead;//死んでいるかどうか
     public bool isDash;//スティックを押したかどうか
     public bool isDizzy;//壁に衝突したかどうか
-    public bool isBoom;//自爆を開始したかどうか
+    public bool isBoom;//自爆が開始されたかどうか
     public bool playerIsStay;//プレイヤーが爆発範囲内にいるかどうか
 }
 public class DashBoomEnemyFSM : BaseEnemyFSM
@@ -28,7 +28,7 @@ public class DashBoomEnemyFSM : BaseEnemyFSM
     public DashBoomEnemyParameter parameter;
     // private IState currentState;
     // private Dictionary<E_EnemyStateType, IState> states = new Dictionary<E_EnemyStateType, IState>();
-    //必要なコンポーネントを取得
+    //必要なコンポーネントを取得する
     public Rigidbody rb;
 
     //補助計算の属性
@@ -36,7 +36,7 @@ public class DashBoomEnemyFSM : BaseEnemyFSM
     
     private void Start()
     {
-        //必要なコンポーネントを取得
+        //必要なコンポーネントを取得する
         rb = GetComponent<Rigidbody>();
 
         states.Add(E_EnemyStateType.Idle,new DBoomEnemy_IdleState(this));
@@ -48,30 +48,34 @@ public class DashBoomEnemyFSM : BaseEnemyFSM
         states.Add(E_EnemyStateType.Boom,new DBoomEnemy_BoomState(this));
 
 
-        TranstionState(E_EnemyStateType.Idle); //初期化状態をIdleに設定し、初期状態を待機状態にする
+        TranstionState(E_EnemyStateType.Idle); //初期状態をIdleに設定し、初期状態を待機状態にします。
     }
 
-    private void Update() {//ここで現在の状態機のUpdateを実行
+    private void Update() {//ここで現在の状態機のアップデートを実行します
         currentState.OnUpDate();
         FaceToCamera();
     }
     private void FixedUpdate() {
         lastDir = rb.velocity;
-        // Debug.Log("BoomDashの速度は:"+ lastDir.magnitude);
+        // Debug.Log("BoomDashの速度は：" + lastDir.magnitude);
     }
-    // public void TranstionState(E_EnemyStateType state)//変換方法
+    // public void TranstionState(E_EnemyStateType state)//状態変換メソッド
     // {
     //     if (currentState != null)
     //     {
-    //         currentState.OnExit();  //状態を切り替える前に現在の状態を終了
+    //         currentState.OnExit();  //現在の状態を終了させる前に状態を切り替えます
     //     }
     //     currentState = states[state];
     //     currentState.OnEnter();
     // }
 
-    /// <summary>
-    /// 敵をプレイヤーの左右に向ける
-    /// </summary>
+    ///<summary>
+
+
+    ////// 敵をプレイヤーの左右に向ける
+
+
+    ///</summary>
     public void RotateToTarget()
     {
         float  weight = parameter.target.transform.position.x - transform.position.x;
@@ -89,7 +93,7 @@ public class DashBoomEnemyFSM : BaseEnemyFSM
     }
 
     /// <summary>
-    /// 物体をプレイヤーの方向に向ける
+    /// オブジェクトをプレイヤーの方向に向けます
     /// </summary>
     /// <param name="other"></param>
     public void FaceToTarget()
@@ -99,9 +103,13 @@ public class DashBoomEnemyFSM : BaseEnemyFSM
         transform.rotation = Quaternion.LookRotation(lookVector);
     }
 
-    /// <summary>
-    /// 自爆クラスの敵は特殊処理が必要
-    /// </summary>
+    ///<summary>
+
+
+    ////// 自爆クラスの敵は特別な処理が必要です。
+
+
+    ///</summary>
     public void RecycleStatePanel()
     {
         BaseEnemyControl baseEnemyControl = gameObject.GetComponent<BaseEnemyControl>();

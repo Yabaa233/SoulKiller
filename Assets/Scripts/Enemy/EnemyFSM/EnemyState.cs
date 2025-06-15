@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 
-//在这里继承状态接口，实现所有的状态方案
+//ここでは、状態インターフェースを継承し、すべての状態スキームを実装します。
 public class EnemyState : IState
 {
     public void OnEnter()
@@ -31,8 +31,8 @@ public class EnemyState : IState
 
 public class Enemy_IdleState : IState
 {
-    private EnemyFSM manager;//状态机
-    private EnemyParameter parameter;//设置的属性
+    private EnemyFSM manager;//状態機械
+    private EnemyParameter parameter;//設定された属性
 
     public Enemy_IdleState(EnemyFSM _manager)
     {
@@ -42,7 +42,7 @@ public class Enemy_IdleState : IState
 
     public void OnEnter()
     {
-        //进入方法
+        //メソッドに入る
         parameter.animator.Play("Idle");
     }
 
@@ -53,12 +53,12 @@ public class Enemy_IdleState : IState
 
     public void OnLateUpDade()
     {
-        //一帧结束之后要做的东西给
+        //フレームが終了した後に行うべきことを教えてください。
     }
 
     public void OnUpDate()
     {
-        // Debug.Log("敌人处于待机状态");
+        // Debug.Log("敵は待機状態にいます。");
         if(parameter.isDead)
         {
             manager.TranstionState(E_EnemyStateType.Dead);
@@ -66,13 +66,13 @@ public class Enemy_IdleState : IState
         }
         if(parameter.getHit)
         {
-            manager.TranstionState(E_EnemyStateType.Hit);//受到攻击，切换到受到攻击状态
+            manager.TranstionState(E_EnemyStateType.Hit);//攻撃を受け、攻撃受け状態に切り替えます。
             return;
         }
 
         if(parameter.ableChase)
         {
-            manager.TranstionState(E_EnemyStateType.Find);//开始追击状态
+            manager.TranstionState(E_EnemyStateType.Find);//追跡状態を開始します
         }
     }
 
@@ -81,8 +81,8 @@ public class Enemy_IdleState : IState
 
 public class Enemy_FindState : IState
 {
-    private EnemyFSM manager;//状态机
-    private EnemyParameter parameter;//设置的属性
+    private EnemyFSM manager;//状態機械
+    private EnemyParameter parameter;//設定された属性
 
     public Enemy_FindState(EnemyFSM _manager)
     {
@@ -114,7 +114,7 @@ public class Enemy_FindState : IState
         }
         if(parameter.getHit)
         {
-            manager.TranstionState(E_EnemyStateType.Hit);//受到攻击，切换到受到攻击状态
+            manager.TranstionState(E_EnemyStateType.Hit);//攻撃を受け、攻撃受け状態に切り替えます。
             return;
         }
         manager.FaceToTarget();
@@ -125,12 +125,12 @@ public class Enemy_FindState : IState
             if(Vector3.Distance(parameter.target.position,parameter.enemyPos.position) < parameter.enemyStateData.attackDistance&&
             manager.IsVisableInCamera)
             {
-                // Debug.Log("进入蓄力状态");
-                manager.TranstionState(E_EnemyStateType.Storage);//玩家在攻击范围之内，且自身在屏幕范围内，进入蓄力状态
+                // Debug.Log("充電状態に入ります");
+                manager.TranstionState(E_EnemyStateType.Storage);//プレイヤーは攻撃範囲内におり、自身が画面範囲内にいる場合、蓄積状態に入ります。
             }
             else{
-                // Debug.Log("进入追击状态");
-                manager.TranstionState(E_EnemyStateType.Chase);//玩家不在攻击范围内则进入追击状态
+                // Debug.Log("追跡状態に入ります");
+                manager.TranstionState(E_EnemyStateType.Chase);//プレイヤーが攻撃範囲内にいない場合、追撃状態に入ります。
             }
         }
     }
@@ -139,9 +139,9 @@ public class Enemy_FindState : IState
 
 public class Enemy_ChaseState : IState
 {
-    private EnemyFSM manager;//状态机
-    private EnemyParameter parameter;//设置的属性
-    private NavMeshAgent agent;//导航组件
+    private EnemyFSM manager;//状態機械
+    private EnemyParameter parameter;//設定された属性
+    private NavMeshAgent agent;//ナビゲーションコンポーネント
     public Enemy_ChaseState(EnemyFSM _manager)
     {
         this.manager = _manager;
@@ -150,7 +150,7 @@ public class Enemy_ChaseState : IState
 
     public void OnEnter()
     {
-        //进入方法
+        //メソッドに入る
         agent = parameter.agent;
         agent.enabled = true;
         parameter.animator.Play("Chase");
@@ -159,12 +159,12 @@ public class Enemy_ChaseState : IState
     public void OnExit()
     {
         //退出方法
-        agent.enabled = false;//stop已经过时了
+        agent.enabled = false;//stopはもう古くなりました
     }
 
     public void OnLateUpDade()
     {
-        //一帧结束之后要做的东西给
+        //フレームが終了した後に行うべきことを教えてください。
     }
 
     public void OnUpDate()
@@ -188,7 +188,7 @@ public class Enemy_ChaseState : IState
         // manager.RotateToTarget();
         if(Vector3.Distance(parameter.target.position,parameter.enemyPos.position) < parameter.enemyStateData.attackDistance)
         {
-            // Debug.Log("进入蓄力状态");
+            // Debug.Log("充電状態に入ります");
             manager.TranstionState(E_EnemyStateType.Storage);
         }
     }
@@ -197,8 +197,8 @@ public class Enemy_ChaseState : IState
 
 public class Enemy_StorageState : IState
 {
-    private EnemyFSM manager;//状态机
-    private EnemyParameter parameter;//设置的属性
+    private EnemyFSM manager;//状態機械
+    private EnemyParameter parameter;//設定された属性
 
     private float btwTime = 1.5f;
     private float nextStateTime;
@@ -250,13 +250,13 @@ public class Enemy_StorageState : IState
 
 public class Enemy_AttackState : IState
 {
-    private EnemyFSM manager;//状态机
-    private EnemyParameter parameter;//设置的属性
+    private EnemyFSM manager;//状態機械
+    private EnemyParameter parameter;//設定された属性
     private float btwTime = 2f;
     private float nextStateTime;
-    private Vector3 originalPos;//暂存
-    private Vector3 attackPos;//攻击距离
-    private Vector3 faceVector;//冲刺朝向
+    private Vector3 originalPos;//一時保存
+    private Vector3 attackPos;//攻撃距離
+    private Vector3 faceVector;//スプリント方向に
     public Enemy_AttackState(EnemyFSM _manager)
     {
         this.manager = _manager;
@@ -265,7 +265,7 @@ public class Enemy_AttackState : IState
 
     public void OnEnter()
     {
-        //进入方法
+        //メソッドに入る
         faceVector = parameter.target.position - parameter.enemyPos.position;
         nextStateTime = Time.time + btwTime;
         parameter.isDash = true;
@@ -284,7 +284,7 @@ public class Enemy_AttackState : IState
 
     public void OnLateUpDade()
     {
-        //一帧结束之后要做的东西给
+        //フレームが終了した後に行うべきことを教えてください。
     }
 
     public void OnUpDate()
@@ -296,12 +296,12 @@ public class Enemy_AttackState : IState
         }
         if(parameter.isDash)
         {
-            // Debug.Log("冲刺了一次");
+            // Debug.Log("一度ダッシュしました");
             manager.FaceToTarget();
             manager.rb.AddForce(faceVector.normalized * parameter.enemyStateData.dashPower, ForceMode.Impulse);
             parameter.isDash = false;
         }
-        if(manager.rb.velocity.magnitude < 1.5f&&Time.time > nextStateTime)//速度小于一个阈值,进入Find状态
+        if(manager.rb.velocity.magnitude < 1.5f&&Time.time > nextStateTime)//速度が閾値以下になると、Find状態に入ります。
         {
             manager.DashCD.flag = false;
             parameter.getHit = false;
@@ -324,7 +324,7 @@ public class Enemy_DeadState : IState
     }
     public void OnEnter()
     {
-        //TO 销毁自身的一些组件
+        //自身の一部のコンポーネントを破壊するために
         parameter.isDead = true;
         parameter.animator.Play("Dead");
         GameManager.Instance.CDList.Remove(manager.DashCD);
@@ -358,7 +358,7 @@ public class Enemy_HitState : IState
     private EnemyParameter parameter;
 
     private float nextStateTime;
-    private float timeBtwState = 0.5f;//至少在受击状态停留0.5s
+    private float timeBtwState = 0.5f;//少なくとも0.5秒間、被打状態に留まる
 
     public Enemy_HitState(EnemyFSM _manager)
     {

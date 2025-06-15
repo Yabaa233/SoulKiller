@@ -8,20 +8,20 @@ using UnityEngine.AI;
 public class DashEnemyParameter
 {
     public CharacterData enemyData;
-    public Animator animator;//动画控制器
-    public GameObject _mainCamera;//相机位置
-    public Transform body;//身体部分
+    public Animator animator;//アニメーションコントローラー
+    public GameObject _mainCamera;//カメラの位置
+    public Transform body;//身体の部分
     public Transform orientationObject;
     public DashEmyStateData_SO enemyStateData;
     public Transform target;
     public bool ableAttact;
     public bool getHit;
     public float moveSpeed;
-    public NavMeshAgent agent;//导航组件
-    public Transform enemyPos;//自己的位置
-    public bool isDead;//是否已经死亡
-    public bool isDash;//是否施加过冲刺
-    public bool isDizzy;//是否撞到了墙体
+    public NavMeshAgent agent;//ナビゲーションコンポーネント
+    public Transform enemyPos;//自分の位置
+    public bool isDead;//すでに死亡していますか？
+    public bool isDash;//スプリントを適用したことがありますか？
+    public bool isDizzy;//壁にぶつかりましたか？
 }
 /// <summary>
 /// ダッシュ敵のFSM
@@ -33,17 +33,17 @@ public class DashEnemyFSM : BaseEnemyFSM
     // private IState currentState;
     // private Dictionary<E_EnemyStateType, IState> states = new Dictionary<E_EnemyStateType, IState>();
 
-    //需要获取的组件
+    //取得が必要なコンポーネント
     public Rigidbody rb;
 
-    //辅助计算的属性
+    //補助計算の属性
     private Vector3 lastDir;
     /// <summary>
     /// FSMの初期化
     /// </summary>
     private void Start()
     {
-        //得到相应的组件
+        //対応するコンポーネントを取得する
         rb = GetComponent<Rigidbody>();
         DashCD.maxCDTime = 1.5f;
         DashCD.flag = true;
@@ -57,12 +57,12 @@ public class DashEnemyFSM : BaseEnemyFSM
         states.Add(E_EnemyStateType.Dead,new DashEnemy_DeadState(this));
 
 
-        TranstionState(E_EnemyStateType.Idle); //初始化状态为Idle，设置初始状态为待机状态
+        TranstionState(E_EnemyStateType.Idle); //初期状態はIdleに設定し、初期状態を待機状態に設定します。
     }
     /// <summary>
     /// FSMの更新
     /// </summary>
-    private void Update() {//在这里执行当前的状态机Update
+    private void Update() {//ここで現在のステートマシンの更新を実行します。
         currentState.OnUpDate();
         FaceToCamera();
     }
@@ -75,9 +75,13 @@ public class DashEnemyFSM : BaseEnemyFSM
         FaceToCamera();
     }
 
-    /// <summary>
-    /// 让敌人朝向玩家的左右
-    /// </summary>
+    ///<summary>
+
+
+    ////// 敵をプレイヤーの左右に向けてください。
+
+
+    ///</summary>
     public void RotateToTarget()
     {
         float  weight = parameter.target.transform.position.x - transform.position.x;
@@ -95,7 +99,7 @@ public class DashEnemyFSM : BaseEnemyFSM
     }
 
     /// <summary>
-    /// 让物体指向玩家方向
+    /// オブジェクトをプレイヤーの方向に向ける
     /// </summary>
     /// <param name="other"></param>
     public void FaceToTarget()
@@ -120,7 +124,7 @@ public class DashEnemyFSM : BaseEnemyFSM
             else
             {
                 GameManager.Instance.EnemyAttack(parameter.enemyPos.gameObject.GetComponent<BaseEnemyControl>());
-                // Debug.Log("攻击了玩家");
+                // Debug.Log("プレイヤーが攻撃されました");
             }
         }
     }
@@ -135,7 +139,7 @@ public class DashEnemyFSM : BaseEnemyFSM
     private void OnCollisionEnter(Collision other) {
         if(other.transform.tag == "Wall")
         {
-            //碰撞时速度进行反弹
+            //衝突時の速度で反発する
             Vector3 reflexAngle = Vector3.Reflect(lastDir,other.contacts[0].normal);
             rb.velocity = reflexAngle.normalized * lastDir.magnitude;
             parameter.isDizzy = true;

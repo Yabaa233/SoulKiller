@@ -28,9 +28,13 @@ public class DashEnemyState : IState
     }
 }
 
-/// <summary>
-/// 状態の初期化
-/// </summary>
+///<summary>
+
+
+////// 状態の初期化
+
+
+///</summary>
 public class DashEnemy_IdleState : IState
 {
     private DashEnemyFSM manager;
@@ -44,7 +48,7 @@ public class DashEnemy_IdleState : IState
 
     public void OnEnter()
     {
-        // Debug.Log("进入了待机状态");
+        // Debug.Log("スタンバイモードに入りました");
         parameter.agent.enabled = false;
         parameter.animator.Play("Idle");
     }
@@ -68,20 +72,26 @@ public class DashEnemy_IdleState : IState
         }
         if(parameter.getHit)
         {
-            manager.TranstionState(E_EnemyStateType.Hit);//受到攻击切换状态
+            manager.TranstionState(E_EnemyStateType.Hit);//攻撃を受けて状態を切り替えます
             return;
         }
         if(parameter.ableAttact)
         {
-            manager.TranstionState(E_EnemyStateType.Find);//到了警戒距离，冲撞类敌人的弹跳提示
+            manager.TranstionState(E_EnemyStateType.Find);//警戒距離に到達し、衝突型の敵に対する跳躍のヒント
         }
     }
 }
 
 
-/// <summary>
-/// 状態の更新
-/// </summary>
+///<summary>
+
+
+
+////// 状態の更新
+
+
+
+///</summary>
 public class DashEnemy_FindState : IState
 {
     private DashEnemyFSM manager;
@@ -96,7 +106,7 @@ public class DashEnemy_FindState : IState
 
     public void OnEnter()
     {
-        // Debug.Log("进入了发现状态");
+        // Debug.Log("発見状態に入りました");
         nextStateTime = Time.time + timer;
         parameter.animator.Play("Find");
         // FmodManager.Instance.PlaySoundOnce(parameter.enemyData.)
@@ -117,13 +127,13 @@ public class DashEnemy_FindState : IState
     {
         manager.RotateToTarget();
         manager.FaceToTarget();
-        //受到攻击直接进入受击状态
+        //攻撃を受けると直接被弾状態に入ります。
         if(parameter.getHit)
         {
-            manager.TranstionState(E_EnemyStateType.Hit);//受到攻击，切换到受到攻击状态
+            manager.TranstionState(E_EnemyStateType.Hit);//攻撃を受け、攻撃受け状態に切り替えます。
             return;
         }
-        //播放弹跳的动画
+        //跳ねるアニメーションを再生する
         AnimatorStateInfo animatorInfo;
         animatorInfo = parameter.animator.GetCurrentAnimatorStateInfo(0);
         if(animatorInfo.normalizedTime > 0.99f && animatorInfo.IsName("Find")&&Time.time > nextStateTime && manager.DashCD.flag)
@@ -134,13 +144,13 @@ public class DashEnemy_FindState : IState
 }
 
 /// <summary>
-/// 状態の終了
+/// ステータスの終了
 /// </summary>
 public class DashEnemy_ChaseState : IState
 {
     private DashEnemyFSM manager;
     private DashEnemyParameter parameter;
-    // Vector3 faceVector;//朝向玩家的向量
+    // Vector3 faceVector;//プレイヤーに向かうベクトル
     // private float timer = 1.5f;
     // private float nextStateTime;
     public DashEnemy_ChaseState(DashEnemyFSM _manager)
@@ -151,8 +161,8 @@ public class DashEnemy_ChaseState : IState
 
     public void OnEnter()
     {
-        // Debug.Log("进入冲刺状态");
-        //得到这一时刻朝向角色的向量
+        // Debug.Log("スプリント状態に入ります");
+        //この瞬間にキャラクターに向かっているベクトルを得る
         // faceVector = parameter.target.position - parameter.enemyPos.position;
         // parameter.isDash = true;
         // nextStateTime = Time.time + timer;
@@ -173,7 +183,7 @@ public class DashEnemy_ChaseState : IState
 
     public void OnUpDate()
     {
-        //新的追踪逻辑
+        //新しい追跡ロジック
         if(parameter.isDead)
         {
             manager.TranstionState(E_EnemyStateType.Dead);
@@ -197,17 +207,17 @@ public class DashEnemy_ChaseState : IState
         manager.RotateToTarget();
         // if(parameter.isDash)
         // {
-        //     // Debug.Log("冲刺了一次");
+        //     // Debug.Log("一度ダッシュしました");
         //     manager.FaceToTarget();
         //     manager.rb.AddForce(faceVector.normalized * parameter.enemyStateData.dashPower, ForceMode.Impulse);
         //     parameter.isDash = false;
         // }
         // if(parameter.isDizzy)
         // {
-        //     manager.TranstionState(E_EnemyStateType.Dizzy);//撞到墙体进入眩晕状态
+        //     manager.TranstionState(E_EnemyStateType.Dizzy);//壁にぶつかってめまい状態に入る
         //     return;
         // }
-        // if(manager.rb.velocity.magnitude < 1.5f&&Time.time > nextStateTime)//速度小于一个阈值,进入Find状态
+        // if(manager.rb.velocity.magnitude < 1.5f && Time.time > nextStateTime)//速度が閾値より小さい場合、Find状態に入ります
         // {
         //     manager.rb.velocity = new Vector3(0f,0f,0f);
         //     parameter.getHit = false;
@@ -218,9 +228,9 @@ public class DashEnemy_ChaseState : IState
 }
 
 
-//眩晕状态要做的只是单纯停留一段时间
+//めまい状態でやるべきことは、ただしばらく静止するだけです。
 /// <summary>
-/// 眩晕状态
+/// めまい状態
 /// </summary>
 public class DashEnemy_DizzyState : IState
 {
@@ -236,7 +246,7 @@ public class DashEnemy_DizzyState : IState
 
     public void OnEnter()
     {
-        Debug.Log("进入了眩晕状态");
+        Debug.Log("めまい状態に入りました");
         parameter.isDizzy = false;
         nextStateTime = Time.time + timer;
         manager.DashCD.curTime = 0;
@@ -257,26 +267,30 @@ public class DashEnemy_DizzyState : IState
     {
         if(parameter.getHit)
         {
-            manager.TranstionState(E_EnemyStateType.Hit);//受到攻击，切换到受到攻击状态
+            manager.TranstionState(E_EnemyStateType.Hit);//攻撃を受け、攻撃受け状態に切り替えます。
             return;
         }
         if(Time.time > nextStateTime)
         {
-            manager.TranstionState(E_EnemyStateType.Idle);//这里先让它回到待机状态
+            manager.TranstionState(E_EnemyStateType.Idle);//ここでは、まず待機状態に戻してください。
             parameter.ableAttact = false;
         }
     }
 }
 
-/// <summary>
-/// 受击状态
-/// </summary>
+///<summary>
+
+
+////// 打撃を受けた状態
+
+
+///</summary>
 public class DashEnemy_GetHitState : IState
 {
     private DashEnemyFSM manager;
     private DashEnemyParameter parameter;
     
-    private float timeBtwState = 0.5f;//在受击状态停留至少0.5s
+    private float timeBtwState = 0.5f;//被打撃状態に少なくとも0.5秒間留まる
     private float nextStateTime;
 
     private bool isHit = true;
@@ -288,7 +302,7 @@ public class DashEnemy_GetHitState : IState
 
     public void OnEnter()
     {
-        //TODO受到攻击的方法
+        //攻撃を受ける方法
         isHit = true;
         parameter.getHit = false;
         nextStateTime = Time.time + timeBtwState;
@@ -297,7 +311,7 @@ public class DashEnemy_GetHitState : IState
 
         //FmodManager.Instance.PlaySoundOnce(parameter.enemyData.getHitSound);
 
-        //减少CD
+        //CDを減らす
         manager.DashCD.curTime -= 0.5f;
         if(manager.DashCD.curTime < 0)
         {
@@ -328,7 +342,7 @@ public class DashEnemy_GetHitState : IState
             // manager.rb.AddForce(backVector.normalized * 5, ForceMode.Impulse);
             isHit = false;
         }
-        if(parameter.getHit)//多次敲击
+        if(parameter.getHit)//何度もノックする
         {
             parameter.animator.Play("GetHit",0,0f);
             manager.TranstionState(E_EnemyStateType.Hit);
@@ -340,9 +354,13 @@ public class DashEnemy_GetHitState : IState
     }
 }
 
-/// <summary>
-/// 死亡状态
-/// </summary>
+///<summary>
+
+
+////// 死亡状態
+
+
+///</summary>
 public class DashEnemy_DeadState :IState
 {
     private DashEnemyFSM manager;

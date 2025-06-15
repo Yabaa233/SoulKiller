@@ -9,25 +9,25 @@ using UnityEngine.AI;
 // [RequireComponent(typeof(NavMeshAgent))]
 public class GunEnemyControl : BaseEnemyControl
 {
-    // [Header("敌人刚体组件")]
+    // [Header("敵のリジッドボディコンポーネント")]
     // public Rigidbody rb;
     // new public Collider collider;
-    // [Header("动画控制器")]
+    // [Header("アニメーションコントローラー")]
     // public Animator animator;
-    // [Header("敌人状态机相关")]
+    // [Header("敵のステートマシン関連")]
     // public GunEnemyFSM enemyFSM;
-    // [Header("角色数值模板（不会使用的）")]
+    // [Header("使用しないキャラクター数値テンプレート")]
     // public GunEnemyData_SO tempCharaterData;
-    // [Tooltip("敌人属性配置SO文件的实例")]public GunEnemyData enemyData;
-    // [Tooltip("角色BUffManager")]public CharacterBuffManager characterBuffManager;
-    // [Header("敌人AI的导航组件")] public NavMeshAgent agent;
+    // [Tooltip("敵の属性設定のSOファイルインスタンス")]public GunEnemyData enemyData;
+    // [Tooltip("キャラクターBUffManager")]public CharacterBuffManager characterBuffManager;
+    // [Header("敵AIのナビゲーションコンポーネント")] public NavMeshAgent agent;
 
-    [Header("敌人状态机相关")]
+    [Header("敵のステートマシン関連")]
     public long_DistanceFSM enemyFSM;
-    [Header("发射点")]
+    [Header("発射点")]
     public Transform firePoint;
 
-    [Header("敌人攻击状态SO模板")]
+    [Header("敵の攻撃状態SOテンプレート")]
     public GunEmyStateData_SO tempEnemyStateData; 
     public GunEmyStateData_SO TempEnemyStateData 
     {
@@ -49,7 +49,7 @@ public class GunEnemyControl : BaseEnemyControl
 
     private void EnemyInit(string tagStr)
     {
-        //组件获取
+        //コンポーネントの取得
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
         enemyFSM = transform.GetComponent<long_DistanceFSM>();
@@ -61,20 +61,20 @@ public class GunEnemyControl : BaseEnemyControl
         orientationObject = transform.Find("OrientationObject");
         firePoint = transform.Find("firepoint");
 
-        //设置自身属性
+        //自身の属性を設定する
         transform.tag = tagStr;
 
-        //初始化一些相关状态
+        //関連状態の初期化を行う
         characterBuffManager = new CharacterBuffManager();
         enemyData = new CharacterData(Instantiate(tempCharaterData));
         characterBuffManager.Init(E_ChararcterType.enemy);
         baseEnemyFSM  = enemyFSM;
-        enemyData.currentComboAttack = 1;//设置攻击倍率
-        moveSpeed = tempEnemyStateData.moveSpeed;//初始化移动速度
-        agent.speed = tempEnemyStateData.moveSpeed;//设置移动速度
+        enemyData.currentComboAttack = 1;//攻撃倍率を設定する
+        moveSpeed = tempEnemyStateData.moveSpeed;//移動速度の初期化
+        agent.speed = tempEnemyStateData.moveSpeed;//移動速度を設定する
 
 
-        //做数据同步
+        //データ同期を行う
         enemyFSM.parameter.enemyData = enemyData;
         enemyFSM.parameter.enemyStateData = tempEnemyStateData;
         enemyFSM.parameter.enemyType = E_EnemyType.GUN;
@@ -90,10 +90,10 @@ public class GunEnemyControl : BaseEnemyControl
 
     protected new void Update() {
         base.Update();
-        //各个管理类的Update方法
+        //各管理クラスのUpdateメソッド
         characterBuffManager.OnUpdate(Time.deltaTime);
 
-        // characterBuffManager.AddBuff(new HpUp(gameObject,characterBuffManager.type));//加血方法
+        // characterBuffManager.AddBuff(new HpUp(gameObject,characterBuffManager.type));//HPを上げる方法
         if(enemyFSM.parameter.ableAttact)
         {
             warningArea.enabled = false;
@@ -115,9 +115,11 @@ public class GunEnemyControl : BaseEnemyControl
         base.Die();
         enemyFSM.parameter.isDead = true;
     }
-/// <summary>
-/// 设置追踪目标
-/// </summary>
+///<summary>
+
+////// 追跡目標を設定する
+
+///</summary>
 /// <param name="transform"></param>
     public override void SetTarget(Transform transform)
     {

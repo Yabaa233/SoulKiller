@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// プレイヤー剣攻撃1
+/// プレイヤーの剣攻撃1
 /// </summary>
 public class PlayerAttack_Sword1 : StateMachineBehaviour
 {
-    private PlayerControl currentPlayer;    //当前角色
+    private PlayerControl currentPlayer;    //現在の役割
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         if (currentPlayer == null)

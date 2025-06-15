@@ -4,32 +4,36 @@ using UnityEngine;
 
 public class GunControl : MonoBehaviour
 {
-    private Transform[] gunBody = new Transform[4]; //浮游炮体，控制炮体旋转
-    private Transform staffShotPoint;   //法球发射点
+    private Transform[] gunBody = new Transform[4]; //浮遊砲身、砲身の回転を制御します
+    private Transform staffShotPoint;   //法球発射点
     private Transform[] swordModePos = new Transform[4];
     private Transform[] gunModePos = new Transform[4];
     private Transform[] staffModePos = new Transform[4];
     private E_WeaponType weaponType;
     private int modeChangeOver = 0;
     public int ModeChangeOver { get { return modeChangeOver; } }
-    public int gunBuffLevel;    //枪Buff等级
-    [Tooltip("最大子弹数")] public float maxAmmunition = 60; //最大子弹数
-    //TODO:因为此处是float，所以UI上显示要显示指定类型为int，或者使用能量形式表现
-    [Tooltip("当前子弹数")] public float curAmmunition = 60;  //当前子弹数
-    [Tooltip("子弹射击CD")] public CDClass gunShotCD = new CDClass(); //射击CD
-    [Tooltip("法球尺寸")] public float magicBallSize; //法球尺寸
-    [Tooltip("是否正在装弹")] public bool isReloading;  //是否正在装填子弹
-    [Tooltip("子弹自动装填速度")] public float autoReloadSpeed; //自动装填速度
-    [Tooltip("子弹手动装填速度")] public float manualReloadSpeed;   //手动装填速度
-    [Header("剑模式转向速度")] public float swordRSpeed = 0.2f;
-    [Header("枪模式转向速度")] public float gunRSpeed = 0.05f;
-    [Header("杖模式转向速度")] public float staffRSpeed = 0.1f;
-    [Header("模式切换移动速度")] public float modeTranstionSpeed = 1.5f;
-    [Header("模式切换旋转速度")] public float modeTranstionRSpeed = 0.1f;
+    public int gunBuffLevel;    //ガンバフレベル
+    [Tooltip("最大弾数")] public float maxAmmunition = 60; //最大弾数
+    //TODO：ここはfloatなので、UI表示はint型を指定するか、エネルギー形式で表示する必要があります。
+    [Tooltip("現在の弾薬数")] public float curAmmunition = 60;  //現在の弾薬数
+    [Tooltip("弾丸シューティングCD")] public CDClass gunShotCD = new CDClass(); //ショットCD
+    [Tooltip("フランスのボールのサイズ")] public float magicBallSize; //フランスのボールのサイズ
+    [Tooltip("弾を装填していますか？")] public bool isReloading;  //弾を装填していますか？
+    [Tooltip("弾丸の自動装填速度")] public float autoReloadSpeed; //自動装填速度
+    [Tooltip("弾丸の手動装填速度")] public float manualReloadSpeed;   //手動装填速度
+    [Header("剣モードの旋回速度")] public float swordRSpeed = 0.2f;
+    [Header("ガンモードの旋回速度")] public float gunRSpeed = 0.05f;
+    [Header("スティックモードの旋回速度")] public float staffRSpeed = 0.1f;
+    [Header("パターン切替移動速度")] public float modeTranstionSpeed = 1.5f;
+    [Header("パターン切替回転速度")] public float modeTranstionRSpeed = 0.1f;
 
-    /// <summary>
-    /// 初始化
-    /// </summary>
+    ///<summary>
+
+
+    ////// 初期化
+
+
+    ///</summary>
     public void Init()
     {
         GameManager.Instance.CDList.Add(gunShotCD);
@@ -46,9 +50,9 @@ public class GunControl : MonoBehaviour
 
     private void Update()
     {
-        if (weaponType != E_WeaponType.gun && curAmmunition < maxAmmunition) //换武器自动装填子弹
+        if (weaponType != E_WeaponType.gun && curAmmunition < maxAmmunition) //武器を交換すると自動的に弾が装填されます
         {
-            //print("自动换弹中");
+            //print("自動的に弾丸を交換中です");
             curAmmunition = Mathf.Min(curAmmunition + Time.deltaTime * autoReloadSpeed, maxAmmunition);
         }
     }
@@ -61,13 +65,17 @@ public class GunControl : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 发射子弹
-    /// </summary>
-    /// <param name="targetPoint"> 子弹发射目标点 </param>
+    ///<summary>
+
+
+    ////// 弾を発射する
+
+
+    ///</summary>
+    /// <param name="targetPoint"> 弾の発射目標点 </param>
     public void GunModeShot(Vector3 targetPoint)
     {
-        if (modeChangeOver != 0 || isReloading) return; //说明模式没有切换完成或者正在装弹
+        if (modeChangeOver != 0 || isReloading) return; //モードの切り替えが完了していないか、または弾薬を装填中です。
         if ((int)curAmmunition > 0)
         {
             if (gunShotCD.flag)
@@ -89,10 +97,14 @@ public class GunControl : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 发射法球
-    /// 需要目标点
-    /// </summary>
+    ///<summary>
+
+
+    ////// 発射法球
+    /// 目標点が必要です
+
+
+    ///</summary>
     public void StaffModeShot(Vector3 targetPoint)
     {
         EffectManager.Instance.SetMagicBall(targetPoint, magicBallSize);
@@ -100,10 +112,10 @@ public class GunControl : MonoBehaviour
     }
 
     /// <summary>
-    /// 根据模式按照不同速率调整浮游炮朝向
+    /// パターンに従って、浮遊砲の向きを異なる速度で調整します。
     /// </summary>
-    /// <param name="targetPoint"> 目标点 </param>
-    /// <param name="_WeaponType"> 武器类型 </param>
+    /// <param name="targetPoint"> ターゲットポイント </param>
+    /// <param name="_WeaponType"> 武器タイプ </param>
     public void ModeLookAt(Vector3 targetPoint, E_WeaponType _WeaponType)
     {
         if (_WeaponType == E_WeaponType.sword)
@@ -120,15 +132,19 @@ public class GunControl : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 转向
-    /// </summary>
-    /// <param name="targetPoint">目标点</param>
-    /// <param name="rSpeed"> 旋转速度 </param>
-    /// <param name="bodyRotate"> 是否需要子浮游炮朝向目标点 </param>
+    ///<summary>
+
+
+    ////// 方向変更
+
+
+    ///</summary>
+    /// <param name="targetPoint">目標点</param>
+    /// <param name="rSpeed"> 回転速度 </param>
+    /// <param name="bodyRotate"> ターゲットポイントに向かって子浮遊砲が必要かどうか </param>
     private void LookAt(Vector3 targetPoint, float rSpeed, bool bodyRotate)
     {
-        if (modeChangeOver != 0) return; //说明模式没有切换完成
+        if (modeChangeOver != 0) return; //モードの切り替えが完了していません
         Quaternion targetRotation = Quaternion.LookRotation(targetPoint - transform.position, Vector3.up);
         transform.localRotation = Quaternion.Lerp(transform.localRotation, targetRotation, rSpeed);
         if (bodyRotate)
@@ -140,10 +156,14 @@ public class GunControl : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 切换武器模式
-    /// </summary>
-    /// <param name="_weaponType"> 目标武器模式 </param>
+    ///<summary>
+
+
+    ////// 武器モードを切り替える
+
+
+    ///</summary>
+    /// <param name="_weaponType"> 目標の武器モード </param>
     public void ChangeMode(E_WeaponType _weaponType)
     {
         weaponType = _weaponType;
@@ -177,27 +197,27 @@ public class GunControl : MonoBehaviour
     }
 
     /// <summary>
-    /// 协程控制模式转换时的浮游炮位移效果
+    /// コルーチン制御モード切替時の浮遊砲の位移効果
     /// </summary>
-    /// <param name="gun"> 需要位移的浮游炮 </param>
-    /// <param name="target"> 目标位置 </param>
+    /// <param name="gun"> 移動が必要な浮遊砲 </param>
+    /// <param name="target"> 目標位置 </param>
     /// <returns></returns>
     IEnumerator GunTransform(Transform gun, Transform target)
     {
         Vector3 dir = gun.transform.position - target.position;
         float dis = dir.magnitude;
-        //先调整角度
+        //まず角度を調整してください。
         while (Mathf.Abs(Quaternion.Dot(gun.rotation, target.rotation)) < 0.95f)
         {
-            // Debug.Log("正在旋转");
+            // Debug.Log("回転中");
             gun.rotation = Quaternion.Lerp(gun.rotation, target.rotation, modeTranstionRSpeed);
             yield return null;
         }
         gun.rotation = target.rotation;
-        //在调整位置
+        //位置を調整しています
         while (dis > 0.1f)
         {
-            // Debug.Log("正在位移");
+            // Debug.Log("移動中");
             gun.Translate(dir * modeTranstionSpeed * Time.deltaTime, Space.World);
             dir = target.position - gun.transform.position;
             dis = dir.magnitude;
@@ -208,14 +228,14 @@ public class GunControl : MonoBehaviour
     }
 
     /// <summary>
-    /// 协程手动换弹逻辑
+    /// コルーチンでの手動弾薬交換ロジック
     /// </summary>
     IEnumerator GunReload()
     {
         isReloading = true;
         while (curAmmunition < maxAmmunition)
         {
-            // print("手动换弹中");
+            // print("手動で弾丸を交換中");
             curAmmunition = Mathf.Min(Time.deltaTime * manualReloadSpeed + curAmmunition, maxAmmunition);
 
             yield return null;

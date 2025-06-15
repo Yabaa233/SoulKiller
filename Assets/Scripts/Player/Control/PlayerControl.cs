@@ -16,57 +16,57 @@ public enum E_WeaponType
 /// </summary>
 public class PlayerControl : MonoBehaviour
 {
-    [Header("战斗相关")]
-    [Tooltip("当前武器种类")] public E_WeaponType weaponType; //武器种类
-    [Tooltip("射击打击感相关配置")] public ComboNode shotComboNode;
-    [Tooltip("法术打击感相关配置")] public ComboNode magicComboNode;
-    public ComboNode currentComboNode;  //当前连招节点
-    public CDClass dodgeCD = new CDClass(); //冲刺CD
-    private bool canShot;   //枪模式长按连射射击时间是否达标
-    private bool magicBallStart = false;    //是否开始蓄力
-    public float staffHoldTime;   //目标蓄力时间
-    public float curHoldTime;   //当前蓄力时间
-    public int dodgeCount = 1;  //冲刺可用次数
-    [Header("武器Buff等级")]
-    public int swordBuffLevel;  //剑Buff等级
-    public int swordBuffTimes;  //剑可连击次数
-    public int gunBuffLevel;    //枪Buff等级
-    public int staffBuffLevel;  //杖Buff等级
-    [Header("浮游炮控制组件")]
-    public GunControl gunControl;   //浮游炮控制组件
+    [Header("戦闘関連")]
+    [Tooltip("現在の武器種類")] public E_WeaponType weaponType; //武器の種類
+    [Tooltip("シューティング感覚関連の設定")] public ComboNode shotComboNode;
+    [Tooltip("魔法攻撃感覚に関連する設定")] public ComboNode magicComboNode;
+    public ComboNode currentComboNode;  //現在の連続スキルノード
+    public CDClass dodgeCD = new CDClass(); //CDをスプリント
+    private bool canShot;   //ガンモードで長押し連射の射撃時間が基準を満たしているかどうか
+    private bool magicBallStart = false;    //力を蓄え始めますか？
+    public float staffHoldTime;   //目標蓄力時間
+    public float curHoldTime;   //現在の蓄積時間
+    public int dodgeCount = 1;  //スプリントの使用可能回数
+    [Header("武器バフレベル")]
+    public int swordBuffLevel;  //剣バフレベル
+    public int swordBuffTimes;  //剣の連続攻撃回数
+    public int gunBuffLevel;    //ガンバフレベル
+    public int staffBuffLevel;  //スタッフBuffレベル
+    [Header("浮遊砲制御コンポーネント")]
+    public GunControl gunControl;   //浮遊砲制御コンポーネント
     [SerializeField]
-    public GameObject comboTrigger;     //连招的攻击范围触发器
-    [Header("动画控制器")]
+    public GameObject comboTrigger;     //コンボの攻撃範囲トリガー
+    [Header("アニメーションコントローラー")]
     public Animator animator;
-    [Header("移动表现相关")]
-    public Vector3 moveRes;    //移动方向结果
+    [Header("モバイルパフォーマンス関連")]
+    public Vector3 moveRes;    //移動方向の結果
     public float staffStopLerp = 0.02f;
-    public bool useMouseScale = false; //使用鼠标朝向结果，不使用键盘输入朝向结果，用于锁定攻击时朝向
-    private int scaleRes_Move = 1;   //移动左右朝向结果
-    private int scaleRes_Mouse = 1;   //用于控制角色攻击时左右旋转
-    public Vector3 targetPoint;    //防止重复创建的鼠标朝向
-    [Header("角色刚体")]
-    public Rigidbody rb;   //角色刚体
-    [Tooltip("骨骼")] public Transform skeletal;  //骨骼
-    [Tooltip("脚底朝向光圈")] public Transform orientationObject; //脚底的朝向光圈
-    [Header("角色数值模板（不会使用的）")]
-    public CharacterData_SO tempCharaterData;   //用于克隆
-    [Header("角色属性相关")]
-    public CharacterData characterData; //角色属性配置SO文件的实例
-    [Tooltip("移动速度")] public Vector2 speed = new Vector3();
-    [Header("角色Buff管理器")]
-    public CharacterBuffManager characterBuffManager;   //当前Buff的管理列表
-    // public GameObject TestCube; //测试攻击范围
+    public bool useMouseScale = false; //マウスを使用して結果に向かう、キーボード入力を使用せずに結果に向かう、攻撃をロックするときに向かうために使用します。
+    private int scaleRes_Move = 1;   //左右に移動する結果
+    private int scaleRes_Mouse = 1;   //キャラクターの攻撃時の左右回転を制御するために使用します。
+    public Vector3 targetPoint;    //重複作成を防ぐマウスの向き
+    [Header("キャラクター剛体")]
+    public Rigidbody rb;   //キャラクター剛体
+    [Tooltip("骨格")] public Transform skeletal;  //骨格
+    [Tooltip("足の底が光の輪に向かっています")] public Transform orientationObject; //足底が光の輪に向かっています
+    [Header("（使用しない）キャラクター数値テンプレート")]
+    public CharacterData_SO tempCharaterData;   //クローニング用
+    [Header("キャラクター属性に関連する")]
+    public CharacterData characterData; //キャラクター属性設定SOファイルのインスタンス
+    [Tooltip("移動速度")] public Vector2 speed = new Vector3();
+    [Header("キャラクターBuffマネージャー")]
+    public CharacterBuffManager characterBuffManager;   //現在のBuffの管理リスト
+    // public GameObject TestCube; //テスト攻撃範囲
     public bool lockHealth = false;
     public bool isDead = false;
     public bool IsDead { get { return isDead; } }
-    // [Header("角色声音控制器")]
-    [Header("特效显示相关")]
-    [Tooltip("冲刺特效出现位置补偿")] public Vector3 effectDashPos = new Vector3(0.0f, 1.5f, 0.0f);
-    [Tooltip("攻击特效出现位置补偿")] public Vector3 effectAtkPos = new Vector3(0.0f, 1.5f, 0.0f);
+    // [Header("キャラクターの音声コントローラー")]
+    [Header("特殊効果表示関連")]
+    [Tooltip("ダッシュ特殊効果の出現位置補正")] public Vector3 effectDashPos = new Vector3(0.0f, 1.5f, 0.0f);
+    [Tooltip("攻撃特効の出現位置補正")] public Vector3 effectAtkPos = new Vector3(0.0f, 1.5f, 0.0f);
 
-    private Vector2 rightStickPos = new Vector2(960, 540);  //右摇杆方向控制器的坐标
-    private Vector2 rightStickMoveSpeed = new Vector2(1200, 800);  //右摇杆灵敏度
+    private Vector2 rightStickPos = new Vector2(960, 540);  //右スティック方向コントローラーの座標
+    private Vector2 rightStickMoveSpeed = new Vector2(1200, 800);  //右スティックの感度
 
     #region 初始化相关
     private void Awake()
@@ -75,40 +75,40 @@ public class PlayerControl : MonoBehaviour
     }
 
     /// <summary>
-    ///  初始化获取角色上各功能组件
+    ///  キャラクターの各機能コンポーネントを初期化する
     /// </summary>
-    /// <param name="tagStr"> 期望初始化的Tag </param>
+    /// <param name="tagStr"> 初期化したいタグ </param>
     private void PlayerInit(string tagStr)
     {
-        //组件获取
+        //コンポーネントの取得
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
         gunControl = transform.Find("GunParent").GetComponent<GunControl>();
-        //子物体获取
+        //子オブジェクトの取得
         skeletal = transform.Find("BOSS");
         orientationObject = transform.Find("OrientationObject");
-        //自身属性设置
+        //自己の属性設定
         transform.tag = tagStr;
-        useMouseScale = false;  //默认使用键盘朝向
-        ResetAnimState();//重置自身动画状态
-        //创建各子component
-        characterData = new CharacterData(Instantiate(tempCharaterData));   //创建实例用来初始化
+        useMouseScale = false;  //デフォルトでキーボードの向きを使用します
+        ResetAnimState();//自身のアニメーション状態をリセットする
+        //各子コンポーネントを作成する
+        characterData = new CharacterData(Instantiate(tempCharaterData));   //インスタンスを作成して初期化します
         characterBuffManager = new CharacterBuffManager();
     }
 
     private void Start()
     {
-        //向GameManager注册
+        //GameManagerに登録する
         GameManager.Instance.currentPlayer = this;
         GameManager.Instance.PlayerDie += PlayerDie;
-        //注册CD
+        //CDを登録する
         GameManager.Instance.CDList.Add(dodgeCD);
         dodgeCD.flag = true;
-        //初始化Buff系统
+        //Buffシステムの初期化
         characterBuffManager.Init(E_ChararcterType.player);
         PlayerBuffRebuild(BuffDataManager.Instance.playerBuffList);
         characterBuffManager.RefreshData();
-        //初始化武器类型为剑
+        //武器タイプを剣に初期化します
         gunControl.Init();
         SetWeaponType(E_WeaponType.sword);
     }
@@ -143,14 +143,14 @@ public class PlayerControl : MonoBehaviour
     }
 
     /// <summary>
-    /// 初始化动画参数状态
+    /// アニメーションパラメーター状態の初期化
     /// </summary>
     public void ResetAnimState()
     {
         if (animator == null)
         {
 #if UNITY_EDITOR
-            Debug.LogError("当前角色动画控制器为空" + this.gameObject);
+            Debug.LogError("現在のキャラクターアニメーションコントローラーは空です" + this.gameObject);
 #endif
             return;
         }
@@ -174,7 +174,7 @@ public class PlayerControl : MonoBehaviour
 
     #region 输入相关
     /// <summary>
-    ///  获取角色的移动向量
+    ///  キャラクターの移動ベクトルを取得する
     /// </summary>
     public void GetPlayerInput_Move(InputAction.CallbackContext callbackContext)
     {
@@ -187,9 +187,9 @@ public class PlayerControl : MonoBehaviour
         {
             return;
         }
-        //用以自己为参考的目标点的世界坐标减去自己的世界坐标（但是操作完是反方向，原因暂未找出）
+        //自分自身を参照点として使用し、その世界座標から自分の世界座標を引く（ただし、操作が完了すると逆方向になり、その理由はまだ見つかっていない）。
         moveRes = transform.position - transform.TransformPoint(moveRes);
-        //叠加速度
+        //重ね加速
         moveRes.x *= speed.x;
         moveRes.z *= speed.y;
         // moveRes.y = rb.velocity.y;
@@ -197,7 +197,7 @@ public class PlayerControl : MonoBehaviour
     }
 
     /// <summary>
-    /// 移动端移动输入
+    /// モバイル端末での移動入力
     /// </summary>
     /// <param name="callbackContext"></param>
     public void GetPlayerInput_StickMove(Vector2 newPos)
@@ -211,9 +211,9 @@ public class PlayerControl : MonoBehaviour
         {
             return;
         }
-        //用以自己为参考的目标点的世界坐标减去自己的世界坐标（但是操作完是反方向，原因暂未找出）
+        //自分自身を参照点として使用し、その世界座標から自分の世界座標を引く（ただし、操作が完了すると逆方向になり、その理由はまだ見つかっていない）。
         moveRes = transform.position - transform.TransformPoint(moveRes);
-        //叠加速度
+        //重ね加速
         moveRes.x *= speed.x;
         moveRes.z *= speed.y;
         // moveRes.y = rb.velocity.y;
@@ -221,25 +221,25 @@ public class PlayerControl : MonoBehaviour
     }
 
     /// <summary>
-    /// 移动端获取角色移动时的旋转结果
+    /// モバイル端末でキャラクターの移動時の回転結果を取得する
     /// </summary>
     public void GetPlayerInput_StickMoveRotate(Vector2 newPos)
     {
         if (newPos.x != 0)
         {
-            //修改移动时的旋转
+            //移動時の回転を修正する
             scaleRes_Move = newPos.x > 0 ? -1 : 1;
         }
     }
 
     /// <summary>
-    /// 移动端朝向输入
+    /// モバイル端末への入力方向
     /// </summary>
     /// <param name="callbackContext"></param>
     public void GetPlayerInput_StickRotate(Vector2 newPos)
     {
         Vector2 temp = newPos;
-        //操作方案1 增量式位移
+        //操作手順1 増分式変位
         // temp *= Time.deltaTime * rightStickMoveSpeed;
         // temp += rightStickPos;
         // rightStickPos.x = Mathf.Min(1920, temp.x);
@@ -247,7 +247,7 @@ public class PlayerControl : MonoBehaviour
         // rightStickPos.y = Mathf.Min(1080, temp.y);
         // rightStickPos.y = Mathf.Max(0, temp.y);
 
-        //操作方案2 位置式位移
+        //操作スキーム2 位置式変位
         temp /= 2;
         temp += Vector2.one / 2;
         temp.x *= 1920;
@@ -256,8 +256,8 @@ public class PlayerControl : MonoBehaviour
     }
 
     /// <summary>
-    /// 获取并调整角色的光圈朝向结果
-    /// 获取角色朝向鼠标时的缩放
+    /// キャラクターのアパーチャー方向を取得し調整する結果
+    /// キャラクターがマウスに向かってスケールする際の取得
     /// </summary>
     public void GetPlayerInput_MouseRotate()
     {
@@ -266,11 +266,11 @@ public class PlayerControl : MonoBehaviour
 #elif UNITY_ANDROID
         Ray ray = Camera.main.ScreenPointToRay(rightStickPos);
 #endif
-        //射线碰撞信息
+        //レイの衝突情報
         RaycastHit groundHit;
         if (Physics.Raycast(ray, out groundHit, 2000, LayerMask.GetMask("Ground")))
         {
-            targetPoint = groundHit.point;  //获取角色朝向，用于控制朝向光圈
+            targetPoint = groundHit.point;  //キャラクターの向きを取得し、向きの光環を制御するために使用します。
             scaleRes_Mouse = Vector3.Dot(transform.right, groundHit.point - transform.position) > 0 ? 1 : -1;
         }
         targetPoint.y = orientationObject.transform.position.y;
@@ -280,19 +280,19 @@ public class PlayerControl : MonoBehaviour
     }
 
     /// <summary>
-    /// 获取角色移动时的旋转结果
+    /// キャラクターの移動時の回転結果を取得する
     /// </summary>
     public void GetPlayerInput_MoveRotate(InputAction.CallbackContext callbackContext)
     {
         if (callbackContext.ReadValue<Vector2>().x != 0)
         {
-            //修改移动时的旋转
+            //移動時の回転を修正する
             scaleRes_Move = callbackContext.ReadValue<Vector2>().x > 0 ? -1 : 1;
         }
     }
 
     /// <summary>
-    ///  获取角色的攻击输入
+    ///  キャラクターの攻撃入力を取得する
     /// </summary>
     public void GetPlayerInput_Attack(InputAction.CallbackContext context)
     {
@@ -302,7 +302,7 @@ public class PlayerControl : MonoBehaviour
             {
                 SetWeaponType(E_WeaponType.sword);
             }
-            else if (animator.GetBool("canAttack"))  //只有可攻击时才能获取按键输入
+            else if (animator.GetBool("canAttack"))  //キー入力は攻撃可能な時だけ取得できます。
             {
                 animator.SetBool("attack", true);
                 return;
@@ -312,7 +312,7 @@ public class PlayerControl : MonoBehaviour
     }
 
     /// <summary>
-    /// 获取角色的射击输入
+    /// キャラクターのシューティング入力を取得する
     /// </summary>
     public void GetPlayerInput_ShotAttack(InputAction.CallbackContext context)
     {
@@ -332,7 +332,7 @@ public class PlayerControl : MonoBehaviour
     }
 
     /// <summary>
-    /// 获取角色的法术攻击输入
+    /// キャラクターの魔法攻撃入力を取得する
     /// </summary>
     public void GetPlayerInput_StaffAttack(InputAction.CallbackContext context)
     {
@@ -346,7 +346,7 @@ public class PlayerControl : MonoBehaviour
                 curHoldTime = 0;
             }
             moveRes = Vector3.zero;
-            // Debug.Log("准备释放");
+            // Debug.Log("リリースの準備が整いました");
             CM_Effect.Instance.PlayerGetDamaged(Color.black, 10, 0.6f);
             if (staffBuffLevel == 4)
             {
@@ -355,18 +355,18 @@ public class PlayerControl : MonoBehaviour
             SetUseMouseScale(true);
             magicBallStart = true;
             EffectManager.Instance.playerMagicRange.gameObject.SetActive(true);
-            EffectManager.Instance.playerMagicRange.GetComponent<AreaControl>().IsBuffed = staffBuffLevel >= 2 ? true : false;  //是否满足降低蓄力时间的条件
+            EffectManager.Instance.playerMagicRange.GetComponent<AreaControl>().IsBuffed = staffBuffLevel >= 2 ? true : false;  //蓄力時間を短縮する条件を満たしていますか？
             GameManager.Instance.SetMouse_Shot();
             FmodManager.Instance.PlaySpecialSound("event:/Player/Zhang/fireBallBefore");
         }
         else if (context.phase == InputActionPhase.Canceled)
         {
-            // Debug.Log("松开蓄力");
+            // Debug.Log("蓄えた力を解放する");
             if (weaponType == E_WeaponType.staff && curHoldTime >= staffHoldTime)
             {
                 CM_Effect.Instance.PlayerGetDamaged(Color.white, 8, 0.6f);
-                magicBallStart = false; //取消长按连发
-                // Debug.Log("发射法球");
+                magicBallStart = false; //長押し連射をキャンセル
+                // Debug.Log("火の玉を発射する");
                 gunControl.StaffModeShot(targetPoint);
             }
             ExitStaffMode();
@@ -375,7 +375,7 @@ public class PlayerControl : MonoBehaviour
     }
 
     /// <summary>
-    /// 退出法术模式
+    /// スペルモードを終了します
     /// </summary>
     public void ExitStaffMode()
     {
@@ -388,7 +388,7 @@ public class PlayerControl : MonoBehaviour
     }
 
     /// <summary>
-    /// 角色闪避输入获取
+    /// キャラクターの回避入力取得
     /// </summary>
     public void GetPlayerInput_Dodge(InputAction.CallbackContext context)
     {
@@ -397,7 +397,7 @@ public class PlayerControl : MonoBehaviour
             if (dodgeCD.flag)
             {
                 dodgeCount = characterBuffManager.GetDogeTimes();
-                // Debug.Log("冲刺");
+                // Debug.Log("スプリント");
                 if ((animator.GetBool("canDodge")))
                 {
                     animator.SetTrigger("dodge");
@@ -418,14 +418,16 @@ public class PlayerControl : MonoBehaviour
     #endregion
 
     #region 控制相关
-    /// <summary>
-    /// 自己的三维向量差值函数
-    /// 按帧插值
-    /// 本项目只使用xz轴，所以不对y轴差值
-    /// </summary>
-    /// <param name="cur"> 当前值 </param>
-    /// <param name="tar"> 目标值 </param>
-    /// <param name="value"> 差值系数 </param>
+    ///<summary>
+
+    ////// 自分の3次元ベクトル差分関数
+    /// フレームごとの補間
+    /// このプロジェクトではxz軸のみを使用しているため、y軸の差は考慮していません。
+
+    ///</summary>
+    /// <param name="cur"> 現在の値 </param>
+    /// <param name="tar"> 目標値 </param>
+    /// <param name="value"> 差分係数 </param>
     /// <returns></returns>
     public void V3Lerp(ref Vector3 cur, Vector3 tar, float value)
     {
@@ -434,8 +436,8 @@ public class PlayerControl : MonoBehaviour
     }
 
     /// <summary>
-    /// 角色Move运动控制
-    /// 改变角色velocity
+    /// キャラクターのMove運動制御
+    /// キャラクターの速度を変更する
     /// </summary>
     public void PlayerBaseMove(float velocityLerpValue)
     {
@@ -447,7 +449,7 @@ public class PlayerControl : MonoBehaviour
     }
 
     /// <summary>
-    /// 角色运动逐渐停止运动
+    /// キャラクターの動きが徐々に停止します。
     /// </summary>
     public void PlayerStopMove(float StopLerpValue)
     {
@@ -457,30 +459,38 @@ public class PlayerControl : MonoBehaviour
     }
 
     /// <summary>
-    /// 切换是否使用鼠标朝向
+    /// マウスの向きを使用するかどうかを切り替えます
     /// </summary>
-    /// <param name="_useMouseScale"> 是或否 </param>
+    /// <param name="_useMouseScale"> はい または いいえ </param>
     public void SetUseMouseScale(bool _useMouseScale)
     {
         useMouseScale = _useMouseScale;
     }
 
-    /// <summary>
-    /// 移动改变角色LocalScale（左右朝向）
-    /// 用于移动和冲刺时的面向调整
-    /// </summary>
+    ///<summary>
+
+
+    ////// 移動はキャラクターのLocalScale（左右の向き）を変更します。
+    /// 移動やスプリント時の方向調整に使用されます。
+
+
+    ///</summary>
     public void PlayerBaseRotate_Move()
     {
         if (!useMouseScale)
         {
-            skeletal.localScale = new Vector3(scaleRes_Move, 1, 1);   //调整朝向
+            skeletal.localScale = new Vector3(scaleRes_Move, 1, 1);   //方向を調整する
         }
     }
 
-    /// <summary>
-    /// 攻击改变角色LocalScale（左右朝向）
-    /// 用于攻击时的面向调整
-    /// </summary>
+    ///<summary>
+
+
+    ////// 攻撃はキャラクターのLocalScale（左右の向き）を変更します
+    /// 攻撃時の向き調整用
+
+
+    ///</summary>
     public void PlayerBaseRotate_Attack()
     {
         scaleRes_Move = scaleRes_Mouse;
@@ -488,22 +498,22 @@ public class PlayerControl : MonoBehaviour
     }
 
     /// <summary>
-    /// 角色基础闪避运动
+    /// キャラクターの基本的な回避動作
     /// </summary>
-    /// <param name="dodgePower"> 闪避速度 </param>
+    /// <param name="dodgePower"> 回避速度 </param>
     public void PlayerBaseMove_Dodge(float dodgePower)
     {
         PlayerBaseMove_ForceMove(dodgePower);
-        //在骨架中心位置显示特效
+        //スケルトンの中心位置に特殊効果を表示します
         EffectManager.Instance.SetDashEffect(transform.position + effectDashPos, rb.velocity);
         FMODUnity.RuntimeManager.PlayOneShot("event:/Player/shift");
     }
 
     /// <summary>
-    /// 角色强制移动
+    /// キャラクターの強制移動
     /// </summary>
-    /// <param name="movePower"> 强制移动速度 </param>
-    /// <param name="useKeyBord"> 是否使用键盘控制方向 </param>
+    /// <param name="movePower"> 強制移動速度 </param>
+    /// <param name="useKeyBord"> キーボードで方向を制御するかどうか </param>
     public void PlayerBaseMove_ForceMove(float movePower)
     {
         Vector3 plusVelocity;
@@ -529,9 +539,13 @@ public class PlayerControl : MonoBehaviour
         rb.velocity = new Vector3(dir.x, rb.velocity.y, dir.z);
     }
 
-    /// <summary>
-    /// 设置武器类型
-    /// </summary>
+    ///<summary>
+
+
+    ////// 武器タイプを設定します
+
+
+    ///</summary>
     public void SetWeaponType(E_WeaponType targetType)
     {
         if (gunControl.ModeChangeOver != 0) return;
@@ -551,81 +565,87 @@ public class PlayerControl : MonoBehaviour
             weaponType = E_WeaponType.staff;
             canShot = false;
         }
-        gunControl.ChangeMode(targetType);  //切换浮游炮模式
+        gunControl.ChangeMode(targetType);  //フロート砲モードに切り替えます
     }
 
-    /// <summary>
-    /// 切换连招到下一个node
-    /// </summary>
+    ///<summary>
+
+
+    ////// 次のノードにコンボを切り替えます
+
+
+    ///</summary>
     public void ChangeCombo(ComboNode nextCombo)
     {
         currentComboNode = nextCombo;
-        // Debug.Log("切换到" + currentComboNode);
+        // Debug.Log("スイッチする" + currentComboNode);
     }
     #endregion
 
     #region 战斗相关
     /// <summary>
-    /// 开启触发器
+    /// トリガーを起動する
     /// </summary>
     public void OpenTrigger()
     {
         comboTrigger.SetActive(true);
-        // Debug.Log("显示");
+        // Debug.Log("表現");
     }
-    /// <summary>
-    /// 生成攻击特效
-    /// </summary>
+    ///<summary>
+
+    ////// 攻撃特効を生成する
+
+    ///</summary>
     public void CreateEffect()
     {
         EffectManager.Instance.SetAttackEffect(currentComboNode.attackEffect, comboTrigger.transform.position + effectAtkPos, comboTrigger.transform.rotation);
         FMODUnity.RuntimeManager.PlayOneShot(currentComboNode.attackSound);
     }
     /// <summary>
-    /// 关闭触发器
+    /// トリガーを閉じる
     /// </summary>
     public void CloseTrigger()
     {
         comboTrigger.SetActive(false);
-        // Debug.Log("关闭");
+        // Debug.Log("クローズ");
     }
     /// <summary>
-    /// 角色索敌突进
-    /// 基于当前ComboNode判断
+    /// キャラクターの索敵突進
+    /// 現在のComboNodeに基づいて判断します
     /// </summary>
     public void PlayerAttackMove_Plunge()
     {
-        //获取朝向向量（目标点-中心点获取向量）归一化后乘以z方向长度拉伸向量
+        //方向ベクトルを取得（目標点-中心点でベクトルを取得）し、正規化した後にz方向の長さでベクトルを伸ばします。
         Vector3 dir = targetPoint - orientationObject.position;
-        dir.y = 0;   //消除俯仰角
-        Vector3 dirNormal = dir.normalized; //保存朝向向量的归一化结果
+        dir.y = 0;   //ピッチ角を消去する
+        Vector3 dirNormal = dir.normalized; //向ベクトルの正規化結果を保存します
         dir = dirNormal * currentComboNode.halfPlungeBoxSize.z;
-        //获取中心位置（可想象成通过将中心位置向朝向向量移动后的位置就是中心位置）
+        //中心位置を取得する（中心位置を向きベクトルに移動した後の位置が中心位置と考えることができます）
         dir = new Vector3(orientationObject.position.x + dir.x, transform.position.y, orientationObject.position.z + dir.z);
         Collider[] colliders = Physics.OverlapBox(dir, currentComboNode.halfPlungeBoxSize, orientationObject.transform.rotation, LayerMask.GetMask("EmyBody"));
 
         // TestCube.transform.position = dir;
         // TestCube.transform.localScale = currentComboNode.halfPlungeBoxSize * 2;
         // TestCube.transform.rotation = orientationObject.transform.rotation;
-        //修改Tigger的尺寸，dir没用了可以在这里复用
+        //Tiggerのサイズを変更し、dirはもう使われていないので、ここで再利用することができます。
         dir = dirNormal * (currentComboNode.attackRange.z / 2 + currentComboNode.attackRangeDeviation);
         dir = new Vector3(orientationObject.position.x + dir.x, transform.position.y, orientationObject.position.z + dir.z);
         comboTrigger.transform.position = dir;
         comboTrigger.transform.localScale = currentComboNode.attackRange;
         comboTrigger.transform.rotation = orientationObject.transform.rotation;
-        //如果没有就不追踪
+        //なければ追跡しない
         if (colliders.Length == 0)
         {
             if (moveRes.magnitude > 3.0f)
             {
-                // Debug.Log("没有搜索到敌人，键盘方向索敌");
+                // Debug.Log("敵が見つからない、キーボードの方向で敵を探す");
                 // rb.velocity = Vector3.zero;
                 dir = moveRes.normalized * currentComboNode.plungePower;
                 rb.velocity = new Vector3(dir.x * currentComboNode.forceSpeed.x, rb.velocity.y, dir.z * currentComboNode.forceSpeed.y);
             }
             else
             {
-                // Debug.Log("没有搜索到敌人，鼠标方向索敌");
+                // Debug.Log("敵が見つからない、マウスの方向で敵を探す");
                 // rb.velocity = Vector3.zero;
                 dir = (targetPoint - transform.position).normalized * currentComboNode.plungePower;
                 rb.velocity = new Vector3(dir.x * currentComboNode.forceSpeed.x, rb.velocity.y, dir.z * currentComboNode.forceSpeed.y);
@@ -633,7 +653,7 @@ public class PlayerControl : MonoBehaviour
         }
         else
         {
-            dir = colliders[0].transform.position - orientationObject.position;    //重复利用变量
+            dir = colliders[0].transform.position - orientationObject.position;    //変数の再利用
             dir.y = 0;
             float minDistence = dir.magnitude;
             foreach (Collider c in colliders)
@@ -646,43 +666,47 @@ public class PlayerControl : MonoBehaviour
                     colliders[0] = c;
                 }
             }
-            dir = colliders[0].transform.position - orientationObject.position;    //重复利用变量
+            dir = colliders[0].transform.position - orientationObject.position;    //変数の再利用
             dir.y = 0;
-            //如果太近就不追踪，进入攻击距离不在追击
+            //あまりにも近すぎると追跡しない、攻撃範囲に入ったら追撃しない。
             if (dir.magnitude > currentComboNode.attackRange.z)
             {
-                //追击敌人速度，越远速率越高
-                // Debug.Log("搜索到敌人，并且距离较远，索敌");
+                //敵を追いかける速度は、距離が遠くなるほど速度が上がります。
+                // Debug.Log("敵を検出し、距離が遠い、索敵");
                 // rb.velocity = Vector3.zero;
                 rb.velocity = dir * currentComboNode.plungePower;
             }
             else
             {
-                // Debug.Log("搜索到敌人，并且距离不远，不索敌");
+                // Debug.Log("敵を検出し、距離も近い、索敵しない");
             }
         }
     }
 
     /// <summary>
-    /// 重攻击逻辑
+    /// ヘビーアタックロジック
     /// </summary>
     private void PlayerAttack_Heavy(InputActionPhase phase)
     {
         if (phase == InputActionPhase.Started)
         {
-            // Debug.Log("重攻击");
+            // Debug.Log("ヘビーアタック");
             animator.SetTrigger("heavyAttack");
         }
         else
         {
-            // Debug.Log("清除重攻击");
+            // Debug.Log("ヘビーアタックをクリア");
             animator.ResetTrigger("heavyAttack");
         }
     }
 
-    /// <summary>
-    /// 枪攻击逻辑
-    /// </summary>
+    ///<summary>
+
+
+    ////// 銃撃のロジック
+
+
+    ///</summary>
     private void PlayerAttack_Gun()
     {
         // if (canShot && animator.GetBool("canAttack"))
@@ -693,12 +717,12 @@ public class PlayerControl : MonoBehaviour
     }
 
     /// <summary>
-    /// 杖攻击逻辑
+    /// スティック攻撃ロジック
     /// </summary>
     private void PlayerAttack_Staff()
     {
-        //进入不可攻击状态时重置蓄力时间
-        //适用于冲刺打断
+        //攻撃不可能な状態に入った時、蓄積時間をリセットします。
+        //スプリントを中断するために適用されます
         // if (!animator.GetBool("canAttack") && staffBuffLevel < 4)
         // {
         //     ExitStaffMode();
@@ -712,18 +736,18 @@ public class PlayerControl : MonoBehaviour
                 curHoldTime = staffHoldTime;
             }
             EffectManager.Instance.playerMagicRange.position = targetPoint;
-            //朝向鼠标方向
+            //マウスの方向に向かう
             PlayerBaseRotate_Attack();
-            //蓄力中无法移动
+            //力を蓄えている間は移動できません。
             PlayerStopMove(staffStopLerp);
         }
     }
 
     /// <summary>
-    /// 根据玩家连击数提升玩家攻击倍率
+    /// プレイヤーのコンボ数に応じて、プレイヤーの攻撃倍率を上げる
     /// </summary>
     /// <param name="maxMagnification"> 最大倍率 </param>
-    /// <param name="stepMagnification"> 每连击增加的倍率 </param>
+    /// <param name="stepMagnification"> 連続ヒットごとの増加倍率 </param>
     public void SetCurrentComboAttack(float maxMagnification, float stepMagnification)
     {
         if (swordBuffLevel == 4)
@@ -737,10 +761,10 @@ public class PlayerControl : MonoBehaviour
     }
 
     /// <summary>
-    /// 根据玩家连击数提升玩家攻击倍率
+    /// プレイヤーのコンボ数に応じて、プレイヤーの攻撃倍率を上げる
     /// </summary>
     /// <param name="maxMagnification"> 最大倍率 </param>
-    /// <param name="stepMagnification"> 每连击增加的倍率 </param>
+    /// <param name="stepMagnification"> 連続ヒットごとの増加倍率 </param>
     public void SetSpecifyComboAttack(E_WeaponType weaponType, float maxMagnification, float stepMagnification)
     {
         if (weaponType == E_WeaponType.gun)
@@ -767,38 +791,42 @@ public class PlayerControl : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 攻击判定
-    /// </summary>
-    /// <param name="other"> 被打击物体 </param>
+    ///<summary>
+
+
+    ////// 攻撃判定
+
+
+    ///</summary>
+    /// <param name="other"> 打撃された物体 </param>
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "EmyBody")
         {
-            // Debug.Log("攻击命中");
+            // Debug.Log("攻撃がヒットします");
             SetCurrentComboAttack(2f, 0.1f);
             GameManager.Instance.PlayerAttack(other.transform.parent.GetComponent<BaseEnemyControl>(), transform.position);
-            GameManager.Instance.Player_StartHitEffect();   //开始打击感流程
+            GameManager.Instance.Player_StartHitEffect();   //打撃感プロセスを開始します
         }
         if (other.tag == "BossBody")
         {
             SetCurrentComboAttack(2, 0.1f);
             GameManager.Instance.PlayerAttack(other.GetComponent<BossControl>());
-            GameManager.Instance.Player_StartHitEffect();   //开始打击感流程
+            GameManager.Instance.Player_StartHitEffect();   //打撃感プロセスを開始します
         }
     }
 
     /// <summary>
-    /// 暂停动画 卡顿效果
+    /// アニメーションを一時停止 チョッピング効果
     /// </summary>
-    /// <param name="pauseSpeed"> 期望动画播放速度 </param>
+    /// <param name="pauseSpeed"> アニメーション再生速度を期待 </param>
     public void PauseAnimation(float pauseSpeed)
     {
         animator.speed = pauseSpeed;
     }
 
     /// <summary>
-    /// 恢复动画 卡顿效果
+    /// アニメーションの復元 ラグ効果
     /// </summary>
     public void ContinueAnimation()
     {
@@ -807,17 +835,23 @@ public class PlayerControl : MonoBehaviour
     #endregion
 
     #region 测试相关
-    /// <summary>
-    /// 屏蔽输入
-    /// </summary>
+    ///<summary>
+
+    ////// 入力をブロックする
+
+    ///</summary>
     public void DisableInput()
     {
         GetComponent<PlayerInput>().enabled = false;
     }
 
-    /// <summary>
-    /// 恢复输入
-    /// </summary>
+    ///<summary>
+
+
+    ////// 入力を復元する
+
+
+    ///</summary>
     public void EnableInput()
     {
         GetComponent<PlayerInput>().enabled = true;
@@ -826,7 +860,7 @@ public class PlayerControl : MonoBehaviour
     }
 
     /// <summary>
-    /// 重新加载Buff相关数据
+    /// Buff関連データを再読み込みします
     /// </summary>
     private void RebuildBuffLevel()
     {
@@ -843,7 +877,7 @@ public class PlayerControl : MonoBehaviour
     }
 
     /// <summary>
-    /// 重新加载玩家Buff
+    /// プレイヤーのBuffを再読み込みする
     /// </summary>
     public void PlayerBuffRebuild(List<I_BuffBase> newBuffList)
     {
@@ -856,18 +890,18 @@ public class PlayerControl : MonoBehaviour
 
 
     /// <summary>
-    /// 角色死亡
+    /// キャラクターの死
     /// </summary>
     public void PlayerDie()
     {
         isDead = true;
-        DisableInput(); //屏蔽输入
+        DisableInput(); //入力をブロックする
         ContinueAnimation();
         animator.SetTrigger("die");
     }
 
     /// <summary>
-    /// 角色收到攻击
+    /// キャラクターが攻撃を受けました
     /// </summary>
     public void GetDamage()
     {
@@ -879,7 +913,7 @@ public class PlayerControl : MonoBehaviour
     }
 
     /// <summary>
-    /// 按下Q键后的操作测试
+    /// Qキーを押した後の操作テスト
     /// </summary>
     public void GetInputKey_Q(InputAction.CallbackContext context)
     {
@@ -890,7 +924,7 @@ public class PlayerControl : MonoBehaviour
     }
 
     /// <summary>
-    /// 按下E键后的操作测试
+    /// Eキーを押した後の操作テスト
     /// </summary>
     public void GetInputKey_E(InputAction.CallbackContext context)
     {
@@ -901,7 +935,7 @@ public class PlayerControl : MonoBehaviour
     }
 
     /// <summary>
-    /// 按下R键后的操作测试
+    /// Rキーを押した後の操作テスト
     /// </summary>
     public void GetInputKey_R(InputAction.CallbackContext context)
     {
