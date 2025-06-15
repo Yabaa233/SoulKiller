@@ -43,7 +43,7 @@ public class HatcheryEnemyFSM : BaseEnemyFSM
     {
         hatcheryEnemyCD.maxCDTime = parameter.intervalTime;
         GameManager.Instance.CDList.Add(hatcheryEnemyCD);
-        /*hatcheryEnemyCD.flag = true;*/
+
         parameter.sonBorn = transform.GetChild(0);
         states.Add(E_EnemyStateType.Idle, new HatcheryEnemy_IdleState(this));
         states.Add(E_EnemyStateType.Attack, new HatcheryEnemy_ProductionState(this));

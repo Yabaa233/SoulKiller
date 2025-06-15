@@ -36,7 +36,7 @@ public class HatcheryEnemyControl : BaseEnemyControl
         enemyBody = transform.Find("body");
         baseEnemyFSM = enemyFSM;
         agent = GetComponent<NavMeshAgent>();
-        /*print("组件初始化");*/
+
         //自身の属性を設定
         enemyData.currentComboAttack = 1;//攻撃倍率を設定
         transform.tag = strTag;
@@ -46,7 +46,7 @@ public class HatcheryEnemyControl : BaseEnemyControl
         characterBuffManager = new CharacterBuffManager();
         enemyData = new CharacterData(Instantiate(tempCharaterData));
         characterBuffManager.Init(E_ChararcterType.enemy);
-        /*print("自身属性初始化");*/
+
         //データの同期
         enemyFSM.parameter.enemyData = enemyData;
         enemyFSM.parameter.enemyStateData = tempEnemyStateData;

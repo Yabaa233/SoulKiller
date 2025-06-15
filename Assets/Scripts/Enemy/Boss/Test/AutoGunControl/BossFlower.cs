@@ -129,7 +129,6 @@ public class BossFlower : MonoBehaviour
                 isEnd = false;
                 isWidth = false;
                 endTimer = Time.time;
-                /*Debug.Log(effect.transform.GetChild(0).GetComponent<LineRenderer>().isVisible);*/
                 effect.SetActive(false);
                 //关闭粒子特效
                 return;

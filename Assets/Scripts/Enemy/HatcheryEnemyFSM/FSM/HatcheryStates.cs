@@ -36,8 +36,7 @@ public class HatcheryEnemy_IdleState : IState
     public void OnEnter()
     {
         parameter.animator.Play("Idle");
-        /*parameter.intervalTime = Time.time;*/
-        ///待機状態、第一状態として設定:1.待機 2.逃走
+
     }
     public void OnUpDate()
     {
@@ -98,7 +97,6 @@ public class HatcheryEnemy_ProductionState : IState
             
             ///1体の敵を生成
             GameObject son = manager.SonProduction(parameter.sonBorn);///生成位置は事前に設定された位置を使用        
-            /*FMODUnity.RuntimeManager.PlayOneShot("event:/Monster/NorMal/duiduiBorn");                                                                        ///敵を生成した後に敵の音を再生*/
             son.transform.parent = manager.transform.parent;
             manager.gameObject.GetComponent<HatcheryEnemyControl>().room.enemyCount++;
             son.SetActive(true);
