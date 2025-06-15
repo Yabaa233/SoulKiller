@@ -75,7 +75,7 @@ public class SwordEnemy_IdleState : IState
         {
             manager.TranstionState(E_EnemyStateType.Hit);
         }
-        // Debug.Log("待機状態にあります");
+        // Debug.Log("スタンバイ状態にあります");
         if(parameter.ableAttact&&manager.AttackCD.flag)
         {
             manager.TranstionState(E_EnemyStateType.Chase);//警戒距離に達したら追撃を開始します。
@@ -227,7 +227,7 @@ public class SwordEnemy_AttackState : IState
 
     public void OnEnter()
     {
-        parameter.agent.enabled = false;//攻撃状態下でパスファインディングをオフにする
+        parameter.agent.enabled = false;//攻撃状態下でパスファインディングをオフにします
         manager.FaceToTarget();
         manager.RotateToTarget();
         parameter.animator.Play("TribleAttack");
@@ -240,7 +240,7 @@ public class SwordEnemy_AttackState : IState
 
     public void OnExit()
     {
-        parameter.agent.enabled = true;//攻撃状態下でパスファインディングをオフにする
+        parameter.agent.enabled = true;//攻撃状態下でパスファインディングをオフにします
     }
 
     public void OnLateUpDade()
@@ -274,7 +274,7 @@ public class SwordEnemy_GetHitState : IState
     private SwordEnemyFSM manager;
     private SwordEnemyParameter parameter;
     private float nextStateTime;
-    private float timeBtwState = 0.3f;//少なくとも被打撃状態に留まる
+    private float timeBtwState = 0.3f;//少なくとも打撃を受けた状態に留まる
     public SwordEnemy_GetHitState(SwordEnemyFSM _manager)
     {
         this.manager = _manager;

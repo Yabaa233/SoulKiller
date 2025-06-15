@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 /// <summary>
-/// ½ÇÉ«µ±Ç°µÄ Buff£¨ÄÜÁ¦£© Ãæ°å
+/// ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ã®ç¾åœ¨ã®ãƒãƒ•ï¼ˆèƒ½åŠ›ï¼‰ãƒ‘ãƒãƒ«
 /// xushi
 /// </summary>
 public class BuffInfoPanel : BasePanel
@@ -12,19 +12,19 @@ public class BuffInfoPanel : BasePanel
 
     public BuffInfoPanel() : base(new UIType(path)) { }
 
-    //×ó²àÊôĞÔbuffÁĞ±í
+    //å·¦å´ã®å±æ€§ãƒãƒ•ãƒªã‚¹ãƒˆ
     GameObject propertyList;
-    //ÓÒ²àÎäÆ÷buffÁĞ±í
+    //å³å´ã®æ­¦å™¨ãƒãƒ•ãƒªã‚¹ãƒˆ
     GameObject weaponList;
-    //·µ»Ø°´Å¥
+    //æˆ»ã‚‹ãƒœã‚¿ãƒ³
     Button back;
 
-    //ÊÇ·ñÊÇµÚÒ»´Î´ò¿ª½çÃæ
+    //ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹ã‚’åˆã‚ã¦é–‹ãã¾ã™ã‹ï¼Ÿ
     bool isFirst = true;
 
     Area_MainBuff area_MainBuff;
 
-    //ÒôĞ§Ğ­³Ì
+    //ã‚µã‚¦ãƒ³ãƒ‰ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã®ã‚³ãƒ«ãƒ¼ãƒãƒ³
     Coroutine soundCoro;
 
     public override void OnShow(params object[] para)
@@ -65,7 +65,7 @@ public class BuffInfoPanel : BasePanel
     {
         base.OnClose();
         Time.timeScale=1.0f;
-        //Ïú»ÙÖ®Ç°µÄui
+        //ä»¥å‰ã®UIã‚’ç ´å£Šã™ã‚‹
         foreach (var item in PanelManager.Instance.GetAllPanel("Buff_Property"))
         {
             item.Close();
@@ -81,7 +81,7 @@ public class BuffInfoPanel : BasePanel
 
         if (PanelManager.Instance.GetPanel("PausePanel") != null)
         {
-            //ÔÚ´ò¿ªÔİÍ£µÄÇé¿öÏÂ´ò¿ªÄÜÁ¦Ãæ°å
+            //ä¸€æ™‚åœæ­¢ä¸­ã«èƒ½åŠ›ãƒ‘ãƒãƒ«ã‚’é–‹ã
             Time.timeScale = 0f;
             coroutines.Add(MonoHelper.Instance.StartCoroutine(ReListenPause()));
         }
@@ -118,16 +118,16 @@ public class BuffInfoPanel : BasePanel
     }
 
 
-    //×ó²àÌî³äitem£¨²âÊÔ£©
+    //å·¦å´ã«ã‚¢ã‚¤ãƒ†ãƒ ï¼ˆãƒ†ã‚¹ãƒˆï¼‰ã‚’åŸ‹ã‚è¾¼ã‚€
     public void InitPropertyBuff()
     {
-        //Ïú»ÙÖ®Ç°µÄui
+        //ä»¥å‰ã®UIã‚’ç ´å£Šã™ã‚‹
         foreach (var item in PanelManager.Instance.GetAllPanel("Buff_Property"))
         {
             item.Close();
         }
 
-        //Éú³É
+        //ç”Ÿæˆ
         foreach (var item in BuffDataManager.Instance.playerCurrentBuff)
         {
             E_BuffKind buffKind=item.buffKind;
@@ -142,10 +142,10 @@ public class BuffInfoPanel : BasePanel
         }
         //Debug.Log("init");
     }
-    //ÓÒ²àÌî³äitem£¨²âÊÔ£©
+    //å³å´ã«ã‚¢ã‚¤ãƒ†ãƒ ï¼ˆãƒ†ã‚¹ãƒˆï¼‰ã‚’åŸ‹ã‚ã‚‹
     public void InitWeaponBuff()
     {
-        //Ïú»ÙÖ®Ç°µÄui
+        //ä»¥å‰ã®UIã‚’ç ´å£Šã™ã‚‹
         foreach (var item in PanelManager.Instance.GetAllPanel("Buff_Weapon"))
         {
             item.Close();
@@ -165,7 +165,7 @@ public class BuffInfoPanel : BasePanel
         }
     }
 
-    //ESC¹Ø±ÕÃæ°å
+    //ESCã§ãƒ‘ãƒãƒ«ã‚’é–‰ã˜ã‚‹
     public void EscClose(KeyCode keyCode)
     {
         if ((keyCode == KeyCode.Escape||keyCode==KeyCode.B)&&!isFirst)

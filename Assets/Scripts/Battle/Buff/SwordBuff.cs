@@ -13,7 +13,7 @@ public class SwordBuff : I_BuffBase
     [Tooltip("Current Role Buff Manager")]CharacterBuffManager characterBuffManager;
     //現在のBUFFの種類
     [Tooltip("Current Buff Type")]E_BuffKind buffType;
-    //現在のキャラクターのタイプ
+    //現在のキャラクタータイプ
     [Tooltip("Current role type")]E_ChararcterType chararcterType;
 
     [Tooltip("Current Buff Level")]public int currentLevel;

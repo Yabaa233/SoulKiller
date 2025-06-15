@@ -23,7 +23,7 @@ public class SceneChangePanel : BasePanel
     public override void OnInit()
     {
         base.OnInit();
-        ifNeedUpdate = true;//需要Update方法来更新
+        ifNeedUpdate = true;//更新するためのUpdateメソッドが必要です。
     }
 
     public override void OnShow(params object[] para)
@@ -48,7 +48,7 @@ public class SceneChangePanel : BasePanel
     public override void Update()
     {
         base.Update();
-        if(asyncPercent>89f)//因为传值最大就是90
+        if(asyncPercent>89f)//値を渡す最大値は90です。
         {
             asyncPercent = 100f;
         }
@@ -63,7 +63,7 @@ public class SceneChangePanel : BasePanel
             currentPercent = asyncPercent;
         }
 
-        loadText.text = "加载中..." + currentPercent.ToString() + "%";
+        loadText.text = "読み込み中..." + currentPercent.ToString() + "%";
 
         if(currentPercent >= 99f)
         {
@@ -83,9 +83,13 @@ public class SceneChangePanel : BasePanel
         
     }
 
-    /// <summary>
-    /// 设置目标百分比
-    /// </summary>
+    ///<summary>
+
+
+    ////// 目標パーセンテージを設定する
+
+
+    ///</summary>
     /// <param name="asyncPercent"></param>
     public void SetPercent(float _asyncPercent)
     {
@@ -94,7 +98,7 @@ public class SceneChangePanel : BasePanel
 
 
     /// <summary>
-    /// 返回是否可以跳转了
+    /// ジャンプできるかどうかを返します。
     /// </summary>
     /// <returns></returns>
     public bool IFCanJump()

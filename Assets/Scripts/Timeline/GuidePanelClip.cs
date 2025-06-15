@@ -6,7 +6,7 @@ using UnityEngine.Playables;
 [System.Serializable]
 public class GuidePanelClip : PlayableAsset
 {
-    [Header("对应的图片")]public Sprite guideImage;
+    [Header("対応する画像")]public Sprite guideImage;
     [TextArea(8,1)] public string guideLineText;
     public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
     {

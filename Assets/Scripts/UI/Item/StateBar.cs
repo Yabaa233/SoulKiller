@@ -5,16 +5,16 @@ using UnityEngine.UI;
 using System;
 
 
-//统一的状态栏
+//統一されたステータスバー
 public class StateBar : IDisposable
 {
-    //创建并且获得状态实例
+    //状態インスタンスを作成し取得する
     private GameObject statePanel;
-    //持有statepanel的物体
+    //statepanelを保有するオブジェクト
     private GameObject panelKeeper;
-    //坐标偏移
+    //座標オフセット
     private Vector3 bias;
-    //血条图片相关
+    //ヘルスバー画像関連
     private Image hpImage;
     private Image hpEffect;
     private bool disposedValue;
@@ -22,7 +22,7 @@ public class StateBar : IDisposable
 
     public StateBar(GameObject _statePanel,GameObject _panelKeeper)
     {
-        //获取到对应的实例
+        //対応するインスタンスを取得しました
         statePanel = _statePanel;
         panelKeeper = _panelKeeper;
 
@@ -30,15 +30,19 @@ public class StateBar : IDisposable
         hpEffect = statePanel.transform.Find("HpEffect").GetComponent<Image>();
     }
 
-    /// <summary>
-    /// 更新方法
-    /// </summary>
+    ///<summary>
+
+
+    ////// 更新方法
+
+
+    ///</summary>
     public void UpdateState(float currentHealth,float maxHealth)
     {
         statePanel.transform.localPosition = PanelManager.Instance.WorldPointToUILocalPoint(panelKeeper.transform.position + bias);
 
-        //血条更新
-        hpImage.fillAmount = currentHealth / maxHealth;//设置血条的百分比
+        //ヘルスバーの更新
+        hpImage.fillAmount = currentHealth / maxHealth;//ヘルスバーのパーセンテージを設定する
         if (hpEffect.fillAmount > hpImage.fillAmount)
         {
             hpEffect.fillAmount -= 0.001f;
@@ -50,9 +54,9 @@ public class StateBar : IDisposable
     }
 
     /// <summary>
-    /// 设置偏移
+    /// オフセットを設定する
     /// </summary>
-    /// <param name="_bias">Vector3偏移量</param>
+    /// <param name="_bias">Vector3オフセット</param>
     public void SetPositionBias(Vector3 _bias)
     {
         bias = _bias;
@@ -60,7 +64,7 @@ public class StateBar : IDisposable
 
 
     /// <summary>
-    /// 设置Scale大小
+    /// スケールサイズを設定する
     /// </summary>
     /// <param name="_scale">Vector3Scale</param>
     public void SetlocalScale(Vector3 _scale)
@@ -68,17 +72,21 @@ public class StateBar : IDisposable
         statePanel.GetComponent<RectTransform>().localScale = _scale;
     }
 
-    /// <summary>
-    /// 销毁当前面板
-    /// </summary>
+    ///<summary>
+
+
+    ////// 現在のパネルを破壊する
+
+
+    ///</summary>
     public void DestroyThis()
     {
-        // Debug.Log("没有执行");
+        // Debug.Log("It is not being executed.");
         GameObject.Destroy(statePanel);
     }
 
     /// <summary>
-    /// 返回面板持有者
+    /// パネルホルダーに戻る
     /// </summary>
     /// <returns></returns>
     public GameObject GetBuffKeeper()
@@ -87,7 +95,7 @@ public class StateBar : IDisposable
     }
 
     /// <summary>
-    /// 返回状态面板
+    /// ステータスパネルを戻す
     /// </summary>
     /// <returns></returns>
     public GameObject GetStatePanel()

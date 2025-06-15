@@ -4,10 +4,13 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-/// <summary>
-/// �����壬���������ѡ��Ҫ����������
-/// xushi
-/// </summary>
+///<summary>
+
+
+////// 申し訳ありませんが、提供された内容は識別および翻訳することができません。
+
+
+///</summary>
 public class Btn_Abandon : BasePanel
 {
     static readonly string path = "UI/Item/Btn_Abandon";
@@ -19,25 +22,25 @@ public class Btn_Abandon : BasePanel
     Image buffIcon;
     //�������
     Text buffInfo;
-    //一级的能力展示
+    //一級の能力展示
     Text buffLevel1Info;
 
     //�����buff����
     BuffItemData buffItem;
 
-    //普通背景
+    //一般的な背景
     GameObject back;
-    //选中状态背景
+    //選択状態の背景
     GameObject selectBack;
-    //选中状态发光
+    //選択状態で光る
     GameObject light;
-    //表面压黑（悬停后移除）
+    //表面プレッシャーブラック（ホバー後に削除）
     GameObject topBack;
     
-    //动画
+    //アニメーション
     Animator anim;
 
-    //长按协程
+    //コルーチンを長押し
     Coroutine pointerDown;
 
 
@@ -70,7 +73,7 @@ public class Btn_Abandon : BasePanel
         buffIcon.sprite = buffItem.buffSprite;
         buffLevel1Info.text = buffItem.buffLevelDatas[0].levelDescribe;
 
-        //表现相关
+        //パフォーマンス関連
         selectBack.SetActive(false);
         light.SetActive(false);
 
@@ -119,7 +122,7 @@ public class Btn_Abandon : BasePanel
         anim.SetTrigger("CancelAbondon");
     }
 
-    //长按逻辑
+    //長押しロジック
     IEnumerator IE_PointerDown()
     {
         anim.SetTrigger("StartAbondon");
@@ -145,9 +148,9 @@ public class Btn_Abandon : BasePanel
         Debug.Log("������buff");
 
         //���ݹ�������������
-        PanelManager.Instance.Open(new SelectPanel(), null, "进阶", buffLevel+1);
+        PanelManager.Instance.Open(new SelectPanel(), null, "Advanced", buffLevel+1);
 
-        //刷新主界面按钮
+        //メイン画面を更新するボタン
         Area_MainBuff area=PanelManager.Instance.GetPanel("Area_MainBuff") as Area_MainBuff;
         area.RefreshBuffButton();
     }

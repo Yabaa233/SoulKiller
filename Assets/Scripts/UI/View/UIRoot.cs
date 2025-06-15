@@ -5,21 +5,21 @@ using UnityEngine;
 public class UIRoot
 {
     private static Transform rootTransform;
-    private static Transform recyclePool;//回收的窗体 隐藏
-    private static Transform workStation;//前台显示，工作中的窗体
-    private static Transform noticesStation;//提示类型的窗体
-    private static bool isInit = false;//是否完成了初始化,避免空引用
+    private static Transform recyclePool;//リサイクルされたウィンドウ 隠す
+    private static Transform workStation;//フロントディスプレイ、作業中のウィンドウ
+    private static Transform noticesStation;//ヒントタイプのウィンドウ形式
+    private static bool isInit = false;//初期化は完了し、null参照を避けましたか？
 
-    //不常驻场景
+    //常駐シーンではない
     // public static void Init()
     // {
-    //     //每次都重新创建一下
+    //     //毎回新しく作成します
     //     if(transform!=null)
     //     {
     //         GameObject.Destroy(transform.gameObject);
     //     }
 
-    //     //初始化创建整个UI层级布局
+    //     // UI階層レイアウト全体の初期化作成
     //     if(transform == null)
     //     {
     //         GameObject obj = Resources.Load<GameObject>("UI/UIRoot");
@@ -43,7 +43,7 @@ public class UIRoot
     //     isInit = true;
     // }
 
-    //让元素常驻场景
+    //エレメントをシーンに常駐させる
     public static void Init()
     {
         rootTransform = GameObject.Find("UIRoot").transform;
@@ -53,15 +53,15 @@ public class UIRoot
         isInit = true;
     }
 
-    //对外接口部分
+    //外部インターフェース部分
     public static void SetParent(Transform window,bool isOpen,bool isTipsWindow =false)
     {
         if(isInit == false)
         {
-            Init();//如果还没有初始化则直接初始化
+            Init();//まだ初期化されていなければ、直接初期化してください。
         }
 
-        if(isOpen == true)//如果面板窗口处于工作状态，则放入下列两个的其中一种窗口
+        if(isOpen == true)//パネルウィンドウが作業状態にある場合、以下の二つのウィンドウのうち一つを入れてください。
         {
             if(isTipsWindow)
             {
@@ -72,7 +72,7 @@ public class UIRoot
                 window.SetParent(workStation,false);
             }
         }
-        else//非工作状态下的窗口进行回收
+        else//非稼働状態のウィンドウをリサイクルします
         {
             window.SetParent(recyclePool,false);
         }

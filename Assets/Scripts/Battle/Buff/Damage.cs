@@ -13,7 +13,7 @@ public class Damage : I_BuffBase
     [Tooltip("Current Role Buff Manager")]CharacterBuffManager characterBuffManager;
     //現在のBUFFの種類
     [Tooltip("Current Buff Type")]E_BuffKind buffType;
-    //現在のキャラクターのタイプ
+    //現在のキャラクタータイプ
     [Tooltip("Current role type")]E_ChararcterType chararcterType;
 
     [Tooltip("Current Buff Level")]public int currentLevel;
@@ -136,7 +136,7 @@ public class Damage : I_BuffBase
 
         realEffect(characterData);
     }
-/////////Buffが削除された時、属性状態を元に戻します。
+/////////バフが削除された時、属性状態を元に戻します。
     private void PlayerDamageRemove()
     {
         PlayerControl playerControl = buffKeeper.GetComponent<PlayerControl>();
@@ -201,7 +201,7 @@ public class Damage : I_BuffBase
         }
     }
     
-    private void level3DamageUp(CharacterData characterData)//第二段のクリティカルヒット率上昇幅
+    private void level3DamageUp(CharacterData characterData)//第二段階のクリティカルヒット率の上昇幅
     {
         if(chararcterType == E_ChararcterType.player)
         {
@@ -217,7 +217,7 @@ public class Damage : I_BuffBase
         }
     }
 
-    private void level4DamageUp(CharacterData characterData)//第三段のクリティカルダメージ増加
+    private void level4DamageUp(CharacterData characterData)//第三段落のクリティカルダメージ増加
     {
         if(chararcterType == E_ChararcterType.player)
         {

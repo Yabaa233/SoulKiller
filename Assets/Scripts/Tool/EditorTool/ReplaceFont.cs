@@ -45,7 +45,7 @@
 //         }
 
 //         /// <summary>
-//         /// ����������Hierarchy���������text���巽��
+//         /// このテキストは階層構造に表示されます。
 //         /// </summary>
 //         public static void ChangeFont_Scene()
 //         {
@@ -59,7 +59,7 @@
 //                 Undo.RecordObject(t, t.gameObject.name);
 //                 t.font = toChangeFont;
 //                 t.fontStyle = toChangeFontStyle;
-//                 //�൱������ˢ���� ��Ȼunity��ʾ���滹��֪���Լ��Ķ�����������  �����������ʾ֮ǰ�Ķ���
+//                 申し訳ありませんが、提供されたテキストは不明確で、適切な翻訳を提供することができません。もう一度、明確なテキストを提供していただけますか？
 //                 EditorUtility.SetDirty(t);
 //             }
 //             Debug.Log("Succed��Hierarchy�����text��������ɹ���");

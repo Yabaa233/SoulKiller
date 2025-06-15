@@ -12,7 +12,7 @@ public class SpeedBuff : I_BuffBase
     [Tooltip("Current Role Buff Manager")]CharacterBuffManager characterBuffManager;
     //現在のBUFFの種類
     [Tooltip("Current Buff Type")]E_BuffKind buffType;
-    //現在のキャラクターのタイプ
+    //現在のキャラクタータイプ
     [Tooltip("Current role type")]E_ChararcterType chararcterType;
 
     [Tooltip("Current Buff Level")]public int currentLevel;
@@ -23,7 +23,7 @@ public class SpeedBuff : I_BuffBase
     [Tooltip("The current number of times that can be dodged")]public int ableDoge;
     [Tooltip("The speed of saving")] public Vector2 storeSpeed;
 
-    // Controlのスキームを一時保存し、GetComponentを何度も行うのを避ける。
+    // コントロールのスキームを一時保存し、GetComponentを何度も行うのを避けます。
     public PlayerControl playerControl;
     public BaseEnemyControl  enemyControl;
     public BossControl bossControl;
@@ -49,7 +49,7 @@ public class SpeedBuff : I_BuffBase
             case E_ChararcterType.enemy:EnemySpeedUp();break;
             case E_ChararcterType.boss:BossSpeedUp();break;
         }
-        Init();//初期化の順序の理由で、順序を変更する必要があります。
+        Init();//初期化の順序に関する理由から、順序を変更する必要があります。
         realEffect(characterData);
         ClearDelegate();
     }
@@ -246,10 +246,10 @@ public class SpeedBuff : I_BuffBase
         }
     }
 
-/////////特殊なメカニズムの実装
+/////////特別なメカニズムの実装
 
     /// <summary>
-    /// スプリント回数を返す
+    /// スプリントの数を返します
     /// </summary>
     /// <returns></returns>
     public int GetDogeTimes()

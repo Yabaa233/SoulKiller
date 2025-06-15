@@ -7,12 +7,12 @@ using UnityEngine.Playables;
 [System.Serializable]
 public class CameraEffectClip : PlayableAsset
 {
-    [Header("是否需要ColorAdjusting")] public bool colorAdjusting;
-    [Header("起始颜色")]public float startPostExposure;
-    [Header("终点颜色")]public float endPostExposure;
-    [Header("是否需要边角压暗")]public bool vignette;
-    [Header("起始强度")]public float startIntensity;
-    [Header("终点强度")]public float endIntensity;
+    [Header("ColorAdjustingが必要ですか？")] public bool colorAdjusting;
+    [Header("開始色")]public float startPostExposure;
+    [Header("終点の色")]public float endPostExposure;
+    [Header("端の部分を暗くする必要がありますか？")]public bool vignette;
+    [Header("開始強度")]public float startIntensity;
+    [Header("ゴール強度")]public float endIntensity;
 
     public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
     {

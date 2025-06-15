@@ -7,7 +7,7 @@ public class BossAttack_Normal : StateMachineBehaviour
     public BossControl boss;
     [Header("手を挙げる動作の割合")]
     public float speedUpPer = 0.5f;
-    [Header("手を挙げるアニメーションの再生速度を期待します")]
+    [Header("手を挙げるアニメーションの再生速度を期待しています")]
     public float animSpeed = 0.02f;
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

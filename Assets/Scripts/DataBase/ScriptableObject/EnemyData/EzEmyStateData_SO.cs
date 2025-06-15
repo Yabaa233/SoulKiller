@@ -4,20 +4,22 @@ using UnityEngine;
 
 
 [CreateAssetMenu(menuName = "ScriptableObject/Battle/EzEmyStateData")]
-/// <summary>
-/// 第一类敌人的攻击状态描述文件
-/// </summary>
+///<summary>
+
+////// 第一種類の敵の攻撃状態を記述するファイル
+
+///</summary>
 [System.Serializable]
 public class EzEmyStateData_SO : ScriptableObject
 {
-   [Header("攻击距离")]
+   [Header("攻撃距離")]
    public float attackDistance;
-   [Header("攻击速度")]
+   [Header("攻撃速度")]
    public float attackSpeed;
-   [Header("基础移动速度")]
+   [Header("基本移動速度")]
    public float moveSpeed;
-   [Header("冲撞力度")]
+   [Header("衝突の強度")]
    public float dashPower;
-    [Header("冲撞音效")]
+    [Header("衝突音効")]
     public FMODUnity.EventReference dashEffect;
 }

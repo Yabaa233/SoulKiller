@@ -10,7 +10,7 @@ public class DashEnemyParameter
     public CharacterData enemyData;
     public Animator animator;//アニメーションコントローラー
     public GameObject _mainCamera;//カメラの位置
-    public Transform body;//身体の部分
+    public Transform body;//体の部分
     public Transform orientationObject;
     public DashEmyStateData_SO enemyStateData;
     public Transform target;
@@ -19,7 +19,7 @@ public class DashEnemyParameter
     public float moveSpeed;
     public NavMeshAgent agent;//ナビゲーションコンポーネント
     public Transform enemyPos;//自分の位置
-    public bool isDead;//すでに死亡していますか？
+    public bool isDead;//あなたはすでに死んでいますか？
     public bool isDash;//スプリントを適用したことがありますか？
     public bool isDizzy;//壁にぶつかりましたか？
 }
@@ -33,7 +33,7 @@ public class DashEnemyFSM : BaseEnemyFSM
     // private IState currentState;
     // private Dictionary<E_EnemyStateType, IState> states = new Dictionary<E_EnemyStateType, IState>();
 
-    //取得が必要なコンポーネント
+    //必要なコンポーネントを取得する
     public Rigidbody rb;
 
     //補助計算の属性
@@ -99,7 +99,7 @@ public class DashEnemyFSM : BaseEnemyFSM
     }
 
     /// <summary>
-    /// オブジェクトをプレイヤーの方向に向ける
+    /// オブジェクトをプレイヤーの方向に向けます
     /// </summary>
     /// <param name="other"></param>
     public void FaceToTarget()

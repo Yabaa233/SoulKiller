@@ -44,7 +44,7 @@ public class ShadowDestroy : MonoBehaviour
         }
     }
     /// <summary>
-    /// モンスター攻撃ロジック
+    /// モンスターの攻撃ロジック
     /// </summary>
     /// <param name="enemy"> 現在のモンスターを取得 </param>
     private float AttackEnemy(BaseEnemyControl enemy)

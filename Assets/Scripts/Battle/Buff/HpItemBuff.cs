@@ -5,7 +5,7 @@ using System;
 
 
 
-//HP道具が与えるバフ
+//HPアイテムが提供するバフ
 /// <summary>
 /// HPアイテムバフ
 /// </summary>
@@ -19,9 +19,9 @@ public class HpItemBuff : I_BuffBase
     [Tooltip("Current Role Buff Manager")]CharacterBuffManager characterBuffManager;
     //現在のBUFFの種類
     [Tooltip("Current Buff Type")]E_BuffKind buffType;
-    //現在のキャラクターのタイプ
+    //現在のキャラクタータイプ
     [Tooltip("Current role type")]E_ChararcterType chararcterType;
-    //現在のBuffが重ねられた層の数
+    //現在のBuffが積み重ねられた層の数
     [Tooltip("Current Buff Level")]public int currentLevel;
     [Tooltip("The cooldown of the bleeding buff.")]public CDClass HpItemBuffCD;
     [Tooltip("List of Duration for Blood Loss Buff")]public List<CDClass> HpItemBuffKeepCDList = new List<CDClass>();
@@ -43,13 +43,13 @@ public class HpItemBuff : I_BuffBase
 
     public void OnAdd(GameObject _buffKeeper)
     {
-        //持続時間を追加する
+        //持続時間を追加します
         CDClass temp = new CDClass();
         temp.maxCDTime = 20;
         temp.flag = false;
         HpItemBuffKeepCDList.Add(temp);
         
-        //レイヤーを一つ追加する
+        //レイヤーを一つ追加します
         currentLevel += 1;
 
         this.buffKeeper = _buffKeeper;
@@ -64,7 +64,7 @@ public class HpItemBuff : I_BuffBase
     public void OnUpdate(float deltaTime)
     {
         CDUpdate();//現在のCDを更新し、リストを処理します。
-        if(currentLevel <=0)//レイヤーがなくなったら、このBuffを削除してください。
+        if(currentLevel <=0)//レイヤーがなくなったら、このバフを削除してください。
         {
             SelfRemove();
             return;
@@ -87,7 +87,7 @@ public class HpItemBuff : I_BuffBase
     /// </summary>
     public void CDUpdate()
     {
-        List<CDClass> HpItemFuzhu = new List<CDClass>(HpItemBuffKeepCDList); //補助配列を走査し、元の配列の要素を削除します。
+        List<CDClass> HpItemFuzhu = new List<CDClass>(HpItemBuffKeepCDList); //補助配列をスキャンし、元の配列の要素を削除します。
         foreach (CDClass temp in HpItemFuzhu.ToArray())
         {
             if (!temp.flag && temp.curTime < temp.maxCDTime)

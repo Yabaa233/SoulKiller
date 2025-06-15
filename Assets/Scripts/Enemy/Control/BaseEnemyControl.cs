@@ -26,10 +26,10 @@ public class BaseEnemyControl : MonoBehaviour
     [Header("敵の体")] public Transform enemyBody;
     [Header("敵はカメラに向かう必要があります")] public GameObject _mainCamera;
     [Header("敵の移動速度")] public float moveSpeed;
-    [Header("敵のステータスパネルインスタンスの参照")] public GameObject statePanel;
+    [Header("敵のステータスパネルインスタンスへの参照")] public GameObject statePanel;
     [Header("モンスターの素材")] public Material enemyMaterial;
-    [Header("死亡しましたか？")] public bool isDead = false;
-    public float biasY;//Spriteのバイアス値
+    [Header("あなたは死んだのですか？")] public bool isDead = false;
+    public float biasY;//スプライトのバイアス値
     public Image hpImage;
     public Image hpEffect;
     public Image shieldImage;
@@ -37,20 +37,20 @@ public class BaseEnemyControl : MonoBehaviour
     public Image shieldBackGround;
     // public Image buffImage;
     public RoomTrigger room; //モンスターが生成される部屋
-    private bool isHurting = false; //現在、ダメージを受けている状態ですか？
+    private bool isHurting = false; //現在、ダメージを受けていますか？
     private bool isStoping = false; //アニメーションは一時停止中ですか？
-    [Header("モンスターが被弾した際の振動回数")] public float enemyHurtCount = 2;
+    [Header("モンスターが被弾した時の振動の回数")] public float enemyHurtCount = 2;
     [Header("モンスターが攻撃を受けた時のワード振動時間")] public float enemyHurtTime = 0.1f;
     [Header("振動とダメージ値の反比例係数")] public float enemyHurtPer = 200;
-    [Header("被打撃効果とダメージの比率曲線")] public AnimationCurve hurtEffCurve;
-    [Header("被ダメージ軽減効果係数")] public float hurtBackForce = 10;
-    [Header("ダメージ値に反比例する撃退係数")] public float enemyBackHurtPer = 200;
+    [Header("打撃効果とダメージの比率曲線")] public AnimationCurve hurtEffCurve;
+    [Header("ダメージ軽減効果の係数")] public float hurtBackForce = 10;
+    [Header("ダメージ値に反比例するノックバック係数")] public float enemyBackHurtPer = 200;
     private Coroutine currentBackEff = null;
     private Vector3 forceBackDir;
     protected void Start()
     {
         room = transform.parent.parent.parent.GetComponent<RoomTrigger>();
-        enemyMaterial = enemyBody.GetComponent<SpriteRenderer>().material;//材質を得る
+        enemyMaterial = enemyBody.GetComponent<SpriteRenderer>().material;//素材を得る
     }
 
     private void ShowGetHitEffect()
@@ -64,13 +64,13 @@ public class BaseEnemyControl : MonoBehaviour
     private void OnEnable()
     {
         statePanel = null;
-        GenerateStatePanel();//ステータスパネルを設定する
+        GenerateStatePanel();//ステータスパネルを設定します
     }
 
     ///<summary>
 
 
-    ////// 小さなモンスターがダメージを受けたときのヒット振動効果
+    ////// 小さなモンスターがダメージを受けた時のヒット振動効果
 
 
     ///</summary>
@@ -139,10 +139,10 @@ public class BaseEnemyControl : MonoBehaviour
 
     /// <summary>
     /// モンスターがダメージを受ける表現方法
-    /// 撃退された攻撃を受け取りました
+    /// 撃退された攻撃を受けました
     /// </summary>
     /// <param name="damage"> ダメージ値 </param>
-    /// <param name="attackerPos"> 攻撃者の座標 </param>
+    /// <param name="attackerPos"> 攻撃者の位置 </param>
     /// <param name="isCritical"> クリティカルヒットかどうか </param>
     public virtual void Damaged(float damage, Vector3 attackerPos, bool isCritical = false)
     {
@@ -179,7 +179,7 @@ public class BaseEnemyControl : MonoBehaviour
     /// ヒットバック効果
     /// </summary>
     /// <param name="damage"> ダメージ値 </param>
-    /// <param name="forceDir"> ノックバック方向 </param>
+    /// <param name="forceDir"> ノックバックの方向 </param>
     /// <returns></returns>
     IEnumerator IE_HurtForceBack(float damage, Vector3 forceDir)
     {
@@ -217,7 +217,7 @@ public class BaseEnemyControl : MonoBehaviour
             ObjectPool.Instance.RecycleObj("EnemyState", statePanel);
         }
         statePanel = null;
-        //衝突ボックスを閉じて、死亡後の多重打撃を避けます。
+        //衝突ボックスを閉じて、死亡後の連続ダメージを避けます。
         // this.transform.Find("bodyCollider").GetComponent<Collider>().enabled = false;
         isDead = true;
     }
@@ -258,7 +258,7 @@ public class BaseEnemyControl : MonoBehaviour
     public void UpDateShield()
     {
         ShieldRipples shieldRipples = characterBuffManager.shieldRipples;//引用を得る
-        shieldImage.fillAmount = shieldRipples.currentHealth / shieldRipples.maxHealth;//シールドのパーセンテージを設定する
+        shieldImage.fillAmount = shieldRipples.currentHealth / shieldRipples.maxHealth;//シールドのパーセンテージを設定します
         if (shieldEffect.fillAmount > shieldImage.fillAmount)
         {
             shieldEffect.fillAmount -= 0.015f;
@@ -270,7 +270,7 @@ public class BaseEnemyControl : MonoBehaviour
     }
 
 
-    //シールドの可視性を設定します。これはBuff側で管理され、パフォーマンスを節約します。
+    //シールドの可視性を設定します。これはBuff側で管理され、パフォーマンスの節約に役立ちます。
     public void SetShieldVisble(bool state)
     {
         shieldImage.gameObject.SetActive(state);
@@ -280,7 +280,7 @@ public class BaseEnemyControl : MonoBehaviour
 
     public void GenerateStatePanel()
     {
-        //Spriteの高さを取得し、サブクラスに移動しました。
+        //スプライトの高さを取得し、サブクラスに移動しました。
         biasY = enemyBody.GetComponent<SpriteRenderer>().bounds.size.y;
 
         // statePanel = PanelManager.Instance.GenerateStatePanel(this.transform,biasY);
@@ -318,7 +318,7 @@ public class BaseEnemyControl : MonoBehaviour
     //         Image curBuffImage = gameObject.GetComponent<Image>();
     //         curBuffImage.enabled = true;
     //         curBuffImage.color = Color.yellow;
-    //         //画像を設定する
+    //         //ポートレートを設定する
     //         E_BuffKind curBuffKind = BuffDataManager.Instance.enemyCurrentBuff[i].buffKind;
     //         foreach (var buffItem in PanelManager.Instance.buffInfoListSO.buffItems)
     //         {

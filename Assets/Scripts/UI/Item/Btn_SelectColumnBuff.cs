@@ -3,34 +3,36 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-/// <summary>
-/// ��ʾСbuffͼ��
-/// </summary>
+///<summary>
+
+////// 小さなバフアイコンを表示する
+
+///</summary>
 public class Btn_SelectColumnBuff : BasePanel
 {
     static readonly string path = "UI/Item/Btn_SelectColumnBuff";
 
     public Btn_SelectColumnBuff() : base(new UIType(path)) { }
 
-    //buffͼƬ
+    //バフ画像
     Image image;
-    //��ǰbuff������
+    //現在のバフタイプ名
     //E_BuffKind buffKind;
-    //��ǰbuff��Ϣ
+    //現在のバフ情報
     BuffItemData itemData;
-    //buff�ĵȼ�
+    //バフのレベル
     int buffLevel;
-    //buff�ĵȼ���ʾ
+    //バフのレベル表示
     GameObject buffLevelList;
-    //buff�ĵȼ��б�
+    //バフのレベルリスト
     GameObject buffLevelListContent;
 
-    //��ͣ�򿪽�������Э��
+    //紹介パネルを開くためのコルーチンをホバーします
     Coroutine openBuffInfo;
-    //��ͣ�򿪽�������ѹ��
+    //ホバーで紹介パネルを開くダークプレス
     GameObject leftFocusGO;
 
-    //�Ƿ��ǵ���
+    //敵かどうか
     bool isEnemy = false;
 
     Material material;
@@ -50,7 +52,7 @@ public class Btn_SelectColumnBuff : BasePanel
 
         material = Object.Instantiate(material);
 
-        //�����Ƿ������ʾ
+        //ハイライト表示するかどうかを渡します
         if (para.Length != 0)
         {
             if (para.Length == 1)
@@ -88,7 +90,7 @@ public class Btn_SelectColumnBuff : BasePanel
         }
     }
 
-    //���ص�ǰbuff������
+    //現在のバフのアップグレードをロードします
     public void InitBuffLevelIcon()
     {
         if (isEnemy)
@@ -136,13 +138,13 @@ public class Btn_SelectColumnBuff : BasePanel
         OpenLevelUp();
     }
 
-    //��ʾ��ǰbuff������
+    //現在のバフのアップグレードを表示します
     public void OpenLevelUp()
     {
         buffLevelList.SetActive(true);
         buffLevelList.transform.SetParent(UITool.GetUI().transform.parent.parent.parent);
     }
-    //�رյ�ǰbuff������
+    //現在のバフのアップグレードを閉じる
     public void CloseLevelUp()
     {
         leftFocusGO.SetActive(false);

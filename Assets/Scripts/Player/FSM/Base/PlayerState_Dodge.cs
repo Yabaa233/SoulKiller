@@ -26,7 +26,7 @@ public class PlayerState_Dodge : StateMachineBehaviour
         animator.SetBool("canMove", false);
         //ダッシュ中は攻撃が禁止されています。
         animator.SetBool("canAttack", false);
-        //ダッシュの中で再度ダッシュは禁止です
+        //ダッシュ内での再度のダッシュは禁止されています。
         animator.SetBool("canDodge", false);
     }
 
@@ -45,10 +45,10 @@ public class PlayerState_Dodge : StateMachineBehaviour
         // }
         if (stateInfo.normalizedTime > attackPercent)
         {
-            //各状態を回復します
+            //すべての状態を回復します。
             animator.SetBool("canAttack", true);
         }
-        if (stateInfo.normalizedTime > movePercent) //少し硬直時間が残っています
+        if (stateInfo.normalizedTime > movePercent) //まだ少し硬直時間が残っています
         {
             animator.SetBool("canDodge", true);
             animator.SetBool("canMove", true);

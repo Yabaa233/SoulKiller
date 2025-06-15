@@ -19,7 +19,7 @@ public class Parameter
     public float moveSpeed;
     public float chaseSpeed;
     public float idleTime;
-    public Transform[] patrolPoints;    //パトロール範囲
+    public Transform[] patrolPoints;    //巡回範囲
     public Transform chaseLeftPoint;     //追撃範囲
     public Transform chaseRightPoint;     //追撃範囲
     public Transform target;
@@ -27,7 +27,7 @@ public class Parameter
     public Transform attackPoint;   //攻撃ポイントの座標
     public float attackArea;    //攻撃範囲の半径
     public bool getHit; //攻撃を受ける
-    // public Animator Animator;   //アニメーションを制御するためのアニメーターコンポーネントを取得
+    // public Animator Animator;   //アニメーターコンポーネントを取得し、アニメーションを制御します。
 }
 ///<summary>
 
@@ -54,7 +54,7 @@ public class FSM : MonoBehaviour
 
         TranstionState(StateType.Idle); //初期状態はIdleです
 
-        //アニメーションコントローラーからparameterを取得する
+        //アニメーションコントローラーからパラメータを取得する
     }
 
     /// <summary>
@@ -63,7 +63,7 @@ public class FSM : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // if(攻撃を受けたら)
+        // もし（攻撃を受けたら）
         // {
         //     parameter.getHit = true;
         // }
@@ -74,13 +74,13 @@ public class FSM : MonoBehaviour
     {
         if (currentState != null)
         {
-            currentState.OnExit();  //ステータスを切り替える前に現在のステータスを終了してください。
+            currentState.OnExit();  //ステータスを切り替える前に、現在のステータスを終了してください。
         }
         currentState = states[state];
         currentState.OnEnter();
     }
 
-    public void FlipTo(Transform target)//方向転換関数
+    public void FlipTo(Transform target)//方向変更関数
     {
         if (target != null)
         {
@@ -111,7 +111,7 @@ public class FSM : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmos() //攻撃距離モニター、攻撃範囲の観察に使用します。敵（Enemy）上に物体を作成して判定の中心座標とする必要があります。レイヤーを指定することを忘れないでください。
+    private void OnDrawGizmos() //攻撃距離モニターは、攻撃範囲の観察に使用します。敵（Enemy）上にオブジェクトを作成し、判定の中心座標とする必要があります。レイヤーの指定を忘れないでください。
     {
         Gizmos.DrawSphere(parameter.attackPoint.position, parameter.attackArea);
     }

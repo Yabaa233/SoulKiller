@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Timeline;
 
 [TrackColor(255/255f,255/255f,255/255f)]
-[TrackClipType(typeof(GuidePanelClip))]//选择可以放置到轨道上的类型
+[TrackClipType(typeof(GuidePanelClip))]//軌道上に配置できるタイプを選択してください。
 public class GuidePanelTrack : TrackAsset
 {
     

@@ -126,61 +126,61 @@ public class BossControl : MonoBehaviour
     [Header("ボスのバフマネージャー")] public CharacterBuffManager characterBuffManager = new CharacterBuffManager();
     [Header("ボス属性テンプレート")] public CharacterData_SO tempCharaterData;
     [Header("ボス属性")] public CharacterData bossData;
-    [Header("ボスの基本移動速度")] public float baseSpeed;
+    [Header("ボスの基本的な移動速度")] public float baseSpeed;
     [Header("ボスが被弾した回数")] public float bossHurtCount;
     [Header("ボスが一回の衝撃で揺れる時間")] public float bossHurtTime;
     [Header("ボスが受けるダメージと反比例する係数")] public float bossHurtPer;
-    [Header("被打撃時の振動とダメージの比率曲線")] public AnimationCurve hurtEffCurve;
+    [Header("打撃時の振動とダメージの比率曲線")] public AnimationCurve hurtEffCurve;
 
     [Header("ボス攻撃モード")] public E_BossAttackMode bossAttackMode = E_BossAttackMode.init;
     [Header("ボス浮遊砲")] public AutoGunControl autoGunControl;
     [Header("ボスの体型モデル")] public Transform bossBody;
     [Header("現在のComboNode")] public ComboNode comboNode;
-    [Header("目標プレイヤー")] public GameObject targetPlayer;
-    [Header("ボスのバフ状況")] public int swordBuffLevel, gunBuffLevel, staffBuffLevel;
+    [Header("目標のプレイヤー")] public GameObject targetPlayer;
+    [Header("ボスのバフ状態")] public int swordBuffLevel, gunBuffLevel, staffBuffLevel;
     [Header("ボスの素材")] public Material mtr;
-    [Header("フィールドサイズ 逆転フラッシュの距離を制御するために使用されます")] public float roomSize;
+    [Header("フィールドサイズは、逆転フラッシュの距離を制御するために使用されます。")] public float roomSize;
 
-    [Header("様々な状態")]
-    [Tooltip("死亡しましたか？")] public bool isDead;
-    [Tooltip("打撃を受けられますか？")] public bool canGetHit;
+    [Header("さまざまな状態")]
+    [Tooltip("あなたは死んだのですか？")] public bool isDead;
+    [Tooltip("あなたは打撃を受けることができますか？")] public bool canGetHit;
     [Tooltip("邪魔してもいいですか？")] public bool canInter;
     [Tooltip("中断されましたか？")] public bool interTrigger;
-    [Tooltip("狂暴な状態にありますか？")] public bool isRageing;
-    [Tooltip("打たれていますか？")] public bool isHurting;
+    [Tooltip("あなたは激怒していますか？")] public bool isRageing;
+    [Tooltip("あなたは打たれていますか？")] public bool isHurting;
     [Tooltip("血液をロックしましたか？")] public bool lockHealth = false;
     [Tooltip("現在の段階")] public int stage;
 
     [Header("設定の内容")]
-    [Tooltip("フィールド上に召喚物が存在していますか？")] public bool hasFlower;
-    [Tooltip("フィールド上の召喚物")] public GameObject bossFlower;
+    [Tooltip("フィールド上に召喚物は存在していますか？")] public bool hasFlower;
+    [Tooltip("フィールド上の召喚されたもの")] public GameObject bossFlower;
     [Tooltip("攻撃特効の出現位置補正")] public Vector3 effectAtkPos = new Vector3(0.0f, 3.0f, 1.0f);
     [Tooltip("HP回復スキルの毎秒のHP回復量")] public float HealthReplyVolume = 10;
     [Tooltip("シールド回復スキルは、毎秒シールドを回復します。")] public float ShieldReplyVolume = 5;
-    [Tooltip("狂暴継続時間")] public float rageTime;
+    [Tooltip("狂暴持続時間")] public float rageTime;
     [Tooltip("レーザーフラワーのプレファブ")] public GameObject bossFlowerPrefab;
-    private Transform bossEffectParent; //ボスの詠唱、フェーズ変更、トレイルエフェクトのマウントノード
+    private Transform bossEffectParent; //ボスの詠唱、フェーズの変更、トレイルエフェクトのマウントノード
     private GameObject bossDashTrailEff;   //ボスのダッシュ残像エフェクト
     private GameObject bossSingingEff;      //ボスの詠唱特効
     private GameObject bossStageChangeEff; //ボスのフェーズ変更特殊効果
-    private GameObject bossAngryStateEff;  //ボスの狂暴状態が持続する特殊効果
-    private GameObject bossWeakStateEff;    //ボスの弱体化エフェクト
+    private GameObject bossAngryStateEff;  //ボスの暴走状態が続く特殊効果
+    private GameObject bossWeakStateEff;    //ボスの弱体化効果
     private GameObject bossDeadStateEff;    //ボスの死亡エフェクト
-    private float curRageTime; //既に暴走時間が経過しています
+    private float curRageTime; //すでに暴走時間が経過しています。
     private Transform roomCenter;   //シーンセンター
-    private Transform flowerTransform;   //花の誕生地
-    private BehaviorTree behaviorTree;  //行動ツリープラグイン
-    public BehaviorTree BehaviorTree { get { return behaviorTree; } }   //外部から取得するために使用
+    private Transform flowerTransform;   //花の生まれた場所
+    private BehaviorTree behaviorTree;  //アクションツリープラグイン
+    public BehaviorTree BehaviorTree { get { return behaviorTree; } }   //使用して外部から取得するために
     private Animator animator;  //アニメーションステートマシン
     private Rigidbody rb;   //剛体
     private Collider weaponTrigger; //武器の衝突体
     private Transform attackRangeHint; //攻撃範囲のヒント
-    private Transform orientationObject; //足底が光の輪に向かっています
+    private Transform orientationObject; //あなたの足元が光の輪に向かっています
     //一時変数、重複作成を防ぐ
     private Vector3 dir;    //ボスの移動方向
     private Vector3 attackDir;  //ボスの今回の攻撃方向
     private float NextStageHealth;  //次の段階のヒットポイント値
-    private int canUseBuffCount = 2;    //使用可能なバフの数は、指定されたHP量で増加します。
+    private int canUseBuffCount = 2;    //使用可能なバフの数は、指定されたHP量に応じて増加します。
 
     private void Awake()
     {
@@ -212,7 +212,7 @@ public class BossControl : MonoBehaviour
         //登録
         GameManager.Instance.currentBoss = this;
         GameManager.Instance.BossDie += BossState_Die;
-        //Buffを初期化する
+        //バフを初期化する
         characterBuffManager.Init(E_ChararcterType.boss);
         // characterBuffManager.AddBuff(new ShieldBuff(E_ChararcterType.boss, 4), this.gameObject);
         // characterBuffManager.AddBuff(new HpUp(E_ChararcterType.boss, 4), this.gameObject);
@@ -226,7 +226,7 @@ public class BossControl : MonoBehaviour
         BossValueInit();
         //CDを登録する
         bossCD.InitCD();
-        //行動ツリーの初期化
+        //アクションツリーの初期化
         BehaviorTreeInit();
         //BossInfoのUI表示を通知します
         PanelManager.Instance.SetBossUIVisble(true);
@@ -271,9 +271,9 @@ public class BossControl : MonoBehaviour
     {
         canGetHit = true;   //打撃を受けることを許可する
         canInter = false;   //邪魔しないでください
-        interTrigger = false;   //邪魔されないで
+        interTrigger = false;   //邪魔されないでください
         isRageing = false;  //暴走していない
-        hasFlower = false;  //花がない
+        hasFlower = false;  //花がありません
         NextStageHealth = bossData.maxHealth * 0.8f;
         mtr.SetFloat("_dissolve", 0);
     }
@@ -316,7 +316,7 @@ public class BossControl : MonoBehaviour
     }
 
     /// <summary>
-    /// アニメーションステートマシンのTrigger変数を設定する
+    /// アニメーションステートマシンのTrigger変数を設定します
     /// </summary>
     /// <param name="name"> 名前 </param>
     public void SetAnimatorTrigger(string name)
@@ -325,7 +325,7 @@ public class BossControl : MonoBehaviour
     }
 
     /// <summary>
-    /// トリガー変数をアニメーションステートマシンでリセットします
+    /// アニメーションステートマシンでトリガー変数をリセットします。
     /// </summary>
     /// <param name="name"> 名前 </param>
     public void ResetAnimatorTrigger(string name)
@@ -351,11 +351,11 @@ public class BossControl : MonoBehaviour
 
     #region 控制相关
     /// <summary>
-    /// Playerに移動します
+    /// プレイヤーに移動します
     /// </summary>
     /// <param name="stoppingDistance"> 停止距離 </param>
     /// <param name="moveSpeed"> 移動速度 </param>
-    /// <returns>プレイヤーに近づいたかどうか</returns>
+    /// プレイヤーに近づいたかどうか
     public bool MoveToPlayer(float stoppingDistance, float moveSpeed)
     {
         dir = targetPlayer.transform.position - transform.position;
@@ -365,12 +365,12 @@ public class BossControl : MonoBehaviour
             rb.velocity = dir * moveSpeed * baseSpeed;
             RotateToTarget(Vector3.Dot(transform.right, dir) > 0 ? -1 : 1);
             animator.SetFloat("speed", rb.velocity.magnitude);
-            return false;  //追い続けても追いつけない、スキルによって中断されることができます。
+            return false;  //追い続けても追いつけない、スキルによって中断されることが可能です。
         }
         else
         {
             animator.SetFloat("speed", rb.velocity.magnitude);
-            return true;  //終わりまで追いかける
+            return true;  //最後まで追い求める
         }
     }
 
@@ -392,7 +392,7 @@ public class BossControl : MonoBehaviour
     /// <summary>
     /// ボスが動きを停止しました
     /// </summary>
-    /// <param name="power"> 移動減衰倍率 </param>
+    /// <param name="power"> 移動減衰率 </param>
     public void StopMove(float power)
     {
         rb.velocity /= power;
@@ -453,11 +453,11 @@ public class BossControl : MonoBehaviour
     }
 
     /// <summary>
-    /// スプリント終了
+    /// スプリントが終了しました
     /// </summary>
     public void DodgeOver()
     {
-        bossDashTrailEff.SetActive(false);  //スプリントの終了を追い込む
+        bossDashTrailEff.SetActive(false);  //スプリントの終了を迫る
         canGetHit = true;
     }
 
@@ -543,7 +543,7 @@ public class BossControl : MonoBehaviour
 
     #region 战斗相关
     /// <summary>
-    /// ボスが銃攻撃状態に入ります
+    /// ボスが銃撃状態に入ります。
     /// </summary>
     /// <param name="type"></param>
     public void BossAttack_Gun(int type)
@@ -553,14 +553,14 @@ public class BossControl : MonoBehaviour
     }
 
     /// <summary>
-    /// プレイヤーはガンアタック状態を終了します
+    /// プレイヤーはガンアタックの状態を終了します。
     /// </summary>
     public void BossAttack_Gun_End()
     {
         bossSingingEff.SetActive(false); //詠唱特効
     }
     /// <summary>
-    /// ボスが杖攻撃状態に入ります
+    /// ボスが杖攻撃モードに入ります。
     /// </summary>
     public void BossAttack_Staff()
     {
@@ -569,7 +569,7 @@ public class BossControl : MonoBehaviour
     }
 
     /// <summary>
-    /// プレイヤーは杖攻撃状態を終了します
+    /// プレイヤーは杖攻撃の状態を終了します。
     /// </summary>
     public void BossAttack_Staff_End()
     {
@@ -605,7 +605,7 @@ public class BossControl : MonoBehaviour
 
     /// <summary>
     /// トリガーを起動する
-    /// 特殊効果を開始する
+    /// 特殊効果を開始します
     /// </summary>
     public void OpenTrigger()
     {
@@ -668,7 +668,7 @@ public class BossControl : MonoBehaviour
     }
 
     /// <summary>
-    /// ボスが傷ついた時のヒットショックエフェクト
+    /// ボスがダメージを受けた時のヒットショックエフェクト
     /// </summary>
     /// <param name="damage"></param>
     /// <returns></returns>
@@ -812,14 +812,14 @@ public class BossControl : MonoBehaviour
     ///<summary>
 
 
-    ////// 狂暴開始、クリティカル率上昇
+    ////// 狂暴が始まり、クリティカル率が上昇します。
 
 
     ///</summary>
     public void Rage_Ready()
     {
         isRageing = true;
-        bossAngryStateEff.SetActive(true);  //狂暴を開始する
+        bossAngryStateEff.SetActive(true);  //暴走を開始する
         bossData.currentCritical += 0.6f;
         bossSingingEff.SetActive(false); //詠唱特効
     }
@@ -834,7 +834,7 @@ public class BossControl : MonoBehaviour
     public void Rage_End()
     {
         isRageing = false;
-        bossAngryStateEff.SetActive(false);  //狂暴を開始する
+        bossAngryStateEff.SetActive(false);  //暴走を開始する
         curRageTime = 0;
         bossData.currentCritical -= 0.6f;
         bossCD.canRage.flag = false;
@@ -844,7 +844,7 @@ public class BossControl : MonoBehaviour
     ///<summary>
 
 
-    ////// 回復の準備が可能で、中断も可能です。
+    ////// 回復の準備ができており、中断も可能です。
 
 
     ///</summary>
@@ -858,7 +858,7 @@ public class BossControl : MonoBehaviour
     ///<summary>
 
 
-    ////// 回復が始まりました。これは中断できません。
+    ////// 復元が開始されました。これは中断できません。
 
 
     ///</summary>
@@ -873,7 +873,7 @@ public class BossControl : MonoBehaviour
     }
 
     /// <summary>
-    /// シールドリターンの準備、中断可能です
+    /// シールドリターンの準備ができており、中断可能です。
     /// </summary>
     public void RestoreShield_Start()
     {
@@ -932,7 +932,7 @@ public class BossControl : MonoBehaviour
     }
 
     /// <summary>
-    /// フェーズ切り替え開始、浮遊砲を停止します。
+    /// フェーズの切り替えを開始し、浮遊砲を停止します。
     /// </summary>
     public void ChangeStage_Start()
     {
@@ -944,14 +944,14 @@ public class BossControl : MonoBehaviour
             bossDashTrailEff.SetActive(false);
             bossSingingEff.SetActive(false);
             bossStageChangeEff.SetActive(false);
-            bossData.currentDefend = +6; //怪我が軽減する
+            bossData.currentDefend = +6; //私の怪我が軽減する
             autoGunControl.my_StopAllCoroutines();
             animator.SetBool("attacking", false);
         }
     }
 
     /// <summary>
-    /// フェーズ切り替え終了、浮遊砲を回復し、Buffを更新します。
+    /// フェーズの切り替えが終了し、浮遊砲を回復し、Buffを更新します。
     /// </summary>
     public void ChangeStage_End()
     {
@@ -967,7 +967,7 @@ public class BossControl : MonoBehaviour
     public void BossState_Die()
     {
         animator.SetTrigger("die");
-        GameManager.Instance.currentPlayer.lockHealth = true;   //ボスが死亡、プレイヤーのHPが固定
+        GameManager.Instance.currentPlayer.lockHealth = true;   //ボスが死亡し、プレイヤーのHPが固定されました。
         CloseTrigger();
         bossDashTrailEff.SetActive(false);
         bossSingingEff.SetActive(false);

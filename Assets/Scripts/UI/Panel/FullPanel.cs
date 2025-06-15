@@ -35,11 +35,11 @@ public class FullPanel : BasePanel
         gameTime = UITool.GetOrAddComponentInChildren<Text>("GameTime");
         returnButton = UITool.GetOrAddComponentInChildren<Button>("ReturnButton");
 
-        //添加事件监听
+        //イベントリスナーを追加する
         returnButton.onClick.AddListener(Skip);
         move = true;
         
-        //播放Doteen
+        //Doteenを再生します
         //fullText.DOText(fullText.text.ToString(),2f);
     }
 
@@ -62,7 +62,7 @@ public class FullPanel : BasePanel
 
 
     /// <summary>
-    /// 跳转回主场景的方法,记得调用
+    /// メインシーンに戻る方法を呼び出すことを忘れないでください。
     /// </summary>
     public void Skip()
     {

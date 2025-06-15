@@ -12,7 +12,7 @@ public class ShieldBuff : I_BuffBase
     [Tooltip("Current Role Buff Manager")]CharacterBuffManager characterBuffManager;
     //現在のBUFFの種類
     [Tooltip("Current Buff Type")]E_BuffKind buffType;
-    //現在のキャラクターのタイプ
+    //現在のキャラクタータイプ
     [Tooltip("Current role type")]E_ChararcterType chararcterType;
 
     [Tooltip("Current Buff Level")]public int currentLevel;
@@ -124,7 +124,7 @@ public class ShieldBuff : I_BuffBase
     }
 
 
-/// 異なるタイプを得てから、Buffを追加します。
+/// 異なるタイプを得た後、Buffを追加します。
     private void PlayerShieldUp()
     {
         PlayerControl playerControl = buffKeeper.GetComponent<PlayerControl>();
@@ -147,7 +147,7 @@ public class ShieldBuff : I_BuffBase
         characterData = bossControl.bossData;
         realEffect(null);
     }
-///////Buffが削除されたときに状態を復元します
+///////バフが削除されたときに状態を復元します
     public void PlayerShieldRemove()
     {
         GameObject.Destroy(sheildPrefab);

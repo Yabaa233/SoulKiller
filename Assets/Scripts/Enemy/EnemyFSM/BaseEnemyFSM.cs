@@ -22,14 +22,14 @@ public class BaseEnemyFSM : MonoBehaviour
     {
         if (currentState != null)
         {
-            currentState.OnExit();  //ステータスを切り替える前に現在のステータスを終了してください。
+            currentState.OnExit();  //ステータスを切り替える前に、現在のステータスを終了してください。
         }
         currentState = states[state];
         currentState.OnEnter();
     }
 
 
-    //画面内での可視性の判断
+    //画面内の可視性の判断
     public bool IsVisableInCamera{get;private set;}
     private void OnBecameVisible() {
         IsVisableInCamera = true;

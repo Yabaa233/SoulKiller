@@ -4,35 +4,38 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-/// <summary>
-/// ÊôĞÔºÍÎäÆ÷Ïà¹ØµÄBuff£¬ÏÔÊ¾µ±Ç°buffºÍbuffµÄÉı¼¶Çé¿ö
-/// xushi
-/// </summary>
+///<summary>
+
+
+////// å±æ€§ã‚„æ­¦å™¨ã«é–¢é€£ã™ã‚‹ãƒãƒ•ã€ç¾åœ¨ã®ãƒãƒ•ã¨ãƒãƒ•ã®ã‚¢ãƒƒãƒ—ã‚°ãƒ¬ãƒ¼ãƒ‰çŠ¶æ³ã‚’è¡¨ç¤ºã—ã¾ã™ã€‚
+
+
+///</summary>
 public class Buff_BaseList : BasePanel
 {
     //static readonly string path = "";
 
     public Buff_BaseList(UIType uIType) : base(uIType) { }
 
-    //µ±Ç°BuffÎïÌå
+    //ç¾åœ¨ã®Buffã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
     GameObject buff;
-    //µ±Ç°BuffÍ¼Æ¬
+    //ç¾åœ¨ã®Buffç”»åƒ
     Image buffImage;
-    //µ±Ç°buffÉı¼¶Çé¿öÁĞ±í
+    //ç¾åœ¨ã®ãƒãƒ•ã‚¢ãƒƒãƒ—ã‚°ãƒ¬ãƒ¼ãƒ‰çŠ¶æ³ãƒªã‚¹ãƒˆ
     GameObject buffLevelList;
-    //Í¼±êÏêÏ¸ĞÅÏ¢
+    //ã‚¢ã‚¤ã‚³ãƒ³ã®è©³ç´°æƒ…å ±
     GameObject buffInfo;
-    //Í¼±êÏêÏ¸ĞÅÏ¢ÎÄ×Ö
+    //ã‚¢ã‚¤ã‚³ãƒ³ã®è©³ç´°æƒ…å ±ãƒ†ã‚­ã‚¹ãƒˆ
     Text buffInfoT;
 
-    //´«ÈëµÄĞÅÏ¢
+    //æ¸¡ã•ã‚ŒãŸæƒ…å ±
     BuffItemData itemData;
     int buffLevel;
 
-    //µ±Ç°ÊÇ·ñ¿ÉÒÔÕ¹Ê¾ÏêÇé
+    //ç¾åœ¨ã€è©³ç´°ã‚’è¡¨ç¤ºã™ã‚‹ã“ã¨ã¯å¯èƒ½ã§ã™ã‹ï¼Ÿ
     bool canShow=true;
 
-    //ĞüÍ£´ò¿ª½éÉÜÃæ°åµÄĞ­³Ì
+    //ç´¹ä»‹ãƒ‘ãƒãƒ«ã‚’é–‹ããŸã‚ã®ã‚³ãƒ«ãƒ¼ãƒãƒ³ã‚’ãƒ›ãƒãƒ¼ã—ã¾ã™
     Coroutine openBuffInfo;
 
     Material material;
@@ -46,13 +49,13 @@ public class Buff_BaseList : BasePanel
         buffInfo = UITool.FindChildGameObject("Img_Info");
         buffInfoT = buffInfo.GetComponentInChildren<Text>();
 
-        //¼àÌıÊó±êÒÆÈë¶¯»­
+        //ãƒã‚¦ã‚¹ã‚ªãƒ¼ãƒãƒ¼ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’ç›£è¦–ã™ã‚‹
         UITool.addTriggersListener(EventTriggerType.PointerEnter, PointerEnter, buff);
         UITool.addTriggersListener(EventTriggerType.PointerExit, PointerExit, buff);
 
         buffInfo.SetActive(false);
 
-        //³õÊ¼»¯µ±Ç°buffµÄĞÅÏ¢
+        //ç¾åœ¨ã®buffã®æƒ…å ±ã‚’åˆæœŸåŒ–ã™ã‚‹
         itemData = (BuffItemData)para[0];
         buffLevel = (int)para[1];
 
@@ -63,7 +66,7 @@ public class Buff_BaseList : BasePanel
 
         material= Object.Instantiate(material);
 
-        //³õÊ¼»¯Éı¼¶Ğ¡Í¼±ê
+        //ã‚¢ãƒƒãƒ—ã‚°ãƒ¬ãƒ¼ãƒ‰ã‚¢ã‚¤ã‚³ãƒ³ã®åˆæœŸåŒ–
         InitBuffLevelIcon();
     }
 
@@ -77,24 +80,24 @@ public class Buff_BaseList : BasePanel
 
     }
 
-    //¸ü¸ÄcanShow
+    //canShowã‚’å¤‰æ›´ã™ã‚‹
     public void SwitchShow(bool a)
     {
         canShow = a;
     }
 
-    //¼ÓÔØµ±Ç°buffµÄÉı¼¶
+    //ç¾åœ¨ã®ãƒãƒ•ã®ã‚¢ãƒƒãƒ—ã‚°ãƒ¬ãƒ¼ãƒ‰ã‚’ãƒ­ãƒ¼ãƒ‰ã—ã¾ã™
     public void InitBuffLevelIcon()
     {
 
-        //¼ÓÔØ
+        //èª­ã¿è¾¼ã¿
         for (int i = 0; i < buffLevel; i++)
         {
             PanelManager.Instance.Open(new Btn_Buff(), buffLevelList.transform, buffInfo,itemData.buffLevelDatas[i] ,UITool.GetUI());
         }
         
     }
-    //ÏÔÊ¾Êó±êĞüÍ£Í¼±êµÄÏêÏ¸ĞÅÏ¢
+    //ãƒã‚¦ã‚¹ãƒ›ãƒãƒ¼ã‚¢ã‚¤ã‚³ãƒ³ã®è©³ç´°æƒ…å ±ã‚’è¡¨ç¤ºã™ã‚‹
     public override void PointerEnter(BaseEventData data)
     {
         material.SetFloat("_TintColorIntensity", 2.5f);
@@ -108,7 +111,7 @@ public class Buff_BaseList : BasePanel
 
         FMODUnity.RuntimeManager.PlayOneShot("event:/UI/buffItemSelect");
     }
-    //¹Ø±ÕÊó±êĞüÍ£Í¼±êµÄÏêÏ¸ĞÅÏ¢
+    //ãƒã‚¦ã‚¹ãƒ›ãƒãƒ¼ã‚¢ã‚¤ã‚³ãƒ³ã®è©³ç´°æƒ…å ±ã‚’é–‰ã˜ã‚‹
     public override void PointerExit(BaseEventData data)
     {
 
@@ -129,17 +132,17 @@ public class Buff_BaseList : BasePanel
         OpenInfo();
 
     }
-    //´ò¿ªÊó±êĞüÍ£Í¼±êµÄÏêÏ¸ĞÅÏ¢
+    //ãƒã‚¦ã‚¹ã‚ªãƒ¼ãƒãƒ¼ã‚¢ã‚¤ã‚³ãƒ³ã®è©³ç´°æƒ…å ±ã‚’é–‹ã
     public void OpenInfo()
     {
 
         buffInfoT.text = itemData.buffDescribe;
-        //ÏÔÊ¾ÏêÏ¸ĞÅÏ¢
+        //è©³ç´°æƒ…å ±ã‚’è¡¨ç¤ºã™ã‚‹
         buffInfo.transform.SetParent(buffInfo.transform.parent.parent.parent.parent);
         buffInfo.SetActive(true);
 
     }
-    //¹Ø±ÕÊó±êĞüÍ£Í¼±êµÄÏêÏ¸ĞÅÏ¢
+    //ãƒã‚¦ã‚¹ãƒ›ãƒãƒ¼ã‚¢ã‚¤ã‚³ãƒ³ã®è©³ç´°æƒ…å ±ã‚’é–‰ã˜ã‚‹
     public  void CloseInfo()
     {
         buffInfo.transform.SetParent(UITool.GetUI().transform);

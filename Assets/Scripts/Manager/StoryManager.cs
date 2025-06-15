@@ -6,10 +6,10 @@ using System;
 
 public class StoryManager : singleton<StoryManager>
 {
-    private List<Action> actions;//将剧情里面的每一步都存成一个函数或者类，通过索引对应的去调用
-    private int _currentStep;//当前剧情阶段
+    private List<Action> actions;//ストーリーの各ステップを関数またはクラスとして保存し、インデックスに対応するものを呼び出します。
+    private int _currentStep;//現在のストーリー段階
 
-    //当前剧情播放的状态
+    //現在のストーリー再生状況
     public enum StoryMode
     {
         GamePlay,
@@ -18,9 +18,9 @@ public class StoryManager : singleton<StoryManager>
     public StoryMode storyMode;
     private PlayableDirector currentPlayableDirector;
 
-    /// 缓存区
-    public GameObject dialoguePanel;//缓存对话面板对象
-    public DialoguePanel dialoguePanelScript;//缓存面板对象的脚本
+    /// バッファエリア
+    public GameObject dialoguePanel;//ダイアログパネルオブジェクトをキャッシュする
+    public DialoguePanel dialoguePanelScript;//スクリプトのキャッシュパネルオブジェクト
 
     protected override void Awake() {
         base.Awake();
@@ -28,7 +28,7 @@ public class StoryManager : singleton<StoryManager>
     }
 
     /// <summary>
-    /// 将剧情回退至
+    /// ストーリーを巻き戻す
     /// </summary>
     /// <param name="_step"></param>
     public void SetStoryTo(int _step)
@@ -40,7 +40,7 @@ public class StoryManager : singleton<StoryManager>
         }
         else if(_currentStep > actions.Count - 1)
         {
-            Debug.LogWarning("注意剧情步数超过限制");
+            Debug.LogWarning("ストーリーのステップ数が制限を超えていることに注意してください。");
             _currentStep = actions.Count - 1;
         }
     }
@@ -51,7 +51,7 @@ public class StoryManager : singleton<StoryManager>
         dialoguePanelScript.SetContinueTipsVis(false);
         dialoguePanel.SetActive(false);
 
-        //注册剧情
+        //ストーリーの登録
         // actions.Add(StartStory);
     }
 
@@ -69,14 +69,14 @@ public class StoryManager : singleton<StoryManager>
     {
         currentPlayableDirector = _playableDirector;
         storyMode = StoryMode.DialogueMoment;
-        currentPlayableDirector.playableGraph.GetRootPlayable(0).SetSpeed(0d);//设置暂停
+        currentPlayableDirector.playableGraph.GetRootPlayable(0).SetSpeed(0d);//一時停止を設定する
         // currentPlayableDirector.Pause();
     }
 
     public void ResumeTimeLine()
     {
         storyMode = StoryMode.GamePlay;
-        currentPlayableDirector.playableGraph.GetRootPlayable(0).SetSpeed(1d);//回复播放
+        currentPlayableDirector.playableGraph.GetRootPlayable(0).SetSpeed(1d);//再生に応答します
         // currentPlayableDirector.Resume();
 
         dialoguePanelScript.SetContinueTipsVis(false);
@@ -86,11 +86,13 @@ public class StoryManager : singleton<StoryManager>
 
 
 ///
-/// ///////////////所有剧本
+//すべての脚本
 /// 
-    /// <summary>
-    /// 第一幕
-    /// </summary>
+    ///<summary>
+ 
+    ////// 第一幕
+ 
+    ///</summary>
     public void StartStory()
     {
 

@@ -20,15 +20,15 @@ public class GameManager : singleton<GameManager>
     [SerializeField]
     public List<CDClass> CDList = new List<CDClass>();
     public List<RoomTrigger> resetRoomList = new List<RoomTrigger>();
-    public CDClass comboInterCD = new CDClass();    //连招计数中断CD
-    public PlayerControl currentPlayer; //需要玩家代码自己注册
-    public BossControl currentBoss; //需要Boss代码自己注册
-    public GameObject playerPrefab; //玩家的预制，用于自动生成玩家
-    public Transform birthPoint;    //玩家出生点
-    private ComboNode currentPlayerNode;    //存储临时ComboNode节点
-    private float player_StopTime;    //玩家停止时间
-    private bool player_IsStop = false;   //玩家是否正在停止
-    private int currentComboCount; //当前连击数
+    public CDClass comboInterCD = new CDClass();    //連続技カウント中断CD
+    public PlayerControl currentPlayer; //プレイヤーは自分でコードを登録する必要があります。
+    public BossControl currentBoss; //ボスコードを自分で登録する必要があります
+    public GameObject playerPrefab; //プレイヤーのプレファブ、自動的にプレイヤーを生成するために使用されます。
+    public Transform birthPoint;    //プレイヤーのスポーンポイント
+    private ComboNode currentPlayerNode;    //一時的なComboNodeノードを保存します
+    private float player_StopTime;    //プレイヤーは時間を停止します
+    private bool player_IsStop = false;   //プレイヤーは停止中ですか？
+    private int currentComboCount; //現在のコンボ数
     public int CurrentComboCount { get { return currentComboCount; } }
     public bool Player_IsStop
     {
@@ -40,7 +40,7 @@ public class GameManager : singleton<GameManager>
     public delegate void characterStopFun();
     public Action PlayerDie;
     public Action BossDie;
-    //游戏通关用时相关
+    //ゲームクリアに関する所要時間
     private float gameStartTime;
     private float gameClearTime;
 
@@ -48,7 +48,7 @@ public class GameManager : singleton<GameManager>
     {
         base.Awake();
         SetMouse_Pointer();
-        Application.targetFrameRate = 144;   //帧率限制
+        Application.targetFrameRate = 144;   //フレームレート制限
         DontDestroyOnLoad(this.gameObject);
     }
 
@@ -74,7 +74,7 @@ public class GameManager : singleton<GameManager>
     private void Update()
     {
         CDUpdate();
-        //清空连击计数
+        //コンボカウントをリセット
         if (comboInterCD.flag)
         {
             currentComboCount = 0;
@@ -88,7 +88,7 @@ public class GameManager : singleton<GameManager>
         currentComboCount++;
     }
     /// <summary>
-    /// 玩家开始攻击反馈
+    /// プレイヤーはフィードバックを攻撃し始めました。
     /// </summary>
     public void Player_StartHitEffect()
     {
@@ -100,7 +100,7 @@ public class GameManager : singleton<GameManager>
     }
 
     /// <summary>
-    /// 玩家开始射击反馈
+    /// プレイヤーがシューティングフィードバックを開始します
     /// </summary>
     public void Player_StartShotEffect(PlayerBullet bullet)
     {
@@ -112,7 +112,7 @@ public class GameManager : singleton<GameManager>
     }
 
     /// <summary>
-    /// 玩家开始法术攻击反馈
+    /// プレイヤーが魔法攻撃のフィードバックを開始します
     /// </summary>
     public void Player_StartStaffEffect(PlayerMagic magic)
     {
@@ -124,13 +124,13 @@ public class GameManager : singleton<GameManager>
     }
 
     /// <summary>
-    /// 玩家停顿协程
+    /// プレイヤーがコルーチンを一時停止
     /// </summary>
-    /// <param name="stopTime"> 停顿时间 </param>
+    /// <param name="stopTime"> 停止時間 </param>
     /// <returns></returns>
     public IEnumerator PlayerStop(float stopTime)
     {
-        //测试不使用TimeScale
+        //TimeScaleを使用しないテスト
         // Time.timeScale = 1f;
         EffectManager.Instance.PauseAttackEffect();
         while (stopTime > 0)
@@ -145,15 +145,15 @@ public class GameManager : singleton<GameManager>
     }
 
     /// <summary>
-    /// 玩家攻击打击感反馈协程
+    /// プレイヤーの攻撃ヒット感フィードバックのコルーチン
     /// </summary>
     private IEnumerator Player_HitEffect()
     {
-        //打击感——震动
+        //打撃感 - 振動
         currentPlayerNode = currentPlayer.currentComboNode;
         CM_Effect.Instance.CM_do_shake(currentPlayerNode.type, currentPlayerNode.shake_time,
                                        currentPlayerNode.amp, currentPlayerNode.fre);
-        //打击感——顿帧
+        //打撃感 - フレーム停止
         currentPlayer.PauseAnimation(0.3f);
         EffectManager.Instance.PauseAttackEffect();
         while (player_StopTime > 0)
@@ -168,15 +168,15 @@ public class GameManager : singleton<GameManager>
     }
 
     /// <summary>
-    /// 玩家射击命中感反馈协程
+    /// プレイヤーのショットヒット感のフィードバックコルーチン
     /// </summary>
     private IEnumerator Player_ShotEffect(PlayerBullet bullet)
     {
-        //打击感——震动
+        //打撃感 - 振動
         currentPlayerNode = currentPlayer.shotComboNode;
         CM_Effect.Instance.CM_do_shake(currentPlayerNode.type, currentPlayerNode.shake_time,
                                        currentPlayerNode.amp, currentPlayerNode.fre);
-        //打击感——顿帧
+        //打撃感 - フレーム停止
         currentPlayer.PauseAnimation(0.2f);
         bullet.PlayerBulletStop();
         while (player_StopTime > 0)
@@ -191,16 +191,16 @@ public class GameManager : singleton<GameManager>
     }
 
     /// <summary>
-    /// 玩家法术命中感反馈协程
+    /// プレイヤーのスペルヒット感のフィードバックコルーチン
     /// </summary>
     private IEnumerator Player_StaffEffect(PlayerMagic magic)
     {
         ParticleSystem magicPartic = magic.migicParticle;
-        //打击感——震动
+        //打撃感 - 振動
         currentPlayerNode = currentPlayer.magicComboNode;
         CM_Effect.Instance.CM_do_shake(currentPlayerNode.type, currentPlayerNode.shake_time,
                                        currentPlayerNode.amp, currentPlayerNode.fre);
-        //打击感——顿帧
+        //打撃感 - フレーム停止
         currentPlayer.PauseAnimation(0.3f);
         magicPartic.Pause();
         while (player_StopTime > 0)
@@ -214,15 +214,15 @@ public class GameManager : singleton<GameManager>
     }
 
     /// <summary>
-    /// 玩家的攻击小怪方法
+    /// プレイヤーのモンスター攻撃方法
     /// </summary>
-    /// <param name="enemy"> 小怪的控制器 </param>
+    /// <param name="enemy"> モンスターのコントローラー </param>
     public void PlayerAttack(BaseEnemyControl enemy, Vector3 attackerPos)
     {
         bool isCritical;
         float damage;
         characterStopFun addStopTime = () => { player_StopTime += player_IsStop ? 0 : enemy.enemyData.currentStopTime; };
-        damage = TakeDamage(currentPlayer.characterBuffManager, enemy.characterBuffManager, currentPlayer.characterData, enemy.enemyData, addStopTime, out isCritical);   //计算伤害
+        damage = TakeDamage(currentPlayer.characterBuffManager, enemy.characterBuffManager, currentPlayer.characterData, enemy.enemyData, addStopTime, out isCritical);   //ダメージを計算する
         if (attackerPos == Vector3.zero)
         {
             enemy.Damaged(damage, isCritical);
@@ -234,9 +234,9 @@ public class GameManager : singleton<GameManager>
     }
 
     /// <summary>
-    /// 玩家的攻击Boss方法
+    /// プレイヤーのボス攻撃方法
     /// </summary>
-    /// <param name="boss"> Boss的控制器 </param>
+    /// <param name="boss"> ボスのコントローラー </param>
     public void PlayerAttack(BossControl boss)
     {
         if (boss.canGetHit)
@@ -244,7 +244,7 @@ public class GameManager : singleton<GameManager>
             bool isCritical;
             float damage;
             characterStopFun addStopTime = () => { player_StopTime += player_IsStop ? 0 : boss.bossData.currentStopTime; };
-            damage = TakeDamage(currentPlayer.characterBuffManager, boss.characterBuffManager, currentPlayer.characterData, boss.bossData, addStopTime, out isCritical);   //计算伤害
+            damage = TakeDamage(currentPlayer.characterBuffManager, boss.characterBuffManager, currentPlayer.characterData, boss.bossData, addStopTime, out isCritical);   //ダメージを計算する
             boss.Damaged(damage, isCritical);
             if (currentBoss.lockHealth)
             {
@@ -258,18 +258,22 @@ public class GameManager : singleton<GameManager>
         }
     }
 
-    /// <summary>
-    /// 敌人的攻击方法
-    /// </summary>
+    ///<summary>
+
+
+    ////// 敵の攻撃方法
+
+
+    ///</summary>
     public void EnemyAttack(BaseEnemyControl enemy)
     {
         Color getHitColor = Color.yellow;
         getHitColor.a = 1f;
         if (currentPlayer.animator.GetCurrentAnimatorStateInfo(0).IsTag("Dodge"))
         {
-            //角色无敌闪避中
+            //キャラクターは無敵回避中です。
             CM_Effect.Instance.PlayerGetDamaged(getHitColor, 5, 0.8f);
-            // Debug.Log("角色无敌，此次伤害无效");
+            // Debug.Log("キャラクターは無敵で、このダメージは無効です。");
             return;
         }
         bool isCritical;
@@ -278,12 +282,12 @@ public class GameManager : singleton<GameManager>
         getHitColor = Color.red;
         getHitColor.a = 0.3f + damage;
         CM_Effect.Instance.PlayerGetDamaged(getHitColor, 5, damage);
-        currentPlayer.GetDamage();  //受伤动画
+        currentPlayer.GetDamage();  //怪我アニメーション
         PlayerHealthCheck();
     }
 
     /// <summary>
-    /// Boss攻击
+    /// ボスが攻撃します
     /// </summary>
     public void BossAttack()
     {
@@ -291,9 +295,9 @@ public class GameManager : singleton<GameManager>
         getHitColor.a = 1f;
         if (currentPlayer.animator.GetCurrentAnimatorStateInfo(0).IsTag("Dodge"))
         {
-            //角色无敌闪避中
+            //キャラクターは無敵回避中です。
             CM_Effect.Instance.PlayerGetDamaged(getHitColor, 5, 0.8f);
-            // Debug.Log("角色无敌，此次伤害无效");
+            // Debug.Log("キャラクターは無敵で、このダメージは無効です。");
             return;
         }
         bool isCritical;
@@ -302,23 +306,27 @@ public class GameManager : singleton<GameManager>
         getHitColor = Color.red;
         getHitColor.a = 0.4f + damage;
         CM_Effect.Instance.PlayerGetDamaged(getHitColor, 5, damage);
-        currentPlayer.GetDamage();  //受伤动画
+        currentPlayer.GetDamage();  //怪我アニメーション
         PlayerHealthCheck();
     }
 
-    /// <summary>
-    /// 机关处理对玩家攻击
-    /// </summary>
-    /// <param name="trickAttackPlayerFun"> 处理玩家的方法 </param>
+    ///<summary>
+
+
+    ////// 機関はプレイヤーに攻撃を行います
+
+
+    ///</summary>
+    /// <param name="trickAttackPlayerFun"> プレイヤーの処理方法 </param>
     public void TrickAttackPlayer(TrickAttackPlayerFun trickAttackPlayerFun)
     {
         Color getHitColor = Color.yellow;
         getHitColor.a = 1f;
         if (currentPlayer.animator.GetCurrentAnimatorStateInfo(0).IsTag("Dodge"))
         {
-            //角色无敌闪避中
+            //キャラクターは無敵回避中です。
             CM_Effect.Instance.PlayerGetDamaged(getHitColor, 5, 0.8f);
-            // Debug.Log("角色无敌，此次伤害无效");
+            // Debug.Log("キャラクターは無敵で、このダメージは無効です。");
             return;
         }
         trickAttackPlayerFun(currentPlayer);
@@ -329,20 +337,28 @@ public class GameManager : singleton<GameManager>
         PlayerHealthCheck();
     }
 
-    /// <summary>
-    /// 机关处理对怪物攻击
-    /// </summary>
-    /// <param name="trickAttackEnemyFun"> 处理怪物的方法 </param>
+    ///<summary>
+
+
+    ////// 機関はモンスターの攻撃を処理します。
+
+
+    ///</summary>
+    /// <param name="trickAttackEnemyFun"> モンスターの処理方法 </param>
     public void TrickAttackEnemy(TrickAttackEnemyFun trickAttackEnemyFun, BaseEnemyControl enemy)
     {
         float damage = trickAttackEnemyFun(enemy);
         enemy.Damaged(damage);
     }
 
-    /// <summary>
-    /// 机关处理对Boss攻击
-    /// </summary>
-    /// <param name="trickAttackEnemyFun"> 处理怪物的方法 </param>
+    ///<summary>
+
+
+    ////// 機関はボスへの攻撃を処理します
+
+
+    ///</summary>
+    /// <param name="trickAttackEnemyFun"> モンスターの処理方法 </param>
     public void TrickAttackBoss(TrickAttackBossFun trickAttackBossFun)
     {
         if (currentBoss.canGetHit)
@@ -362,70 +378,70 @@ public class GameManager : singleton<GameManager>
     }
 
     /// <summary>
-    /// 伤害判定与伤害计算
-    /// 特殊处理
+    /// ダメージ判定とダメージ計算
+    /// 特別処理
     /// </summary>
-    /// <param name="characterBuffManager">攻击方Buff管理器数据</param>
-    /// <param name="characterBuffManager">攻击方Buff管理器数据</param>
-    /// <param name="attackerData">攻击方数据</param>
-    /// <param name="defenderData">防守方数据</param>
+    /// <param name="characterBuffManager">攻撃者のBuff管理器データ</param>
+    /// <param name="characterBuffManager">攻撃者のBuff管理器データ</param>
+    /// <param name="attackerData">攻撃者のデータ</param>
+    /// <param name="defenderData">防衛者データ</param>
     /// <param name="stopFun"></param>
     public float TakeDamage(CharacterBuffManager attackerBuffManager, CharacterBuffManager defenderBuffManager, CharacterData attackerData, CharacterData defenderData, characterStopFun stopFun, out bool isCritical)
     {
         float damage = ResultDamage(attackerData, defenderData, out isCritical);
-        if (defenderBuffManager.CalcuSheild(attackerData, damage))    //护盾逻辑
+        if (defenderBuffManager.CalcuSheild(attackerData, damage))    //シールドロジック
         {
-            // Debug.Log("打盾上了");
+            // Debug.Log("シールドがヒットされた");
         }
         else
         {
-            stopFun();  //受击自己停顿
-            attackerBuffManager.ReturnHP(damage);  //吸血逻辑
-            defenderData.currentHealth = Mathf.Max(defenderData.currentHealth - damage, 0f);//防止负血量
+            stopFun();  //自分自身が打撃を受けて停止する
+            attackerBuffManager.ReturnHP(damage);  //吸血論理
+            defenderData.currentHealth = Mathf.Max(defenderData.currentHealth - damage, 0f);//マイナス血液量を防ぐ
         }
         return damage;
     }
 
     /// <summary>
-    /// 计算伤害结果
+    /// ダメージ結果を計算する
     /// </summary>
-    /// <param name="attackerData"> 攻击方数据 </param>
-    /// <param name="defenderData"> 防守方数据 </param>
-    /// <returns> 本次伤害值 </returns>
+    /// <param name="attackerData"> 攻撃者のデータ </param>
+    /// <param name="defenderData"> 防御側のデータ </param>
+    /// <returns> 今回のダメージ値 </returns>
     public float ResultDamage(CharacterData attackerData, CharacterData defenderData, out bool isCritical)
     {
         float ResultDamage = 0f;
-        //暴击判断
-        if (UnityEngine.Random.Range(0f, 1f) < attackerData.currentCritical)  //暴击
+        //クリティカル判定
+        if (UnityEngine.Random.Range(0f, 1f) < attackerData.currentCritical)  //クリティカルヒット
         {
             isCritical = true;
-            // Debug.Log("暴击");
-            // AkSoundEngine.PostEvent(DefenderData.characterData.getCriticalSound, DefenderData.gameObject);  //播放被暴击音效
+            // Debug.Log("クリティカルヒット");
+            // AkSoundEngine.PostEvent(DefenderData.characterData.getCriticalSound, DefenderData.gameObject);  //クリティカルヒットの音を再生する
             FMODUnity.RuntimeManager.PlayOneShot(defenderData.characterData.getCriticalSound);
 
             ResultDamage = attackerData.currentComboAttack * (attackerData.currentAttack - defenderData.currentDefend)
                         * (1 + attackerData.currentCriticalDamage);
         }
-        else    //没暴击
+        else    //クリティカルヒットがない
         {
             isCritical = false;
-            //音效 AkSoundEngine.PostEvent(DefenderData.characterData.getHitSound, DefenderData.gameObject);  //播放受击音效
+            //サウンドエフェクト AkSoundEngine.PostEvent(DefenderData.characterData.getHitSound, DefenderData.gameObject);  // ヒットサウンドを再生
             FMODUnity.RuntimeManager.PlayOneShot(defenderData.characterData.getHitSound);
             ResultDamage = attackerData.currentComboAttack * (attackerData.currentAttack - defenderData.currentDefend);
         }
 
 
-        //if (attackerData.BaseAttack > 9) DPSManager.Instance.PlusDamage(ResultDamage);//计算玩家DPS
-        //if (attackerData.BaseHealth > 1000) DPSManager.Instance.PlusBOSSDamage(ResultDamage);//计算BOSSDPS
+        //if (attackerData.BaseAttack > 9) DPSManager.Instance.PlusDamage(ResultDamage);//プレイヤーのDPSを計算する
+        //if (attackerData.BaseHealth > 1000) DPSManager.Instance.PlusBOSSDamage(ResultDamage);//BOSSDPSを計算する
 
 
-        return Mathf.Max(ResultDamage, 0);  //防止回血
+        return Mathf.Max(ResultDamage, 0);  //回復を防ぐ
     }
 
 
 
     /// <summary>
-    /// 更新CD
+    /// CDを更新する
     /// </summary>
     public void CDUpdate()
     {
@@ -444,14 +460,14 @@ public class GameManager : singleton<GameManager>
     }
     #region 游戏进度管理 暂无本地存储逻辑
     /// <summary>
-    /// 游戏正式开始
-    /// 进入战斗关卡
+    /// ゲームが正式に始まりました
+    /// バトルステージに入る
     /// </summary>
     public void GameStart()
     {
-        PanelManager.Instance.SetMainCamera(Camera.main);   //初始化绑定相机
-        birthPoint = GameObject.Find("Level").transform.Find("FirstBirthPoint");    //设置第一个出生点
-        //加buff
+        PanelManager.Instance.SetMainCamera(Camera.main);   //カメラの初期化バインド
+        birthPoint = GameObject.Find("Level").transform.Find("FirstBirthPoint");    //最初のスポーンポイントを設定する
+        //バフを追加する
         BuffDataManager.Instance.playerBuffList.Clear();
         BuffDataManager.Instance.playerBuffList.Add(new SwordBuff(E_ChararcterType.player, 4));
         BuffDataManager.Instance.playerBuffList.Add(new StaffBuff(E_ChararcterType.player, 4));
@@ -464,11 +480,11 @@ public class GameManager : singleton<GameManager>
         if (currentPlayer != null) Destroy(currentPlayer.gameObject);
         GameObject firstPlayer = Instantiate(playerPrefab, birthPoint.position, playerPrefab.transform.rotation);
 
-        CM_Effect.Instance.SetFollwerPlayer(firstPlayer.transform);     //相机绑定
-        firstPlayer.GetComponent<PlayerControl>().lockHealth = true;    //进入后锁血
+        CM_Effect.Instance.SetFollwerPlayer(firstPlayer.transform);     //カメラバインド
+        firstPlayer.GetComponent<PlayerControl>().lockHealth = true;    //後に入ってから血をロックします
         gameStartTime = Time.time;
-        TimelineManager.Instance.changePlayableTO(0);   //TimeLine操作
-        TimelineManager.Instance.PlayCurrentPlayableDirector();   //TimeLine操作
+        TimelineManager.Instance.changePlayableTO(0);   //タイムライン操作
+        TimelineManager.Instance.PlayCurrentPlayableDirector();   //タイムライン操作
     }
     public void OpenFirstRoomTrigger()
     {
@@ -476,7 +492,7 @@ public class GameManager : singleton<GameManager>
     }
 
     /// <summary>
-    /// 检测玩家是否存活
+    /// プレイヤーが生存しているかどうかを確認する
     /// </summary>
     public void PlayerHealthCheck()
     {
@@ -500,27 +516,27 @@ public class GameManager : singleton<GameManager>
     }
 
     /// <summary>
-    /// 玩家死亡本轮游戏结束
-    /// 播放死亡镜头
-    /// 恢复镜头
-    /// 播放回溯效果
-    /// 显示回溯面板
+    /// プレイヤーが死亡したら、このラウンドのゲームは終了します。
+    /// デスシーンを再生する
+    /// レンズを復元する
+    /// 再生リトラクション効果
+    /// バックトレースパネルを表示する
     /// </summary>
     public IEnumerator GameOver()
     {
         float time = 0;
 
-        //通知玩家死亡事件
-        Debug.Log("玩家死亡进入GameOver流程");
+        //プレイヤーの死亡イベントを通知する
+        Debug.Log("プレイヤーが死亡し、ゲームオーバーのプロセスに入ります。");
         PlayerDie();
-        while (time < 0.001f)   //执行下一帧
+        while (time < 0.001f)   //次のフレームを実行する
         {
             time += Time.deltaTime;
             yield return null;
         }
         time = 0;
 
-        //镜头拉近 缓速播放死亡动画
+        //カメラがズームインし、死亡アニメーションがスローモーションで再生されます。
         StartCoroutine(PlayerStop(1.0f));
         CM_Effect.Instance.CM_TransitionDim(6, 0.5f);
         while (time < 1.5f)
@@ -530,7 +546,7 @@ public class GameManager : singleton<GameManager>
         }
         time = 0;
 
-        //镜头拉远
+        //カメラが引きます
         CM_Effect.Instance.CM_TransitionDim(18, 1.0f);
         while (time < 1.2f)
         {
@@ -539,7 +555,7 @@ public class GameManager : singleton<GameManager>
         }
         time = 0;
 
-        //黑屏等方式掩盖重生效果
+        //黒い画面などでリスポーン効果を隠す
         while (time < 3.0f)
         {
             CM_Effect.Instance.SetColorAdjusting(-time * 10);
@@ -549,7 +565,7 @@ public class GameManager : singleton<GameManager>
         ResetLevel();
         RemakePlayer();
 
-        //恢复屏幕 恢复玩家输入
+        //画面を復元する プレイヤーの入力を復元する
         while (time >= 0)
         {
             CM_Effect.Instance.SetColorAdjusting(-time * 10);
@@ -560,15 +576,19 @@ public class GameManager : singleton<GameManager>
         time = 0;
         currentPlayer.EnableInput();
         PanelManager.Instance.Open(new TipsItem());
-        //亮屏 恢复玩家输入控制
+        //画面を明るくし、プレイヤーの入力制御を回復します
 
 
         yield break;
     }
 
-    /// <summary>
-    /// 通关大罪关卡时调用
-    /// </summary>
+    ///<summary>
+
+
+    ////// 大罪のステージをクリアした時に呼び出す
+
+
+    ///</summary>
     public void ClearLevel(RoomTrigger roomTrigger)
     {
         resetRoomList.Clear();
@@ -582,13 +602,17 @@ public class GameManager : singleton<GameManager>
         // BuffDataManager.Instance.RecordBuffList();
     }
 
-    /// <summary>
-    /// 死亡时调用
-    /// </summary>
+    ///<summary>
+
+
+    ////// 死亡時に呼び出す
+
+
+    ///</summary>
     public void ResetLevel()
     {
         // List<RoomTrigger> temp = SaveManager.LoadFromJson<List<RoomTrigger>>("LevelData");
-        //重置记录的关卡的状态
+        //レコードのステージの状態をリセットする
         foreach (var t in resetRoomList)
         {
             t.ResetRoom();
@@ -598,44 +622,44 @@ public class GameManager : singleton<GameManager>
     }
 
     /// <summary>
-    /// 重新创建玩家
+    /// プレイヤーを再作成する
     /// </summary>
     public void RemakePlayer()
     {
-        //玩家重生
+        //プレイヤーのリスポーン
         // birthPoint = SaveManager.LoadFromJson<Transform>("ResurrectionPoint");
         currentPlayer.characterBuffManager.RemoveAllBuff();
         if (currentPlayer != null)
         {
             Destroy(currentPlayer.gameObject);
         }
-        //重置Buff
+        //バフをリセット
         BuffDataManager.Instance.BackBuff();
 
         GameObject newPlayer = Instantiate(playerPrefab, birthPoint.position, playerPrefab.transform.rotation);
         currentPlayer = newPlayer.GetComponent<PlayerControl>();
         currentPlayer.DisableInput();
-        CM_Effect.Instance.SetFollwerPlayer(newPlayer.transform);   //设置相机跟随玩家
+        CM_Effect.Instance.SetFollwerPlayer(newPlayer.transform);   //カメラをプレイヤーに追従させる設定
 
         EffectManager.Instance.SetResurgenceEffect(birthPoint.position);
     }
 
     /// <summary>
-    /// 通关游戏逻辑
+    /// ゲームのロジックをクリアする
     /// </summary>
     public void GameClear()
     {
         currentPlayer.characterBuffManager.RemoveAllBuff();
-        //移除Boss和小怪的buff
+        //ボスとモンスターのバフを削除する
         PanelManager.Instance.Close(PanelManager.Instance.GetPanel("BattleMainPanel").UIType);
         BuffDataManager.Instance.ClearAllBuff();
         SceneLoadManager.Instance.LoadScene(3);
     }
 
     /// <summary>
-    /// 获取游戏通关流程时间
+    /// ゲームクリアのプロセス時間を取得する
     /// </summary>
-    /// <returns> 通关用秒 </returns>
+    /// <returns> クリア時間は秒 </returns>
     public float GetClearTime()
     {
         return gameClearTime - gameStartTime;

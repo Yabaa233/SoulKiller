@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// »·ĞÎUI£¬¹ÒÔØÔÚBattleMainPanelÉÏÓÃÀ´ÏÔÊ¾²¢ÇĞ»»µ±Ç°µÄÎäÆ÷
+/// ãƒªãƒ³ã‚°å‹UIã€BattleMainPanelã«ãƒã‚¦ãƒ³ãƒˆã—ã¦ç¾åœ¨ã®æ­¦å™¨ã‚’è¡¨ç¤ºã—åˆ‡ã‚Šæ›¿ãˆã‚‹ãŸã‚ã«ä½¿ç”¨ã—ã¾ã™ã€‚
 /// xushi
 /// </summary>
 public class Weapen : BasePanel
@@ -13,56 +13,56 @@ public class Weapen : BasePanel
 
     public Weapen() : base(new UIType(path)) { }
 
-    //Ñ¡ÏîÔ¤ÖÆÌå
+    //é¸æŠè‚¢ãƒ—ãƒ¬ãƒ•ã‚¡ãƒ–ä½“
     private GameObject optionPrefab;
-    //Ñ¡Ïî×éµÄ¸¸¶ÔÏó
+    //ã‚ªãƒ—ã‚·ãƒ§ãƒ³ã‚°ãƒ«ãƒ¼ãƒ—ã®è¦ªã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
     private GameObject optionGroup;
-    //Ñ¡Ïî×é
+    //ã‚ªãƒ—ã‚·ãƒ§ãƒ³ã‚°ãƒ«ãƒ¼ãƒ—
     private Transform[] options;
-    //Ñ¡Ïî×ÜÊı
+    //é¸æŠè‚¢ã®ç·æ•°
     [Range(0, 20)]
     private int optionNUm;
-    //Ñ¡Ïî×ÜÊıµÄÒ»°ë
+    //é¸æŠè‚¢ã®ç·æ•°ã®åŠåˆ†
     private float halfNum;
-    //Ñ¡ÏîºÍÑ¡ÏîÎ»ÖÃ
+    //é¸æŠè‚¢ã¨é¸æŠè‚¢ã®ä½ç½®
     private Dictionary<Transform, Vector3> OptionP = new Dictionary<Transform, Vector3>();
-    //µ÷Õû²ã¼¶Ë³ĞòµÄ×Öµä
+    //éšå±¤é †åºã‚’èª¿æ•´ã™ã‚‹è¾æ›¸
     private Dictionary<Transform, int> OptionS = new Dictionary<Transform, int>();
-    //Ğı×ªÖĞĞÄ
+    //å›è»¢ä¸­å¿ƒ
     private Vector3 center = Vector3.zero;
-    //Ğı×ª°ë¾¶
+    //å›è»¢åŠå¾„
     private float R = 50f;
-    //Ğı×ªËÙ¶È
+    //å›è»¢é€Ÿåº¦
     [Range(1f, 100f)]
     private float speed;
-    //yÖáµÄÆ«ÒÆÁ¿£¬ÈÃÃ¿Ò»¸öÔªËØ¶¼ÄÜ±»¿´µ½
+    //yè»¸ã®ã‚ªãƒ•ã‚»ãƒƒãƒˆé‡ã€ã™ã¹ã¦ã®è¦ç´ ãŒè¦‹ãˆã‚‹ã‚ˆã†ã«ã—ã¾ã™ã€‚
     private float yOffet;
-    //×îĞ¡Í¸Ã÷¶È
+    //æœ€å°é€æ˜åº¦
     [Range(0, 1)]
     public float minAlpha;
 
-    //Ñ¡ÖĞÏîµÄËõ·Å³Ì¶È
+    //é¸æŠé …ç›®ã®ã‚ºãƒ¼ãƒ ãƒ¬ãƒ™ãƒ«
     [Range(1, 5)]
     public float firstS;
     [Range(0, 1)]
-    public float minS;//×îĞ¡Ëõ·Å³Ì¶È
+    public float minS;//æœ€å°ã‚¹ã‚±ãƒ¼ãƒ«åº¦
     [Range(0, 1)]
-    public float tempS;//Ğı×ª¹ı³ÌÖĞµÄËõ·Å³Ì¶È
+    public float tempS;//å›è»¢éç¨‹ã«ãŠã‘ã‚‹ã‚¹ã‚±ãƒ¼ãƒªãƒ³ã‚°ã®ç¨‹åº¦
     [Range(0, 0.5f)]
-    public float smoothSTime;//Ëõ·ÅµÄÆ½»¬Ê±¼ä
+    public float smoothSTime;//ã‚ºãƒ¼ãƒ ã®ã‚¹ãƒ ãƒ¼ã‚ºãªæ™‚é–“
 
-    Coroutine currentPIE;//µ±Ç°ÕıÔÚÒÆ¶¯µÄĞ­³Ì
-    Coroutine[] SIE2;//ËùÓĞµÄËõ·ÅĞ­³Ì
+    Coroutine currentPIE;//ç¾åœ¨ç§»å‹•ä¸­ã®ã‚³ãƒ«ãƒ¼ãƒãƒ³
+    Coroutine[] SIE2;//ã™ã¹ã¦ã®ã‚¹ã‚±ãƒ¼ãƒªãƒ³ã‚°ã‚³ãƒ«ãƒ¼ãƒãƒ³
 
-    //±ß¿òÑÕÉ«²¿·Ö
-    Image[] border;//Ñ¡Ïî±ß¿ò
-    [ColorUsage(true, false)]//µÚÒ»¸ö²ÎÊıÎªÊÇ·ñÏÔÊ¾AlphaÍ¨µÀ£¬µÚ¶ş¸ö²ÎÊıÎªÊÇ·ñ¿ªÆôHDR
-    public Color originColor;//³õÊ¼±ß¿òÑÕÉ«
+    //æ ç·šã®è‰²éƒ¨åˆ†
+    Image[] border;//é¸æŠè‚¢ã®æ ç·š
+    [ColorUsage(true, false)]//æœ€åˆã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã¯Alphaãƒãƒ£ãƒ³ãƒãƒ«ã‚’è¡¨ç¤ºã™ã‚‹ã‹ã©ã†ã‹ã€äºŒç•ªç›®ã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã¯HDRã‚’æœ‰åŠ¹ã«ã™ã‚‹ã‹ã©ã†ã‹ã§ã™ã€‚
+    public Color originColor;//åˆæœŸã®æ ç·šã®è‰²
     [ColorUsage(true, false)]
-    public Color firstColor;//Ñ¡ÖĞ±ß¿òµÄÑÕÉ«
+    public Color firstColor;//é¸æŠã—ãŸæ ç·šã®è‰²
 
-    private Button leftButton;//×ó°´Å¥
-    private Button rightButton;//ÓÒ°´Å¥
+    private Button leftButton;//å·¦ãƒœã‚¿ãƒ³
+    private Button rightButton;//å³ãƒœã‚¿ãƒ³
 
     public override void OnInit()
     {
@@ -71,26 +71,26 @@ public class Weapen : BasePanel
     }
 
 
-    //ÖØĞ´º¯Êı²¿·Ö
+    //é–¢æ•°éƒ¨åˆ†ã®æ›¸ãæ›ãˆ
     public override void OnShow(params object[] para)
     {
-        ////×é¼ş°ó¶¨
+        ////ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®ãƒã‚¤ãƒ³ãƒ‡ã‚£ãƒ³ã‚°
         //optionGroup = skin.transform.Find("Option").gameObject;
         //optionPrefab = optionGroup.transform.Find("Item").gameObject;
         //leftButton = skin.transform.Find("LeftButton").gameObject.GetComponent<Button>();
         //rightButton = skin.transform.Find("RightButton").gameObject.GetComponent<Button>();
 
-        //×é¼ş°ó¶¨
+        //ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®ãƒã‚¤ãƒ³ãƒ‡ã‚£ãƒ³ã‚°
         optionGroup = UITool.FindChildGameObject("Option");
         optionPrefab = UITool.FindChildGameObject("Item");
         leftButton = UITool.GetOrAddComponentInChildren<Button>("LeftButton");
         rightButton = UITool.GetOrAddComponentInChildren<Button>("RightButton");
 
-        //Ìí¼Ó¼àÌı
+        //ãƒªã‚¹ãƒŠãƒ¼ã‚’è¿½åŠ ã™ã‚‹
         leftButton.onClick.AddListener(TurnLeft);
         rightButton.onClick.AddListener(TurnRight);
 
-        //Êı¾İ³õÊ¼»¯
+        //ãƒ‡ãƒ¼ã‚¿ã®åˆæœŸåŒ–
         optionNUm = 3;
         yOffet = 20;
         speed = 8;
@@ -102,19 +102,19 @@ public class Weapen : BasePanel
         originColor = Color.white;
         firstColor = Color.black;
 
-        //³õÊ¼»¯¸÷ÖÖÊı×é
+        //å„ç¨®ã®é…åˆ—ã‚’åˆæœŸåŒ–ã™ã‚‹
         SIE2 = new Coroutine[optionNUm];
         options = new Transform[optionNUm];
         border = new Image[optionNUm];
 
-        //Éú³ÉÂß¼­
+        //ç”Ÿæˆãƒ­ã‚¸ãƒƒã‚¯
         Generate();
     }
 
     public void Generate()
     {
-        Debug.Log("Éú³ÉÁËÑ­»·UI");
-        for (int i = 0; i < optionNUm - 1; i++)//-1ÊÇÒòÎªµÚÒ»¸öÒÑ¾­Éú³ÉÁË£¬ÓÃÀ´µ±×÷Ô¤ÖÆÌåÄ£°å
+        Debug.Log("ã‚µã‚¤ã‚¯ãƒªãƒƒã‚¯UIãŒç”Ÿæˆã•ã‚Œã¾ã—ãŸ");
+        for (int i = 0; i < optionNUm - 1; i++)//-1ã¯ã€æœ€åˆã®ã‚‚ã®ãŒã™ã§ã«ç”Ÿæˆã•ã‚Œã€ãƒ—ãƒ¬ãƒ•ã‚¡ãƒ–ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆã¨ã—ã¦ä½¿ç”¨ã™ã‚‹ãŸã‚ã§ã™ã€‚
         {
             GameObject go = GameObject.Instantiate(optionPrefab, Vector3.zero, Quaternion.identity, optionGroup.transform);
             go.name = i.ToString();
@@ -129,11 +129,11 @@ public class Weapen : BasePanel
             SetBorderColor(i, originColor);
         }
 
-        InitPos();//³õÊ¼»¯Î»ÖÃ
-        InitSibling();//¶ÔÎ»ÖÃ½øĞĞÅÅÁĞ
-        SetAlpha();//ÉèÖÃÔªËØÍ¸Ã÷¶È
-        SetFristColor();//ÉèÖÃÔªËØÑÕÉ«
-        // MonoHelper.Instance.StartCoroutine(SetScale());//ÉèÖÃËõ·Å±ÈÀı´óĞ¡£¬ÔİÊ±²»ĞèÒªÕâ¸ö¹¦ÄÜ
+        InitPos();//åˆæœŸä½ç½®
+        InitSibling();//ä½ç½®ã‚’æ•´åˆ—ã™ã‚‹
+        SetAlpha();//è¦ç´ ã®é€æ˜åº¦ã‚’è¨­å®šã™ã‚‹
+        SetFristColor();//è¦ç´ ã®è‰²ã‚’è¨­å®šã™ã‚‹
+        // MonoHelper.Instance.StartCoroutine(SetScale());//ã‚¹ã‚±ãƒ¼ãƒ«ã‚’è¨­å®šã™ã‚‹ã€ç¾åœ¨ã¯ã“ã®æ©Ÿèƒ½ã¯ä¸è¦
     }
 
     public void InitPos()
@@ -142,13 +142,13 @@ public class Weapen : BasePanel
 
         for (int i = 0; i < optionNUm; i++)
         {
-            //ÉèÖÃ¶ÔÓ¦µÄ½Ç¶È
+            //å¯¾å¿œã™ã‚‹è§’åº¦ã‚’è¨­å®šã™ã‚‹
             angle = (360.0f / (float)optionNUm) * i * Mathf.Deg2Rad;
 
             float x = Mathf.Sin(angle) * R;
             float z = -Mathf.Cos(angle) * R;
 
-            //ÉèÖÃ¶ÔÓ¦µÄÆ«ÒÆÁ¿
+            //å¯¾å¿œã™ã‚‹ã‚ªãƒ•ã‚»ãƒƒãƒˆã‚’è¨­å®šã™ã‚‹
             float y = 0;
             if (i != 0)
             {
@@ -159,7 +159,7 @@ public class Weapen : BasePanel
                 }
             }
 
-            //³õÊ¼»¯Î»ÖÃºÍ×Öµä
+            //ä½ç½®ã¨è¾æ›¸ã®åˆæœŸåŒ–
             Vector3 temp = options[i].localPosition = new Vector3(x, y, z);
             OptionP.Add(options[i], temp);
         }
@@ -167,36 +167,36 @@ public class Weapen : BasePanel
 
     public void InitSibling()
     {
-        //ÉèÖÃË³Ğò
+        //é †åºã‚’è¨­å®šã™ã‚‹
         for (int i = 0; i < optionNUm; i++)
         {
-            //Ã»ÓĞ¹ı°ë
+            //ã¾ã åŠåˆ†ã‚‚çµŒã£ã¦ã„ã¾ã›ã‚“
             if (i <= halfNum)
             {
-                //Å¼Êı
+                //å¶æ•°
                 if (optionNUm % 2 == 0)
                 {
                     options[i].SetSiblingIndex((int)halfNum - i);
                 }
-                //ÆæÊı
+                //å¥‡æ•°
                 else
                 {
                     options[i].SetSiblingIndex((int)((optionNUm - 1) / 2) - i);
                 }
             }
-            else//¹ı°ë
+            else//åŠåˆ†ä»¥ä¸Š
             {
                 options[i].SetSiblingIndex(options[optionNUm - i].GetSiblingIndex());
             }
         }
-        //Ìí¼Óµ½×Öµä
+        //è¾æ›¸ã«è¿½åŠ ã™ã‚‹
         for (int i = 0; i < optionNUm; i++)
         {
             OptionS.Add(options[i], options[i].GetSiblingIndex());
         }
     }
 
-    //»ñÈ¡µ±Ç°Ñ¡ÏîIndex
+    //ç¾åœ¨ã®é¸æŠè‚¢ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚’å–å¾—ã™ã‚‹
     public int GetFirst()
     {
         for (int i = 0; i < optionNUm; i++)
@@ -206,7 +206,7 @@ public class Weapen : BasePanel
                 return i;
             }
         }
-        //Ã»ÓĞÕÒµ½µÄ±êÊ¶
+        //è¦‹ã¤ã‹ã‚‰ãªã„è­˜åˆ¥å­
         return 233;
     }
 
@@ -230,10 +230,10 @@ public class Weapen : BasePanel
             tf.localPosition = Vector3.MoveTowards(tf.localPosition, target, tempspeed * Time.deltaTime);
             yield return null;
         }
-        //¸üĞÂ×ÖµäÀïµÄÎ»ÖÃ
+        //è¾æ›¸ã®ä½ç½®ã‚’æ›´æ–°ã™ã‚‹
         OptionP[tf] = target;
 
-        //ÉèÖÃÍ¸Ã÷¶È
+        //é€æ˜åº¦ã‚’è¨­å®šã™ã‚‹
         SetAlpha();
 
         yield return null;
@@ -241,13 +241,13 @@ public class Weapen : BasePanel
 
     IEnumerator MoveLeft()
     {
-        //±ÜÃâĞ­³Ì³åÍ»
+        //ã‚³ãƒ«ãƒ¼ãƒãƒ³ã®ç«¶åˆã‚’é¿ã‘ã‚‹
         if (currentPIE != null)
         {
             yield return currentPIE;
         }
 
-        //ÔİÊ±²»¿ªÆôËõ·Å¹¦ÄÜ
+        //ä¸€æ™‚çš„ã«ã‚ºãƒ¼ãƒ æ©Ÿèƒ½ã‚’ã‚ªãƒ•ã«ã—ã¾ã™ã€‚
         // for(int i = 0;i<optionNUm;i++)
         // {
         //     if(SIE2[i] != null)
@@ -256,7 +256,7 @@ public class Weapen : BasePanel
         //     }
         // }
 
-        //ÖØÖÃÊôĞÔÇøÓò
+        //å±æ€§é ˜åŸŸã‚’ãƒªã‚»ãƒƒãƒˆ
         int first = GetFirst();
         SetBorderColor(first, originColor);
         // ReSetScale();
@@ -290,7 +290,7 @@ public class Weapen : BasePanel
 
         // MonoHelper.Instance.StartCoroutine(SetScale());
 
-        SetFristColor();//ÉèÖÃÔªËØÑÕÉ«
+        SetFristColor();//è¦ç´ ã®è‰²ã‚’è¨­å®šã™ã‚‹
 
 
         yield return null;
@@ -304,7 +304,7 @@ public class Weapen : BasePanel
             yield return currentPIE;
         }
 
-        //ÔİÊ±²»¿ªÆôËõ·Å¹¦ÄÜ
+        //ä¸€æ™‚çš„ã«ã‚ºãƒ¼ãƒ æ©Ÿèƒ½ã‚’ã‚ªãƒ•ã«ã—ã¾ã™ã€‚
         // for(int i = 0;i<optionNUm;i++)
         // {
         //     if(SIE2[i] != null)
@@ -314,22 +314,22 @@ public class Weapen : BasePanel
         // }
 
 
-        //ÖØÖÃÊôĞÔÇøÓò
+        //å±æ€§é ˜åŸŸã‚’ãƒªã‚»ãƒƒãƒˆ
         int first = GetFirst();
         SetBorderColor(first, originColor);
         // ReSetScale();
 
-        //´æ´¢ĞÅÏ¢£º×îºó
+        //æƒ…å ±ã®ä¿å­˜ï¼šæœ€å¾Œ
         Vector3 p = OptionP[options[optionNUm - 1]];
         int s = OptionS[options[optionNUm - 1]];
         Vector3 targetP;
 
-        //´Ó×îºóÒ»¸ö¿ªÊ¼Ñ­»·
+        //æœ€å¾Œã®ã‚‚ã®ã‹ã‚‰ãƒ«ãƒ¼ãƒ—ã‚’é–‹å§‹ã—ã¾ã™
         for (int i = optionNUm - 1; i >= 0; i--)
         {
             if (i == 0)
             {
-                //È·¶¨Ä¿±êµÄÒÆ¶¯Î»ÖÃ
+                //ç›®æ¨™ã®ç§»å‹•ä½ç½®ã‚’ç¢ºå®šã™ã‚‹
                 targetP = p;
                 OptionS[options[i]] = s;
             }
@@ -345,19 +345,19 @@ public class Weapen : BasePanel
 
         // MonoHelper.Instance.StartCoroutine(SetScale());
 
-        SetFristColor();//ÉèÖÃÔªËØÑÕÉ«
+        SetFristColor();//è¦ç´ ã®è‰²ã‚’è¨­å®šã™ã‚‹
 
 
         yield return null;
     }
 
-    private void SetAlpha()//¸ù¾İZÖµ¶¯Ì¬Éú³ÉÍ¸Ã÷¶È
+    private void SetAlpha()//Zå€¤ã«åŸºã¥ã„ã¦é€æ˜åº¦ã‚’å‹•çš„ã«ç”Ÿæˆã™ã‚‹
     {
-        //¼ÆËãZÖµµÄÆßµã£¬¼´µ±Ç°Ñ¡Ïî£¬Í¸Ã÷¶È×î´ó
+        //Zå€¤ã‚’è¨ˆç®—ã™ã‚‹7ã¤ã®ãƒã‚¤ãƒ³ãƒˆã€ã¤ã¾ã‚Šç¾åœ¨ã®é¸æŠè‚¢ã€é€æ˜åº¦ãŒæœ€å¤§ã§ã™ã€‚
         float startz = center.z - R;
         foreach (var option in OptionP)
         {
-            //¼ÆËãÍ¸Ã÷¶È
+            //é€æ˜åº¦ã‚’è¨ˆç®—ã™ã‚‹
             float val = 1 - Mathf.Abs(option.Value.z - startz) / (2 * R) * (1 - minAlpha);
 
             Image[] img = option.Key.GetComponentsInChildren<Image>();
@@ -375,7 +375,7 @@ public class Weapen : BasePanel
 
         for (int i = 0; i < optionNUm; i++)
         {
-            //µ±Ç°Ñ¡ÏîµÄ·Å´óÂÊÊÇµ¥¶ÀÉèÖÃµÄ
+            //ç¾åœ¨ã®ã‚ªãƒ—ã‚·ãƒ§ãƒ³ã®æ‹¡å¤§ç‡ã¯å€‹åˆ¥ã«è¨­å®šã•ã‚Œã¦ã„ã¾ã™ã€‚
             if (i == first)
             {
                 SIE2[i] = MonoHelper.Instance.StartCoroutine(ChangeScale(options[i], firstS));
@@ -399,11 +399,11 @@ public class Weapen : BasePanel
         }
     }
 
-    // Ëõ·Å´¦ÀíµÄĞ­³Ì
+    // ã‚ºãƒ¼ãƒ å‡¦ç†ã®ã‚³ãƒ«ãƒ¼ãƒãƒ³
     IEnumerator ChangeScale(Transform tf, float targetS)
     {
         float temp = 0;
-        while (Mathf.Abs(tf.localScale.x - targetS) > 0.001)//ÓÉÓÚÓĞ¿ÉÄÜÓÀÔ¶¶¼ÎŞ·¨´ïµ½ÏàÍ¬µÄËõ·Å³Ì¶È£¬ËùÒÔÕâÀïÖ÷ÒªÊÇĞ¡ÓÚÄ³¸ö·¶Î§¾ÍĞĞ
+        while (Mathf.Abs(tf.localScale.x - targetS) > 0.001)//åŒã˜ã‚¹ã‚±ãƒ¼ãƒ«ã«åˆ°é”ã§ããªã„å¯èƒ½æ€§ãŒã‚ã‚‹ãŸã‚ã€ã“ã“ã§ã¯ä¸»ã«ã‚ã‚‹ç¯„å›²ã‚ˆã‚Šå°ã•ã„ã“ã¨ãŒé‡è¦ã§ã™ã€‚
         {
             float s = Mathf.SmoothDamp(tf.localScale.x, targetS, ref temp, smoothSTime);
             tf.localScale = Vector3.one * s;
@@ -413,11 +413,11 @@ public class Weapen : BasePanel
     }
 
 
-    //ÈÃÕûÌå¾ÓÖĞÏÔÊ¾£¬±ÜÃâÉÏÏÂ¿Õ¼ä²î¾à¹ı´ó
+    //å…¨ä½“ã‚’ä¸­å¤®ã«è¡¨ç¤ºã•ã›ã€ä¸Šä¸‹ã®ç©ºé–“ã®å·®ãŒå¤§ãã™ãã‚‹ã®ã‚’é¿ã‘ã¦ãã ã•ã„ã€‚
     IEnumerator AlignCenter()
     {
-        //È·±£Ëõ·ÅÒÑ¾­Íê³ÉÁË
-        //ÔİÊ±²»¿ªÆôËõ·Å¹¦ÄÜ
+        //æ‹¡å¤§ç¸®å°ãŒå®Œäº†ã—ãŸã“ã¨ã‚’ç¢ºèªã—ã¦ãã ã•ã„ã€‚
+        //ä¸€æ™‚çš„ã«ã‚ºãƒ¼ãƒ æ©Ÿèƒ½ã‚’ã‚ªãƒ•ã«ã—ã¾ã™ã€‚
         // for(int i = 0;i<optionNUm;i++)
         // {
         //     if(SIE2[i] != null)
@@ -427,13 +427,13 @@ public class Weapen : BasePanel
         // }
 
         float a = options[0].GetComponent<RectTransform>().rect.height * options[0].localScale.x / 2f;
-        //Èç¹ûÎªÅ¼ÊıµÄ»°
+        //å¶æ•°ã§ã‚ã‚Œã°
         if (optionNUm % 2 == 0)
         {
             float b = options[(int)halfNum].GetComponent<RectTransform>().rect.height * options[(int)halfNum].localScale.x / 2f;
             optionGroup.transform.localPosition = new Vector3(0, (-halfNum * yOffet + a - b) / 2f, 0);
         }
-        //Èç¹ûÊÇÆæÊı
+        //å¥‡æ•°ã§ã‚ã‚‹ãªã‚‰
         else
         {
             int temp = (optionNUm - 1) / 2;
@@ -444,14 +444,14 @@ public class Weapen : BasePanel
         yield return null;
     }
 
-    private void SetBorderColor(int i, Color c)//ÉèÖÃÑÕÉ«µÄ·½·¨
+    private void SetBorderColor(int i, Color c)//è‰²ã®è¨­å®šæ–¹æ³•
     {
         border[i].color = c;
     }
 
-    private void SetFristColor()//ÉèÖÃµÚÒ»¸öÑÕÉ«
+    private void SetFristColor()//æœ€åˆã®è‰²ã‚’è¨­å®šã™ã‚‹
     {
-        //ÉèÖÃ±ß¿òÑÕÉ«
+        //æ ç·šã®è‰²ã‚’è¨­å®šã™ã‚‹
         int first = GetFirst();
         SetBorderColor(first, firstColor);
     }

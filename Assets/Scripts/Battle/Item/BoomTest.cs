@@ -21,70 +21,69 @@ public class BoomTest : MonoBehaviour
     ////// 自分でpointAとpointBを登録して使用します。
 
     ///</summary>
-    /*    private void Awake()
+    /*
+private void Awake()
         {
             pointA = transform;
             pointB = GameObject.Find("Player").transform;
         }
 */
     ///<summary>
-
-    ////// 爆発テスト
-
+ 　//爆発テスト
     ///</summary>
     void Start()
     {
         // rb = GetComponent<Rigidbody>();
         // inBlast = false;
         // //gameObject.GetComponent<Collider>().enabled = false;
-        // // 物体をA点に置く
+ // // 物体をA点に置く
         // transform.position = pointA.position + new Vector3(0,1,0);
  
-        // // 式を使って初速度を計算する
+ // // 式を使って初速度を計算する
         // speed = new Vector3(
         //     (pointB.position.x - pointA.position.x) / time,
         //     (pointB.position.y - pointA.position.y) / time - 0.5f * g * time, 
         //     (pointB.position.z - pointA.position.z) / time);
  
-        // // 重力の初速度は0です
+ // // 重力の初速度は0です
         // rb.AddForce(speed, ForceMode.Impulse);
     }
 
     /// <summary>
-    /// テストの初期化
+    //テストの初期化
     /// </summary>
     private void OnEnable() 
     {
         rb = GetComponent<Rigidbody>();
         inBlast = false;
         //gameObject.GetComponent<Collider>().enabled = false;
-        // 物体をA点に置きます。
+ // オブジェクトをA点に置きます。
         if(pointA != null && pointB != null)
         {
             pointB = GameManager.Instance.currentPlayer.transform;
             transform.position = pointA.position + new Vector3(0,1,0);
     
-            // 式を使って初速度を計算する
+ // 式を使って初速度を計算する
             speed = new Vector3(
                 (pointB.position.x - pointA.position.x) / time,
                 (pointB.position.y - pointA.position.y) / time - 0.5f * g * time, 
                 (pointB.position.z - pointA.position.z) / time);
     
-            // 重力の初速度は0です
+ // 重力の初速度は0です
             rb.AddForce(speed, ForceMode.Impulse);
         }
     }
     /// <summary>
-    /// テストの更新
+    //テストの更新
     /// </summary>
     void FixedUpdate()
     {
-        // 重力シミュレーション
-        // transform.Translate(speed * Time.deltaTime); // 位置のシミュレーション
+ // 重力シミュレーション
+ // transform.Translate(speed * Time.deltaTime); // 位置のシミュレーション
         // transform.Translate(Gravity * Time.deltaTime);
         ///<summary>
 
-        ////// 着地時間が3秒を超えた場合、サブオブジェクトのトリガーを起動し、爆発が終了した後、オブジェクトプールに回収します。
+        //着地時間が3秒を超えた場合、サブオブジェクトのトリガーを起動し、爆発が終了した後、オブジェクトプールに回収します。
 
         ///</summary>
         if (isBoom)
@@ -108,8 +107,8 @@ public class BoomTest : MonoBehaviour
     }
     ///<summary>
 
-    ////// アース検出
-/// タイマーと接触マークの起動が開始されます
+    //地球検出
+ /// タイマーと接触マークの起動が開始されます
 
     ///</summary>
     /// <param name="collision"></param>
@@ -117,7 +116,8 @@ public class BoomTest : MonoBehaviour
     {
         if (other.gameObject.layer == LayerJudge("Ground"))
         {
-            /*Debug.Log("Enter Ground");*/
+            /*Debug.Log("Enter Ground");
+*/
             if (!isBoom)
             {
                 isBoom = true;
@@ -175,7 +175,7 @@ public class BoomTest : MonoBehaviour
     }
     ///<summary>
 
-    ////// 試験の終了
+    ////// テストの終了
 
     ///</summary>
 }

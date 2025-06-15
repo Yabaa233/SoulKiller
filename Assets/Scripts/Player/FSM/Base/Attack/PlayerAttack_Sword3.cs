@@ -8,7 +8,7 @@ using UnityEngine;
 public class PlayerAttack_Sword3 : StateMachineBehaviour
 {
     private PlayerControl currentPlayer;    //現在のキャラクター
-    [Header("スプリント開始の時間点")]
+    [Header("スプリント開始の時点")]
     public float dodgeStartPer = 0.4f;
     [Header("スプリントスピード")]
     public float dodgeSpeed = 1.0f;
@@ -29,7 +29,7 @@ public class PlayerAttack_Sword3 : StateMachineBehaviour
         {
             dodged = true;
             resDir = (currentPlayer.targetPoint - currentPlayer.transform.position).normalized * dodgeSpeed;
-            currentPlayer.PlayerAttackMove_Plunge();    //向きを再設定する
+            currentPlayer.PlayerAttackMove_Plunge();    //方向を再設定する
             currentPlayer.OpenTrigger();
             currentPlayer.CreateEffect();
             currentPlayer.PlayerForceMove(resDir);

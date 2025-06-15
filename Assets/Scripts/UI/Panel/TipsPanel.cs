@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 
 /// <summary>
-/// ÌáÊ¾Ãæ°å£¬Õ¹Ê¾Í¼ÎÄÌáÊ¾
+/// ãƒ’ãƒ³ãƒˆãƒ‘ãƒãƒ«ã€ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ãƒ’ãƒ³ãƒˆã®è¡¨ç¤º
 /// xushi
 /// </summary>
 public class TipsPanel : BasePanel
@@ -14,32 +14,32 @@ public class TipsPanel : BasePanel
 
     public TipsPanel() : base(new UIType(path)) { }
 
-    //ÌáÊ¾±êÌâ
+    //ãƒ’ãƒ³ãƒˆã‚¿ã‚¤ãƒˆãƒ«
     Text title;
 
-    //µ±Ç°Ò³Âë
+    //ç¾åœ¨ã®ãƒšãƒ¼ã‚¸ç•ªå·
     Text curPage;
     int curPageNum;
-    //ËùÓĞÒ³Âë
+    //ã™ã¹ã¦ã®ãƒšãƒ¼ã‚¸ç•ªå·
     Text totalPage;
     int totalPageNum;
-    //Ïò×ó¹ö¶¯°´Å¥
+    //å·¦ã«ã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«ã™ã‚‹ãƒœã‚¿ãƒ³
     Button turnLeft;
-    //ÏòÓÒ¹ö¶¯°´Å¥
+    //å³ã«ã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«ã™ã‚‹ãƒœã‚¿ãƒ³
     Button turnRight;
 
-    //·µ»Ø°´Å¥
+    //æˆ»ã‚‹ãƒœã‚¿ãƒ³
     Button backButton;
-    //Ò³ÃæÁĞ±í
+    //ãƒšãƒ¼ã‚¸ãƒªã‚¹ãƒˆ
     GameObject tipsItemList;
 
-    //µ±Ç°¶¯»­
+    //ç¾åœ¨ã®ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³
     Animator animator;
 
-    //µ±Ç°Êı¾İ
+    //ç¾åœ¨ã®ãƒ‡ãƒ¼ã‚¿
     TipsPanelSO tipsPanelSO;
 
-    //ContentÎ»ÖÃ×é
+    //ã‚³ãƒ³ãƒ†ãƒ³ãƒ„ã®ä½ç½®
     //List<int> contentPositionList;
 
     public override void OnShow(params object[] para)
@@ -58,15 +58,15 @@ public class TipsPanel : BasePanel
         //animator = UITool.GetOrAddComponent<Animator>();
         PanelManager.Instance.KeyBoardUpdateAction += PanelSwitch;
 
-        //¼àÌı
+        //ç›£è¦–
         backButton.onClick.AddListener(Close);
         turnLeft.onClick.AddListener(TurnLeft);
         turnRight.onClick.AddListener(TurnRight);
 
-        //³õÊ¼»¯
+        //åˆæœŸåŒ–
         if (para.Length != 0)
         {
-            //³õÊ¼»¯±êÌâÓëÒ³Âë
+            //ã‚¿ã‚¤ãƒˆãƒ«ã¨ãƒšãƒ¼ã‚¸ç•ªå·ã®åˆæœŸåŒ–
             tipsPanelSO = (TipsPanelSO)para[0];
             title.text = tipsPanelSO.name;
             RefreshPages(1, tipsPanelSO.tipsPanelItems.Count);
@@ -76,7 +76,7 @@ public class TipsPanel : BasePanel
 
         //contentPositionList = new List<int>();
         int i = 0;
-        //³õÊ¼»¯Ò³ÃæÁĞ±í
+        //ãƒšãƒ¼ã‚¸ãƒªã‚¹ãƒˆã®åˆæœŸåŒ–
         foreach (var item in tipsPanelSO.tipsPanelItems)
         {
             i += 920;
@@ -98,7 +98,7 @@ public class TipsPanel : BasePanel
         PanelManager.Instance.KeyBoardUpdateAction -= PanelSwitch;
     }
 
-    //°´¼ü¼ì²â·½·¨
+    //ã‚­ãƒ¼æ¤œå‡ºæ–¹æ³•
     public void PanelSwitch(KeyCode keyCode)
     {
         if (keyCode == KeyCode.Q)
@@ -107,7 +107,7 @@ public class TipsPanel : BasePanel
             TurnRight();
     }
 
-    //Ë¢ĞÂÒ³Âë
+    //ãƒšãƒ¼ã‚¸ã‚’æ›´æ–°ã™ã‚‹
     public void RefreshPages(int curP,int totalP)
     {
         curPageNum = curP;
@@ -115,7 +115,7 @@ public class TipsPanel : BasePanel
         curPage.text = curP.ToString();
         totalPage.text = totalP.ToString();
     }
-    //Ïò×ó·­Ò³(²¥·Å·­Ò³¶¯»­
+    //å·¦ã«ãƒšãƒ¼ã‚¸ã‚’ã‚ãã‚‹ï¼ˆãƒšãƒ¼ã‚¸ã‚ãã‚Šã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’å†ç”Ÿï¼‰
     public void TurnLeft()
     {
         if (curPageNum != 1)
@@ -126,7 +126,7 @@ public class TipsPanel : BasePanel
             RefreshPages(curPageNum, totalPageNum);
         }
     }
-    //ÏòÓÒ·­Ò³(²¥·Å·­Ò³¶¯»­
+    //å³ã«ãƒšãƒ¼ã‚¸ã‚’ã‚ãã‚‹ï¼ˆãƒšãƒ¼ã‚¸ã‚ãã‚Šã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’å†ç”Ÿï¼‰
     public void TurnRight()
     {
         if (curPageNum != totalPageNum)
@@ -156,7 +156,7 @@ public class TipsPanel : BasePanel
     //    }
         
     //}
-    ////¸Ä±äContentµÄÎ»ÖÃ
+    ////Contentã®ä½ç½®ã‚’å¤‰æ›´ã™ã‚‹
     //public void PositionChange(float x,float y,bool isLeft)
     //{
     //    if(isLeft)

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 
-//ここでは、状態インターフェースを継承し、すべての状態スキームを実装します。
+//ここでは、ステートインターフェースを継承し、全てのステートスキームを実装します。
 public class EnemyState : IState
 {
     public void OnEnter()
@@ -31,7 +31,7 @@ public class EnemyState : IState
 
 public class Enemy_IdleState : IState
 {
-    private EnemyFSM manager;//状態機械
+    private EnemyFSM manager;//ステートマシン
     private EnemyParameter parameter;//設定された属性
 
     public Enemy_IdleState(EnemyFSM _manager)
@@ -53,7 +53,7 @@ public class Enemy_IdleState : IState
 
     public void OnLateUpDade()
     {
-        //フレームが終了した後に行うべきことを教えてください。
+        //フレームが終了した後に何をすべきか教えてください。
     }
 
     public void OnUpDate()
@@ -81,7 +81,7 @@ public class Enemy_IdleState : IState
 
 public class Enemy_FindState : IState
 {
-    private EnemyFSM manager;//状態機械
+    private EnemyFSM manager;//ステートマシン
     private EnemyParameter parameter;//設定された属性
 
     public Enemy_FindState(EnemyFSM _manager)
@@ -126,11 +126,11 @@ public class Enemy_FindState : IState
             manager.IsVisableInCamera)
             {
                 // Debug.Log("充電状態に入ります");
-                manager.TranstionState(E_EnemyStateType.Storage);//プレイヤーは攻撃範囲内におり、自身が画面範囲内にいる場合、蓄積状態に入ります。
+                manager.TranstionState(E_EnemyStateType.Storage);//プレイヤーが攻撃範囲内にいて、自分自身が画面範囲内にいる場合、蓄積状態になります。
             }
             else{
                 // Debug.Log("追跡状態に入ります");
-                manager.TranstionState(E_EnemyStateType.Chase);//プレイヤーが攻撃範囲内にいない場合、追撃状態に入ります。
+                manager.TranstionState(E_EnemyStateType.Chase);//プレイヤーが攻撃範囲内にいない場合、追撃状態になります。
             }
         }
     }
@@ -139,7 +139,7 @@ public class Enemy_FindState : IState
 
 public class Enemy_ChaseState : IState
 {
-    private EnemyFSM manager;//状態機械
+    private EnemyFSM manager;//ステートマシン
     private EnemyParameter parameter;//設定された属性
     private NavMeshAgent agent;//ナビゲーションコンポーネント
     public Enemy_ChaseState(EnemyFSM _manager)
@@ -159,12 +159,12 @@ public class Enemy_ChaseState : IState
     public void OnExit()
     {
         //退出方法
-        agent.enabled = false;//stopはもう古くなりました
+        agent.enabled = false;//stopはもう古いです
     }
 
     public void OnLateUpDade()
     {
-        //フレームが終了した後に行うべきことを教えてください。
+        //フレームが終了した後に何をすべきか教えてください。
     }
 
     public void OnUpDate()
@@ -197,7 +197,7 @@ public class Enemy_ChaseState : IState
 
 public class Enemy_StorageState : IState
 {
-    private EnemyFSM manager;//状態機械
+    private EnemyFSM manager;//ステートマシン
     private EnemyParameter parameter;//設定された属性
 
     private float btwTime = 1.5f;
@@ -250,13 +250,13 @@ public class Enemy_StorageState : IState
 
 public class Enemy_AttackState : IState
 {
-    private EnemyFSM manager;//状態機械
+    private EnemyFSM manager;//ステートマシン
     private EnemyParameter parameter;//設定された属性
     private float btwTime = 2f;
     private float nextStateTime;
     private Vector3 originalPos;//一時保存
     private Vector3 attackPos;//攻撃距離
-    private Vector3 faceVector;//スプリント方向に
+    private Vector3 faceVector;//スプリントの方向に
     public Enemy_AttackState(EnemyFSM _manager)
     {
         this.manager = _manager;
@@ -284,7 +284,7 @@ public class Enemy_AttackState : IState
 
     public void OnLateUpDade()
     {
-        //フレームが終了した後に行うべきことを教えてください。
+        //フレームが終了した後に何をすべきか教えてください。
     }
 
     public void OnUpDate()
@@ -301,7 +301,7 @@ public class Enemy_AttackState : IState
             manager.rb.AddForce(faceVector.normalized * parameter.enemyStateData.dashPower, ForceMode.Impulse);
             parameter.isDash = false;
         }
-        if(manager.rb.velocity.magnitude < 1.5f&&Time.time > nextStateTime)//速度が閾値以下になると、Find状態に入ります。
+        if(manager.rb.velocity.magnitude < 1.5f&&Time.time > nextStateTime)//速度が閾値以下になると、Find状態に移行します。
         {
             manager.DashCD.flag = false;
             parameter.getHit = false;
@@ -324,7 +324,7 @@ public class Enemy_DeadState : IState
     }
     public void OnEnter()
     {
-        //自身の一部のコンポーネントを破壊するために
+        //自分自身の一部のコンポーネントを破壊するために
         parameter.isDead = true;
         parameter.animator.Play("Dead");
         GameManager.Instance.CDList.Remove(manager.DashCD);
@@ -358,7 +358,7 @@ public class Enemy_HitState : IState
     private EnemyParameter parameter;
 
     private float nextStateTime;
-    private float timeBtwState = 0.5f;//少なくとも0.5秒間、被打状態に留まる
+    private float timeBtwState = 0.5f;//少なくとも0.5秒間、打たれた状態に留まる
 
     public Enemy_HitState(EnemyFSM _manager)
     {

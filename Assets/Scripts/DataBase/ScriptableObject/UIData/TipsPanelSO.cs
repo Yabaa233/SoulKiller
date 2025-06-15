@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 /// <summary>
-/// ´¢´æÒªÕ¹Ê¾µÄÌáÊ¾Ãæ°åĞÅÏ¢£¬ÓÃÓÚuiÏÔÊ¾
+/// UIè¡¨ç¤ºç”¨ã«è¡¨ç¤ºã™ã‚‹ãƒ—ãƒ­ãƒ³ãƒ—ãƒˆãƒ‘ãƒãƒ«æƒ…å ±ã‚’ä¿å­˜ã—ã¾ã™ã€‚
 /// xushi
 /// </summary>
 
@@ -15,11 +15,11 @@ public class TipsPanelSO : ScriptableObject
 [System.Serializable]
 public class TipsPanelItem 
 {
-    //ÌáÊ¾µÄÃû³Æ
+    //ãƒ’ãƒ³ãƒˆã®åå‰
     //public string tipsName;
-    //ÏÔÊ¾µÄÍ¼Æ¬
+    //è¡¨ç¤ºã•ã‚Œã‚‹ç”»åƒ
     public Sprite sprite;
-    //ÏÔÊ¾µÄÎÄ×Ö
+    //è¡¨ç¤ºã•ã‚Œã‚‹ãƒ†ã‚­ã‚¹ãƒˆ
     [TextArea]
     public string  text;
 }

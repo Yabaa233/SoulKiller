@@ -2,23 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-/// <summary>
-/// È·ÈÏµ¯´°
+///<summary>
+
+////// ç¢ºèªãƒãƒƒãƒ—ã‚¢ãƒƒãƒ—
 /// xushi
-/// </summary>
+
+///</summary>
 public class EnsurePanel : BasePanel
 {
     static readonly string path = "UI/Panel/EnsurePanel";
 
     public EnsurePanel() : base(new UIType(path)) { }
 
-    //µ¯´°±êÌâ
+    //ãƒãƒƒãƒ—ã‚¢ãƒƒãƒ—ã‚¿ã‚¤ãƒˆãƒ«
     Text title;
-    //µ¯´°ÄÚÈİ
+    //ãƒãƒƒãƒ—ã‚¢ãƒƒãƒ—ã‚³ãƒ³ãƒ†ãƒ³ãƒ„
     Text describe;
-    //È·ÈÏ°´Å¥
+    //ç¢ºèªãƒœã‚¿ãƒ³
     Button ok;
-    //È¡Ïû°´Å¥
+    //ã‚­ãƒ£ãƒ³ã‚»ãƒ«ãƒœã‚¿ãƒ³
     Button cancel;
 
     public override void OnShow(params object[] para)
@@ -29,17 +31,17 @@ public class EnsurePanel : BasePanel
         ok = UITool.GetOrAddComponentInChildren<Button>("Btn_Ok");
         cancel = UITool.GetOrAddComponentInChildren<Button>("Btn_Cancel");
 
-        //¼àÌı
+        //ç›£è¦–
         ok.onClick.AddListener(Ensure);
         cancel.onClick.AddListener(Cancel);
     }
 
-    //È·ÈÏ°´Å¥
+    //ç¢ºèªãƒœã‚¿ãƒ³
     public void Ensure()
     {
 
     }
-    //È¡Ïû°´Å¥
+    //ã‚­ãƒ£ãƒ³ã‚»ãƒ«ãƒœã‚¿ãƒ³
     public void Cancel()
     {
         Close();

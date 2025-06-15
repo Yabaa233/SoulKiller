@@ -5,15 +5,15 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 /// <summary>
-/// 所有界面的基类，存放界面信息和通用方法
+/// すべてのインターフェースの基底クラスで、インターフェース情報と共通メソッドを保存します。
 /// xushi
 /// </summary>
 public class BasePanel
 {
-    //UI基本信息
+    //UI基本情報
     public UIType UIType { get; private set; }
 
-    //UI工具
+    //UIツール
     public UITool UITool { get; private set; }
 
     public BasePanel(UIType uIType)
@@ -21,45 +21,45 @@ public class BasePanel
         UIType = uIType;
     }
 
-    //UI启动的所有协程信息
+    //UIが起動したすべてのコルーチン情報
     protected List<Coroutine> coroutines;
 
-    //UI是否需要Update
+    //UIは更新が必要ですか？
     public bool ifNeedUpdate = false;
 
-    //初始化加载
+    //初期化読み込み
     public void Init(UITool tool){
-        //皮肤
-        // GameObject skinPrefab = ResManager.LoadPrefab(skinPath);//资源加载模块后续要补
+        //肌
+        // GameObject skinPrefab = ResManager.LoadPrefab(skinPath); //リソースロードモジュールは後で補充する必要があります
 
-        //当前UI的UI工具（包括当前GameObject信息）
+        //現在のUIのUIツール（現在のGameObject情報を含む）
         UITool = tool;
         coroutines = new List<Coroutine>();
     }
-    //关闭
+    //閉じる
     public virtual void Close()
     {
         PanelManager.Instance.Close(UIType);
     }
 
-    //暂停时
+    //一時停止時に
     public virtual void OnPause()
     {
 
     }
 
-    //初始化时
+    //初期化時に
     public virtual void OnInit(){
 
     }
 
-    //显示的时候
+    //表示するとき
     public virtual void OnShow(params object[] para){
         
     }
-    //关闭的时候
+    //閉じる時に
     public virtual void OnClose(){
-        //关闭所有协程
+        //すべてのコルーチンを閉じる
         if (coroutines != null)
             foreach (var item in coroutines)
             {
@@ -67,23 +67,23 @@ public class BasePanel
             }
     }
 
-    //接收分发Update时间
+    //アップデート配布時間の受信
     public virtual void Update()
     {
 
     }
 
-    //鼠标进入方法
+    //マウスエンターメソッド
     public virtual void PointerEnter(BaseEventData data)
     {
 
     }
-    //鼠标移出方法
+    //マウスアウトメソッド
     public virtual void PointerExit(BaseEventData data)
     {
 
     }
-    //鼠标点击方法
+    //マウスクリック方法
     public virtual void PointerClick(BaseEventData data)
     {
 

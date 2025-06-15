@@ -63,6 +63,6 @@ using UnityEngine;
 
 //     private void OnTestButton()
 //     {
-//         Debug.Log("点击事件产生成功");
+//         Debug.Log("クリックイベントが成功しました");
 //     } 
 // }

@@ -156,7 +156,7 @@ public class longEnemy_ShootState :IState
 {
     private long_DistanceFSM manager;
     private longEnemyParameter parameter;
-    private float nextAttackTime;//次の攻撃イベントを一時保存する
+    private float nextAttackTime;//次の攻撃イベントを一時保存します
     private float timeBtwAttck;//攻撃速度によって決定される間隔
     private bool isAttack;//攻撃しますか？
 
@@ -250,7 +250,7 @@ public class longEnemy_GetHitState :IState
     private longEnemyParameter parameter;
 
     private float nextStateTime;
-    private float timeBtwState = 0.5f;//少なくとも被打撃状態に留まる
+    private float timeBtwState = 0.5f;//少なくとも打撃を受けた状態に留まる
     public longEnemy_GetHitState(long_DistanceFSM _manager)
     {
         this.manager = _manager;
@@ -353,7 +353,7 @@ public class longEnemy_StorageState : IState
 {
     private long_DistanceFSM manager;
     private longEnemyParameter parameter;
-    private float jumpTime = 2f;//時間を飛び越える
+    private float jumpTime = 2f;//時間を超える
     private float nextStateTime;//次の状態の時間を大まかに計算する
     public longEnemy_StorageState(long_DistanceFSM _manager)
     {
@@ -400,12 +400,12 @@ public class longEnemy_JumpState : IState
     //次のジャンプポイント
     private Vector3 nextPoint;
     private Vector3 sourcePoint;//原始点
-    private float jumpTime = 0.5f;//時間を飛び越える
+    private float jumpTime = 0.5f;//時間を超える
     private float nextStateTime;//次の状態の時間を大まかに計算する
-    private float distance;//移動距離を一時保存
+    private float distance;//移動距離を一時保存する
     private float speed;//一時保存ジャンプ速度
     private float StartTime;//開始時間
-    private Vector3 faceVector;//二点間の単位ベクトル
+    private Vector3 faceVector;//2点間の単位ベクトル
     public longEnemy_JumpState(long_DistanceFSM _manager)
     {
         this.manager = _manager;
@@ -414,7 +414,7 @@ public class longEnemy_JumpState : IState
 
     public void OnEnter()
     {
-        //元のデータを保存する
+        //オリジナルのデータを保存する
         sourcePoint = parameter.enemyPos.position;
         nextStateTime = Time.time + jumpTime;
         //次のランダムポイント領域をサンプリングします
@@ -507,7 +507,7 @@ public class longEnemy_MoveAfterState : IState
     private Vector3 sourcePos;
     private float moveDistance = 5f;//移動距離
     private float startTime;
-    private float distance;//移動距離を一時保存
+    private float distance;//移動距離を一時保存する
     private float moveTime = 1f;//ポジショニングタイム
     private float speed;
     private float nextStateTime;

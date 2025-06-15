@@ -27,7 +27,7 @@ public class SpitFireControl : MonoBehaviour
     public UnityAction DeathNotice;
     private float startTime, endTime, breakTime, shutUpTime;    //火炎放射の準備開始時間、火炎放射の終了時間、機構が破壊される時間、一回の口を閉じる必要な時間。
     private Transform upperJaw;                                 //上顎
-    private Vector3 upperStart, upperPoint;                     //口を開ける原始座標、最上限
+    private Vector3 upperStart, upperPoint;                     //口を開ける原点座標、最上限
     private bool inSpitFire,isDead;                                    //火を吹いていますか？
     private RoomTrigger roomTrigger;
     ///<summary>
@@ -57,7 +57,7 @@ public class SpitFireControl : MonoBehaviour
     }
     ///<summary>
 
-    ////// 起動するたびに、イベントTriggerとバインドする必要があります。
+    ////// 起動するたびに、イベントトリガーとバインドする必要があります。
 
     ///</summary>
     private void OnEnable()
@@ -71,11 +71,11 @@ public class SpitFireControl : MonoBehaviour
         {
             if (inSpitFire)
             {
-                SpitFire();//火を噴出す段階にあるときに火を噴出すを実行します。
+                SpitFire();//火を噴出す段階にあるときに、火を噴出す操作を実行します。
             }
             else
             {
-                fire.SetActive(false);//終了するときは、炎を消す必要があります。
+                fire.SetActive(false);//終了する際には、火を消す必要があります。
                 if (Time.time >= endTime + intervalTime)//十分な時間を間隔に
                 {
                     startTime = Time.time;
@@ -88,8 +88,8 @@ public class SpitFireControl : MonoBehaviour
             ///
             ///<summary>
 
-            ////// 時間の更新を破壊し、噴火している場合、
-            /// それなら、口を閉じるべきで、その後は無駄骨です。
+            ////// 時間の更新が破壊され、噴火が発生している場合、
+            /// それなら、口を閉じるべきで、それ以降は無駄口を叩くな。
 
             ///</summary>
             ///
@@ -150,7 +150,7 @@ public class SpitFireControl : MonoBehaviour
     }
     ///<summary>
 
-    ////// 火を消し、口を閉じてください。
+    ////// 火を消して、口を閉じてください。
 
     ///</summary>
     void CloseFire()

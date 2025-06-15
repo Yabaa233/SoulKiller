@@ -8,42 +8,42 @@ public class sound_test : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        //SoundManager.init();//³õÊ¼»¯ÒôÀÖÒôĞ§¹ÜÀí
+        //SoundManager.init();//éŸ³æ¥½ã¨åŠ¹æœéŸ³ã®ç®¡ç†ã‚’åˆæœŸåŒ–
 
-        //sound_manager.play_music("sounds/Login");//²¥·Å±³¾°ÒôÀÖ
+        //sound_manager.play_music("sounds/Login");//ãƒãƒƒã‚¯ã‚°ãƒ©ã‚¦ãƒ³ãƒ‰ãƒŸãƒ¥ãƒ¼ã‚¸ãƒƒã‚¯ã‚’å†ç”Ÿ
 
         //this.InvokeRepeating("test_music_mute", 1, 3);
 
         
-        SoundManager.play_effect("sounds/°´Å¥Àà1£­mcx20070509");//²¥·ÅÒôĞ§,Ö±½Ó¸´ÖÆresuorces/soundÂ·¾¶ÏÂµÄÎÄ¼şÃû³Æ¾ÍºÃ
-        if (SoundManager.effect_is_off())//Èç¹ûµ±Ç°ÊÇ¾²Òô£¬¾ÍÇĞ»»³ÉÓĞÉùÒôµÄ×´Ì¬
+        SoundManager.play_effect("ã‚µã‚¦ãƒ³ãƒ‰/ãƒœã‚¿ãƒ³ã‚¯ãƒ©ã‚¹1-mcx20070509");//ã‚µã‚¦ãƒ³ãƒ‰ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã‚’å†ç”Ÿã™ã‚‹ã«ã¯ã€resuorces/soundãƒ‘ã‚¹ã®ãƒ•ã‚¡ã‚¤ãƒ«åã‚’ç›´æ¥ã‚³ãƒ”ãƒ¼ã—ã¦ãã ã•ã„ã€‚
+        if (SoundManager.effect_is_off())//ç¾åœ¨ãŒãƒŸãƒ¥ãƒ¼ãƒˆçŠ¶æ…‹ã§ã‚ã‚Œã°ã€éŸ³å£°ã‚ã‚Šã®çŠ¶æ…‹ã«åˆ‡ã‚Šæ›¿ãˆã¦ãã ã•ã„ã€‚
         {
             SoundManager.switch_effect();
         }
-        this.InvokeRepeating("again", 3, 3);//Ã¿¸ô3Ãëµ÷ÓÃÒ»´Î
+        this.InvokeRepeating("again", 3, 3);//3ç§’ã”ã¨ã«å‘¼ã³å‡ºã—ã¾ã™
 
         //this.InvokeRepeating("again", 2, 3);
         //this.InvokeRepeating("test_effect_mute", 1, 3);
     }
 
-    //±³¾°ÒôÀÖ¾²ÒôÇĞ»»²âÊÔº¯Êı
+    //ãƒãƒƒã‚¯ã‚°ãƒ©ã‚¦ãƒ³ãƒ‰ãƒŸãƒ¥ãƒ¼ã‚¸ãƒƒã‚¯ã®ãƒŸãƒ¥ãƒ¼ãƒˆåˆ‡ã‚Šæ›¿ãˆãƒ†ã‚¹ãƒˆé–¢æ•°
     void test_music_mute()
     {
         Debug.Log("test_music_mute");
         SoundManager.switch_music();
     }
 
-    //ÒôĞ§¾²ÒôÇĞ»»²âÊÔº¯Êı
+    //ã‚µã‚¦ãƒ³ãƒ‰ãƒŸãƒ¥ãƒ¼ãƒˆåˆ‡ã‚Šæ›¿ãˆãƒ†ã‚¹ãƒˆé–¢æ•°
     void test_effect_mute()
     {
         Debug.Log("test_effect_mute");
         SoundManager.switch_effect();
     }
 
-    //Òş²ØAudioSource×é¼şÓÅ»¯²âÊÔº¯Êı
+    //AudioSourceã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®æœ€é©åŒ–ãƒ†ã‚¹ãƒˆé–¢æ•°ã‚’éš ã™
     void again()
     {
-        SoundManager.play_effect("sounds/°´Å¥Àà1£­mcx20070509");
+        SoundManager.play_effect("ã‚µã‚¦ãƒ³ãƒ‰/ãƒœã‚¿ãƒ³ã‚¯ãƒ©ã‚¹1-mcx20070509");
         
     }
 

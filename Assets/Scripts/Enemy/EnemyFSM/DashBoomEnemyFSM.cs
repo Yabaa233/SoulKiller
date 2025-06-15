@@ -9,7 +9,7 @@ public class DashBoomEnemyParameter
     public CharacterData enemyData;
     public Animator animator;//アニメーションコントローラー
     public GameObject _mainCamera;//カメラの位置
-    public Transform body;//身体の部分
+    public Transform body;//体の部分
     public DBoomEmyStateData_SO enemyStateData;
     public Transform target;
     public bool ableAttact;
@@ -51,7 +51,7 @@ public class DashBoomEnemyFSM : BaseEnemyFSM
         TranstionState(E_EnemyStateType.Idle); //初期状態をIdleに設定し、初期状態を待機状態にします。
     }
 
-    private void Update() {//ここで現在の状態機のアップデートを実行します
+    private void Update() {//ここで現在の状態機の更新を実行します
         currentState.OnUpDate();
         FaceToCamera();
     }
@@ -63,7 +63,7 @@ public class DashBoomEnemyFSM : BaseEnemyFSM
     // {
     //     if (currentState != null)
     //     {
-    //         currentState.OnExit();  //現在の状態を終了させる前に状態を切り替えます
+    //         currentState.OnExit();  //現在の状態を終了する前に状態を切り替えます
     //     }
     //     currentState = states[state];
     //     currentState.OnEnter();

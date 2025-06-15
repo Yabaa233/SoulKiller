@@ -6,30 +6,30 @@ using UnityEngine.UI;
 
 public class TMPDamageText : MonoBehaviour
 {
-    public TextMeshProUGUI damageText;//伤害数字
-    public RectTransform rectTransform;//矩形绘制框
-    [Header("文字存在时间")]public float lifeTimer = 3;//存在多久
-    [Header("文字上升速度")]private float upSpeed = 5;//上升速度
-    [Header("文字最小上升速度")] public float upMinSpeed = 5;//最小上升速度
-    [Header("文字最大上升速度")] public float upMaxSpeed = 5;//最大上升速度
+    public TextMeshProUGUI damageText;//ダメージ数値
+    public RectTransform rectTransform;//長方形描画ボックス
+    [Header("文字の存在時間")]public float lifeTimer = 3;//どのくらい存在していますか？
+    [Header("テキストの上昇速度")]private float upSpeed = 5;//上昇速度
+    [Header("テキストの最小上昇速度")] public float upMinSpeed = 5;//最小上昇速度
+    [Header("テキストの最大上昇速度")] public float upMaxSpeed = 5;//最大上昇速度
 
-    [Header("文字上升速度曲线")] public AnimationCurve upSpeedCurve ;//上升速度曲线
-    [Header("文字缩放速度曲线")] public AnimationCurve upScaleCurve;//缩放速度曲线
-    [Header("文字变透明速度曲线")] public AnimationCurve upAlphaCurve;//透明度变换速度曲线
+    [Header("テキストの上昇速度曲線")] public AnimationCurve upSpeedCurve ;//上昇速度曲線
+    [Header("テキストのズーム速度カーブ")] public AnimationCurve upScaleCurve;//ズーム速度カーブ
+    [Header("テキストの透明度変化速度カーブ")] public AnimationCurve upAlphaCurve;//透明度の変化速度の曲線
 
-    [Header("暴击时文字的缩放倍数")]public float scaleMultible = 2;//暴击时文字缩放倍
-    [Header("初始大小")]public Vector3 startSize = new Vector3(0.5f,0.5f,0.5f);
+    [Header("クリティカルヒット時のテキストの拡大倍率")]public float scaleMultible = 2;//クリティカルヒット時のテキストスケール倍数
+    [Header("初期サイズ")]public Vector3 startSize = new Vector3(0.5f,0.5f,0.5f);
     public TMP_ColorGradient criticalPreset;
     public TMP_ColorGradient normalPreset;
     public TMP_ColorGradient playerColorPreset;
 
-    private Vector3 storePos;//存储刚出生时的位置
-    private float biasY;//存储Y轴位移
-    private float curTime=0;//储存动画曲线采样时间
+    private Vector3 storePos;//生まれた時の位置を保存する
+    private float biasY;//Y軸の変位を保存します
+    private float curTime=0;//アニメーションカーブのサンプリング時間を保存します
 
     //private Material myMat;
     //private Vector3 myColor;
-    //private bool isTimeStop=false;//是否正在顿帧
+    //private bool isTimeStop=false;//フレームが停止しているかどうか
     void Awake()
     {
         damageText = gameObject.GetComponent<TextMeshProUGUI>();
@@ -108,7 +108,7 @@ public class TMPDamageText : MonoBehaviour
         float allChangeScale = scaleMultible - 1;
         float nowChangeScale = 1;
         float time = 0;
-        //print("暴击飘字缩放");
+        //print("クリティカルヒットのフローティングテキストのスケーリング");
         while (time<1)
         {
             if (!GameManager.Instance.Player_IsStop)
@@ -131,19 +131,19 @@ public class TMPDamageText : MonoBehaviour
             yield return null;
         }
     }
-    public void SetStorePos(Vector3 _store)//记录初始位置
+    public void SetStorePos(Vector3 _store)//初期位置を記録する
     {
         storePos = _store;
     }
 
-    public void SetColorGradiant(TMP_ColorGradient colorGradient)//设置颜色渐变
+    public void SetColorGradiant(TMP_ColorGradient colorGradient)//グラデーション色を設定する
     {
         damageText.colorGradientPreset = colorGradient;
     }
 
-    public void PlayerPreset(bool state)//使用玩家预设
+    public void PlayerPreset(bool state)//プレイヤーのプリセットを使用する
     {
-        //目前只有颜色更改
+        //現在、色の変更のみが可能です。
         if(state)
         {
             SetColorGradiant(playerColorPreset);

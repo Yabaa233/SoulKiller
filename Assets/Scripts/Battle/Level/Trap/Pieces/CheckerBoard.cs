@@ -17,7 +17,7 @@ public class CheckerBoard : MonoBehaviour
     [SerializeField] public List<PieceMoveClip> pieceMove;
     [SerializeField] public List<PieceMoveClip> initPosition;
     [Tooltip("現在の段階")] public int nextStep = 0; //現在の段階
-    [Tooltip("チェスのステップ頻度")] public float moveCD = 1;    //チェスのステップ頻度
+    [Tooltip("チェスのステップの頻度")] public float moveCD = 1;    //チェスのステップの頻度
     [Tooltip("初期化後の静止時間")] public float initWaitTime = 2.0f;  //初期化後の静止時間
     [Tooltip("Broken King Special Effects")] public GameObject kingBreakEff_W;
     [Tooltip("Queen's Shattered Special Effects")] public GameObject queenBreakEff_W;
@@ -53,7 +53,7 @@ public class CheckerBoard : MonoBehaviour
         {
             Debug.LogWarning("The current chessboard does not have all the chess pieces' starting points set up.");
         }
-        StartCoroutine(InitCheckerBoard()); //空でなければ位置を初期化します
+        StartCoroutine(InitCheckerBoard()); //空でない場合は位置を初期化します。
     }
 
     private void OnEnable()
@@ -77,7 +77,7 @@ public class CheckerBoard : MonoBehaviour
                 //現在の移動駒が空でないことを保証します
                 while (!pieceMove[nextStep].piece.gameObject.activeSelf)
                 {
-                    //駒がすべて破壊されたら、もう動かない。
+                    //すべての駒が破壊されたら、もう動かせません。
                     if (pieceCount == 0)
                     {
                         Debug.Log("There are no chess pieces left in the scene.");
@@ -153,7 +153,7 @@ public class CheckerBoard : MonoBehaviour
     }
 
     /// <summary>
-    /// KingとQueenの生存数を確認してください。
+    /// キングとクイーンの生存数を確認してください。
     /// </summary>
     public void CheckKingAndQueen()
     {
@@ -165,7 +165,7 @@ public class CheckerBoard : MonoBehaviour
     }
 
     /// <summary>
-    /// すべてのチェスピースを破壊する
+    /// すべてのチェスの駒を破壊する
     /// </summary>
     public void BreakAllPiece()
     {

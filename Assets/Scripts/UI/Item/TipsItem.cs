@@ -42,7 +42,7 @@ public class TipsItem : BasePanel
             excample.sprite = tipsPanelItem.sprite;
         }
         
-        tipsText.DOText("回溯到前一个时间节点，请重新舍弃一个能力", 2).SetEase(Ease.Linear);
+        tipsText.DOText("前の時間点に戻って、能力を再度放棄してください。", 2).SetEase(Ease.Linear);
 
         back = UITool.GetOrAddComponentInChildren<Button>("Btn_Back");
         back.onClick.AddListener(OpenAbandon);
@@ -55,7 +55,7 @@ public class TipsItem : BasePanel
     public void OpenAbandon()
     {
         Close();
-        PanelManager.Instance.Open(new SelectPanel(), null, "舍弃");
+        PanelManager.Instance.Open(new SelectPanel(), null, "Abandon");
     }
 
     public override void OnClose()

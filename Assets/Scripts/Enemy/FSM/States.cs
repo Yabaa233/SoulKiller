@@ -118,7 +118,7 @@ public class PatrolState : IState
             manager.TranstionState(StateType.React);    //プレイヤーを見つけたら、反応状態に切り替えてください。
         }
 
-        //目的地へ向かって移動します
+        //目的地に向かって移動します
         manager.transform.position = Vector2.MoveTowards(
             manager.transform.position, target.position,
             parameter.moveSpeed * Time.deltaTime);
@@ -192,7 +192,7 @@ public class ReactState : IState
     }
     public void OnEnter()
     {
-        //ステータス開始時にリアクションアニメーションを再生
+        //ステータスが開始されたときにリアクションアニメーションを再生します
     }
 
     public void OnExit()
@@ -274,7 +274,7 @@ public class HitState : IState
 {
     private FSM manager;    //ステートマシン
     private Parameter parameter;    //設定された属性
-    //アニメーション再生の進行状況を取得
+    //アニメーションの再生進行状況を取得する
     public HitState(FSM _manager)
     {
         this.manager = _manager;
@@ -282,7 +282,7 @@ public class HitState : IState
     }
     public void OnEnter()
     {
-        //ダメージ受けアニメーションを再生する
+        //ダメージを受けたアニメーションを再生する
     }
 
     public void OnExit()
@@ -292,7 +292,7 @@ public class HitState : IState
 
     public void OnUpDate()
     {
-        //ダメージ受けアニメーションの再生状態を取得
+        //ダメージ受けアニメーションの再生状態を取得します。
         if (parameter.health <= 0)
         {
             manager.TranstionState(StateType.Dead);
@@ -300,7 +300,7 @@ public class HitState : IState
         else
         {
             parameter.target = GameObject.FindWithTag("Player").transform;  //TODO：攻撃を発したオブジェクトに基づいて追跡対象をロックする
-            // if(傷つきアニメーションが終わりそう)
+            // if（傷つきアニメーションが終わりそうなら）
             // {
             //     manager.TranstionState(StateType.Chase);    //追跡状態に移行
             // }

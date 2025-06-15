@@ -42,7 +42,7 @@ public class BossFlower : MonoBehaviour
     }
     private void OnDestroy()
     {
-        //敗北時にボスにログアウトします
+        //敗北時にボスからログアウトします
         if (stateBar != null)
         {
             stateBar.DestroyThis();
@@ -140,11 +140,11 @@ public class BossFlower : MonoBehaviour
                 effect.SetActive(false);
                 //パーティクルエフェクトをオフにする
                 return;
-                //粒子の衝突装置を閉じる必要があります。
+                //粒子衝突装置を閉じる必要があります。
             }
             if (!isWidth)//パーティクルエフェクトが最大幅に達していない時（間違いなく初期起動状態）
             {
-                if (!effect.activeSelf)//まだ起動していない場合は、先に起動してください。
+                if (!effect.activeSelf)//もしまだ起動していない場合は、先に起動してください。
                 {
                     //力を蓄えるアニメーションを再生し、状態を切り替えます。
                     effect.SetActive(true);

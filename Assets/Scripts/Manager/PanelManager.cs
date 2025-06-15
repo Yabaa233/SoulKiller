@@ -4,38 +4,38 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 面板管理器
+/// パネルマネージャー
 /// xushi
 /// </summary>
 public class PanelManager : singleton<PanelManager>
 {
-    [Header("挂载位置")] public Transform battleUIParent;
+    [Header("マウント位置")] public Transform battleUIParent;
 
-    [Header("buff显示信息")] public BuffInfoListSO buffInfoListSO;
-    [Header("当前关卡类型")] public E_BuffKind currentE_BuffKind;
-    [Header("SkipButton绑定标识")]public bool isTip = false;
-    //层级关系
+    [Header("バフ表示情報")] public BuffInfoListSO buffInfoListSO;
+    [Header("現在のステージタイプ")] public E_BuffKind currentE_BuffKind;
+    [Header("SkipButtonバインド識別子")]public bool isTip = false;
+    //階層関係
     public enum Layer
     {
         Panel,
         Tip,
     }
 
-    //按键委托
+    //キー委託
     public Action<KeyCode> KeyBoardUpdateAction;
 
-    //层级列表
+    //階層リスト
     private Dictionary<Layer, Transform> layers = new Dictionary<Layer, Transform>();
-    //UI对象列表
+    //UIオブジェクトリスト
     private Dictionary<UIType, BasePanel> dicUIO;
-    //UI GameObject列表
+    //UIゲームオブジェクトリスト
     private Dictionary<UIType, GameObject> dicUIG ;
-    //UI对象栈
+    //UIオブジェクトスタック
     //private Stack<BasePanel> stackUI;
-    //需要Update分发的UI
+    //UIの更新が必要です
     private List<BasePanel> UpdateUIList;
 
-    //结构
+    //構造
     public static Transform root;
     public static Transform canvas;
 
@@ -55,14 +55,14 @@ public class PanelManager : singleton<PanelManager>
 
     public Camera UICamera;
 
-    /// ////缓存分配区
+    /// キャッシュ割り当て区域
 
     protected override void Awake()
     {
         base.Awake();
         DontDestroyOnLoad(this.gameObject);
 
-        //绑定ScrollToolManager脚本
+        //ScrollToolManagerスクリプトをバインドする
         if (gameObject.GetComponent<ScrollToolManager>() == null)
             gameObject.AddComponent<ScrollToolManager>();
 
@@ -81,9 +81,9 @@ public class PanelManager : singleton<PanelManager>
         }
     }
 
-    //初始化面板管理器
+    //パネルマネージャーの初期化
     public void Init() {
-        //初始化UI储存
+        //UIストレージの初期化
         dicUIO = new Dictionary<UIType, BasePanel>();
         dicUIG = new Dictionary<UIType, GameObject>();
         UpdateUIList = new List<BasePanel>();
@@ -106,25 +106,25 @@ public class PanelManager : singleton<PanelManager>
     }
 
     /// <summary>
-    /// 打开一个面板
+    /// パネルを開く
     /// </summary>
-    /// <param name="basePanel">面板对象</param>
-    /// <param name="para">需要传递的参数列表</param>
+    /// <param name="basePanel">パネルオブジェクト</param>
+    /// <param name="para">渡す必要があるパラメータのリスト</param>
     public void Open(BasePanel basePanel,Transform parent=null,params object[] para) {
         
         if(parent==null)
             parent = layers[basePanel.UIType._layer];
         
-        //判断是否已经打开，如果已经打开则获取UI信息
+        //開いているかどうかを判断し、開いていたらUI情報を取得します。
         GameObject panel = GetSingleUI(basePanel,parent);
 
         basePanel.Init(new UITool(panel));
 
-        //调用面板的初始化方法和进入方法
+        //パネルの初期化メソッドとエンターメソッドを呼び出す
         basePanel.OnInit();
         basePanel.OnShow(para);
 
-        //如果需要Update方法
+        //Updateメソッドが必要な場合
         if(basePanel.ifNeedUpdate)
         {
             UpdateUIList.Add(basePanel);
@@ -132,9 +132,9 @@ public class PanelManager : singleton<PanelManager>
     }
 
     /// <summary>
-    /// 关闭一个面板
+    /// パネルを閉じる
     /// </summary>
-    /// <param name="type">面板类型</param>
+    /// <param name="type">パネルタイプ</param>
     public void Close(UIType type=null)
     {
         //if (type == null)
@@ -154,10 +154,10 @@ public class PanelManager : singleton<PanelManager>
                 {
                     UpdateUIList.Remove(dicUIO[type]);
                 }
-                //调用面板的关闭方法
+                //パネルのクローズメソッドを呼び出す
                 dicUIO[type].OnClose();
 
-                //销毁面板物体，从各列表中移除
+                //パネルオブジェクトを破壊し、各リストから削除します。
                 Destroy(dicUIG[type]);
                 dicUIG.Remove(type);
                 dicUIO.Remove(type);
@@ -166,9 +166,9 @@ public class PanelManager : singleton<PanelManager>
     }
 
     /// <summary>
-    /// 获取一个BasePanel对象
+    /// BasePanelオブジェクトを取得する
     /// </summary>
-    /// <param name="name">面板名称</param>
+    /// <param name="name">パネル名</param>
     /// <returns></returns>
     public BasePanel GetPanel(string name)
     {
@@ -186,14 +186,18 @@ public class PanelManager : singleton<PanelManager>
             }
         }
 
-        Debug.Log($"未找到名为{name}的对象");
+        Debug.Log($"名前が{name}のオブジェクトが見つかりませんでした");
         return null;
     }
 
-    /// <summary>
-    /// 获取同名的所有BasePanel对象
-    /// </summary>
-    /// <param name="name">面板名称</param>
+    ///<summary>
+
+
+    ////// 同名のすべてのBasePanelオブジェクトを取得します
+
+
+    ///</summary>
+    /// <param name="name">パネル名</param>
     /// <returns></returns>
     public List<BasePanel> GetAllPanel(string name)
     {
@@ -204,15 +208,15 @@ public class PanelManager : singleton<PanelManager>
                 basePanels.Add(item.Value);
         }
         //if (basePanels.Count==0)
-            //Debug.Log($"未找到名为{name}的对象");
+            //Debug.Log($"{name}という名前のオブジェクトが見つかりませんでした");
         return basePanels;
     }
 
     /// <summary>
-    /// 获取一个UI物体，如果UI不存在就创建一个
+    /// UIオブジェクトを取得し、存在しない場合は新たに作成します。
     /// </summary>
-    /// <param name="parent">UI的父物体</param>
-    /// <param name="basePanel">UI对象</param>
+    /// <param name="parent">UIの親オブジェクト</param>
+    /// <param name="basePanel">UIオブジェクト</param>
     /// <returns></returns>
     public GameObject GetSingleUI(BasePanel basePanel, Transform parent = null)
     {
@@ -220,7 +224,7 @@ public class PanelManager : singleton<PanelManager>
             return dicUIG[basePanel.UIType];
         if (!parent)
         {
-            Debug.LogError("UI的父物体不存在");
+            Debug.LogError("UIの親オブジェクトが存在しません");
             return null;
         }
         GameObject ui = Instantiate(Resources.Load<GameObject>(basePanel.UIType._path), parent);
@@ -231,7 +235,7 @@ public class PanelManager : singleton<PanelManager>
         return ui;
     }
 
-    void OnGUI()//有可能每帧不止调用一次
+    void OnGUI()//それぞれのフレームが一度以上呼び出される可能性があります。
     {
         if (KeyBoardUpdateAction != null)
         {
@@ -266,11 +270,11 @@ public class PanelManager : singleton<PanelManager>
     }
 
     ///
-    /// /////////////////一些特殊面板特殊处理
+    //一部の特別なパネルは特別に処理されます
     /// 
 
     /// <summary>
-    /// 创建对话面板
+    /// ダイアログパネルを作成する
     /// </summary>
     /// <returns></returns>
     public GameObject CreateDialoguePanel()
@@ -279,21 +283,21 @@ public class PanelManager : singleton<PanelManager>
         GameObject dialoguePanel = Instantiate(Resources.Load<GameObject>("UI/Panel/DialoguePanel"),canvas.Find("Tip"));
         if(dialoguePanel == null)
         {
-            Debug.Log("创建失败");
+            Debug.Log("作成に失敗しました");
         }
         return dialoguePanel;
     }
 
     /// <summary>
-    /// 设置BossUI的可见性
+    /// BossUIの可視性を設定する
     /// </summary>
-    /// <param name="state">是否可见</param>
+    /// <param name="state">表示可能かどうか</param>
     public void SetBossUIVisble(bool state)
     {
         BattleMainPanel battleMainPanel = GetPanel("BattleMainPanel") as BattleMainPanel;
         if(battleMainPanel==null)
         {
-            Debug.LogWarning("没有获取到主UI面板");
+            Debug.LogWarning("メインUIパネルが取得できませんでした");
             return;
         }
         else
@@ -304,14 +308,14 @@ public class PanelManager : singleton<PanelManager>
 
 
     /// <summary>
-    /// 设置玩家护盾的可见性
+    /// プレイヤーのシールドの可視性を設定する
     /// </summary>
     public void SetPlayerShieldVisble(bool state)
     {
         BattleMainPanel battleMainPanel = GetPanel("BattleMainPanel") as BattleMainPanel;
         if(battleMainPanel==null)
         {
-            Debug.LogWarning("没有获取到主UI面板");
+            Debug.LogWarning("メインUIパネルが取得できませんでした");
             return;
         }
         else
@@ -321,9 +325,9 @@ public class PanelManager : singleton<PanelManager>
     }
 
 ///
-/// //////////////////UI帮助函数部分
+/// //////////////////UIヘルプ関数部分
 /// 
-    //世界空间转UI空间
+    //ワールドスペースからUIスペースへの変換
     public Vector3 WorldPointToUILocalPoint(Vector3 point)
     {
         Vector3 screenPoint = Camera.main.WorldToScreenPoint(point);
@@ -335,14 +339,14 @@ public class PanelManager : singleton<PanelManager>
     }
 
     /// <summary>
-    /// 产生伤害数字
+    /// ダメージ数値を生成する
     /// </summary>
-    /// <param name="damage">该次受到伤害</param>
-    /// <param name="who">产生在谁身上</param>
+    /// <param name="damage">このダメージを受けた</param>
+    /// <param name="who">誰の上で発生する</param>
     public void GenerateDamageNum(float damage,Transform who,bool isCritical = false,bool isPlayer = false)
     {
         GameObject nowText = ObjectPool.Instance.GetObject("DamageText",true,true);
-        //现在使用的是TMP字体
+        //現在使用しているのはTMPフォントです。
         TMPDamageText tMPDamageText = nowText.GetComponent<TMPDamageText>();
         tMPDamageText.SetDamage(damage,isCritical);
         nowText.transform.localPosition = WorldPointToUILocalPoint(who.position);
@@ -351,9 +355,13 @@ public class PanelManager : singleton<PanelManager>
         tMPDamageText.PlayerPreset(isPlayer);
     }
 
-    /// <summary>
-    /// 生成通用血量面板，一般针对机关，返回StateBar脚本
-    /// </summary>
+    ///<summary>
+
+
+    ////// 汎用的なヘルスバーを生成し、一般的にはメカニズムに対して使用され、StateBarスクリプトを返します。
+
+
+    ///</summary>
     /// <returns></returns>
     public StateBar GenerateCommonStatePanel(Transform who)
     {
@@ -363,7 +371,7 @@ public class PanelManager : singleton<PanelManager>
     }
 
     /// <summary>
-    /// 返回跟随目标的UI空间坐标
+    /// ターゲットに追従するUIスペース座標を返します。
     /// </summary>
     /// <returns></returns>
     public Vector3 UIFollow(Transform who,float biasY = 0f)
@@ -373,20 +381,28 @@ public class PanelManager : singleton<PanelManager>
     }
 
 
-////////////////////对外接口函数部分
+////////////////////外部インターフェース関数の一部
 
-    /// <summary>
-    /// 返回当前角色剩余的血量
-    /// </summary>
+    ///<summary>
+
+
+    ////// 現在のキャラクターの残りの体力を返します
+
+
+    ///</summary>
     /// <returns></returns>
     public float GetPlayerCurrentHP()
     {
         return GameManager.Instance.currentPlayer.characterData.currentHealth;
     }
 
-    /// <summary>
-    /// 返回当前boss剩余的血量
-    /// </summary>
+    ///<summary>
+
+
+    ////// 現在のボスの残りの体力を返します
+
+
+    ///</summary>
     /// <returns></returns>
     public float GetBossCurrentHp()
     {
@@ -395,27 +411,39 @@ public class PanelManager : singleton<PanelManager>
         return -1;
     }
 
-    /// <summary>
-    /// 返回当前玩家的最大生命值
-    /// </summary>
+    ///<summary>
+
+
+    ////// 現在のプレイヤーの最大体力を返します
+
+
+    ///</summary>
     /// <returns></returns>
     public float GetPlayerMaxHp()
     {
         return GameManager.Instance.currentPlayer.characterData.maxHealth;
     }
 
-    /// <summary>
-    /// 返回当前boss的最大生命值
-    /// </summary>
+    ///<summary>
+
+
+    ////// 現在のボスの最大体力を返します
+
+
+    ///</summary>
     /// <returns></returns>
     public float GetBossMaxHp()
     {
         return GameManager.Instance.currentBoss.bossData.maxHealth;
     }
 
-    /// <summary>
-    /// 返回当前玩家的当前护盾值，-1代表没有护盾
-    /// </summary>
+    ///<summary>
+
+
+    ////// 現在のプレイヤーの現在のシールド値を返します。-1はシールドがないことを示します。
+
+
+    ///</summary>
     /// <returns></returns>
     public float GetPlayerShieldHp()
     {
@@ -429,9 +457,13 @@ public class PanelManager : singleton<PanelManager>
         }
     }
 
-    /// <summary>
-    /// 返回当前玩家的最大护盾值，-1代表没有护盾或者Boss不存在
-    /// </summary>
+    ///<summary>
+
+
+    ////// 現在のプレイヤーの最大シールド値を返します。-1はシールドが存在しない、またはボスが存在しないことを示します。
+
+
+    ///</summary>
     /// <returns></returns>
     public float GetPlayerShieldMaxHp()
     {
@@ -448,9 +480,11 @@ public class PanelManager : singleton<PanelManager>
             return -1;
         }
     }
-    /// <summary>
-    /// 返回当前玩家的当前护盾值，-1代表没有护盾或者Boss不存在
-    /// </summary>
+    ///<summary>
+
+    ////// 現在のプレイヤーの現在のシールド値を返します。-1はシールドがない、またはボスが存在しないことを示します。
+
+    ///</summary>
     /// <returns></returns>
     public float GetBossShield()
     {
@@ -468,9 +502,13 @@ public class PanelManager : singleton<PanelManager>
         }
     }
 
-    /// <summary>
-    /// 返回当前boss的最大护盾值，-1代表没有护盾,或者Boss不存在
-    /// </summary>
+    ///<summary>
+
+
+    ////// 現在のボスの最大シールド値を返します。-1はシールドがない、またはボスが存在しないことを示します。
+
+
+    ///</summary>
     /// <returns></returns>
     public float GetBossShieldMax()
     {
@@ -489,7 +527,7 @@ public class PanelManager : singleton<PanelManager>
     }
 
     /// <summary>
-    /// 获得连击次数,暂时无法使用
+    /// コンボ数を獲得しましたが、一時的に使用できません。
     /// </summary>
     /// <returns></returns>
     public float GetcomboTime()
@@ -498,7 +536,7 @@ public class PanelManager : singleton<PanelManager>
     }
 
     /// <summary>
-    /// 获得玩家当前子弹数,-1代表没有这个Buff或者玩家不存在
+    /// プレイヤーの現在の弾数を取得します。-1は、このバフが存在しないか、プレイヤーが存在しないことを示します。
     /// </summary>
     /// <returns></returns>
     public float GetPlayerGunAmmo()
@@ -518,7 +556,7 @@ public class PanelManager : singleton<PanelManager>
     }
 
     /// <summary>
-    /// 获得玩家当前最大子弹数，-1代表没有这个Buff或者玩家不存在
+    /// プレイヤーの現在の最大弾数を取得します。-1は、このバフが存在しないか、プレイヤーが存在しないことを示します。
     /// </summary>
     /// <returns></returns>
     public float GetPlayerGunMaxAmmo()
@@ -538,7 +576,7 @@ public class PanelManager : singleton<PanelManager>
     }
 
     /// <summary>
-    /// 返回玩家当前蓄力比例，-1代表没有这个Buff或者玩家不存在
+    /// プレイヤーの現在の蓄積比率を返します、-1はこのBuffが存在しないか、プレイヤーが存在しないことを示します。
     /// </summary>
     /// <returns></returns>
     public float GetPlayerStaffPercent()
@@ -559,7 +597,7 @@ public class PanelManager : singleton<PanelManager>
     }
 
     /// <summary>
-    /// 设置主相机
+    /// メインカメラを設定する
     /// </summary>
     public void SetMainCamera(Camera _mainCamera)
     {
@@ -569,7 +607,7 @@ public class PanelManager : singleton<PanelManager>
 
 
     /// <summary>
-    /// 设置跳过Button
+    /// スキップボタンを設定する
     /// </summary>
     /// <param name="state"></param>
     public void SetSkipButton(bool state)

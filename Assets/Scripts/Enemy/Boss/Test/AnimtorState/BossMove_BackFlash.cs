@@ -7,7 +7,7 @@ public class BossMove_BackFlash : StateMachineBehaviour
     private BossControl boss;
     [Header("手を挙げる動作の割合")]
     public float speedUpPer = 0.2f;
-    [Header("実際に期待されるスプリント再生速度")]
+    [Header("実際に期待されるスプリントの再生速度")]
     public float animSpeed = 1.5f;
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {

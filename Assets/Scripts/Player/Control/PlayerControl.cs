@@ -17,19 +17,19 @@ public enum E_WeaponType
 public class PlayerControl : MonoBehaviour
 {
     [Header("戦闘関連")]
-    [Tooltip("現在の武器種類")] public E_WeaponType weaponType; //武器の種類
-    [Tooltip("シューティング感覚関連の設定")] public ComboNode shotComboNode;
+    [Tooltip("現在の武器の種類")] public E_WeaponType weaponType; //武器の種類
+    [Tooltip("シューティング感覚に関連する設定")] public ComboNode shotComboNode;
     [Tooltip("魔法攻撃感覚に関連する設定")] public ComboNode magicComboNode;
     public ComboNode currentComboNode;  //現在の連続スキルノード
     public CDClass dodgeCD = new CDClass(); //CDをスプリント
-    private bool canShot;   //ガンモードで長押し連射の射撃時間が基準を満たしているかどうか
-    private bool magicBallStart = false;    //力を蓄え始めますか？
+    private bool canShot;   //ガンモードでの長押し連射の射撃時間が基準を満たしているかどうか
+    private bool magicBallStart = false;    //力を蓄え始めますか？は日本語です。翻訳する内容がありません。
     public float staffHoldTime;   //目標蓄力時間
-    public float curHoldTime;   //現在の蓄積時間
-    public int dodgeCount = 1;  //スプリントの使用可能回数
-    [Header("武器バフレベル")]
+    public float curHoldTime;   //現在の累積時間
+    public int dodgeCount = 1;  //スプリントの利用可能回数
+    [Header("武器のバフレベル")]
     public int swordBuffLevel;  //剣バフレベル
-    public int swordBuffTimes;  //剣の連続攻撃回数
+    public int swordBuffTimes;  //剣の連続攻撃の回数
     public int gunBuffLevel;    //ガンバフレベル
     public int staffBuffLevel;  //スタッフBuffレベル
     [Header("浮遊砲制御コンポーネント")]
@@ -38,34 +38,34 @@ public class PlayerControl : MonoBehaviour
     public GameObject comboTrigger;     //コンボの攻撃範囲トリガー
     [Header("アニメーションコントローラー")]
     public Animator animator;
-    [Header("モバイルパフォーマンス関連")]
+    [Header("モバイルパフォーマンスに関連する")]
     public Vector3 moveRes;    //移動方向の結果
     public float staffStopLerp = 0.02f;
-    public bool useMouseScale = false; //マウスを使用して結果に向かう、キーボード入力を使用せずに結果に向かう、攻撃をロックするときに向かうために使用します。
-    private int scaleRes_Move = 1;   //左右に移動する結果
-    private int scaleRes_Mouse = 1;   //キャラクターの攻撃時の左右回転を制御するために使用します。
-    public Vector3 targetPoint;    //重複作成を防ぐマウスの向き
+    public bool useMouseScale = false; //マウスを使用して結果に向かい、キーボード入力を使用せずに結果に向かいます。攻撃をロックする際にも使用します。
+    private int scaleRes_Move = 1;   //結果として左右に移動する
+    private int scaleRes_Mouse = 1;   //キャラクターの攻撃時の左右の回転を制御するために使用します。
+    public Vector3 targetPoint;    //マウスの向きの重複作成を防ぐ
     [Header("キャラクター剛体")]
     public Rigidbody rb;   //キャラクター剛体
     [Tooltip("骨格")] public Transform skeletal;  //骨格
-    [Tooltip("足の底が光の輪に向かっています")] public Transform orientationObject; //足底が光の輪に向かっています
+    [Tooltip("足の裏が光の輪に向かっています")] public Transform orientationObject; //あなたの足元が光の輪に向かっています
     [Header("（使用しない）キャラクター数値テンプレート")]
     public CharacterData_SO tempCharaterData;   //クローニング用
-    [Header("キャラクター属性に関連する")]
+    [Header("キャラクターの属性に関連する")]
     public CharacterData characterData; //キャラクター属性設定SOファイルのインスタンス
     [Tooltip("移動速度")] public Vector2 speed = new Vector3();
     [Header("キャラクターBuffマネージャー")]
-    public CharacterBuffManager characterBuffManager;   //現在のBuffの管理リスト
-    // public GameObject TestCube; //テスト攻撃範囲
+    public CharacterBuffManager characterBuffManager;   //現在のBuff管理リスト
+    // public GameObject TestCube; //テストキューブ
     public bool lockHealth = false;
     public bool isDead = false;
     public bool IsDead { get { return isDead; } }
-    // [Header("キャラクターの音声コントローラー")]
+    // [ヘッダー("キャラクターの音声コントローラー")]
     [Header("特殊効果表示関連")]
-    [Tooltip("ダッシュ特殊効果の出現位置補正")] public Vector3 effectDashPos = new Vector3(0.0f, 1.5f, 0.0f);
+    [Tooltip("ダッシュ特殊効果の出現位置の補正")] public Vector3 effectDashPos = new Vector3(0.0f, 1.5f, 0.0f);
     [Tooltip("攻撃特効の出現位置補正")] public Vector3 effectAtkPos = new Vector3(0.0f, 1.5f, 0.0f);
 
-    private Vector2 rightStickPos = new Vector2(960, 540);  //右スティック方向コントローラーの座標
+    private Vector2 rightStickPos = new Vector2(960, 540);  //右スティックの方向コントローラーの座標
     private Vector2 rightStickMoveSpeed = new Vector2(1200, 800);  //右スティックの感度
 
     #region 初始化相关
@@ -84,21 +84,21 @@ public class PlayerControl : MonoBehaviour
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
         gunControl = transform.Find("GunParent").GetComponent<GunControl>();
-        //子オブジェクトの取得
+        //サブオブジェクトの取得
         skeletal = transform.Find("BOSS");
         orientationObject = transform.Find("OrientationObject");
-        //自己の属性設定
+        //自分の属性設定
         transform.tag = tagStr;
-        useMouseScale = false;  //デフォルトでキーボードの向きを使用します
-        ResetAnimState();//自身のアニメーション状態をリセットする
+        useMouseScale = false;  //デフォルトではキーボードの向きを使用します
+        ResetAnimState();//自分のアニメーション状態をリセットする
         //各子コンポーネントを作成する
-        characterData = new CharacterData(Instantiate(tempCharaterData));   //インスタンスを作成して初期化します
+        characterData = new CharacterData(Instantiate(tempCharaterData));   //インスタンスを作成し、初期化します。
         characterBuffManager = new CharacterBuffManager();
     }
 
     private void Start()
     {
-        //GameManagerに登録する
+        //ゲームマネージャーに登録する
         GameManager.Instance.currentPlayer = this;
         GameManager.Instance.PlayerDie += PlayerDie;
         //CDを登録する
@@ -143,7 +143,7 @@ public class PlayerControl : MonoBehaviour
     }
 
     /// <summary>
-    /// アニメーションパラメーター状態の初期化
+    /// アニメーションパラメーターの状態を初期化する
     /// </summary>
     public void ResetAnimState()
     {
@@ -189,7 +189,7 @@ public class PlayerControl : MonoBehaviour
         }
         //自分自身を参照点として使用し、その世界座標から自分の世界座標を引く（ただし、操作が完了すると逆方向になり、その理由はまだ見つかっていない）。
         moveRes = transform.position - transform.TransformPoint(moveRes);
-        //重ね加速
+        //積み重ね加速
         moveRes.x *= speed.x;
         moveRes.z *= speed.y;
         // moveRes.y = rb.velocity.y;
@@ -197,7 +197,7 @@ public class PlayerControl : MonoBehaviour
     }
 
     /// <summary>
-    /// モバイル端末での移動入力
+    /// モバイルデバイスでの移動入力
     /// </summary>
     /// <param name="callbackContext"></param>
     public void GetPlayerInput_StickMove(Vector2 newPos)
@@ -213,7 +213,7 @@ public class PlayerControl : MonoBehaviour
         }
         //自分自身を参照点として使用し、その世界座標から自分の世界座標を引く（ただし、操作が完了すると逆方向になり、その理由はまだ見つかっていない）。
         moveRes = transform.position - transform.TransformPoint(moveRes);
-        //重ね加速
+        //積み重ね加速
         moveRes.x *= speed.x;
         moveRes.z *= speed.y;
         // moveRes.y = rb.velocity.y;
@@ -233,7 +233,7 @@ public class PlayerControl : MonoBehaviour
     }
 
     /// <summary>
-    /// モバイル端末への入力方向
+    /// モバイルデバイスへの入力方法
     /// </summary>
     /// <param name="callbackContext"></param>
     public void GetPlayerInput_StickRotate(Vector2 newPos)
@@ -247,7 +247,7 @@ public class PlayerControl : MonoBehaviour
         // rightStickPos.y = Mathf.Min(1080, temp.y);
         // rightStickPos.y = Mathf.Max(0, temp.y);
 
-        //操作スキーム2 位置式変位
+        //操作スキーム2 位置変化式
         temp /= 2;
         temp += Vector2.one / 2;
         temp.x *= 1920;
@@ -270,7 +270,7 @@ public class PlayerControl : MonoBehaviour
         RaycastHit groundHit;
         if (Physics.Raycast(ray, out groundHit, 2000, LayerMask.GetMask("Ground")))
         {
-            targetPoint = groundHit.point;  //キャラクターの向きを取得し、向きの光環を制御するために使用します。
+            targetPoint = groundHit.point;  //キャラクターの向きを取得し、その向きの光環を制御するために使用します。
             scaleRes_Mouse = Vector3.Dot(transform.right, groundHit.point - transform.position) > 0 ? 1 : -1;
         }
         targetPoint.y = orientationObject.transform.position.y;
@@ -332,7 +332,7 @@ public class PlayerControl : MonoBehaviour
     }
 
     /// <summary>
-    /// キャラクターの魔法攻撃入力を取得する
+    /// キャラクターの魔法攻撃力を取得する
     /// </summary>
     public void GetPlayerInput_StaffAttack(InputAction.CallbackContext context)
     {
@@ -355,7 +355,7 @@ public class PlayerControl : MonoBehaviour
             SetUseMouseScale(true);
             magicBallStart = true;
             EffectManager.Instance.playerMagicRange.gameObject.SetActive(true);
-            EffectManager.Instance.playerMagicRange.GetComponent<AreaControl>().IsBuffed = staffBuffLevel >= 2 ? true : false;  //蓄力時間を短縮する条件を満たしていますか？
+            EffectManager.Instance.playerMagicRange.GetComponent<AreaControl>().IsBuffed = staffBuffLevel >= 2 ? true : false;  //力を蓄える時間を短縮する条件を満たしていますか？
             GameManager.Instance.SetMouse_Shot();
             FmodManager.Instance.PlaySpecialSound("event:/Player/Zhang/fireBallBefore");
         }
@@ -366,7 +366,7 @@ public class PlayerControl : MonoBehaviour
             {
                 CM_Effect.Instance.PlayerGetDamaged(Color.white, 8, 0.6f);
                 magicBallStart = false; //長押し連射をキャンセル
-                // Debug.Log("火の玉を発射する");
+                // Debug.Log("火球を発射する");
                 gunControl.StaffModeShot(targetPoint);
             }
             ExitStaffMode();
@@ -388,7 +388,7 @@ public class PlayerControl : MonoBehaviour
     }
 
     /// <summary>
-    /// キャラクターの回避入力取得
+    /// キャラクターの回避入力の取得
     /// </summary>
     public void GetPlayerInput_Dodge(InputAction.CallbackContext context)
     {
@@ -427,7 +427,7 @@ public class PlayerControl : MonoBehaviour
     ///</summary>
     /// <param name="cur"> 現在の値 </param>
     /// <param name="tar"> 目標値 </param>
-    /// <param name="value"> 差分係数 </param>
+    /// <param name="value"> 微分係数 </param>
     /// <returns></returns>
     public void V3Lerp(ref Vector3 cur, Vector3 tar, float value)
     {
@@ -436,8 +436,8 @@ public class PlayerControl : MonoBehaviour
     }
 
     /// <summary>
-    /// キャラクターのMove運動制御
-    /// キャラクターの速度を変更する
+    /// キャラクターの移動制御
+    /// キャラクターの速度を変更します
     /// </summary>
     public void PlayerBaseMove(float velocityLerpValue)
     {
@@ -449,7 +449,7 @@ public class PlayerControl : MonoBehaviour
     }
 
     /// <summary>
-    /// キャラクターの動きが徐々に停止します。
+    /// キャラクターの動きが徐々に止まります。
     /// </summary>
     public void PlayerStopMove(float StopLerpValue)
     {
@@ -487,7 +487,7 @@ public class PlayerControl : MonoBehaviour
 
 
     ////// 攻撃はキャラクターのLocalScale（左右の向き）を変更します
-    /// 攻撃時の向き調整用
+    /// 攻撃時の方向調整用
 
 
     ///</summary>
@@ -498,7 +498,7 @@ public class PlayerControl : MonoBehaviour
     }
 
     /// <summary>
-    /// キャラクターの基本的な回避動作
+    /// キャラクターの基本的な回避行動
     /// </summary>
     /// <param name="dodgePower"> 回避速度 </param>
     public void PlayerBaseMove_Dodge(float dodgePower)
@@ -513,7 +513,7 @@ public class PlayerControl : MonoBehaviour
     /// キャラクターの強制移動
     /// </summary>
     /// <param name="movePower"> 強制移動速度 </param>
-    /// <param name="useKeyBord"> キーボードで方向を制御するかどうか </param>
+    /// <param name="useKeyBord"> キーボードを使って方向を制御するかどうか </param>
     public void PlayerBaseMove_ForceMove(float movePower)
     {
         Vector3 plusVelocity;
@@ -542,7 +542,7 @@ public class PlayerControl : MonoBehaviour
     ///<summary>
 
 
-    ////// 武器タイプを設定します
+    ////// 武器のタイプを設定します。
 
 
     ///</summary>
@@ -610,30 +610,30 @@ public class PlayerControl : MonoBehaviour
         // Debug.Log("クローズ");
     }
     /// <summary>
-    /// キャラクターの索敵突進
+    /// キャラクターの探索突撃
     /// 現在のComboNodeに基づいて判断します
     /// </summary>
     public void PlayerAttackMove_Plunge()
     {
-        //方向ベクトルを取得（目標点-中心点でベクトルを取得）し、正規化した後にz方向の長さでベクトルを伸ばします。
+        //方向ベクトルを取得します（目標点から中心点へのベクトルを取得）、それを正規化した後、z方向の長さでベクトルを伸ばします。
         Vector3 dir = targetPoint - orientationObject.position;
-        dir.y = 0;   //ピッチ角を消去する
-        Vector3 dirNormal = dir.normalized; //向ベクトルの正規化結果を保存します
+        dir.y = 0;   //ピッチ角を消去します
+        Vector3 dirNormal = dir.normalized; //正規化されたベクトルの結果を保存します。
         dir = dirNormal * currentComboNode.halfPlungeBoxSize.z;
-        //中心位置を取得する（中心位置を向きベクトルに移動した後の位置が中心位置と考えることができます）
+        //中心位置を取得します（向きベクトルに移動した後の位置を中心位置と考えることができます）
         dir = new Vector3(orientationObject.position.x + dir.x, transform.position.y, orientationObject.position.z + dir.z);
         Collider[] colliders = Physics.OverlapBox(dir, currentComboNode.halfPlungeBoxSize, orientationObject.transform.rotation, LayerMask.GetMask("EmyBody"));
 
         // TestCube.transform.position = dir;
         // TestCube.transform.localScale = currentComboNode.halfPlungeBoxSize * 2;
         // TestCube.transform.rotation = orientationObject.transform.rotation;
-        //Tiggerのサイズを変更し、dirはもう使われていないので、ここで再利用することができます。
+        //Tiggerのサイズを変更し、dirはもう使用されていないので、ここで再利用することが可能です。
         dir = dirNormal * (currentComboNode.attackRange.z / 2 + currentComboNode.attackRangeDeviation);
         dir = new Vector3(orientationObject.position.x + dir.x, transform.position.y, orientationObject.position.z + dir.z);
         comboTrigger.transform.position = dir;
         comboTrigger.transform.localScale = currentComboNode.attackRange;
         comboTrigger.transform.rotation = orientationObject.transform.rotation;
-        //なければ追跡しない
+        //追跡しなければならない
         if (colliders.Length == 0)
         {
             if (moveRes.magnitude > 3.0f)
@@ -721,7 +721,7 @@ public class PlayerControl : MonoBehaviour
     /// </summary>
     private void PlayerAttack_Staff()
     {
-        //攻撃不可能な状態に入った時、蓄積時間をリセットします。
+        //攻撃不能な状態になった時、蓄積時間をリセットします。
         //スプリントを中断するために適用されます
         // if (!animator.GetBool("canAttack") && staffBuffLevel < 4)
         // {
@@ -736,9 +736,9 @@ public class PlayerControl : MonoBehaviour
                 curHoldTime = staffHoldTime;
             }
             EffectManager.Instance.playerMagicRange.position = targetPoint;
-            //マウスの方向に向かう
+            //マウスの方向へ向かう
             PlayerBaseRotate_Attack();
-            //力を蓄えている間は移動できません。
+            //パワーを蓄えている間は移動することができません。
             PlayerStopMove(staffStopLerp);
         }
     }
@@ -798,7 +798,7 @@ public class PlayerControl : MonoBehaviour
 
 
     ///</summary>
-    /// <param name="other"> 打撃された物体 </param>
+    /// <param name="other"> 打撃を受けた物体 </param>
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "EmyBody")
@@ -817,9 +817,9 @@ public class PlayerControl : MonoBehaviour
     }
 
     /// <summary>
-    /// アニメーションを一時停止 チョッピング効果
+    /// アニメーションを一時停止、チョッピング効果
     /// </summary>
-    /// <param name="pauseSpeed"> アニメーション再生速度を期待 </param>
+    /// <param name="pauseSpeed"> アニメーション再生速度を一時停止 </param>
     public void PauseAnimation(float pauseSpeed)
     {
         animator.speed = pauseSpeed;
@@ -877,7 +877,7 @@ public class PlayerControl : MonoBehaviour
     }
 
     /// <summary>
-    /// プレイヤーのBuffを再読み込みする
+    /// プレイヤーのバフを再読み込みします
     /// </summary>
     public void PlayerBuffRebuild(List<I_BuffBase> newBuffList)
     {

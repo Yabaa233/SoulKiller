@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// プレイヤーの移動状態
+/// プレイヤーの移動状況
 /// </summary>
 public class PlayerState_Move : StateMachineBehaviour
 {

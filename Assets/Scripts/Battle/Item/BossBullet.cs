@@ -16,7 +16,7 @@ public class BossBullet : MonoBehaviour
     ///<summary>
 
 
-    ////// オブジェクトとの衝突を検出した場合、自動的に回収します。
+    ////// オブジェクトと衝突を検出した場合、自動的に回収します。
 
 
     ///</summary>

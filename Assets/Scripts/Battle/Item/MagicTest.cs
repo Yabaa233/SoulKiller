@@ -13,7 +13,7 @@ public class MagicTest : MonoBehaviour
 
     ////// Speed
     /// シャッタースピード
-    /// 目标：ターゲット
+    /// 目的：目的
 
     ///</summary>
     [Header("Speed")]
@@ -27,7 +27,8 @@ public class MagicTest : MonoBehaviour
     //発射
     private Rigidbody myRigidbody;
     private Transform target;
-    /*    Vector3 GetMiddlePosition(Vector3 startPos,Vector3 lastTargetPos)
+    /*
+Vector3 GetMiddlePosition(Vector3 startPos,Vector3 lastTargetPos)
         {
             Vector3 m = Vector3.Lerp(startPos, lastTargetPos, 0.2f),pos=startPos-lastTargetPos;
             Vector3 usePos = pos;
@@ -55,11 +56,11 @@ public class MagicTest : MonoBehaviour
     private void OnEnable()
     {
         Init();
-        //進行
+ //進行中
         myRigidbody.velocity = transform.forward * speed;
         beginTime = Time.time;
 
-        // //特殊効果リソースの接続
+ // //特殊効果リソースの接続
         if(muzzlePrefab != null)
         {
             var muzzleVFX = Instantiate (muzzlePrefab, transform.position, Quaternion.identity);
@@ -82,7 +83,8 @@ public class MagicTest : MonoBehaviour
                 }
                 Vector3 bezierPos = Untils.Bezier(percent, startPos, midPos, lastTargetPos);
                 bezierPos[1] = y;
-                transform.position = bezierPos;*/
+                transform.position = bezierPos;
+*/
         if(target!=null)
         {
             Vector3 dir = lastTargetPos - transform.position;

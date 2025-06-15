@@ -14,11 +14,11 @@ public enum E_EnemyStateType
     Dead,   //死亡
     Shot,   //射撃
     Find, //状態を発見する
-    Storage,//蓄力状態
+    Storage,//蓄積状態
     Dizzy,//めまい状態
     Boom,//自爆状態
     Jump,//ジャンプ状態
-    MoveAfter,//ポジショニング状態
+    MoveAfter,//位置決め状態
 }
 
 
@@ -26,18 +26,18 @@ public enum E_EnemyStateType
 [Serializable]
 public class EnemyParameter
 {
-    public CharacterData enemyData;//基本属性参照を取得する
+    public CharacterData enemyData;//基本属性の参照を取得する
     public Animator animator;//アニメーションコントローラー
     public GameObject _mainCamera;//カメラの位置
-    public Transform body;//身体の部分
+    public Transform body;//体の部分
     public EzEmyStateData_SO enemyStateData;//属性状態の参照を取得する
     public Transform target;
     public bool ableChase;
     public bool getHit; //攻撃を受ける
     public NavMeshAgent agent;//ナビゲーションコンポーネント
     public Transform enemyPos;//自分の位置
-    public bool isDead;//すでに死亡していますか？
-    public bool isDash;//すでにスプリントを行ったことがありますか？
+    public bool isDead;//あなたはすでに死んでいますか？
+    public bool isDash;//あなたはすでにスプリントを行ったことがありますか？
 }
 
 public class EnemyFSM : BaseEnemyFSM
@@ -95,7 +95,7 @@ public class EnemyFSM : BaseEnemyFSM
     }
 
     /// <summary>
-    /// オブジェクトをプレイヤーの方向に向ける
+    /// オブジェクトをプレイヤーの方向に向けます
     /// </summary>
     /// <param name="other"></param>
     public void FaceToTarget()
@@ -105,7 +105,7 @@ public class EnemyFSM : BaseEnemyFSM
         transform.rotation = Quaternion.LookRotation(lookVector);
     }
 
-    private void OnTriggerEnter(Collider other) {//最初の敵の状態機械は、プレイヤーを見つけたらすぐに追いかけて止まらない。
+    private void OnTriggerEnter(Collider other) {//最初の敵の状態マシンは、プレイヤーを見つけるとすぐに追いかけて止まりません。
         // Debug.Log("コライダーがトリガーされました");
         if(other.tag == "Player")
         {
@@ -130,7 +130,7 @@ public class EnemyFSM : BaseEnemyFSM
         }
     }
 
-    // private void OnDrawGizmos() //ここで距離関連のサポートを描画します
+    // private void OnDrawGizmos() //ここでは距離関連のサポートを描画します
     // {
     //     Gizmos.color = Color.red;
     //     Gizmos.DrawSphere(transform.position,10f);

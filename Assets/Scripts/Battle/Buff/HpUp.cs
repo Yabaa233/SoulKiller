@@ -13,7 +13,7 @@ public class HpUp : I_BuffBase
     [Tooltip("Current Role Buff Manager")] CharacterBuffManager characterBuffManager;
     //現在のBUFFの種類
     [Tooltip("Current Buff Type")] E_BuffKind buffType;
-    //現在のキャラクターのタイプ
+    //現在のキャラクタータイプ
     [Tooltip("Current role type")] E_ChararcterType chararcterType;
 
     [Tooltip("Current Buff Level")] public int currentLevel;
@@ -31,19 +31,19 @@ public class HpUp : I_BuffBase
         this.currentLevel = level;
         buffType = E_BuffKind.HpUp;
         chararcterType = _chararcterType;
-        isHpSteal = false;//デフォルトでは吸血はオフになっています
+        isHpSteal = false;//デフォルトでは、吸血はオフに設定されています。
 
         //初期化リスト
         levelEffect = new List<Action<CharacterData>>();
     }
 
 
-    //体力増幅を追加する
+    //体力を増幅する機能を追加する
     public void OnAdd(GameObject _buffKeeper)
     {
         this.buffKeeper = _buffKeeper;
         // Debug.Log("HpUp has been added.");
-        //現在の体力と最大体力を倍にする
+        //現在の体力と最大体力を倍にします
         Init();
         switch (chararcterType)
         {
@@ -156,7 +156,7 @@ public class HpUp : I_BuffBase
 
         realEffect(characterData);
     }
-    ////Buffが削除された時に属性状態を復元します
+    ////バフが削除された時に属性状態を復元します
 
     private void PlayerHpUpRemove()
     {
@@ -263,7 +263,7 @@ public class HpUp : I_BuffBase
         }
     }
 
-    ///////////特殊なメカニズムの実装
+    ///////////特別なメカニズムの実装
 
 
     ///<summary>
@@ -275,10 +275,10 @@ public class HpUp : I_BuffBase
 
 
     ///</summary>
-    /// <param name="damage">一度のダメージ値</param>
+    /// <param name="damage">一回のダメージ値</param>
     public void ReturnHp(float damage)
     {
-        if (!isHpSteal)//HpStealが有効になっていません
+        if (!isHpSteal)//HpStealは有効になっていません
         {
             return;
         }

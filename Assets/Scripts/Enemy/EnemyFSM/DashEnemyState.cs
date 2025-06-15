@@ -77,7 +77,7 @@ public class DashEnemy_IdleState : IState
         }
         if(parameter.ableAttact)
         {
-            manager.TranstionState(E_EnemyStateType.Find);//警戒距離に到達し、衝突型の敵に対する跳躍のヒント
+            manager.TranstionState(E_EnemyStateType.Find);//警戒距離に到達し、衝突型の敵に対するジャンプのヒント
         }
     }
 }
@@ -127,7 +127,7 @@ public class DashEnemy_FindState : IState
     {
         manager.RotateToTarget();
         manager.FaceToTarget();
-        //攻撃を受けると直接被弾状態に入ります。
+        //攻撃を受けると、直接に被弾状態になります。
         if(parameter.getHit)
         {
             manager.TranstionState(E_EnemyStateType.Hit);//攻撃を受け、攻撃受け状態に切り替えます。
@@ -150,7 +150,7 @@ public class DashEnemy_ChaseState : IState
 {
     private DashEnemyFSM manager;
     private DashEnemyParameter parameter;
-    // Vector3 faceVector;//プレイヤーに向かうベクトル
+    // Vector3 faceVector; //プレイヤーに向かうベクトル
     // private float timer = 1.5f;
     // private float nextStateTime;
     public DashEnemy_ChaseState(DashEnemyFSM _manager)
@@ -214,10 +214,10 @@ public class DashEnemy_ChaseState : IState
         // }
         // if(parameter.isDizzy)
         // {
-        //     manager.TranstionState(E_EnemyStateType.Dizzy);//壁にぶつかってめまい状態に入る
+        //     manager.TranstionState(E_EnemyStateType.Dizzy);//壁にぶつかってめまい状態になる
         //     return;
         // }
-        // if(manager.rb.velocity.magnitude < 1.5f && Time.time > nextStateTime)//速度が閾値より小さい場合、Find状態に入ります
+        // if(manager.rb.velocity.magnitude < 1.5f && Time.time > nextStateTime)//速度が閾値より小さい場合、Find状態に移行します
         // {
         //     manager.rb.velocity = new Vector3(0f,0f,0f);
         //     parameter.getHit = false;
@@ -228,7 +228,7 @@ public class DashEnemy_ChaseState : IState
 }
 
 
-//めまい状態でやるべきことは、ただしばらく静止するだけです。
+//目まい状態でやるべきことは、ただしばらく静止するだけです。
 /// <summary>
 /// めまい状態
 /// </summary>
@@ -246,7 +246,7 @@ public class DashEnemy_DizzyState : IState
 
     public void OnEnter()
     {
-        Debug.Log("めまい状態に入りました");
+        Debug.Log("めまいの状態になりました");
         parameter.isDizzy = false;
         nextStateTime = Time.time + timer;
         manager.DashCD.curTime = 0;
@@ -272,7 +272,7 @@ public class DashEnemy_DizzyState : IState
         }
         if(Time.time > nextStateTime)
         {
-            manager.TranstionState(E_EnemyStateType.Idle);//ここでは、まず待機状態に戻してください。
+            manager.TranstionState(E_EnemyStateType.Idle);//まず、ここで待機状態に戻してください。
             parameter.ableAttact = false;
         }
     }
@@ -281,7 +281,7 @@ public class DashEnemy_DizzyState : IState
 ///<summary>
 
 
-////// 打撃を受けた状態
+////// 被打击的状态
 
 
 ///</summary>
@@ -290,7 +290,7 @@ public class DashEnemy_GetHitState : IState
     private DashEnemyFSM manager;
     private DashEnemyParameter parameter;
     
-    private float timeBtwState = 0.5f;//被打撃状態に少なくとも0.5秒間留まる
+    private float timeBtwState = 0.5f;//少なくとも0.5秒間、打撃状態に留まる
     private float nextStateTime;
 
     private bool isHit = true;

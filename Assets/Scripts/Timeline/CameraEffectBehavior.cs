@@ -6,21 +6,21 @@ using UnityEngine.Playables;
 [System.Serializable]
 public class CameraEffectBehavior : PlayableBehaviour
 {
-    private PlayableDirector playableDirector;//获取Timeline对象上的导演组件
-    //相机轨道切片需要的属性
-    [Header("是否需要ColorAdjusting")] public bool colorAdjusting;
-    [Header("起始颜色")]public float startPostExposure;
-    [Header("终点颜色")]public float endPostExposure;
-    [Header("是否需要边角压暗")]public bool vignette;
-    [Header("起始强度")]public float startIntensity;
-    [Header("终点强度")]public float endIntensity;
+    private PlayableDirector playableDirector;//Timelineオブジェクト上のディレクターコンポーネントを取得します。
+    //カメラトラックスライスに必要な属性
+    [Header("ColorAdjustingが必要ですか？")] public bool colorAdjusting;
+    [Header("開始色")]public float startPostExposure;
+    [Header("終点の色")]public float endPostExposure;
+    [Header("端の部分を暗くする必要がありますか？")]public bool vignette;
+    [Header("開始強度")]public float startIntensity;
+    [Header("ゴール強度")]public float endIntensity;
 
 
     private bool isClipPlayed;
 
     public override void OnPlayableCreate(Playable playable)
     {
-        playableDirector = playable.GetGraph().GetResolver() as PlayableDirector;//需要解析之后进行类型转换，有点类似让粒子系统可以变成一个可挂载的脚本
+        playableDirector = playable.GetGraph().GetResolver() as PlayableDirector;//解析後に型変換を行う必要があり、それは粒子システムをマウント可能なスクリプトに変えることに少し似ています。
     }
 
     public override void ProcessFrame(Playable playable, FrameData info, object playerData)
@@ -33,7 +33,7 @@ public class CameraEffectBehavior : PlayableBehaviour
         float x = (float)playable.GetDuration();
         if(x < 0.001f)
         {
-            Debug.LogWarning("不能除这么小的数");
+            Debug.LogWarning("これほど小さい数を除算することはできません。");
             x = 1;
         }
         float percent = (float)playable.GetTime()/x;

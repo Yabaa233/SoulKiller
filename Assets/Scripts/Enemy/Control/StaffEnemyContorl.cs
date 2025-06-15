@@ -45,7 +45,7 @@ public class StaffEnemyContorl : BaseEnemyControl
         //自分の属性の設定
         transform.tag = tagStr;
 
-        //いくつかの関連状態を初期化します
+        //いくつかの関連する状態を初期化します
         characterBuffManager = new CharacterBuffManager();
         enemyData = new CharacterData(Instantiate(tempCharaterData));
         characterBuffManager.Init(E_ChararcterType.enemy);

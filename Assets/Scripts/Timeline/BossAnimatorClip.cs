@@ -18,8 +18,8 @@ public class BossAnimatorClip : PlayableAsset
     }
 }
 
-//TimeLine控制的Boss状态
+//TimeLineで制御されるボスの状態
 public enum E_BossClipState
 {
-    Boss_Dodge,//Boss冲刺
+    Boss_Dodge,//ボスラッシュ
 }

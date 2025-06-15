@@ -42,7 +42,7 @@ public class ShadowGenerate : MonoBehaviour
     void FixedUpdate()
     {
         if ((!trapStart && !isConduct) || (!trapShadow && !isConduct)) return;//トラップが開いている状態とステージに入る状態、どちらもfalseであればトラップは閉じます。
-        if (!isDown)//落下した調理器具の起動はすでに始まりましたか？
+        if (!isDown)//落とした調理器具の起動はもう始まりましたか？
         {
             if (Time.time > endTime + intervalTime)//時間間隔が十分かどうかを判断します
             {

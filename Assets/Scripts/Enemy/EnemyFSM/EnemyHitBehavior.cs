@@ -14,7 +14,7 @@ public class EnemyHitBehavior : StateMachineBehaviour
 {
     public float startTime = 0.3f;//カルビの開始時間
     public BaseEnemyControl keeper;//現在のモンスターの引用
-    public bool isHitStop = true;//停止しますか
+    public bool isHitStop = true;//停止しますか？
     private float storageSpeed;//元の時間
     private CDClass HitTime = new CDClass();
 

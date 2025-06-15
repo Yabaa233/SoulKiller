@@ -20,7 +20,7 @@ public class DialoguePanel : MonoBehaviour
     public GameObject spaceIcon;
 
 
-    //缓存区
+    //バッファエリア
     private Vector3 startPos;
 
     private void Awake() {
@@ -52,21 +52,21 @@ public class DialoguePanel : MonoBehaviour
 
 
     /// <summary>
-    /// 设置文字
+    /// テキストを設定する
     /// </summary>
-    /// <param name="_name">角色名字</param>
-    /// <param name="_contentText">角色名字</param>
-    /// <param name="_continueTips">按什么键继续</param>
+    /// <param name="_name">キャラクター名</param>
+    /// <param name="_contentText">キャラクターの名前</param>
+    /// <param name="_continueTips">何のキーを押して続けますか</param>
     public void SetText(string _name,string _contentText)
     {
         characterName.text = _name;
         contentText.text = _contentText;
     }
     /// <summary>
-    /// 动效-逐字设置文字
+    /// アニメーション - テキストを一文字ずつ設定する
     /// </summary>
-    /// <param name="_name">角色名字</param>
-    /// <param name="_contentText">角色名字</param>
+    /// <param name="_name">キャラクター名</param>
+    /// <param name="_contentText">キャラクターの名前</param>
     public void SetTextByChar(string _name,string _contentText)
     {
         characterName.DOText(_name,3).SetEase(Ease.Linear);

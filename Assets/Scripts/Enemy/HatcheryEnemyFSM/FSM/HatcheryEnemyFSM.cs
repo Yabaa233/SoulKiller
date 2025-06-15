@@ -6,7 +6,7 @@ public enum E_HatcheryStateType
 {
     Idle,//スタンバイ
     Production,//生産
-    Hit,//ダメージを受ける
+    Hit,//被害を受ける
     Dead,//死亡
 }
 public class HatcheryEnemeyCD
@@ -27,7 +27,7 @@ public class HatcheryEnemyParameter
     public GameObject _mainCamera;//カメラ
     public CharacterData enemyData;//敵のデータ
     public Transform body;//本体の位置
-    public float intervalTime;//間隔時間
+    public float intervalTime;//インターバル時間
     public bool getHit;
     public bool isDead;
     public Transform sonBorn;//子の生成位置

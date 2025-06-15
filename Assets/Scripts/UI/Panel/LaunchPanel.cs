@@ -26,7 +26,7 @@ public class LaunchPanel : BasePanel
     //�򿪿�ʼ����
     public void StartBegin()
     {
-        Debug.Log("点击了一次");
+        Debug.Log("一回クリックした");
         FMODUnity.RuntimeManager.PlayOneShot("event:/UI/click");
         Close();
         PanelManager.Instance.Open(new StartPanel());

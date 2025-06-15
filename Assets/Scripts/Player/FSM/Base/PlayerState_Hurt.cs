@@ -10,7 +10,7 @@ public class PlayerState_Hurt : StateMachineBehaviour
     [Range(0.0f, 1.0f)]
     [Tooltip("硬直時間 硬直時間が大きいほど長い")] public float forceProgress = 0.95f;
     [Range(0.0f, 10.0f)]
-    [Tooltip("ダメージを受けた時のブレーキ力 この値が大きいほど、ブレーキの効きが早くなります")] public float hurtStopLerpValue = 5.0f; //ダメージ制動補間用
+    [Tooltip("被ダメージ時のブレーキ力 この値が大きいほど、ブレーキの効果が早くなります")] public float hurtStopLerpValue = 5.0f; //ダメージ制御補間用
     private PlayerControl currentPlayer; //現在のキャラクター
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {

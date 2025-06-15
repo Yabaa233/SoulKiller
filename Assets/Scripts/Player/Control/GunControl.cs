@@ -13,10 +13,10 @@ public class GunControl : MonoBehaviour
     private int modeChangeOver = 0;
     public int ModeChangeOver { get { return modeChangeOver; } }
     public int gunBuffLevel;    //ガンバフレベル
-    [Tooltip("最大弾数")] public float maxAmmunition = 60; //最大弾数
-    //TODO：ここはfloatなので、UI表示はint型を指定するか、エネルギー形式で表示する必要があります。
+    [Tooltip("最大弾薬数")] public float maxAmmunition = 60; //最大弾薬数
+    //TODO：ここはfloat型なので、UI表示はint型に指定するか、エネルギー形式で表示する必要があります。
     [Tooltip("現在の弾薬数")] public float curAmmunition = 60;  //現在の弾薬数
-    [Tooltip("弾丸シューティングCD")] public CDClass gunShotCD = new CDClass(); //ショットCD
+    [Tooltip("バレットシューティングCD")] public CDClass gunShotCD = new CDClass(); //ショットCD
     [Tooltip("フランスのボールのサイズ")] public float magicBallSize; //フランスのボールのサイズ
     [Tooltip("弾を装填していますか？")] public bool isReloading;  //弾を装填していますか？
     [Tooltip("弾丸の自動装填速度")] public float autoReloadSpeed; //自動装填速度
@@ -24,8 +24,8 @@ public class GunControl : MonoBehaviour
     [Header("剣モードの旋回速度")] public float swordRSpeed = 0.2f;
     [Header("ガンモードの旋回速度")] public float gunRSpeed = 0.05f;
     [Header("スティックモードの旋回速度")] public float staffRSpeed = 0.1f;
-    [Header("パターン切替移動速度")] public float modeTranstionSpeed = 1.5f;
-    [Header("パターン切替回転速度")] public float modeTranstionRSpeed = 0.1f;
+    [Header("パターン切替の移動速度")] public float modeTranstionSpeed = 1.5f;
+    [Header("パターン切替の回転速度")] public float modeTranstionRSpeed = 0.1f;
 
     ///<summary>
 
@@ -50,9 +50,9 @@ public class GunControl : MonoBehaviour
 
     private void Update()
     {
-        if (weaponType != E_WeaponType.gun && curAmmunition < maxAmmunition) //武器を交換すると自動的に弾が装填されます
+        if (weaponType != E_WeaponType.gun && curAmmunition < maxAmmunition) //武器を交換すると、自動的に弾が装填されます。
         {
-            //print("自動的に弾丸を交換中です");
+            //print("自動的に弾薬を交換中です");
             curAmmunition = Mathf.Min(curAmmunition + Time.deltaTime * autoReloadSpeed, maxAmmunition);
         }
     }
@@ -75,7 +75,7 @@ public class GunControl : MonoBehaviour
     /// <param name="targetPoint"> 弾の発射目標点 </param>
     public void GunModeShot(Vector3 targetPoint)
     {
-        if (modeChangeOver != 0 || isReloading) return; //モードの切り替えが完了していないか、または弾薬を装填中です。
+        if (modeChangeOver != 0 || isReloading) return; //モードの切り替えが完了していない、または弾薬を装填中です。
         if ((int)curAmmunition > 0)
         {
             if (gunShotCD.flag)
@@ -101,7 +101,7 @@ public class GunControl : MonoBehaviour
 
 
     ////// 発射法球
-    /// 目標点が必要です
+    /// 目標地点が必要です
 
 
     ///</summary>
@@ -135,16 +135,16 @@ public class GunControl : MonoBehaviour
     ///<summary>
 
 
-    ////// 方向変更
+    ////// 方向転換
 
 
     ///</summary>
     /// <param name="targetPoint">目標点</param>
     /// <param name="rSpeed"> 回転速度 </param>
-    /// <param name="bodyRotate"> ターゲットポイントに向かって子浮遊砲が必要かどうか </param>
+    /// <param name="bodyRotate"> ターゲットポイントに向けて子浮遊砲が必要かどうか </param>
     private void LookAt(Vector3 targetPoint, float rSpeed, bool bodyRotate)
     {
-        if (modeChangeOver != 0) return; //モードの切り替えが完了していません
+        if (modeChangeOver != 0) return; //モードの切り替えがまだ完了していません
         Quaternion targetRotation = Quaternion.LookRotation(targetPoint - transform.position, Vector3.up);
         transform.localRotation = Quaternion.Lerp(transform.localRotation, targetRotation, rSpeed);
         if (bodyRotate)
@@ -163,7 +163,7 @@ public class GunControl : MonoBehaviour
 
 
     ///</summary>
-    /// <param name="_weaponType"> 目標の武器モード </param>
+    /// <param name="_weaponType"> ターゲットの武器モード </param>
     public void ChangeMode(E_WeaponType _weaponType)
     {
         weaponType = _weaponType;
@@ -197,7 +197,7 @@ public class GunControl : MonoBehaviour
     }
 
     /// <summary>
-    /// コルーチン制御モード切替時の浮遊砲の位移効果
+    /// コルーチン制御モードの切替時における浮遊砲の位相効果
     /// </summary>
     /// <param name="gun"> 移動が必要な浮遊砲 </param>
     /// <param name="target"> 目標位置 </param>
@@ -206,7 +206,7 @@ public class GunControl : MonoBehaviour
     {
         Vector3 dir = gun.transform.position - target.position;
         float dis = dir.magnitude;
-        //まず角度を調整してください。
+        //まず、角度を調整してください。
         while (Mathf.Abs(Quaternion.Dot(gun.rotation, target.rotation)) < 0.95f)
         {
             // Debug.Log("回転中");
@@ -214,7 +214,7 @@ public class GunControl : MonoBehaviour
             yield return null;
         }
         gun.rotation = target.rotation;
-        //位置を調整しています
+        //位置調整中です
         while (dis > 0.1f)
         {
             // Debug.Log("移動中");
@@ -228,7 +228,7 @@ public class GunControl : MonoBehaviour
     }
 
     /// <summary>
-    /// コルーチンでの手動弾薬交換ロジック
+    /// コルーチンによる手動弾薬交換ロジック
     /// </summary>
     IEnumerator GunReload()
     {

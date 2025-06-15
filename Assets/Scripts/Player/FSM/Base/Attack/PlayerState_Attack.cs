@@ -10,7 +10,7 @@ public class PlayerState_Attack : StateMachineBehaviour
     private PlayerControl currentPlayer;    //現在のキャラクター
     public ComboNode curComboNode;    //現在の攻撃コンボ
     private bool nextCombo; //次の攻撃アニメーションに入ったかどうか
-    private float forceProgress;  //アニメーション強制再生率
+    private float forceProgress;  //アニメーションの強制再生率
     [Range(0.0f, 10.0f)]
     [Tooltip("この値が大きいほど、制動速度は速くなります。")] public float attackStopLerpValue = 0.005f; //攻撃制動補間用
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -19,12 +19,12 @@ public class PlayerState_Attack : StateMachineBehaviour
         {
             currentPlayer = animator.gameObject.GetComponent<PlayerControl>();
         }
-        animator.SetBool("changeCombo", false);  //コンボの検出、攻撃ボタンの入力が必要でコンボ状態を維持
+        animator.SetBool("changeCombo", false);  //コンボの検出には、攻撃ボタンの入力が必要で、コンボ状態を維持します。
         animator.SetBool("canAttack", false);   //攻撃と移動を禁止します
         animator.SetBool("attack", false);  //現在の攻撃をキャンセルします
         animator.SetBool("canMove", false);
         currentPlayer.ChangeCombo(curComboNode);    //プレイヤーのComboNodeを切り替えます
-        currentPlayer.PlayerAttackMove_Plunge();    //自動探知
+        currentPlayer.PlayerAttackMove_Plunge();    //自動検出
         currentPlayer.CloseTrigger();   //攻撃トリガーを閉じる
         forceProgress = curComboNode.forceAnimProgress; //硬直効果
         currentPlayer.SetUseMouseScale(true); //マウス入力で方向を制御し、移動時の方向変更を無効にします。
@@ -48,7 +48,7 @@ public class PlayerState_Attack : StateMachineBehaviour
         if (!nextCombo && stateInfo.normalizedTime > 0.99f)
         {
             animator.SetBool("changeCombo", false);
-            animator.SetBool("canMove", true);  //最後のフレームが終了した後しばらくしてから移動が可能になります。
+            animator.SetBool("canMove", true);  //最後のフレームが終了した後、しばらく経ってから移動が可能になります。
             // currentPlayer.CloseTrigger();   //攻撃トリガーを閉じる
         }
     }

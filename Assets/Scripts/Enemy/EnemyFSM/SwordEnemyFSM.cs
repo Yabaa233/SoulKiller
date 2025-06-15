@@ -11,7 +11,7 @@ public class SwordEnemyParameter
     public CharacterData enemyData;
     public Animator animator;//アニメーションコントローラー
     public GameObject _mainCamera;//カメラの位置
-    public Transform body;//身体の部分
+    public Transform body;//体の部分
     public SwordEmyStateData_SO enemyStateData;
     public Transform target;
     public Transform orientationObject;
@@ -20,7 +20,7 @@ public class SwordEnemyParameter
     public bool getHit;
     public NavMeshAgent agent;//ナビゲーションコンポーネント
     public Transform enemyPos;//自分の位置
-    public bool isDead;//すでに死亡していますか？
+    public bool isDead;//あなたはすでに死んでいますか？
     public bool isDash;//スプリントを適用したことがありますか？
     public bool isDizzy;//壁にぶつかりましたか？
 }

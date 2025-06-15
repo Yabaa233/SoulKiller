@@ -18,7 +18,7 @@ public class longEnemyParameter
     public CharacterData enemyData;
     public Animator animator;//アニメーションコントローラー
     public GameObject _mainCamera;//カメラの位置
-    public Transform body;//身体の部分
+    public Transform body;//体の部分
     public Transform orientationObject;
     public Transform outPos;//点滅点
     public longEmyStateData_SO enemyStateData;
@@ -29,7 +29,7 @@ public class longEnemyParameter
     public NavMeshAgent agent;//ナビゲーションコンポーネント
     public Transform enemyPos;//自分の位置
     public Transform firePoint;//発火点
-    public bool isDead;//すでに死亡していますか？
+    public bool isDead;//あなたはすでに死んでいますか？
 }
 
 ///<summary>
@@ -82,7 +82,7 @@ public class long_DistanceFSM : BaseEnemyFSM
     // {
     //     if (currentState != null)
     //     {
-    //         currentState.OnExit();  //現在の状態を終了してから状態を切り替えます
+    //         currentState.OnExit();  //現在の状態を終了した後、状態を切り替えます
     //     }
     //     currentState = states[state];
     //     currentState.OnEnter();
@@ -147,7 +147,7 @@ public class long_DistanceFSM : BaseEnemyFSM
 
     ///プライベート属性
     private void OnTriggerEnter(Collider other) {
-        // Debug.Log("トリガーが発動されました");
+        // Debug.Log("トリガーが引き起こされました");
         if(other.tag == "Player")
         {
             parameter.ableAttact = true;
@@ -159,7 +159,7 @@ public class long_DistanceFSM : BaseEnemyFSM
     }
 
 
-    // private void OnDrawGizmos() //ここで距離関連のサポートを描画します
+    // private void OnDrawGizmos() //ここでは距離関連のサポートを描画します
     // {
     //     Gizmos.color = Color.red;
     //     Gizmos.DrawSphere(transform.position,10f);

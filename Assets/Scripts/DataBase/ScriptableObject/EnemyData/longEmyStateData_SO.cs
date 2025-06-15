@@ -4,20 +4,22 @@ using UnityEngine;
 
 
 // [CreateAssetMenu(menuName = "ScriptableObject/Battle/GunEmyStateData")]
-/// <summary>
-/// 远距离攻击敌人的描述文件，所有属性都放在这里
-/// </summary>
+///<summary>
+
+////// 敵を遠距離から攻撃するための記述ファイル、すべての属性はここに配置されます。
+
+///</summary>
 public class longEmyStateData_SO : ScriptableObject
 {
-    [Header("攻击距离")]
+    [Header("攻撃距離")]
     public float attackDistance;
-    [Header("攻击间隔")]
+    [Header("攻撃間隔")]
     public float attackSpeed;
-    [Header("基础移动速度")]
+    [Header("基本移動速度")]
     public float moveSpeed;
-    [Header("攻击音效")]
+    [Header("攻撃音効")]
     public FMODUnity.EventReference attackSound;
-    [Header("闪现音效")]
+    [Header("フラッシュサウンドエフェクト")]
 
     public FMODUnity.EventReference shiftSound;
 

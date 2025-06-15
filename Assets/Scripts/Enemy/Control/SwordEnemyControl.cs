@@ -7,7 +7,7 @@ using UnityEngine.AI;
 public class SwordEnemyControl : BaseEnemyControl
 {
     // Start is called before the first frame update
-    //新規変数を追加する
+    //新しい変数を追加する
     [Header("敵のステートマシン関連")]
     public SwordEnemyFSM enemyFSM;
 
@@ -49,14 +49,14 @@ public class SwordEnemyControl : BaseEnemyControl
         //自身の属性を設定する
         transform.tag = tagStr;
 
-        //関連状態の初期化を行う
+        //関連状態の初期化を行います
         characterBuffManager = new CharacterBuffManager();
         enemyData = new CharacterData(Instantiate(tempCharaterData));
         characterBuffManager.Init(E_ChararcterType.enemy);
         baseEnemyFSM = enemyFSM;
         enemyData.currentComboAttack = 1;//攻撃倍率を設定する
         moveSpeed = tempEnemyStateData.moveSpeed;
-        agent.speed = tempEnemyStateData.moveSpeed;//移動速度を設定する
+        agent.speed = tempEnemyStateData.moveSpeed;//移動速度を設定します
         // attackArea.gameObject.SetActive(false);//最初はこのコンポーネントを無効にします
 
 
@@ -84,7 +84,7 @@ public class SwordEnemyControl : BaseEnemyControl
             warningArea.enabled = true;
         }
         // transform.LookAt(enemyFSM.parameter.target);
-        // if(enemyFSM.parameter.isDead)//死亡状態に移動して実行します
+        // if(enemyFSM.parameter.isDead)//死亡状態に移行して実行します
         // {
         //     Destroy(gameObject);
         // }

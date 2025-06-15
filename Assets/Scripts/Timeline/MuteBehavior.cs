@@ -8,27 +8,27 @@ using UnityEngine.SceneManagement;
 [System.Serializable]
 public class MuteBehavior : PlayableBehaviour
 {
-    private PlayableDirector playableDirector;//获取Timeline对象上的导演组件
+    private PlayableDirector playableDirector;//Timelineオブジェクト上のディレクターコンポーネントを取得します。
 
-    //屏蔽轨道需要的属性
-    [Header("需要屏蔽的物体")] public GameObject muteObject;
-    [Header("屏蔽玩家长剑")] public GameObject swordObject;
-    [Header("屏蔽Boss")]public bool isNeedMuteBoss;
-    [Header("播放爆炸音频")]public bool isNeedMuteSound;
-    [Header("激活大门")]public bool activeDoor;
-    [Header("激活SkipButton")]public bool activeSkipButton;
-    [Header("激活玩家操作")]public bool isNeedActivePlayer = false;
-    [Header("是否需要玩家溶解")]public bool isNeedPlayerDisslove = false;
-    [Header("传入玩家物体")]public GameObject player;
-    [Header("是否需要屏蔽主UI")]public bool isNeedMuteMainUI = false;
-    [Header("是否需要打开FullPane")]public bool isNeedOpenFullPanel = false;
+    //トラックをブロックするために必要な属性
+    [Header("ブロックする必要があるオブジェクト")] public GameObject muteObject;
+    [Header("プレイヤーのロングソードをブロックする")] public GameObject swordObject;
+    [Header("ボスをブロックする")]public bool isNeedMuteBoss;
+    [Header("爆発音声を再生する")]public bool isNeedMuteSound;
+    [Header("ゲートをアクティベートする")]public bool activeDoor;
+    [Header("SkipButtonをアクティブにする")]public bool activeSkipButton;
+    [Header("プレイヤー操作を活性化する")]public bool isNeedActivePlayer = false;
+    [Header("プレイヤーが溶解する必要がありますか？")]public bool isNeedPlayerDisslove = false;
+    [Header("プレイヤーオブジェクトを渡す")]public GameObject player;
+    [Header("メインUIをブロックする必要がありますか？")]public bool isNeedMuteMainUI = false;
+    [Header("FullPaneを開く必要がありますか？")]public bool isNeedOpenFullPanel = false;
     private PlayerControl playerControl;
     private Material playermaterial;
     private bool isClipPlayed;
     private bool isJump = false;
     public override void OnPlayableCreate(Playable playable)
     {
-        playableDirector = playable.GetGraph().GetResolver() as PlayableDirector;//需要解析之后进行类型转换，有点类似让粒子系统可以变成一个可挂载的脚本
+        playableDirector = playable.GetGraph().GetResolver() as PlayableDirector;//解析後に型変換を行う必要があり、それは粒子システムをマウント可能なスクリプトに変えることに少し似ています。
     }
 
     public override void ProcessFrame(Playable playable, FrameData info, object playerData)
@@ -76,7 +76,7 @@ public class MuteBehavior : PlayableBehaviour
             {
                 // BattleMainPanel battleMainPanel = PanelManager.Instance.GetPanel("BattleMainPanel") as BattleMainPanel;
                 // battleMainPanel.UITool.GetUI().SetActive(false);
-                // //直接关闭掉好了，避免关卡循环重复创建
+                // //直接閉じてしまいましょう。これにより、ステージが繰り返し作成されるのを防ぎます。
                 // PanelManager.Instance.Close(battleMainPanel.UIType);
             }
             if(isNeedOpenFullPanel)
@@ -91,7 +91,7 @@ public class MuteBehavior : PlayableBehaviour
         float x = (float)playable.GetDuration();
         if(x < 0.001f)
         {
-            Debug.LogWarning("不能除这么小的数");
+            Debug.LogWarning("これほど小さい数を除算することはできません。");
             x = 1;
         }
         float percent = (float)playable.GetTime()/x;
@@ -113,7 +113,7 @@ public class MuteBehavior : PlayableBehaviour
 
     public void Skip()
     {
-        Debug.Log("触发跳转");
+        Debug.Log("ジャンプをトリガーする");
         if(isJump)
         {
             return;
@@ -122,16 +122,16 @@ public class MuteBehavior : PlayableBehaviour
         GameObject.Find("PanelManager").transform.Find("UIRoot").Find("Canvas").Find("BattleUI").Find("SkipButton").gameObject.SetActive(false);
         if(SceneManager.GetActiveScene().buildIndex == 1)
         {
-            //停止Timeline
+            //タイムラインを停止
             GameObject.Find("Timeline").GetComponent<PlayableDirector>().Stop();
-            SceneLoadManager.Instance.LoadBattleScene(2);//只跳转一次
+            SceneLoadManager.Instance.LoadBattleScene(2);//一回だけジャンプします
             isJump = false;
             return;
         }
         else if(SceneManager.GetActiveScene().buildIndex == 3)
         {   
             GameObject.Find("Timeline").GetComponent<PlayableDirector>().Stop();
-            SceneLoadManager.Instance.LoadMainScene(0);//跳转回到主菜单
+            SceneLoadManager.Instance.LoadMainScene(0);//メインメニューに戻る
             isJump = false;
             return;
         }

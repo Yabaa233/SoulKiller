@@ -54,12 +54,12 @@ public class HatcheryEnemyControl : BaseEnemyControl
         enemyFSM.parameter._mainCamera = _mainCamera;
         enemyFSM.parameter.body = enemyBody;
     }
-    protected new void Update()//アップデート管理
+    protected new void Update()//更新管理
     {
         base.Update();
         characterBuffManager.OnUpdate(Time.deltaTime);
     }
-    public override void Damaged(float damage,bool isCritical = false)//ダメージマークを受けた
+    public override void Damaged(float damage,bool isCritical = false)//ダメージマークを受けました
     {
         base.Damaged(damage,isCritical);
         enemyFSM.parameter.getHit = true;

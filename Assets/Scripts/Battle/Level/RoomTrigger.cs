@@ -32,10 +32,10 @@ public class RoomTrigger : MonoBehaviour
     public int enemyCount;  //モンスターの数
     public Func<bool> clearCheck;   //大罪の関のクリア条件を確認してください
     public GameObject crimeRoomPrefab;  //大罪のステージメカニズムのプレファブ
-    public Transform resurrectionPoint;    //プレイヤーが死亡した後の復活ポイントは、大罪のレベルだけが設定が必要です。
+    public Transform resurrectionPoint;    //プレイヤーが死亡した後の復活ポイントは、大罪のレベルだけ設定が必要です。
     private GameObject curCrimeRoom;    //現在の大罪のステージ
     protected GameObject closeCollider;   //閉鎖時の衝突体
-    protected GameObject openCollider;    //開放時の衝突体
+    protected GameObject openCollider;    //オープン時のコリジョンボディ
     private GameObject clearTrigger;    //クリアポータル
     public UnityAction ClearScenc;        //クリアシーンの整理
     private void Awake()
@@ -64,7 +64,7 @@ public class RoomTrigger : MonoBehaviour
     ///<summary>
 
 
-    ////// パスを開く
+    ////// 道を開く
 
 
     ///</summary>
@@ -123,7 +123,7 @@ public class RoomTrigger : MonoBehaviour
     }
 
     /// <summary>
-    /// プレイヤーが壁にぶつかり、プレイヤーに大罪のステージをクリアしていないことを示します。
+    /// プレイヤーが壁にぶつかると、プレイヤーが大罪のステージをまだクリアしていないことを示します。
     /// </summary>
     private void OnCollisionEnter(Collision other)
     {
@@ -163,7 +163,7 @@ public class RoomTrigger : MonoBehaviour
     ///<summary>
 
 
-    ////// 部屋情報をリセットします
+    ////// 部屋の情報をリセットします
 
 
     ///</summary>
@@ -221,7 +221,7 @@ public class RoomTrigger : MonoBehaviour
     }
 
     /// <summary>
-    /// すべての仕掛けが破壊され、同時にモンスターがすべて死んだかどうか判断します。
+    /// すべての装置が破壊され、同時にモンスターがすべて死んだかどうかを判断します。
     /// </summary>
     public void TrapClear()
     {
@@ -233,7 +233,7 @@ public class RoomTrigger : MonoBehaviour
     }
 
     /// <summary>
-    /// プレイヤーがすべてのモンスターと全ての装置を倒した後のロジック
+    /// プレイヤーがすべてのモンスターとすべての装置を倒した後のロジック
     /// </summary>
     protected void Clear()
     {
@@ -264,7 +264,7 @@ public class RoomTrigger : MonoBehaviour
         // Time.timeScale = 0.1f;
         StartCoroutine(GameManager.Instance.PlayerStop(1.5f));
         CM_Effect.Instance.CM_TransitionDim(8, 1.2f);
-        Invoke("ResetTime", 2f);  //リセット時間を1秒遅延して呼び出す
+        Invoke("ResetTime", 2f);  //リセット時間を1秒遅らせて呼び出します
         OpenWallCollider();
     }
 
@@ -310,7 +310,7 @@ public class RoomTrigger : MonoBehaviour
     }
 
     /// <summary>
-    /// ボスクリア特殊エフェクトを表示する
+    /// ボスクリアの特殊エフェクトを表示する
     /// </summary>
     private void ShowBossRoomClear()
     {

@@ -57,7 +57,7 @@ public class EnemyControl : BaseEnemyControl
         //自身の属性を設定する
         transform.tag = tagStr;
 
-        //関連状態の初期化を行う
+        //関連状態の初期化を行います
         characterBuffManager = new CharacterBuffManager();
         enemyData = new CharacterData(Instantiate(tempCharaterData));
         characterBuffManager.Init(E_ChararcterType.enemy);
@@ -67,7 +67,7 @@ public class EnemyControl : BaseEnemyControl
 
 
         //データ同期を行う
-        // Debug.Log("データは既に同期されています");
+        // Debug.Log("データはすでに同期されています。");
         enemyFSM.parameter.enemyData = enemyData;
         enemyFSM.parameter.enemyStateData = tempEnemyStateData;
         enemyFSM.parameter.animator = animator;

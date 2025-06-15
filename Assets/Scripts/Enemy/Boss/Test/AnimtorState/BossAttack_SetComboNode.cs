@@ -9,7 +9,7 @@ public class BossAttack_SetComboNode : StateMachineBehaviour
     public bool SetAttackRangeHint = true;
     [Tooltip("攻撃するプレイヤーの方向を更新しますか？")] public bool SetPlayerPosition = false;
     [Range(0.0f, 1.0f)]
-    [Tooltip("更新が必要な場合、いつ更新を行うべきですか？")] public float setPositionTime;
+    [Tooltip("更新が必要な場合、いつ更新すべきですか？")] public float setPositionTime;
     private bool setedAttackRangeHint  =false;
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {

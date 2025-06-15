@@ -48,14 +48,14 @@ public class DashEnemyControl : BaseEnemyControl
         //自身の属性を設定する
         transform.tag = tagStr;
 
-        //関連状態の初期化を行う
+        //関連状態の初期化を行います
         characterBuffManager = new CharacterBuffManager();
         enemyData = new CharacterData(Instantiate(tempCharaterData));
         characterBuffManager.Init(E_ChararcterType.enemy);
         baseEnemyFSM = enemyFSM;
         enemyData.currentComboAttack = 1;//攻撃倍率を設定する
         moveSpeed = tempEnemyStateData.moveSpeed;
-        agent.speed = tempEnemyStateData.moveSpeed;//移動速度を設定する
+        agent.speed = tempEnemyStateData.moveSpeed;//移動速度を設定します
 
 
         //データ同期を行う

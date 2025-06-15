@@ -5,13 +5,13 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 /// <summary>
-/// ¿ØÖÆScrollView£¬Ê¹ÆäÄÜÔÚ»¬¶¯Ê±ÎŞÊÓeventtriggerµÄÕÚµ²
+/// ScrollViewã‚’åˆ¶å¾¡ã—ã¦ã€ã‚¹ãƒ©ã‚¤ãƒ‰æ™‚ã«eventtriggerã®ãƒ–ãƒ­ãƒƒã‚¯ã‚’ç„¡è¦–ã§ãã‚‹ã‚ˆã†ã«ã—ã¾ã™ã€‚
 /// xushi
 /// </summary>
 public class ScrollTool : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     ScrollRect Scroll;
-    //ÓÃÓÚ¼ÆÊ±µÄĞ­³Ì
+    //ã‚¿ã‚¤ãƒŸãƒ³ã‚°ç”¨ã®ã‚³ãƒ«ãƒ¼ãƒãƒ³
     Coroutine enableShow;
 
 
@@ -21,7 +21,7 @@ public class ScrollTool : MonoBehaviour, IPointerClickHandler, IBeginDragHandler
         if (Scroll == null)
             Scroll = transform.parent.parent.parent.parent.gameObject.GetComponent<ScrollRect>();
         if (Scroll == null)
-            Debug.Log("ScrollÆÁ±Î½Å±¾Î´ÕÒµ½ScrollRect");
+            Debug.Log("Scrollã‚¹ã‚¯ãƒªãƒ—ãƒˆãŒè¦‹ã¤ã‹ã‚‰ãªã„ScrollRect");
 
         ScrollToolManager.Instance.InitScrollabelBuffItem();
     }

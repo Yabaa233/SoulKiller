@@ -4,10 +4,13 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-/// <summary>
-/// ÊôĞÔÏà¹ØµÄBuff£¬ÏÔÊ¾µ±Ç°buffºÍbuffµÄÉı¼¶Çé¿ö
-/// xushi
-/// </summary>
+///<summary>
+
+
+////// å±æ€§é–¢é€£ã®ãƒãƒ•ã€ç¾åœ¨ã®ãƒãƒ•ã¨ãƒãƒ•ã®ã‚¢ãƒƒãƒ—ã‚°ãƒ¬ãƒ¼ãƒ‰çŠ¶æ³ã‚’è¡¨ç¤ºã—ã¾ã™ã€‚
+
+
+///</summary>
 public class Buff_Property : Buff_BaseList
 {
     static readonly string path = "UI/Item/Buff_Property";

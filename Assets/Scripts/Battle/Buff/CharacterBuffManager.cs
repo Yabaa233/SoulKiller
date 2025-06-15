@@ -19,14 +19,14 @@ public class CharacterBuffManager
     [Tooltip("The Buff list currently held by the character.")] public List<I_BuffBase> characterKeepBuffList = new List<I_BuffBase>();
     [SerializeField]
     [Tooltip("An array of text and corresponding indices")] public Dictionary<E_BuffKind, I_BuffBase> indexDictionary = new Dictionary<E_BuffKind, I_BuffBase>();
-    //実際には、最初からこの方法を使って全てのBuffを保存するんだ！
+    //実際には、最初からこの方法を使ってすべてのバフを保存するんだ！
     // [SerializeField]
     // [Tooltip("Storage location for persistent Buff")]public Dictionary<E_BuffKind,List<I_BuffBase>> timeBuffDictionary = new Dictionary<E_BuffKind, List<I_BuffBase>>();
 
     //実体のあるバフが存在する場所
     [Header("Shield Entity")] public ShieldRipples shieldRipples;
     /// <summary>
-    /// バフマネージャーから全てのバフタイプを取得し、バフリストを初期化します。
+    /// バフマネージャーからすべてのバフタイプを取得し、バフリストを初期化します。
     /// </summary>
     public void Init(E_ChararcterType _type)
     {
@@ -53,7 +53,7 @@ public class CharacterBuffManager
                 buff.OnAdd(gameObject);//一時的な追加方法
             }
         }
-        else//もし継続的ではないなら
+        else//もし継続的でなければ
         {
             if (indexDictionary.ContainsKey(buff.GetBuffType()))
             {
@@ -170,7 +170,7 @@ public class CharacterBuffManager
             buff.OnAdd(gameObject);
             characterKeepBuffList.Add(buff);
             indexDictionary.Add(buff.GetBuffType(), buff);
-            //構造体に詰め込んで渡す
+            //構造体に詰めて渡す
             S_BuffKindAndLevel s = new S_BuffKindAndLevel();
             s.buffKind = buff.GetBuffType();
             s.level = buff.GetLevel();
@@ -205,7 +205,7 @@ public class CharacterBuffManager
         
     }
     /// <summary>
-    /// すべてのバフを削除する
+    /// すべてのバフを削除します
     /// </summary>
     public void RemoveAllBuff()
     {
@@ -217,7 +217,7 @@ public class CharacterBuffManager
         indexDictionary.Clear();
     }
     /// <summary>
-    /// プレイヤー/敵/Bossおよびデータクラスのデータ交換を同期する
+    /// プレイヤー/敵/Bossおよびデータクラスのデータ交換を同期します
     /// </summary>
     public void RefreshData()
     {
@@ -271,7 +271,7 @@ public class CharacterBuffManager
     }
 
     /// <summary>
-    /// すべてのデバフをクリアし、現在はHP減少のバフのみなので、個別に修正することが可能です。
+    /// すべてのデバフをクリアし、現在はHP減少のバフのみとなっているため、個別に修正することが可能です。
     /// </summary>
     public void ClearDebuff()
     {
@@ -280,7 +280,7 @@ public class CharacterBuffManager
     }
 
 
-    /// 一部分特別なバフの実装
+    /// 一部の特別なバフの実装
 
 
     ///<summary>
@@ -300,26 +300,26 @@ public class CharacterBuffManager
             // Debug.LogWarning("HpBuff cannot be found, unable to drain health.");
             return;
         }
-        //強制的な変換が安全でない場合は、GetLevelを通じて現在のスキルレベルが吸血開始レベル以上であるかどうかを判断することができます。
+        //強制的な変換が安全でない場合、GetLevelを通じて現在のスキルレベルが吸血開始レベル以上であるかどうかを判断することができます。
         HpUp buff = indexDictionary[E_BuffKind.HpUp] as HpUp;
         buff.ReturnHp(damage);
     }
 
     /// <summary>
-    /// プレイヤーがスプリントするべき回数を得る
+    /// プレイヤーがスプリントすべき回数を得る
     /// </summary>
     public int GetDogeTimes()
     {
         if (!indexDictionary.ContainsKey(E_BuffKind.SpeedBuff))
         {
-            return 1;//そのバフがなければ、一度だけダッシュするしかありません。
+            return 1;//そのバフがなければ、ダッシュは一度だけしかできません。
         }
         SpeedBuff buff = indexDictionary[E_BuffKind.SpeedBuff] as SpeedBuff;
         return buff.GetDogeTimes();
     }
 
     /// <summary>
-    /// シールドがあるかどうかを判断するインターフェース、trueはシールドがあることを示し、falseはシールドがないことを示します。
+    /// シールドの有無を判断するインターフェースで、trueはシールドが存在することを示し、falseはシールドが存在しないことを示します。
     /// </summary>
     /// <param name="characterData">攻撃者のデータ</param>
     /// <param name="damage">この攻撃のダメージ</param>
@@ -375,7 +375,7 @@ public class CharacterBuffManager
             // RemoveBuff(buff);
             //シールドバーを破壊する
             // shieldRipples.DestroyShield();
-            //可視性を設定する
+            //表示設定を行う
             // shieldRipples.isTrue = false;
             // shieldRipples.SetShieldVisble(false);
             // shieldRipples = null;
@@ -421,14 +421,14 @@ public class CharacterBuffManager
         
         if (!indexDictionary.ContainsKey(E_BuffKind.SwordBuff))
         {
-            return 2;//現在の企画案では、剣を捨てることはできないので、最低でも2回の連続攻撃が必要です。
+            return 2;//現在の企画案では、剣を捨てることはできないため、少なくとも2回の連続攻撃が必要となります。
         }
 
         SwordBuff buff = indexDictionary[E_BuffKind.SwordBuff] as SwordBuff;
         return buff.GetPlayerTimes();
     }
     /// <summary>
-    /// キャラクターの剣バフレベルを返す
+    /// キャラクターの剣のバフレベルを返します
     /// </summary>
     /// <returns></returns>
     public int PlayerSwordLevel()
@@ -467,7 +467,7 @@ public class CharacterBuffManager
     }
 
     /// <summary>
-    /// プレイヤーの現在の杖のBuffレベルを返します。0はこのBuffがないことを意味します。
+    /// プレイヤーの現在の杖のBuffレベルを返します。0はこのBuffが存在しないことを意味します。
     /// </summary>
     /// <returns></returns>
     public int PlayerStaffBuffLevel()
@@ -487,7 +487,7 @@ public class CharacterBuffManager
     }
 
     /// <summary>
-    /// シールド値を回復
+    /// シールド値を回復する
     /// </summary>
     /// <param name="raise">シールドの回復量</param>
     public void RaiseShieldHP(float raise)
@@ -511,7 +511,7 @@ public class CharacterBuffManager
     }
 
     /// <summary>
-    /// HpItemBuffを追加し、一層のラッパーを作成します。この関数を使用すると、buffの作成回数を減らすことができます。
+    /// HpItemBuffを追加し、さらなるラッパーを作成します。この関数を使用すると、buffの作成回数を減らすことができます。
     /// </summary>
     /// <param name="chararcterType">キャラクタータイプ</param>
     /// <param name="gameObject">バフ保持者</param>
@@ -529,7 +529,7 @@ public class CharacterBuffManager
         AddBuff(hpItemBuff,gameObject,true);
     }
     
-    //これは、将来他のアイテムのBuffがある場合に備えたインターフェースで、メソッドはタイプを入力します。辞書にインスタンスがない場合は作成し、そうでなければAddを再度呼び出します。
+    //これは、将来他のアイテムのBuffが存在する可能性に備えたインターフェースで、メソッドはタイプを入力します。辞書にインスタンスが存在しない場合は作成し、存在する場合はAddを再度呼び出します。
     public void AddItemBuff(E_BuffKind buffKind)
     {
 

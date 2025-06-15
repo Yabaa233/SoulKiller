@@ -77,7 +77,7 @@ public class DBoomEnemy_IdleState : IState
         }
         if(parameter.ableAttact)
         {
-            manager.TranstionState(E_EnemyStateType.Find);//警戒距離に到達し、衝突型の敵に対する跳躍のヒント
+            manager.TranstionState(E_EnemyStateType.Find);//警戒距離に到達し、衝突型の敵に対するジャンプのヒント
             return;
         }
     }
@@ -122,7 +122,7 @@ public class DBoomEnemy_FindState : IState
     {
         manager.FaceToTarget();
         manager.RotateToTarget();
-        //攻撃を受けると直接被弾状態に入ります。
+        //攻撃を受けると、直接に被弾状態になります。
         if(parameter.isBoom)
         {
              manager.TranstionState(E_EnemyStateType.Boom);
@@ -150,7 +150,7 @@ public class DBoomEnemy_ChaseState : IState
 {
     private DashBoomEnemyFSM manager;
     private DashBoomEnemyParameter parameter;
-    // Vector3 faceVector;//プレイヤーに向かうベクトル
+    // Vector3 faceVector; //プレイヤーに向かうベクトル
     // private float timer = 1.5f;
     // private float nextStateTime;
     public DBoomEnemy_ChaseState(DashBoomEnemyFSM _manager)
@@ -206,7 +206,7 @@ public class DBoomEnemy_ChaseState : IState
         }
         manager.FaceToTarget();
         manager.RotateToTarget();
-        //元のスプリントロジック
+        //オリジナルのスプリントロジック
         // if(parameter.isDash)
         // {
         //     // Debug.Log("一度ダッシュしました");
@@ -227,10 +227,10 @@ public class DBoomEnemy_ChaseState : IState
         // }
         // if(parameter.isDizzy)
         // {
-        //     manager.TranstionState(E_EnemyStateType.Dizzy);//壁にぶつかってめまい状態に入る
+        //     manager.TranstionState(E_EnemyStateType.Dizzy);//壁にぶつかってめまい状態になる
         //     return;
         // }
-        // if(manager.rb.velocity.magnitude < 1.5f && Time.time > nextStateTime)//速度が閾値より小さい場合、Find状態に入ります
+        // if(manager.rb.velocity.magnitude < 1.5f && Time.time > nextStateTime)//速度が閾値より小さい場合、Find状態に移行します
         // {   
         //     manager.rb.velocity = new Vector3(0f,0f,0f);
         //     manager.TranstionState(E_EnemyStateType.Find);
@@ -238,7 +238,7 @@ public class DBoomEnemy_ChaseState : IState
     }
 }
 
-//めまい状態でやるべきことは、ただしばらく静止するだけです。
+//目まい状態でやるべきことは、ただしばらく静止するだけです。
 /// <summary>
 /// めまい状態
 /// </summary>
@@ -256,7 +256,7 @@ public class DBoomEnemy_DizzyState : IState
 
     public void OnEnter()
     {
-        // Debug.Log("めまいの状態になりました");
+        // Debug.Log("私はめまいを感じています。");
         parameter.isDizzy = false;
         nextStateTime = Time.time + timer;
         parameter.animator.Play("GetHit");
@@ -280,7 +280,7 @@ public class DBoomEnemy_DizzyState : IState
         }
         if(Time.time > nextStateTime)
         {
-            manager.TranstionState(E_EnemyStateType.Idle);//ここでは、まず待機状態に戻してください。
+            manager.TranstionState(E_EnemyStateType.Idle);//まず、ここで待機状態に戻してください。
         }
     }
 }
@@ -290,7 +290,7 @@ public class DBoomEnemy_DizzyState : IState
 
 
 
-////// 打撃を受けた状態
+////// 被打击的状态
 
 
 
@@ -300,7 +300,7 @@ public class  DBoomEnemy_GetHitState: IState
     private DashBoomEnemyFSM manager;
     private DashBoomEnemyParameter parameter;
     
-    private float timeBtwState = 0.3f;//被打撃状態に少なくとも0.5秒間留まる
+    private float timeBtwState = 0.3f;//少なくとも0.5秒間、打撃状態に留まる
     private float nextStateTime;
     public DBoomEnemy_GetHitState(DashBoomEnemyFSM _manager)
     {
@@ -312,7 +312,7 @@ public class  DBoomEnemy_GetHitState: IState
     {
         nextStateTime = Time.time + timeBtwState;
         parameter.animator.Play("GetHit");
-        // Debug.Log("打たれる状態に入りました。");
+        // Debug.Log("叩かれる状態に入りました。");
          //FMODUnity.RuntimeManager.PlayOneShot(parameter.enemyData.getHitSound);
         // FmodManager.Instance.PlaySoundOnce(parameter.enemyData.getHitSound);
 
@@ -330,7 +330,7 @@ public class  DBoomEnemy_GetHitState: IState
 
     public void OnUpDate()
     {
-        //  Debug.Log("ブームに入る");
+        //  Debug.Log("ブームに乗る");
         if(parameter.enemyData.currentHealth <=0)
         {
             manager.TranstionState(E_EnemyStateType.Boom);
@@ -365,7 +365,7 @@ public class DBoomEnemy_BoomState : IState
     private DashBoomEnemyParameter parameter;
     private float timer = 1f;
     private float nextStateTime;
-    private Vector3 nowPos;//現在の位置を一時保存する
+    private Vector3 nowPos;//現在の位置を一時的に保存する
     public DBoomEnemy_BoomState(DashBoomEnemyFSM _manager)
     {
         this.manager = _manager;

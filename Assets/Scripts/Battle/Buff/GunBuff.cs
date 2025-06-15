@@ -13,7 +13,7 @@ public class GunBuff : I_BuffBase
     [Tooltip("Current Role Buff Manager")] CharacterBuffManager characterBuffManager;
     //現在のBUFFの種類
     [Tooltip("Current Buff Type")] E_BuffKind buffType;
-    //現在のキャラクターのタイプ
+    //現在のキャラクタータイプ
     [Tooltip("Current role type")] E_ChararcterType chararcterType;
 
     [Tooltip("Current Buff Level")] public int currentLevel;
@@ -139,7 +139,7 @@ public class GunBuff : I_BuffBase
 
         realEffect(characterData);
     }
-    /////Buffが削除されるときに属性を復元します
+    /////バフが削除されるときに属性を復元します
     private void PlayerGunRemove()
     {
         if (currentLevel >= 3)
@@ -201,7 +201,7 @@ public class GunBuff : I_BuffBase
             float maxAmmo = gunControl.maxAmmunition;
             gunControl.maxAmmunition += BuffDataManager.Instance.playerBulletUpNum;
             float percent = BuffDataManager.Instance.playerBulletUpNum / maxAmmo;
-            //現在、埋め戻しを速める必要はありません。
+            //現在、埋め戻しを急ぐ必要はありません。
             gunControl.autoReloadSpeed *= (1 + percent);
             gunControl.manualReloadSpeed *= (1 + percent);
         }

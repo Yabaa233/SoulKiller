@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// µ×²¿ÌáÊ¾UI
+/// ãƒœãƒˆãƒ ãƒ’ãƒ³ãƒˆUI
 /// xushi
 /// </summary>
 public class BottomTips : BasePanel
@@ -12,9 +12,9 @@ public class BottomTips : BasePanel
     static readonly string path = "UI/Panel/BottomTips";
 
     public BottomTips() : base(new UIType(path)) { }
-    //ÌáÊ¾Í¼Æ¬
+    //ãƒ’ãƒ³ãƒˆç”»åƒ
     Image image;
-    //ÌáÊ¾ÎÄ×Ö
+    //ãƒ’ãƒ³ãƒˆãƒ†ã‚­ã‚¹ãƒˆ
     Text text;
 
     Coroutine closePanel;
@@ -33,12 +33,12 @@ public class BottomTips : BasePanel
         closePanel = MonoHelper.Instance.StartCoroutine(IE_Close());
         coroutines.Add(closePanel); 
     }
-    //ÉèÖÃÍ¼Æ¬
+    //ç”»åƒã‚’è¨­å®šã™ã‚‹
     public void SetImage(Sprite sprite)
     {
         image.sprite = sprite;
     }
-    //ÉèÖÃÎÄ×Ö
+    //ãƒ†ã‚­ã‚¹ãƒˆã‚’è¨­å®šã™ã‚‹
     public void SetText(string str)
     {
         text.text = str;

@@ -154,7 +154,7 @@ public class BulletTest : MonoBehaviour
     ///<summary>
 
 
-    ////// 試験の終了
+    ////// テストの終了
 
 
     ///</summary>

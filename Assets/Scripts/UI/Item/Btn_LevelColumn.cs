@@ -5,7 +5,7 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 /// <summary>
-/// �ڽ�ɫbuffչʾ��壬��ʾbuff���������
+/// キャラクターのバフ表示パネルで、バフのアップグレード状況を表示します。
 /// xushi
 /// </summary>
 public class Btn_LevelColumn : BasePanel
@@ -14,12 +14,12 @@ public class Btn_LevelColumn : BasePanel
 
     public Btn_LevelColumn() : base(new UIType(path)) { }
 
-    //buffͼƬ
+    //バフ画像
     Image img;
-    //buff����
+    //バフの説明
     Text info;
 
-    //��ǰbuff�ȼ���Ϣ
+    //現在のバフレベル情報
     BuffLevelData levelData;
 
 
@@ -29,7 +29,7 @@ public class Btn_LevelColumn : BasePanel
         img = UITool.GetOrAddComponentInChildren<Image>("Image");
         info = UITool.GetOrAddComponentInChildren<Text>("Text");
 
-        //���ݸ�ui����ʾ���
+        //親UIの表示コンポーネントを伝達します
 
         levelData = (BuffLevelData)para[0];
 

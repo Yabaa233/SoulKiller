@@ -6,11 +6,11 @@ using UnityEngine;
 [System.Serializable]
 public class CharacterData
 {
-    [Header("复制出的数值模板（正在使用的）")]
+    [Header("コピーされた数値テンプレート（使用中）")]
     public CharacterData_SO characterData;
     
     /// <summary>
-    /// 构造函数，用于创建一个角色数值类
+    /// キャラクター数値クラスを作成するためのコンストラクタ
     /// </summary>
     public CharacterData(CharacterData_SO tempCharaterData)
     {
@@ -20,87 +20,87 @@ public class CharacterData
         }
         else
         {
-            Debug.LogWarning("没有模板属性");
+            Debug.LogWarning("テンプレート属性がありません");
         }
         DataInit();
     }
 
     #region BaseData
-    public float BaseHealth //角色基础生命值
+    public float BaseHealth //キャラクターの基本生命値
     {
         get
         {
             if (characterData != null)
                 return characterData.baseHealth;
             else
-                Debug.LogWarning("没有数据文件可供读取");
+                Debug.LogWarning("読み取るためのデータファイルがありません");
             return 0;
         }
     }
-    public float maxHealth; //计算等级、装备、属性加成后的生命值
-    public float currentHealth; //当前血量
+    public float maxHealth; //レベル、装備、属性ボーナスを計算した後のヒットポイント
+    public float currentHealth; //現在のHP
 
-    public float BaseAttack //角色基础攻击力
+    public float BaseAttack //キャラクターの基本攻撃力
     {
         get
         {
             if (characterData != null)
                 return characterData.baseAttack;
             else
-                Debug.LogWarning("没有数据文件可供读取");
+                Debug.LogWarning("読み取るためのデータファイルがありません");
             return 0;
         }
     }
     public float currentAttack;
     public float currentComboAttack;
 
-    public float BaseDefend //角色基础防御力
+    public float BaseDefend //キャラクターの基本防御力
     {
         get
         {
             if (characterData != null)
                 return characterData.baseDefend;
             else
-                Debug.LogWarning("没有数据文件可供读取");
+                Debug.LogWarning("読み取るためのデータファイルがありません");
             return 0;
         }
     }
     public float currentDefend;
 
-    public float BaseCritical //角色基础暴击率
+    public float BaseCritical //キャラクターの基本クリティカル率
     {
         get
         {
             if (characterData != null)
                 return characterData.baseCritical;
             else
-                Debug.LogWarning("没有数据文件可供读取");
+                Debug.LogWarning("読み取るためのデータファイルがありません");
             return 0;
         }
     }
     public float currentCritical;
 
-    public float BaseCriticalDamage //角色基础暴击伤害
+    public float BaseCriticalDamage //キャラクターの基本クリティカルダメージ
     {
         get
         {
             if (characterData != null)
                 return characterData.baseCriticalDamage;
             else
-                Debug.LogWarning("没有数据文件可供读取");
+                Debug.LogWarning("読み取るためのデータファイルがありません");
             return 0;
         }
     }
     public float currentCriticalDamage;
 
-    public float BaseCriticalDefend //角色基础暴击抗性
+    public float BaseCriticalDefend //キャラクターの基本クリティカル抵抗力
     {
         get
         {
             if (characterData != null)
                 return characterData.baseCriticalDefend;
             else
-                Debug.LogWarning("没有数据文件可供读取");
+                Debug.LogWarning("読み取るためのデータファイルがありません");
             return 0;
         }
     }
@@ -113,7 +113,7 @@ public class CharacterData
             if (characterData != null)
                 return characterData.baseStopTime;
             else
-                Debug.LogWarning("没有数据文件可供读取");
+                Debug.LogWarning("読み取るためのデータファイルがありません");
             return 0;
         }
     }
@@ -125,7 +125,7 @@ public class CharacterData
             if (characterData != null)
                 return characterData.getHitSound;
             else
-                Debug.LogWarning("没有数据文件可供读取");
+                Debug.LogWarning("読み取るためのデータファイルがありません");
                 return characterData.getHitSound;
         }
     }
@@ -136,7 +136,7 @@ public class CharacterData
             if (characterData != null)
                 return characterData.getCriticalSound;
             else
-                Debug.LogWarning("没有数据文件可供读取");
+                Debug.LogWarning("読み取るためのデータファイルがありません");
             return characterData.getCriticalSound;
         }
     }
@@ -144,7 +144,7 @@ public class CharacterData
     #endregion
 
     /// <summary>
-    /// 初始化角色Data
+    /// キャラクターデータの初期化
     /// </summary>
     public void DataInit()
     {

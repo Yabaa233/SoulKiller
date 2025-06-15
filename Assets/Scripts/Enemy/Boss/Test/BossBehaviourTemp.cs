@@ -17,7 +17,7 @@ public class BossBehaviourTemp : Action
 }
 #region 运动控制相关
 /// <summary>
-/// プレイヤーに正常に移動します
+/// プレイヤーは正常に移動します
 /// </summary>
 [TaskCategory("BossBaseMove")]
 public class BossMoveToPlayer : Action
@@ -117,7 +117,7 @@ public class BossFlashBackPlayer : Action
 }
 
 /// <summary>
-/// プレイヤーを取得する
+/// プレイヤーを獲得する
 /// </summary>
 [TaskCategory("BossCheck")]
 public class GetPlayer : Conditional
@@ -163,7 +163,7 @@ public class LookCamera : Action
 }
 
 /// <summary>
-/// すべての攻撃が共通の攻撃モード切り替えパフォーマンスノード
+/// すべての攻撃が共通の攻撃モード切替パフォーマンスノード
 /// </summary>
 [TaskCategory("BossBase")]
 public class BossChangeWeaponOver : Action
@@ -288,7 +288,7 @@ public class BossAttack_Sword_Start : Action
         bossControl.SetAnimatorBool("move", false);
         bossControl.SetAnimatorBool("attacking", true);
         bossControl.SetAnimatorTrigger("skill");
-        // Debug.Log("剣技攻撃");
+        // Debug.Log("剣術攻撃");
     }
     public override TaskStatus OnUpdate()
     {
@@ -315,7 +315,7 @@ public class BossAttack_Sword_Start : Action
 public class BossAttack_Gun : Action
 {
     private BossControl bossControl;
-    public int attackType;  //攻撃タイプ
+    public int attackType;  //アタックタイプ
     public override void OnStart()
     {
         if (bossControl == null)
@@ -326,7 +326,7 @@ public class BossAttack_Gun : Action
         bossControl.SetAnimatorBool("attacking", true);
         bossControl.SetAnimatorTrigger("beforeSkill");
         bossControl.BossAttack_Gun(attackType);
-        // Debug.Log("銃スキル攻撃");
+        // Debug.Log("ガンスキルアタック");
     }
     public override TaskStatus OnUpdate()
     {
@@ -611,7 +611,7 @@ public class BossState_StageChange : Conditional
 }
 
 /// <summary>
-/// ボスのフェーズ移行が終了したか判断
+/// ボスのフェーズ移行が終了したかどうかを判断する
 /// </summary>
 [TaskCategory("BossBaseState")]
 public class BossState_StageChange_End : Action
@@ -632,7 +632,7 @@ public class BossState_StageChange_End : Action
         {
             bossControl.BossStageChange();
         }
-        // Debug.Log("フェーズ移行が終了しました");
+        // Debug.Log("フェーズ移行が完了しました");
     }
     public override TaskStatus OnUpdate()
     {
@@ -648,7 +648,7 @@ public class BossState_StageChange_End : Action
 }
 
 /// <summary>
-/// ボスは本当にフェーズシフトを開始しましたか？
+/// ボスは本当にフェーズシフトを開始したのですか？
 /// </summary>
 [TaskCategory("BossBaseState")]
 public class BossState_StageChangeReal : Action
@@ -751,8 +751,8 @@ public class BossCheckDistence : Conditional
 public class BossCheckBuff : Conditional
 {
     BossControl bossControl;
-    [Header("その後のスキルは、Buffが必要で発動できますか？")] public bool needBuff;
-    [Header("必要であれば、どのBuffが必要ですか？")] public E_BuffKind buff;
+    [Header("その後のスキルは、バフが必要で発動できますか？")] public bool needBuff;
+    [Header("必要な場合、どのBuffが必要ですか？")] public E_BuffKind buff;
     public override void OnStart()
     {
         if (bossControl == null)
@@ -780,7 +780,7 @@ public class BossCheckBuff : Conditional
 public class BossCheckStage : Conditional
 {
     private SharedInt curStage; //現在の段階
-    [Header("次の段階に進むことができる段階数 注：段階数は0 1 2 3 4段階で、成功の判断条件は現在の段階数がtargetStage以上であること。")]
+    [Header("進むことができるステージ数 注：ステージ数は0 1 2 3 4の5段階で、成功の判断条件は現在のステージ数がtargetStage以上であること。")]
     public int targetStage;
     public override void OnStart()
     {
@@ -893,7 +893,7 @@ public class BossCDSet : Action
 }
 
 /// <summary>
-/// ボスの個々のスキルのCDをリセットする
+/// ボスの各スキルのCDをリセットする
 /// </summary>
 [TaskCategory("BossCD")]
 public class BossOneCDReset : Action
@@ -977,7 +977,7 @@ public class BossAllCDSet : Action
 }
 
 /// <summary>
-/// CDが基底クラスを取得
+/// CDが基底クラスを取得します
 /// </summary>
 public class BossCDConditional : Conditional
 {
@@ -1016,7 +1016,7 @@ public class BossCanFlashToPlayer : BossCDConditional
 }
 
 /// <summary>
-/// ボスがプレイヤーに背を向けてフラッシュCD
+/// ボスがプレイヤーに背を向けてフラッシュCDを使う
 /// </summary>
 [TaskCategory("BossCD")]
 public class BossCanFlashBackPlayer : BossCDConditional
@@ -1028,7 +1028,7 @@ public class BossCanFlashBackPlayer : BossCDConditional
 }
 
 /// <summary>
-/// ボスの通常攻撃CD
+/// ボスの通常攻撃のクールダウン
 /// </summary>
 [TaskCategory("BossCD")]
 public class BossAttackCD_Normal : BossCDConditional
@@ -1052,7 +1052,7 @@ public class BossAttackCD_SwordSkill : BossCDConditional
 }
 
 /// <summary>
-/// BOSSの銃攻撃1CD
+/// ボスの銃攻撃1CD
 /// </summary>
 [TaskCategory("BossCD")]
 public class BossAttackCD_Shot01 : BossCDConditional
@@ -1077,7 +1077,7 @@ public class BossAttackCD_Shot02 : BossCDConditional
 
 
 /// <summary>
-/// BOSSの杖攻撃CD
+/// ボスの杖攻撃CD
 /// </summary>
 [TaskCategory("BossCD")]
 public class BossAttackCD_Staff : BossCDConditional
@@ -1089,7 +1089,7 @@ public class BossAttackCD_Staff : BossCDConditional
 }
 
 /// <summary>
-/// ボスの召喚攻撃CD
+/// ボスの召喚攻撃のクールダウン
 /// </summary>
 [TaskCategory("BossCD")]
 public class BossAttackCD_Summon : BossCDConditional
@@ -1125,7 +1125,7 @@ public class BossBuffCD_Shield : BossCDConditional
 }
 
 /// <summary>
-/// ボスの狂暴CD
+/// ボスの暴走CD
 /// </summary>
 [TaskCategory("BossCD/Skill")]
 public class BossBuffCD_Rage : BossCDConditional

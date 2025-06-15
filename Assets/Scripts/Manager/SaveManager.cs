@@ -6,10 +6,10 @@ using UnityEngine;
 public class SaveManager
 {
     /// <summary>
-    /// 存档
+    /// アーカイブ
     /// </summary>
-    /// <param name="saveFileName">存档文件的名字</param>
-    /// <param name="data">存档的数据</param>
+    /// <param name="saveFileName">セーブファイルの名前</param>
+    /// <param name="data">保存されたデータ</param>
     public static void SaveByJson(string saveFileName,object data)
     {
         var json = JsonUtility.ToJson(data);
@@ -17,10 +17,10 @@ public class SaveManager
         File.WriteAllText(path, json);
     }
     /// <summary>
-    /// 读档
+    /// セーブデータを読む
     /// </summary>
-    /// <typeparam name="T">泛型，指我们需要哪种类型的数据</typeparam>
-    /// <param name="saveFileName">存档所在的文件名称</param>
+    /// <typeparam name="T">ジェネリック、つまり、どのタイプのデータが必要かを指します</typeparam>
+    /// <param name="saveFileName">セーブデータのファイル名</param>
     /// <returns></returns>
     public static T LoadFromJson<T>(string saveFileName)
     {

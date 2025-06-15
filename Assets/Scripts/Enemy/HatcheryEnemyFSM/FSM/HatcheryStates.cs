@@ -62,7 +62,7 @@ public class HatcheryEnemy_IdleState : IState
     }
     public void OnExit()
     {
-        ///ステータス終了
+        ///ステータスが終了しました
     }
 }
 ///<summary>
@@ -131,7 +131,7 @@ public class HatcheryEnemy_HitState : IState
     {
         parameter.animator.Play("Hit");
         nextTime = Time.time;
-        ///ダメージ処理はすでにcontrolスクリプトに移行されているので省略します。parameter.enemyData.currentHealth -= 1; ///この部分はplayerのAttack値に置き換える必要があります。
+        ///ダメージ処理は既にcontrolスクリプトに移行されているため、省略します。parameter.enemyData.currentHealth -= 1; ///この部分はplayerのAttack値に置き換える必要があります。
     }
     public void OnUpDate()
     {

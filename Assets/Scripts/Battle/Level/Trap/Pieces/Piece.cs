@@ -112,9 +112,9 @@ public class Piece : MonoBehaviour
     IEnumerator MoveToTartgetPoint(Vector3 target)
     {
         float time = 0; //時間計測用
-        //持ち上げる
+        //リフトアップ
         if (pieceDownEff != null) Destroy(pieceDownEff);
-        isMoveing = true;   //移動が開始されると、プレイヤーは攻撃することができず、またプレイヤーを攻撃することもできません。
+        isMoveing = true;   //移動が開始されると、プレイヤーは攻撃することができず、また他のプレイヤーからの攻撃も受けることができません。
         while (transform.position.y < targetY)
         {
             transform.Translate(Vector3.up * Time.deltaTime * upSpeed, Space.World);
@@ -128,7 +128,7 @@ public class Piece : MonoBehaviour
         time = 0;
         //水平移動
         Vector3 curtarget = target;
-        curtarget.y = targetY;  //上下の動きを防止する
+        curtarget.y = targetY;  //上下の動きを防ぐ
         Vector3 dir = curtarget - transform.position;
         while (dir.magnitude > 0.5f)
         {
@@ -143,7 +143,7 @@ public class Piece : MonoBehaviour
             time += Time.deltaTime;
             yield return null;
         }
-        weapon.enabled = true;  //コライダーを有効にする
+        weapon.enabled = true;  //コライダーを有効にします
         isMoveing = false;  //プレイヤーが攻撃可能になる
         while (transform.position.y > downTargetY)
         {
@@ -151,9 +151,9 @@ public class Piece : MonoBehaviour
             dir = curtarget - transform.position;
             yield return null;
         }
-        checkerBoard.CanNext(true);    //次のピースを進める
-        weapon.enabled = false; //コライダーを無効にする
-        isAttacking = false;    //攻撃状態が終了しました
+        checkerBoard.CanNext(true);    //次のピースを進めてください。
+        weapon.enabled = false; //コライダーを無効にします
+        isAttacking = false;    //攻撃状態が終了しました。
         pieceDownEff = Instantiate(checkerBoard.pieceDownEff, transform.position, Quaternion.identity, transform);
 
         FMODUnity.RuntimeManager.PlayOneShot("event:/Level/AoMan/qiziGround");
@@ -294,7 +294,7 @@ public class Piece : MonoBehaviour
     ///<summary>
 
 
-    ////// 現在の駒は攻撃で破壊されました。
+    ////// 現在の駒は攻撃により破壊されました。
 
 
     ///</summary>
@@ -329,7 +329,7 @@ public class Piece : MonoBehaviour
     }
 
     /// <summary>
-    /// KingとQueenが全て破壊され、結果として現在の駒も破壊されました。
+    /// キングとクイーンが全て壊され、結果として現在の駒も壊されました。
     /// </summary>
     public void BreakAllPiece_One()
     {
