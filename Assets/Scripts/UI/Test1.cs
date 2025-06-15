@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// UI测试
+/// UIテスト
 /// xushi
 /// </summary>
 public class Test1 : singleton<Test1>
 {
-    public GameObject player;//当前场景的角色
+    public GameObject player;//現在のシーンのキャラクター
     public PlayerControl playerC;
 
     protected override void Awake()
@@ -27,7 +27,7 @@ public class Test1 : singleton<Test1>
 
     public void InitPlayerBuff()
     {
-        //新建一些角色当前的buff用来展示
+        //新たにいくつかのキャラクターの現在のバフを表示するために作成します。
         Damage damageBuff1 = new Damage(E_ChararcterType.player, 1);
         SpeedBuff speedBuff1 = new SpeedBuff(E_ChararcterType.player, 3);
         HpUp hpBuff1 = new HpUp(E_ChararcterType.player, 2);
@@ -36,7 +36,7 @@ public class Test1 : singleton<Test1>
         GunBuff gunBuff1 = new GunBuff(E_ChararcterType.player, 2);
         SwordBuff swordBuff1 = new SwordBuff(E_ChararcterType.player,1);
 
-        //给所有buff加载到当前角色上
+        //すべてのバフを現在のキャラクターに適用します。
         playerC = player.GetComponent<PlayerControl>();
 
         playerC.characterBuffManager.AddBuff(damageBuff1, player);

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// ダッシュ爆発敵の状態
+/// ダッシュ爆発の敵の状態
 /// </summary>
 public class DashBoomEnemyState : IState
 {
@@ -28,9 +28,13 @@ public class DashBoomEnemyState : IState
     }
 }
 
-/// <summary>
-/// 状態の初期化
-/// </summary>
+///<summary>
+
+
+////// 状態の初期化
+
+
+///</summary>
 public class DBoomEnemy_IdleState : IState
 {
     private DashBoomEnemyFSM manager;
@@ -44,7 +48,7 @@ public class DBoomEnemy_IdleState : IState
 
     public void OnEnter()
     {
-        // Debug.Log("进入了待机状态");
+        // Debug.Log("スタンバイモードに入りました");
         parameter.agent.enabled = false;
         parameter.animator.Play("Idle");
     }
@@ -68,20 +72,24 @@ public class DBoomEnemy_IdleState : IState
         }
         if(parameter.getHit)
         {
-            manager.TranstionState(E_EnemyStateType.Hit);//受到攻击切换状态
+            manager.TranstionState(E_EnemyStateType.Hit);//攻撃を受けて状態を切り替えます
             return;
         }
         if(parameter.ableAttact)
         {
-            manager.TranstionState(E_EnemyStateType.Find);//到了警戒距离，冲撞类敌人的弹跳提示
+            manager.TranstionState(E_EnemyStateType.Find);//警戒距離に到達し、衝突型の敵に対するジャンプのヒント
             return;
         }
     }
 }
 
-/// <summary>
-/// 状態の更新
-/// </summary>
+///<summary>
+
+
+////// 状態の更新
+
+
+///</summary>
 public class DBoomEnemy_FindState : IState
 {
     private DashBoomEnemyFSM manager;
@@ -96,7 +104,7 @@ public class DBoomEnemy_FindState : IState
 
     public void OnEnter()
     {
-        Debug.Log("进入了发现状态");
+        Debug.Log("ディスカバリーモードに入りました");
         nextStateTime = Time.time + timer;
         parameter.animator.Play("Find");
     }
@@ -114,7 +122,7 @@ public class DBoomEnemy_FindState : IState
     {
         manager.FaceToTarget();
         manager.RotateToTarget();
-        //受到攻击直接进入受击状态
+        //攻撃を受けると、直接に被弾状態になります。
         if(parameter.isBoom)
         {
              manager.TranstionState(E_EnemyStateType.Boom);
@@ -122,9 +130,9 @@ public class DBoomEnemy_FindState : IState
         }
         if(parameter.getHit)
         {
-            manager.TranstionState(E_EnemyStateType.Hit);//受到攻击，切换到受到攻击状态
+            manager.TranstionState(E_EnemyStateType.Hit);//攻撃を受け、攻撃受け状態に切り替えます。
         }
-        //播放弹跳的动画
+        //跳ねるアニメーションを再生する
         AnimatorStateInfo animatorInfo;
         animatorInfo = parameter.animator.GetCurrentAnimatorStateInfo(0);
         if(animatorInfo.normalizedTime > 0.99f && animatorInfo.IsName("Find")&&Time.time > nextStateTime)
@@ -136,13 +144,13 @@ public class DBoomEnemy_FindState : IState
 
 
 /// <summary>
-/// 状態の終了
+/// ステータスの終了
 /// </summary>
 public class DBoomEnemy_ChaseState : IState
 {
     private DashBoomEnemyFSM manager;
     private DashBoomEnemyParameter parameter;
-    // Vector3 faceVector;//朝向玩家的向量
+    // Vector3 faceVector; //プレイヤーに向かうベクトル
     // private float timer = 1.5f;
     // private float nextStateTime;
     public DBoomEnemy_ChaseState(DashBoomEnemyFSM _manager)
@@ -153,8 +161,8 @@ public class DBoomEnemy_ChaseState : IState
 
     public void OnEnter()
     {
-        // Debug.Log("进入冲刺状态");
-        //得到这一时刻朝向角色的向量
+        // Debug.Log("スプリント状態に入ります");
+        //この瞬間にキャラクターに向かっているベクトルを得る
         // faceVector = parameter.target.position - parameter.enemyPos.position;
         // parameter.isDash = true;
         // nextStateTime = Time.time + timer;
@@ -175,7 +183,7 @@ public class DBoomEnemy_ChaseState : IState
 
     public void OnUpDate()
     {
-        //新的追踪逻辑
+        //新しい追跡ロジック
         if(parameter.isBoom)
         {
              manager.TranstionState(E_EnemyStateType.Boom);
@@ -198,10 +206,10 @@ public class DBoomEnemy_ChaseState : IState
         }
         manager.FaceToTarget();
         manager.RotateToTarget();
-        //原本的冲刺逻辑
+        //オリジナルのスプリントロジック
         // if(parameter.isDash)
         // {
-        //     // Debug.Log("冲刺了一次");
+        //     // Debug.Log("一度ダッシュしました");
         //     manager.FaceToTarget();
         //     manager.RotateToTarget();
         //     manager.rb.AddForce(faceVector.normalized * parameter.enemyStateData.dashPower, ForceMode.Impulse);
@@ -219,10 +227,10 @@ public class DBoomEnemy_ChaseState : IState
         // }
         // if(parameter.isDizzy)
         // {
-        //     manager.TranstionState(E_EnemyStateType.Dizzy);//撞到墙体进入眩晕状态
+        //     manager.TranstionState(E_EnemyStateType.Dizzy);//壁にぶつかってめまい状態になる
         //     return;
         // }
-        // if(manager.rb.velocity.magnitude < 1.5f&&Time.time > nextStateTime)//速度小于一个阈值,进入Find状态
+        // if(manager.rb.velocity.magnitude < 1.5f && Time.time > nextStateTime)//速度が閾値より小さい場合、Find状態に移行します
         // {   
         //     manager.rb.velocity = new Vector3(0f,0f,0f);
         //     manager.TranstionState(E_EnemyStateType.Find);
@@ -230,9 +238,9 @@ public class DBoomEnemy_ChaseState : IState
     }
 }
 
-//眩晕状态要做的只是单纯停留一段时间
+//目まい状態でやるべきことは、ただしばらく静止するだけです。
 /// <summary>
-/// 眩晕状態
+/// めまい状態
 /// </summary>
 public class DBoomEnemy_DizzyState : IState
 {
@@ -248,7 +256,7 @@ public class DBoomEnemy_DizzyState : IState
 
     public void OnEnter()
     {
-        // Debug.Log("进入了眩晕状态");
+        // Debug.Log("私はめまいを感じています。");
         parameter.isDizzy = false;
         nextStateTime = Time.time + timer;
         parameter.animator.Play("GetHit");
@@ -268,25 +276,31 @@ public class DBoomEnemy_DizzyState : IState
     {
         if(parameter.getHit)
         {
-            manager.TranstionState(E_EnemyStateType.Hit);//受到攻击，切换到受到攻击状态
+            manager.TranstionState(E_EnemyStateType.Hit);//攻撃を受け、攻撃受け状態に切り替えます。
         }
         if(Time.time > nextStateTime)
         {
-            manager.TranstionState(E_EnemyStateType.Idle);//这里先让它回到待机状态
+            manager.TranstionState(E_EnemyStateType.Idle);//まず、ここで待機状態に戻してください。
         }
     }
 }
 
 
-/// <summary>
-/// 受擊狀態
-/// </summary>
+///<summary>
+
+
+
+////// 被打击的状态
+
+
+
+///</summary>
 public class  DBoomEnemy_GetHitState: IState
 {
     private DashBoomEnemyFSM manager;
     private DashBoomEnemyParameter parameter;
     
-    private float timeBtwState = 0.3f;//在受击状态停留至少0.5s
+    private float timeBtwState = 0.3f;//少なくとも0.5秒間、打撃状態に留まる
     private float nextStateTime;
     public DBoomEnemy_GetHitState(DashBoomEnemyFSM _manager)
     {
@@ -298,7 +312,7 @@ public class  DBoomEnemy_GetHitState: IState
     {
         nextStateTime = Time.time + timeBtwState;
         parameter.animator.Play("GetHit");
-        // Debug.Log("进入了受击状态");
+        // Debug.Log("叩かれる状態に入りました。");
          //FMODUnity.RuntimeManager.PlayOneShot(parameter.enemyData.getHitSound);
         // FmodManager.Instance.PlaySoundOnce(parameter.enemyData.getHitSound);
 
@@ -316,7 +330,7 @@ public class  DBoomEnemy_GetHitState: IState
 
     public void OnUpDate()
     {
-        //  Debug.Log("进入Boom");
+        //  Debug.Log("ブームに乗る");
         if(parameter.enemyData.currentHealth <=0)
         {
             manager.TranstionState(E_EnemyStateType.Boom);
@@ -336,16 +350,22 @@ public class  DBoomEnemy_GetHitState: IState
 }
 
 
-/// <summary>
-/// 爆炸狀態
-/// </summary>
+///<summary>
+
+
+
+////// 爆発状態
+
+
+
+///</summary>
 public class DBoomEnemy_BoomState : IState
 {
     private DashBoomEnemyFSM manager;
     private DashBoomEnemyParameter parameter;
     private float timer = 1f;
     private float nextStateTime;
-    private Vector3 nowPos;//暂存现在的位置
+    private Vector3 nowPos;//現在の位置を一時的に保存する
     public DBoomEnemy_BoomState(DashBoomEnemyFSM _manager)
     {
         this.manager = _manager;
@@ -354,7 +374,7 @@ public class DBoomEnemy_BoomState : IState
 
     public void OnEnter()
     {
-        // Debug.Log("进入了爆炸状态");
+        // Debug.Log("爆発状態に入りました");
         timer = parameter.enemyStateData.boomDelay;
         nextStateTime = Time.time + timer;
         nowPos = parameter.enemyPos.position;
@@ -387,9 +407,15 @@ public class DBoomEnemy_BoomState : IState
 }
 
 
-/// <summary>
-/// 死亡狀態
-/// </summary>
+///<summary>
+
+
+
+////// 死亡状態
+
+
+
+///</summary>
 public class DBoomEnemy_DeadState :IState
 {
     private DashBoomEnemyFSM manager;
@@ -410,7 +436,7 @@ public class DBoomEnemy_DeadState :IState
         boomEffect.transform.position = parameter.enemyPos.position;
         boomEffect.transform.GetChild(0).GetComponent<ParticleSystem>().Play();
 
-        //在这里做自爆的伤害判定
+        //ここで自爆のダメージ判定を行います
         if(parameter.playerIsStay)
         {
             GameManager.Instance.EnemyAttack(parameter.enemyPos.gameObject.GetComponent<BaseEnemyControl>());

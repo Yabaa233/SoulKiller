@@ -288,7 +288,7 @@ public class FmodManager : singleton<FmodManager>
 
         if (BGMPathDict.ContainsKey(currentAmbientAudio))
         {
-            //ֹ֮ͣǰ��,��ÿ���ͨ�������仯��������?
+            //对不起，您提供的内容无法识别，请提供正确的内容。
             //if (BGMEvent != null)
             {
                 BGMEvent.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);

@@ -4,18 +4,18 @@ using UnityEngine;
 
 public class BossFlower : MonoBehaviour
 {
-    [Header("粒子特效")]
+    [Header("パーティクルエフェクト")]
     public GameObject effect;
-    [Header("间隔时间")]
+    [Header("Interval Time")]
     public float intervalTime;
-    [Header("目标")]
+    [Header("Objective")]
     public Transform target;
-    [Header("最大生命值")]
+    [Header("Maximum Health Points")]
     public float maxHealth = 500.0f;
     public float curHealth = 500.0f;
-    [Tooltip("受到近战攻击时伤害值")] public float getSwordDamage = 20.0f;
-    [Tooltip("受到子弹攻击时伤害值")] public float getShotDamage = 1.0f;
-    [Tooltip("受到魔法攻击时伤害值")] public float getMagicDamage = 15.0f;
+    [Tooltip("Damage value when attacked in close combat")] public float getSwordDamage = 20.0f;
+    [Tooltip("Damage value when hit by a bullet")] public float getShotDamage = 1.0f;
+    [Tooltip("Damage value when attacked by magic")] public float getMagicDamage = 15.0f;
     private float endTimer;
     private Animation anim;
     private bool isWidth, isEnd;
@@ -33,16 +33,16 @@ public class BossFlower : MonoBehaviour
 
     private void OnEnable()
     {
-        //获取当前玩家
+        //現在のプレイヤーを取得する
         target = GameManager.Instance.currentPlayer.transform;
-        //开始时向Boss注册
+        //ボスに登録を開始します
         boss = GameManager.Instance.currentBoss;
         boss.hasFlower = true;
         curHealth = maxHealth;
     }
     private void OnDestroy()
     {
-        //被击败时向Boss注销
+        //敗北時にボスからログアウトします
         if (stateBar != null)
         {
             stateBar.DestroyThis();
@@ -55,18 +55,26 @@ public class BossFlower : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 摧毁当前花
-    /// </summary>
+    ///<summary>
+
+
+    ////// 現在の花を破壊する
+
+
+    ///</summary>
     private void BreakThisFlower()
     {
         Destroy(this.gameObject);
     }
 
-    /// <summary>
-    /// 花可能被玩家摧毁
-    /// 也可以攻击玩家
-    /// </summary>
+    ///<summary>
+
+
+    ////// 花はプレイヤーによって破壊される可能性があります。
+    /// プレイヤーを攻撃することも可能です
+
+
+    ///</summary>
     /// <param name="other"></param>
     private void OnTriggerEnter(Collider other)
     {
@@ -129,22 +137,21 @@ public class BossFlower : MonoBehaviour
                 isEnd = false;
                 isWidth = false;
                 endTimer = Time.time;
-                /*Debug.Log(effect.transform.GetChild(0).GetComponent<LineRenderer>().isVisible);*/
                 effect.SetActive(false);
-                //关闭粒子特效
+                //パーティクルエフェクトをオフにする
                 return;
-                //粒子的碰撞体要关闭
+                //粒子衝突装置を閉じる必要があります。
             }
-            if (!isWidth)//在粒子特效尚未达到最大宽度时(肯定是初启动状态)
+            if (!isWidth)//パーティクルエフェクトが最大幅に達していない時（間違いなく初期起動状態）
             {
-                if (!effect.activeSelf)//还没有启动话要先启动
+                if (!effect.activeSelf)//もしまだ起動していない場合は、先に起動してください。
                 {
-                    //播放蓄力动画，切换状态
+                    //力を蓄えるアニメーションを再生し、状態を切り替えます。
                     effect.SetActive(true);
                     effect.GetComponent<LaserController>().LasertShoot();
                 }
                 effect.GetComponent<LaserController>().DrawLine();
-                if (effect.transform.GetChild(0).GetComponent<LineRenderer>().widthMultiplier >= 10)//宽度达到最大值，可以进入正式的攻击状态
+                if (effect.transform.GetChild(0).GetComponent<LineRenderer>().widthMultiplier >= 10)//幅が最大値に達し、正式な攻撃状態に入ることができます。
                 {
                     isWidth = true;
                 }

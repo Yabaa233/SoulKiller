@@ -5,9 +5,17 @@ using UnityEngine.AI;
 
 
 
-/// <summary>
-/// 長距離敵の状態
-/// </summary>
+///<summary>
+
+
+
+
+////// 長距離の敵の状態
+
+
+
+
+///</summary>
 public class long_DistanceState : IState
 {
     public void OnEnter()
@@ -44,14 +52,14 @@ public class longEnemy_IdleState : IState
     }
     public void OnEnter()
     {
-        // Debug.Log("进入了待机状态");
+        // Debug.Log("スタンバイモードに入りました");
         parameter.agent.enabled = false;
         parameter.animator.Play("Idle");
     }
 
     public void OnUpDate()
     {
-        // Debug.Log("敌人处于待机状态");
+        // Debug.Log("敵は待機状態にいます。");
         if(parameter.isDead == true)
         {
             manager.TranstionState(E_EnemyStateType.Dead);
@@ -59,7 +67,7 @@ public class longEnemy_IdleState : IState
         }
         if(parameter.getHit)
         {
-            manager.TranstionState(E_EnemyStateType.Hit);//受到攻击切换状态
+            manager.TranstionState(E_EnemyStateType.Hit);//攻撃を受けて状態を切り替えます
         }
         if(parameter.ableAttact)
         {
@@ -69,7 +77,7 @@ public class longEnemy_IdleState : IState
             }
             else
             {
-                manager.TranstionState(E_EnemyStateType.Chase);//到了警戒距离开启追击
+                manager.TranstionState(E_EnemyStateType.Chase);//警戒距離に達したら追跡を開始します。
             }
         }
     }
@@ -98,7 +106,7 @@ public class longEnemy_ChaseState : IState
 
     public void OnEnter()
     {
-        // Debug.Log("进入了追踪状态");
+        // Debug.Log("追跡状態に入りました");
         parameter.agent.enabled = true;
         parameter.animator.Play("Chase");
     }
@@ -122,7 +130,7 @@ public class longEnemy_ChaseState : IState
         }
         if(parameter.getHit)
         {
-            manager.TranstionState(E_EnemyStateType.Hit);//受到攻击，切换到受到攻击状态
+            manager.TranstionState(E_EnemyStateType.Hit);//攻撃を受け、攻撃受け状態に切り替えます。
             return;
         }
         parameter.agent.speed = parameter.moveSpeed;
@@ -132,7 +140,7 @@ public class longEnemy_ChaseState : IState
         }
         if(Vector3.Distance(parameter.target.position,parameter.enemyPos.position) < parameter.enemyStateData.attackDistance)
         {
-            // Debug.Log("进入攻击状态");
+            // Debug.Log("攻撃状態に入ります");
             manager.TranstionState(E_EnemyStateType.Shot);
 
         }
@@ -148,24 +156,24 @@ public class longEnemy_ShootState :IState
 {
     private long_DistanceFSM manager;
     private longEnemyParameter parameter;
-    private float nextAttackTime;//暂存下次攻击事件
-    private float timeBtwAttck;//根据攻速决定的间隔
-    private bool isAttack;//是否要攻击
+    private float nextAttackTime;//次の攻撃イベントを一時保存します
+    private float timeBtwAttck;//攻撃速度によって決定される間隔
+    private bool isAttack;//攻撃しますか？
 
     public longEnemy_ShootState(long_DistanceFSM _manager)
     {
         this.manager = _manager;
         this.parameter = _manager.parameter;
 
-        //不能在构造函数里面赋值，因为inspector面板的东西是在构造函数时赋值的
+        //コンストラクタ内で値を割り当てることはできません。なぜなら、インスペクタパネルの内容はコンストラクタの時に割り当てられるからです。
     }
 
     public void OnEnter()
     {
-        // Debug.Log("进入了攻击状态");
-        parameter.agent.enabled = false;//进入攻击状态先关闭寻路组件
+        // Debug.Log("攻撃状態に入りました");
+        parameter.agent.enabled = false;//攻撃状態に入る前に、パスファインドコンポーネントをオフにしてください。
         isAttack = true;
-        //一些属性的赋值
+        //いくつかの属性の割り当て
         timeBtwAttck = parameter.enemyStateData.attackSpeed;
         //FmodManager.Instance.PlaySoundOnce(parameter.enemyStateData.attackSound);
         FMODUnity.RuntimeManager.PlayOneShot(parameter.enemyStateData.attackSound);
@@ -196,7 +204,7 @@ public class longEnemy_ShootState :IState
         manager.FaceToTarget();
         if(Time.time > nextAttackTime && isAttack)
         {
-            // Debug.Log("攻击一次");
+            // Debug.Log("一度攻撃する");
             parameter.animator.Play("Attack");
             manager.Shot(parameter.enemyType);
             nextAttackTime = Time.time + timeBtwAttck;
@@ -242,7 +250,7 @@ public class longEnemy_GetHitState :IState
     private longEnemyParameter parameter;
 
     private float nextStateTime;
-    private float timeBtwState = 0.5f;//至少在受击状态停留
+    private float timeBtwState = 0.5f;//少なくとも打撃を受けた状態に留まる
     public longEnemy_GetHitState(long_DistanceFSM _manager)
     {
         this.manager = _manager;
@@ -251,7 +259,7 @@ public class longEnemy_GetHitState :IState
 
     public void OnEnter()
     {
-        //TODO受到攻击的方法
+        //攻撃を受ける方法
         nextStateTime = Time.time;
         parameter.agent.enabled = false;
         parameter.animator.Play("GetHit");
@@ -340,13 +348,13 @@ public class longEnemy_DeadState :IState
 }
 
 
-/////////额外状态
+/////////追加の状態
 public class longEnemy_StorageState : IState
 {
     private long_DistanceFSM manager;
     private longEnemyParameter parameter;
-    private float jumpTime = 2f;//跳跃时间
-    private float nextStateTime;//粗略计算下一个状态的时间
+    private float jumpTime = 2f;//時間を超える
+    private float nextStateTime;//次の状態の時間を大まかに計算する
     public longEnemy_StorageState(long_DistanceFSM _manager)
     {
         this.manager = _manager;
@@ -389,15 +397,15 @@ public class longEnemy_JumpState : IState
 {
     private long_DistanceFSM manager;
     private longEnemyParameter parameter;
-    //下一个跳跃点
+    //次のジャンプポイント
     private Vector3 nextPoint;
     private Vector3 sourcePoint;//原始点
-    private float jumpTime = 0.5f;//跳跃时间
-    private float nextStateTime;//粗略计算下一个状态的时间
-    private float distance;//暂存移动距离
-    private float speed;//暂存跳跃速度
-    private float StartTime;//开始时间
-    private Vector3 faceVector;//两点之间的单位向量
+    private float jumpTime = 0.5f;//時間を超える
+    private float nextStateTime;//次の状態の時間を大まかに計算する
+    private float distance;//移動距離を一時保存する
+    private float speed;//一時保存ジャンプ速度
+    private float StartTime;//開始時間
+    private Vector3 faceVector;//2点間の単位ベクトル
     public longEnemy_JumpState(long_DistanceFSM _manager)
     {
         this.manager = _manager;
@@ -406,26 +414,26 @@ public class longEnemy_JumpState : IState
 
     public void OnEnter()
     {
-        //保存原始数据
+        //オリジナルのデータを保存する
         sourcePoint = parameter.enemyPos.position;
         nextStateTime = Time.time + jumpTime;
-        //对下一个随机点区域进行采样
+        //次のランダムポイント領域をサンプリングします
         float range = 20f;
         Vector3 randomPoint;
         if(RandomPoint(parameter.target.position,range,out randomPoint))
         {
             nextPoint = randomPoint;
-            // Debug.Log("采样成功");
+            // Debug.Log("サンプリングが成功しました");
         }
         else
         {
             nextPoint = parameter.enemyPos.localPosition;
-            // Debug.Log("采样失败");
+            // Debug.Log("サンプリングに失敗しました");
         }
-        // Debug.Log( "采样 ：下一个点位为" + nextPoint + "  玩家点位:" + parameter.target.position);
+        // Debug.Log( "サンプリング：次のポイントは" + nextPoint + "  プレイヤーポイント：" + parameter.target.position);
         nextPoint = parameter.enemyPos.parent.TransformPoint(nextPoint);
-        distance = Vector3.Distance(sourcePoint,nextPoint);//计算距离
-        speed = distance / jumpTime;//计算速度
+        distance = Vector3.Distance(sourcePoint,nextPoint);//距離を計算する
+        speed = distance / jumpTime;//計算速度
         faceVector = Vector3.Normalize(nextPoint - sourcePoint);
         // Debug.Log(nextPoint + "   sourcepoint" + sourcePoint);
         StartTime = Time.time;
@@ -497,10 +505,10 @@ public class longEnemy_MoveAfterState : IState
     private Vector3 backPos;
     private Vector3 backVector;
     private Vector3 sourcePos;
-    private float moveDistance = 5f;//走位距离
+    private float moveDistance = 5f;//移動距離
     private float startTime;
-    private float distance;//暂存移动距离
-    private float moveTime = 1f;//走位时间
+    private float distance;//移動距離を一時保存する
+    private float moveTime = 1f;//ポジショニングタイム
     private float speed;
     private float nextStateTime;
     public longEnemy_MoveAfterState(long_DistanceFSM _manager)

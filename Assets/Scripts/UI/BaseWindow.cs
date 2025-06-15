@@ -3,93 +3,93 @@
 // using UnityEngine;
 // using UnityEngine.UI;
 
-//暂时不使用
+//一時的に使用しない
 // public class BaseWindow
 // {
-//     //窗体本体
+//     //ウィンドウ本体
 //     protected Transform transform;
-//     //资源名称
+//     //リソース名
 //     protected string resName;
-//     //是否常驻
+//     //常駐していますか
 //     protected bool resident;
-//     //是否可见
+//     //見えますか
 //     protected bool visble = false;
-//     //窗体类型
+//     //ウィンドウタイプ
 //     protected WindowType selfType;
-//     //场景类型
+//     //シーンタイプ
 //     protected ScenesType scenesType;
 
-//     //UI控件 主要是按钮的反馈事件
-//     //按钮列表
+//     //UIコントロール 主にボタンのフィードバックイベント
+//     //ボタンリスト
 //     protected Button[] buttonList;
 
 
-//     //////////给子类提供的接口：
-//     //初始化
+//     サブクラスに提供されるインターフェース：
+//     //初期化
 //     protected virtual void Awake()
 //     {
-//         //bool类型为true表示隐藏的物体也会去查找
+//         //bool型がtrueであると、隠されたオブジェクトも検索されます
 //         buttonList = transform.GetComponentsInChildren<Button>(true);
 //         RegisterUIEvent(); 
 //     }
 
-//     //UI事件注册
+//     //UIイベント登録
 //     protected virtual void RegisterUIEvent()
 //     {
         
 //     }
 
-//     //添加监听游戏事件（比如网络事件和游戏逻辑事件）
+//     //ゲームイベント（ネットワークイベントやゲームロジックイベントなど）のリスナーを追加する
 //     protected virtual void OnAddListener()
 //     {
         
 //     }
 
-//     //移除游戏事件
+//     //ゲームイベントを削除
 //     protected virtual void OnRemoveListener()
 //     {
 
 //     }
 
-//     //每次打开
+//     //毎回開く
 //     protected virtual void OnEnable()
 //     {
 
 //     }
 
-//     //每次关闭
+//     //毎回閉じる
 //     protected virtual void OnDisable()
 //     {
 
 //     }
 
-//     //每一帧的更新
+//     //各フレームの更新
 //     public virtual void Update(float deltaTime)
 //     {
 
 //     }
 
-//     //--------------针对WindowManager的接口------------------
-//     //打开窗口
+//     //--------------WindowManagerに対するインターフェース------------------
+//     //ウィンドウを開く
 //     public void Open()
 //     {
-//         //如果当前物体为空，则去调用初始化方法
+//         //現在のオブジェクトが空の場合、初期化メソッドを呼び出します。
 //         if(transform == null)
 //         {
 //             if(Create())
 //             {
-//                 Awake();//初始化
+//                 Awake(); //初期化
 //             }
 //         }
 
-//         //如果处于没有激活的状态（在Create方法中其实被显式隐藏了）
+//         //アクティブでない状態（Createメソッドで明示的に隠されている）の場合
 //         if(transform.gameObject.activeSelf == false)
 //         {
 //             UIRoot.SetParent(transform,true,selfType == WindowType.TipsWindow);
 //             transform.gameObject.SetActive(true);
 //             visble = true;
-//             OnEnable();//调用激活时应该触发的事件
-//             OnAddListener();//添加激活时应该监听的事件
+//             OnEnable();//アクティブ化時にトリガーするべきイベントを呼び出す
+//             OnAddListener();//アクティブ化時にリスナーが監視すべきイベントを追加します
 //         }
 //     }
 
@@ -97,12 +97,12 @@
 //     {
 //         if(transform.gameObject.activeSelf == true)
 //         {
-//             OnRemoveListener();//首先移除游戏事件监听
-//             OnDisable();//调用隐藏关闭事件
+//             OnRemoveListener();//まず、ゲームイベントのリスナーを削除します
+//             OnDisable();//非表示クローズイベントを呼び出す
 
-//             if(isDestroy == false)//判断是否是强制关闭（比如重新加载游戏的时候可能要全部卸载）
+//             if(isDestroy == false)//強制的に閉じるかどうかを判断する（例えば、ゲームを再読み込みする時には全てをアンインストールする必要があるかもしれません）
 //             {
-//                 if(resident)//判断是不是常驻内存的面板，如果是频繁调用的面板让它常驻内存可以降低开销
+//                 if(resident)//パネルが常駐メモリかどうかを判断し、頻繁に呼び出されるパネルを常駐メモリにすることでコストを削減できます。
 //                 {
 //                     transform.gameObject.SetActive(false);
 //                     UIRoot.SetParent(transform,false,false);
@@ -119,11 +119,11 @@
 //                 transform = null;
 //             }
 //         }
-//         //不可见的状态 
+//         //見えない状態
 //         visble = false;
 //     }
 
-//     //预加载方法只需要简单的初始化面板即可
+//     //プリロード方法は、パネルを簡単に初期化するだけで十分です。
 //     public void PreLoad()
 //     {
 //         if(transform == null)
@@ -135,33 +135,33 @@
 //         }
 //     }
 
-//     public ScenesType GetScenesType()//得到属于场景
+//     public ScenesType GetScenesType()//シーンタイプを取得する
 //     {
 //         return scenesType;
 //     }
 
-//     public WindowType GetWindowType()//得到窗体类型
+//     public WindowType GetWindowType()//ウィンドウタイプを取得する
 //     {
 //         return selfType;
 //     }
 
-//     public Transform GetRoot()//得到窗体本体
+//     public Transform GetRoot()//ウィンドウ本体を取得
 //     {
 //         return transform;
 //     }
 
-//     public bool IsVisible()//得到窗体是否可见
+//     public bool IsVisible()//ウィンドウが可視かどうかを取得します
 //     {
 //         return visble;
 //     }
 
-//     public bool isResident()//窗体是否要常驻内存
+//     public bool isResident() //フォームがメモリに常駐するかどうか
 //     {
 //         return resident;
 //     }
 
-//     //-----------------内部调用的接口--------------------
-//     //创建面板的接口
+//     //-----------------内部呼び出しのインターフェース--------------------
+//     //パネル作成のインターフェース
 //     private bool Create()
 //     {
 //         if(string.IsNullOrEmpty(resName))
@@ -171,16 +171,16 @@
 
 //         if(transform == null)
 //         {
-//             //创建出面板
+//             //パネルを作成する
 //             GameObject obj = Resources.Load<GameObject>(resName);
 //             if(obj == null)
 //             {
-//                 Debug.LogError($"没有找到UI预制体{selfType}");
+//                 Debug.LogError($"UIプレハブ{selfType}が見つかりませんでした");
 //                 return false;
 //             }
 //             transform = GameObject.Instantiate(obj).transform;
 
-//             transform.gameObject.SetActive(false);//先将面板隐藏，这样在之后打开就可以调用OnEnable方法，比较方便
+//             transform.gameObject.SetActive(false);//パネルを先に非表示にし、その後でOnEnableメソッドを呼び出すことができます。これは非常に便利です。
 
 //             UIRoot.SetParent(transform,false,selfType == WindowType.TipsWindow);
 //             return true;
@@ -192,16 +192,16 @@
 // }
 
 
-// //窗口的类型
+// //ウィンドウのタイプ
 // public enum WindowType
 // {
 //     MainWindow,
-//     TipsWindow,//提示窗口
-//     TestWindow,//用于测试的窗口
-//     RollingWindow,//旋转窗口
+//     TipsWindow,//ヒントウィンドウ
+//     TestWindow, //テスト用のウィンドウ
+//     ローリングウィンドウ
 // }
 
-// //属于哪个场景,提供根据场景类型进行的预加载功能
+// //どのシーンに属しているか、シーンタイプに基づいて行われるプリロード機能を提供します
 // public enum ScenesType
 // {
 //     Main,

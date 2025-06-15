@@ -43,7 +43,7 @@ public class RoomTipPanel : BasePanel
         }
         returnButton.onClick.AddListener(CloseMySelf);
 
-        //暂时隐藏主面板
+        //一時的にメインパネルを非表示にします
         SetMainUIActive(false);
     }
 
@@ -51,7 +51,7 @@ public class RoomTipPanel : BasePanel
     public void CloseMySelf()
     {
         Time.timeScale = 1;
-        //显示主面板
+        //メインパネルを表示する
         SetMainUIActive(true);
         Close();
     }
@@ -63,7 +63,7 @@ public class RoomTipPanel : BasePanel
     }
     public void SetMainUIActive(bool state)
     {
-        // Debug.Log("运行了");
+        // Debug.Log("It has been executed.");
         BattleMainPanel battleMainPanel = PanelManager.Instance.GetPanel("BattleMainPanel") as BattleMainPanel;
         battleMainPanel.UITool.GetUI().SetActive(state);
 

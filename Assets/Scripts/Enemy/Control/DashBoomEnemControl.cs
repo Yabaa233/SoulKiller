@@ -4,16 +4,16 @@ using UnityEngine;
 using UnityEngine.AI;
 
 /// <summary>
-/// ダッシュ爆発敵の制御
+/// ダッシュ爆発で敵を制圧
 /// </summary>
 public class DashBoomEnemControl : BaseEnemyControl
 {
     
-    [Header("敌人状态机相关")]
+    [Header("敵のステートマシン関連")]
 
     public DashBoomEnemyFSM enemyFSM;
 
-    [Header("敌人攻击状态SO模板")]
+    [Header("敵の攻撃状態SOテンプレート")]
     public DBoomEmyStateData_SO tempEnemyStateData; 
     public DBoomEmyStateData_SO TempEnemyStateData 
     {
@@ -34,7 +34,7 @@ public class DashBoomEnemControl : BaseEnemyControl
 
     private void EnemyInit(string tagStr)
     {
-        //组件获取
+        //コンポーネントの取得
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
         enemyFSM = transform.GetComponent<DashBoomEnemyFSM>();
@@ -48,20 +48,20 @@ public class DashBoomEnemControl : BaseEnemyControl
         baseEnemyFSM  = enemyFSM;
 
 
-        //设置自身属性
+        //自身の属性を設定する
         transform.tag = tagStr;
 
-        //初始化一些相关状态
+        //関連状態の初期化を行います
         characterBuffManager = new CharacterBuffManager();
         enemyData = new CharacterData(Instantiate(tempCharaterData));
         characterBuffManager.Init(E_ChararcterType.enemy);
         baseEnemyFSM = enemyFSM;
-        enemyData.currentComboAttack = 1;//设置攻击倍率
+        enemyData.currentComboAttack = 1;//攻撃倍率を設定する
         moveSpeed = tempEnemyStateData.moveSpeed;
-        agent.speed = tempEnemyStateData.moveSpeed;//设置移动速度
+        agent.speed = tempEnemyStateData.moveSpeed;//移動速度を設定します
 
 
-        //做数据同步
+        //データ同期を行う
         enemyFSM.parameter.enemyData = enemyData;
         enemyFSM.parameter.enemyStateData = tempEnemyStateData;
         enemyFSM.parameter.animator = animator;
@@ -74,7 +74,7 @@ public class DashBoomEnemControl : BaseEnemyControl
 
     protected new void Update(){
         base.Update();
-        //各个管理类的Update方法
+        //各管理クラスのUpdateメソッド
         characterBuffManager.OnUpdate(Time.deltaTime);
         if(enemyFSM.parameter.ableAttact || enemyFSM.parameter.getHit)
         {
@@ -103,9 +103,13 @@ public class DashBoomEnemControl : BaseEnemyControl
         enemyFSM.parameter.isBoom = true;
     }
 
-    /// <summary>
-/// 设置追踪目标
-/// </summary>
+    ///<summary>
+
+
+    ////// 追跡目標を設定する
+
+
+    ///</summary>
 /// <param name="transform"></param>
     public override void SetTarget(Transform transform)
     {

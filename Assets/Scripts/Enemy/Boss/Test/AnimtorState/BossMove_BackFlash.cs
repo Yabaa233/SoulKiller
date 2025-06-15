@@ -5,13 +5,13 @@ using UnityEngine;
 public class BossMove_BackFlash : StateMachineBehaviour
 {
     private BossControl boss;
-    [Header("抬手动作占比")]
+    [Header("手を挙げる動作の割合")]
     public float speedUpPer = 0.2f;
-    [Header("实际期望冲刺播放速度")]
+    [Header("実際に期待されるスプリントの再生速度")]
     public float animSpeed = 1.5f;
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        Debug.Log("反向闪现");
+        Debug.Log("バックフラッシュ");
         if (boss == null)
         {
             boss = animator.GetComponent<BossControl>();

@@ -3,10 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-/// <summary>
-/// 控制当前button事件的类
+///<summary>
+
+
+////// 鐝惧湪銇儨銈裤兂銈ゃ儥銉炽儓銈掑埗寰°仚銈嬨偗銉┿偣
 /// xushi
-/// </summary>
+
+
+///</summary>
 public class ButtonHighLight : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public void OnPointerEnter(PointerEventData eventData)

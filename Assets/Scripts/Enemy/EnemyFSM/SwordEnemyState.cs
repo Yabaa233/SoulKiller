@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-/// <summary>
-/// 剣の敵の状態
-/// </summary>
+///<summary>
+
+////// 剣の敵の状態
+
+///</summary>
 public class SwordEnemyState : IState
 {
     public void OnEnter()
@@ -28,9 +30,13 @@ public class SwordEnemyState : IState
     }
 }
 
-/// <summary>
-/// 状態の初期化
-/// </summary>
+///<summary>
+
+
+////// 状態の初期化
+
+
+///</summary>
 public class SwordEnemy_IdleState : IState
 {
     private SwordEnemyFSM manager;
@@ -44,7 +50,7 @@ public class SwordEnemy_IdleState : IState
 
     public void OnEnter()
     {
-        // Debug.Log("进入了待机状态");
+        // Debug.Log("スタンバイモードに入りました");
         parameter.agent.enabled = false;
     }
 
@@ -69,17 +75,21 @@ public class SwordEnemy_IdleState : IState
         {
             manager.TranstionState(E_EnemyStateType.Hit);
         }
-        // Debug.Log("处于待机状态");
+        // Debug.Log("スタンバイ状態にあります");
         if(parameter.ableAttact&&manager.AttackCD.flag)
         {
-            manager.TranstionState(E_EnemyStateType.Chase);//到了警戒距离开始追击
+            manager.TranstionState(E_EnemyStateType.Chase);//警戒距離に達したら追撃を開始します。
         }
     }
 }
 
-/// <summary>
-/// 状態の更新
-/// </summary>
+///<summary>
+
+
+////// 状態の更新
+
+
+///</summary>
 public class SwordEnemy_ChaseState : IState
 {
     private SwordEnemyFSM manager;
@@ -92,7 +102,7 @@ public class SwordEnemy_ChaseState : IState
 
     public void OnEnter()
     {
-        // Debug.Log("进入追踪状态");
+        // Debug.Log("追跡状態に入ります");
         parameter.agent.enabled = true;
         parameter.agent.updatePosition = false;
         parameter.animator.Play("Chase");
@@ -147,7 +157,7 @@ public class SwordEnemy_ChaseState : IState
 }
 
 /// <summary>
-/// 状態の終了
+/// ステータスの終了
 /// </summary>
 public class SwordEnemy_StorageState :IState
 {
@@ -187,7 +197,7 @@ public class SwordEnemy_StorageState :IState
             manager.TranstionState(E_EnemyStateType.Dead);
             return;
         }
-        // if(parameter.getHit)//暂定为不可被打断
+        // if(parameter.getHit)//一時的に中断不可とする
         // {
         //     manager.TranstionState(E_EnemyStateType.Hit);
         //     return;
@@ -202,7 +212,7 @@ public class SwordEnemy_StorageState :IState
 }
 
 /// <summary>
-/// 状態の終了
+/// ステータスの終了
 /// </summary>
 public class SwordEnemy_AttackState : IState
 {
@@ -217,7 +227,7 @@ public class SwordEnemy_AttackState : IState
 
     public void OnEnter()
     {
-        parameter.agent.enabled = false;//攻击状态下关闭寻路
+        parameter.agent.enabled = false;//攻撃状態下でパスファインディングをオフにします
         manager.FaceToTarget();
         manager.RotateToTarget();
         parameter.animator.Play("TribleAttack");
@@ -230,7 +240,7 @@ public class SwordEnemy_AttackState : IState
 
     public void OnExit()
     {
-        parameter.agent.enabled = true;//攻击状态下关闭寻路
+        parameter.agent.enabled = true;//攻撃状態下でパスファインディングをオフにします
     }
 
     public void OnLateUpDade()
@@ -257,14 +267,14 @@ public class SwordEnemy_AttackState : IState
 }
 
 /// <summary>
-/// 状態の終了
+/// ステータスの終了
 /// </summary>
 public class SwordEnemy_GetHitState : IState
 {
     private SwordEnemyFSM manager;
     private SwordEnemyParameter parameter;
     private float nextStateTime;
-    private float timeBtwState = 0.3f;//至少在受击状态停留
+    private float timeBtwState = 0.3f;//少なくとも打撃を受けた状態に留まる
     public SwordEnemy_GetHitState(SwordEnemyFSM _manager)
     {
         this.manager = _manager;
@@ -273,7 +283,7 @@ public class SwordEnemy_GetHitState : IState
 
     public void OnEnter()
     {
-        //TODO受到攻击的方法
+        //攻撃を受ける方法
         nextStateTime = Time.time;
         parameter.agent.enabled = false;
         parameter.animator.Play("GetHit");
@@ -311,7 +321,7 @@ public class SwordEnemy_GetHitState : IState
 }
 
 /// <summary>
-/// 状態の終了
+/// ステータスの終了
 /// </summary>
 public class SwordEnemy_DeadState : IState
 {

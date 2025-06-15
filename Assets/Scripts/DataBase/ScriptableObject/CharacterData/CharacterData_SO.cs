@@ -5,24 +5,24 @@ using UnityEngine;
 [CreateAssetMenu(fileName ="New CharacterData", menuName = "ScriptableObject/CharaterData/CharacterData")]
 public class CharacterData_SO : ScriptableObject
 {
-    [Header("基本生命值")]
+    [Header("基本生命値")]
     public float baseHealth;
-    [Header("基础攻击力")]
+    [Header("基本攻撃力")]
     public float baseAttack;
-    [Header("基础防御力")]
+    [Header("基本防御力")]
     public float baseDefend;
-    [Header("基础暴击率")]
+    [Header("基本クリティカル率")]
     public float baseCritical;
-    [Header("基础暴击伤害")]
+    [Header("基本クリティカルダメージ")]
     public float baseCriticalDamage;
-    [Header("基础暴击抗性")]
+    [Header("基本クリティカル抵抗力")]
     public float baseCriticalDefend;
-    [Header("受击时对攻击方追加的卡肉时间 同时自己受击并卡顿这个时间")]
+    [Header("攻撃を受けた際に攻撃者に追加されるカードの時間、同時に自分も攻撃を受けてカードが停止する時間")]
     public float baseStopTime;
-    [Header("受击音效")]
-    [Tooltip("受击音效")] public FMODUnity.EventReference getHitSound;  //受击音效
-    [Header("被暴击音效")]
-    [Tooltip("被暴击音效")] public FMODUnity.EventReference getCriticalSound; //受到暴击音效
+    [Header("被打撃音効")]
+    [Tooltip("被打撃音効")] public FMODUnity.EventReference getHitSound;  //被打撃音効
+    [Header("クリティカルヒットの音効果")]
+    [Tooltip("クリティカルヒットの音効果")] public FMODUnity.EventReference getCriticalSound; //クリティカルヒット音效
 
 
     public CharacterData_SO(CharacterData_SO tempCharaterData)

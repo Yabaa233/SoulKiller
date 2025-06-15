@@ -7,11 +7,11 @@ using UnityEngine.AI;
 public class SwordEnemyControl : BaseEnemyControl
 {
     // Start is called before the first frame update
-    //新增变量
-    [Header("敌人状态机相关")]
+    //新しい変数を追加する
+    [Header("敵のステートマシン関連")]
     public SwordEnemyFSM enemyFSM;
 
-    [Header("敌人攻击状态SO模板")]
+    [Header("敵の攻撃状態SOテンプレート")]
     public SwordEmyStateData_SO tempEnemyStateData; 
     public SwordEmyStateData_SO TempEnemyStateData 
     {
@@ -27,14 +27,14 @@ public class SwordEnemyControl : BaseEnemyControl
     }
 
     protected new void Start() {
-        // Debug.Log("已经运行");
+        // Debug.Log("既に実行されています");
         base.Start();
         SetTarget(GameManager.Instance.currentPlayer.transform);
     }
 
     private void EnemyInit(string tagStr)
     {
-        //组件获取
+        //コンポーネントの取得
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
         enemyFSM = transform.GetComponent<SwordEnemyFSM>();
@@ -46,21 +46,21 @@ public class SwordEnemyControl : BaseEnemyControl
         orientationObject = transform.Find("OrientationObject");
 
 
-        //设置自身属性
+        //自身の属性を設定する
         transform.tag = tagStr;
 
-        //初始化一些相关状态
+        //関連状態の初期化を行います
         characterBuffManager = new CharacterBuffManager();
         enemyData = new CharacterData(Instantiate(tempCharaterData));
         characterBuffManager.Init(E_ChararcterType.enemy);
         baseEnemyFSM = enemyFSM;
-        enemyData.currentComboAttack = 1;//设置攻击倍率
+        enemyData.currentComboAttack = 1;//攻撃倍率を設定する
         moveSpeed = tempEnemyStateData.moveSpeed;
-        agent.speed = tempEnemyStateData.moveSpeed;//设置移动速度
-        // attackArea.gameObject.SetActive(false);//最开始禁用该组件
+        agent.speed = tempEnemyStateData.moveSpeed;//移動速度を設定します
+        // attackArea.gameObject.SetActive(false);//最初はこのコンポーネントを無効にします
 
 
-        //做数据同步
+        //データ同期を行う
         enemyFSM.parameter.enemyData = enemyData;
         enemyFSM.parameter.enemyStateData = tempEnemyStateData;
         enemyFSM.parameter.animator = animator;
@@ -74,7 +74,7 @@ public class SwordEnemyControl : BaseEnemyControl
 
     protected new void Update(){
         base.Update();
-        //各个管理类的Update方法
+        //各管理クラスのUpdateメソッド
         characterBuffManager.OnUpdate(Time.deltaTime);
         if(enemyFSM.parameter.ableAttact)
         {
@@ -84,7 +84,7 @@ public class SwordEnemyControl : BaseEnemyControl
             warningArea.enabled = true;
         }
         // transform.LookAt(enemyFSM.parameter.target);
-        // if(enemyFSM.parameter.isDead)//挪到死亡状态中执行
+        // if(enemyFSM.parameter.isDead)//死亡状態に移行して実行します
         // {
         //     Destroy(gameObject);
         // }
@@ -101,9 +101,11 @@ public class SwordEnemyControl : BaseEnemyControl
         base.Die();
         enemyFSM.parameter.isDead = true;
     }
-/// <summary>
-/// 设置追踪目标
-/// </summary>
+///<summary>
+
+////// 追跡目標を設定する
+
+///</summary>
 /// <param name="transform"></param>
     public override void SetTarget(Transform transform)
     {

@@ -3,20 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-/// <summary>
-/// 敵のヒット動作
-/// </summary>
+///<summary>
+
+
+////// 敵のヒットアクション
+
+
+///</summary>
 public class EnemyHitBehavior : StateMachineBehaviour
 {
-    public float startTime = 0.3f;//卡肉开始时间
-    public BaseEnemyControl keeper;//当前怪物的引用
-    public bool isHitStop = true;//是否停顿
-    private float storageSpeed;//原本的时间
+    public float startTime = 0.3f;//カルビの開始時間
+    public BaseEnemyControl keeper;//現在のモンスターの引用
+    public bool isHitStop = true;//停止しますか？
+    private float storageSpeed;//元の時間
     private CDClass HitTime = new CDClass();
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     /// <summary>
-    /// 動作の初期化
+    /// アクションの初期化
     /// </summary>
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -25,12 +29,12 @@ public class EnemyHitBehavior : StateMachineBehaviour
        HitTime.maxCDTime = keeper.enemyData.currentStopTime;
        HitTime.flag = false;
        GameManager.Instance.CDList.Add(HitTime);
-       storageSpeed = animator.speed;//记录原本的播放速度
+       storageSpeed = animator.speed;//元の再生速度を記録する
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     /// <summary>
-    /// 動作の更新
+    /// アクションの更新
     /// </summary>
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -47,7 +51,7 @@ public class EnemyHitBehavior : StateMachineBehaviour
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     /// <summary>
-    /// 動作の終了
+    /// アクションの終了
     /// </summary>
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {

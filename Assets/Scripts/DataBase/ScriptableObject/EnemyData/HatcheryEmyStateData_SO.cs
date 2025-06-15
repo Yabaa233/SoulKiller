@@ -4,8 +4,8 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "ScriptableObject/Battle/HatcheryEmyStateData")]
 public class HatcheryEmyStateData_SO : ScriptableObject
 {
-    [Header("Éú³ÉĞ¡¹ÖÎïµÄprefab")]
+    [Header("ãƒ¢ãƒ³ã‚¹ã‚¿ãƒ¼ã®ãƒ—ãƒ¬ãƒãƒ–ã‚’ç”Ÿæˆã™ã‚‹")]
     public GameObject sonPrefab;
-    [Header("Éú³ÉĞ¡¹ÖÎïµÄÉÏÏŞ")]
+    [Header("ãƒ¢ãƒ³ã‚¹ã‚¿ãƒ¼ç”Ÿæˆã®ä¸Šé™")]
     public int sonMaxCount;
 }

@@ -5,38 +5,38 @@ using System;
 
 public class StaffBuff : I_BuffBase
 {
-    [Header("外部传参获得数据部分")]
-    //存当前角色的引用
-    [Tooltip("当前角色引用")] GameObject buffKeeper;
-    //存当前角色的BuffManager
-    [Tooltip("当前角色Buff管理器")] CharacterBuffManager characterBuffManager;
-    //当前BUFF种类
-    [Tooltip("当前Buff类型")] E_BuffKind buffType;
-    //当前角色的类型
-    [Tooltip("当前角色类型")] E_ChararcterType chararcterType;
+    [Header("Obtaining data part through external parameter passing")]
+    //現在のキャラクターの参照を保存する
+    [Tooltip("Current role reference")] GameObject buffKeeper;
+    //現在のキャラクターのBuffManagerを保存します
+    [Tooltip("Current Role Buff Manager")] CharacterBuffManager characterBuffManager;
+    //現在のBUFFの種類
+    [Tooltip("Current Buff Type")] E_BuffKind buffType;
+    //現在のキャラクタータイプ
+    [Tooltip("Current role type")] E_ChararcterType chararcterType;
 
-    [Tooltip("当前Buff等级")] public int currentLevel;
+    [Tooltip("Current Buff Level")] public int currentLevel;
 
-    [Header("Buff数据部分")]
-    [Tooltip("存放技能等级函数")] public Action<CharacterData> realEffect;
-    [Tooltip("函数等级列表")] public List<Action<CharacterData>> levelEffect;
+    [Header("Buff data section")]
+    [Tooltip("Store Skill Level Function")] public Action<CharacterData> realEffect;
+    [Tooltip("Function Level List")] public List<Action<CharacterData>> levelEffect;
     [Tooltip("PlayerContorl")] public PlayerControl playerControl;
 
     public StaffBuff(E_ChararcterType _chararcterType, int level = 1)
     {
-        //赋值
+        //代入
         this.currentLevel = level;
         buffType = E_BuffKind.StaffBuff;
         chararcterType = _chararcterType;
 
-        //初始化列表
+        //初期化リスト
         levelEffect = new List<Action<CharacterData>>();
     }
 
     public void OnAdd(GameObject _buffKeeper)
     {
         this.buffKeeper = _buffKeeper;
-        Init();//初始化Buff赋值
+        Init();//Buffの初期化と代入
         switch (chararcterType)
         {
             case E_ChararcterType.player: PlayerStaffBuff(); break;
@@ -96,11 +96,11 @@ public class StaffBuff : I_BuffBase
 
         if (currentLevel > levelEffect.Count)
         {
-            Debug.Log("赋予的等级超过Buff当前等级限制");
+            Debug.Log("The assigned level exceeds the current level limit of the Buff.");
             return;
         }
 
-        for (int i = 0; i < currentLevel; i++)//根据技能等级添加效果
+        for (int i = 0; i < currentLevel; i++)//スキルレベルに応じて効果を追加する
         {
             realEffect += levelEffect[i];
         }
@@ -114,7 +114,7 @@ public class StaffBuff : I_BuffBase
         }
     }
 
-    //////得到不同类型敌人的数据，然后施加对应的Buff
+    //////異なるタイプの敵のデータを取得し、それに対応するBuffを適用します。
     private void PlayerStaffBuff()
     {
         playerControl = buffKeeper.GetComponent<PlayerControl>();
@@ -139,17 +139,17 @@ public class StaffBuff : I_BuffBase
         realEffect(characterData);
     }
 
-    ///////Buff移除的时候还原属性
+    ///////バフが削除されたときに属性を復元します。
     private void PlayerStaffRemove()
     {
-        Debug.Log("已经移除");
+        Debug.Log("Already removed");
         if (currentLevel >= 2)
         {
             playerControl.staffHoldTime /= (1 - BuffDataManager.Instance.playerStaffStoragePercent);
         }
         GunControl gunControl = playerControl.gunControl;
         gunControl.magicBallSize = 1;
-        //移除法球大小
+        //ボールのサイズを削除する
         if (currentLevel >= 3)
         {
             EffectManager.Instance.playerMagicRange.localScale /= BuffDataManager.Instance.playerStaffAoeUpPercent;
@@ -166,7 +166,7 @@ public class StaffBuff : I_BuffBase
 
     }
 
-    //////////Buff效果的具体实现
+    //////////バフ効果の具体的な実装
 
     private void level1StaffBuff(CharacterData characterData)
     {

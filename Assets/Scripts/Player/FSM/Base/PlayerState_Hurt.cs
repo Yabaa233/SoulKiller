@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// プレイヤー被撃状態
+/// プレイヤーが攻撃を受けている状態
 /// </summary>
 public class PlayerState_Hurt : StateMachineBehaviour
 {
     [Range(0.0f, 1.0f)]
     [Tooltip("硬直時間 硬直時間が大きいほど長い")] public float forceProgress = 0.95f;
     [Range(0.0f, 10.0f)]
-    [Tooltip("被ダメージ時の制動 この値が大きいほど制動速度が速い")] public float hurtStopLerpValue = 5.0f; //被ダメージ制動補間用
+    [Tooltip("被ダメージ時のブレーキ力 この値が大きいほど、ブレーキの効果が早くなります")] public float hurtStopLerpValue = 5.0f; //ダメージ制御補間用
     private PlayerControl currentPlayer; //現在のキャラクター
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {

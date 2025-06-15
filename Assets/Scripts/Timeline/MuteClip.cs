@@ -6,17 +6,17 @@ using UnityEngine.Playables;
 [System.Serializable]
 public class MuteClip : PlayableAsset
 {
-    [Header("屏蔽玩家移动")] public ExposedReference<GameObject> muteObject;
-    [Header("屏蔽玩家的剑")] public ExposedReference<GameObject> swordObject;
-    [Header("屏蔽Boss")]public bool isNeedMuteBoss;
-    [Header("屏蔽音频")]public bool isNeedMuteSound;
-    [Header("激活大门")]public bool activeDoor;
-    [Header("激活SkipButton")]public bool activeSkipButton;
-    [Header("激活玩家操作")]public bool isNeedActivePlayer;
-    [Header("是否需要玩家溶解")]public bool isNeedPlayerDisslove;
-    [Header("传入玩家物体")]public ExposedReference<GameObject> player;
-    [Header("是否需要屏蔽主UI")]public bool isNeedMuteMainUI;
-    [Header("是否需要打开FullPane")]public bool isNeedOpenFullPanel;
+    [Header("プレイヤーの移動をブロックする")] public ExposedReference<GameObject> muteObject;
+    [Header("プレイヤーの剣をブロックする")] public ExposedReference<GameObject> swordObject;
+    [Header("ボスをブロックする")]public bool isNeedMuteBoss;
+    [Header("オーディオをブロックする")]public bool isNeedMuteSound;
+    [Header("ゲートをアクティベートする")]public bool activeDoor;
+    [Header("SkipButtonをアクティブにする")]public bool activeSkipButton;
+    [Header("プレイヤー操作を活性化する")]public bool isNeedActivePlayer;
+    [Header("プレイヤーが溶解する必要がありますか？")]public bool isNeedPlayerDisslove;
+    [Header("プレイヤーオブジェクトを渡す")]public ExposedReference<GameObject> player;
+    [Header("メインUIをブロックする必要がありますか？")]public bool isNeedMuteMainUI;
+    [Header("FullPaneを開く必要がありますか？")]public bool isNeedOpenFullPanel;
     public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
     {
         var playable = ScriptPlayable<MuteBehavior>.Create(graph);

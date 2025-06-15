@@ -17,7 +17,7 @@ public class BossBehaviourTemp : Action
 }
 #region 运动控制相关
 /// <summary>
-/// 正常向玩家移动
+/// プレイヤーは正常に移動します
 /// </summary>
 [TaskCategory("BossBaseMove")]
 public class BossMoveToPlayer : Action
@@ -38,7 +38,7 @@ public class BossMoveToPlayer : Action
 }
 
 /// <summary>
-/// 进入冲刺状态
+/// スプリント状態に入る
 /// </summary>
 [TaskCategory("BossBaseMove")]
 public class BossDodgeToPlayer : Action
@@ -65,7 +65,7 @@ public class BossDodgeToPlayer : Action
 }
 
 /// <summary>
-/// 进入闪现状态
+/// フラッシュ状態に入る
 /// </summary>
 [TaskCategory("BossBaseMove")]
 public class BossFlashToPlayer : Action
@@ -91,7 +91,7 @@ public class BossFlashToPlayer : Action
 }
 
 /// <summary>
-/// 进入反向闪现状态
+/// リバースフラッシュモードに入る
 /// </summary>
 [TaskCategory("BossBaseMove")]
 public class BossFlashBackPlayer : Action
@@ -117,7 +117,7 @@ public class BossFlashBackPlayer : Action
 }
 
 /// <summary>
-/// 获取玩家
+/// プレイヤーを獲得する
 /// </summary>
 [TaskCategory("BossCheck")]
 public class GetPlayer : Conditional
@@ -128,19 +128,19 @@ public class GetPlayer : Conditional
         hasPlayer.Value = Owner.GetVariable("player").GetValue() == null ? false : true;
         if (hasPlayer.Value)
         {
-            // Debug.Log("有玩家");
+            // Debug.Log("プレイヤーがいます");
             return TaskStatus.Success;
         }
         else
         {
-            // Debug.Log("没有玩家");
+            // Debug.Log("プレイヤーがいません");
             return TaskStatus.Failure;
         }
     }
 }
 
 /// <summary>
-/// 朝向摄像机
+/// カメラに向かって
 /// </summary>
 [TaskCategory("BossBase")]
 public class LookCamera : Action
@@ -163,13 +163,13 @@ public class LookCamera : Action
 }
 
 /// <summary>
-/// 所有攻击通用的切换攻击模式演出节点
+/// すべての攻撃が共通の攻撃モード切替パフォーマンスノード
 /// </summary>
 [TaskCategory("BossBase")]
 public class BossChangeWeaponOver : Action
 {
     private BossControl bossControl;
-    [Header("Boss攻击模式")]
+    [Header("ボス攻撃モード")]
     public E_BossAttackMode bossAttackMode;
     [Header("停止速度")] public float stopPower = 3;
     public override void OnStart()
@@ -177,7 +177,7 @@ public class BossChangeWeaponOver : Action
         bossControl = gameObject.GetComponent<BossControl>();
         bossControl.ChangeWeaponType(bossAttackMode);
         bossControl.SetAnimatorBool("move", false);
-        // Debug.Log("切换攻击模式");
+        // Debug.Log("攻撃モードを切り替える");
     }
 
     public override TaskStatus OnUpdate()
@@ -189,7 +189,7 @@ public class BossChangeWeaponOver : Action
         }
         else
         {
-            // Debug.Log("模式切换完成");
+            // Debug.Log("モードの切り替えが完了しました");
             return TaskStatus.Success;
         }
     }
@@ -199,14 +199,18 @@ public class BossChangeWeaponOver : Action
 
 #region 攻击相关
 
-/// <summary>
-/// 近战攻击距离判断
-/// </summary>
+///<summary>
+
+
+////// 近接攻撃距離の判断
+
+
+///</summary>
 [TaskCategory("BossCheck")]
 public class BossAttack_CanHit : Conditional
 {
     public SharedGameObject player;
-    [Header("当前攻击攻击范围")]
+    [Header("現在の攻撃範囲")]
     public float attackRange;
     private BossControl bossControl;
     public override void OnStart()
@@ -228,9 +232,13 @@ public class BossAttack_CanHit : Conditional
 
 #region 普通攻击相关
 
-/// <summary>
-/// 普通攻击开始
-/// </summary>
+///<summary>
+
+
+////// 通常の攻撃が始まります
+
+
+///</summary>
 [TaskCategory("BossBaseAttack/Normal")]
 public class BossAttack_Normal_Start : Action
 {
@@ -245,7 +253,7 @@ public class BossAttack_Normal_Start : Action
         bossControl.SetAnimatorInt("normalType", Random.Range((int)1, (int)4));
         bossControl.SetAnimatorBool("attacking", true);
         bossControl.SetAnimatorTrigger("normalAttack");
-        // Debug.Log("剑普通攻击");
+        // Debug.Log("剣の通常攻撃");
     }
     public override TaskStatus OnUpdate()
     {
@@ -262,9 +270,11 @@ public class BossAttack_Normal_Start : Action
 #endregion
 
 #region 剑攻击相关
-/// <summary>
-/// 剑攻击开始
-/// </summary>
+///<summary>
+
+////// 剣攻撃開始
+
+///</summary>
 [TaskCategory("BossBaseAttack/Sword")]
 public class BossAttack_Sword_Start : Action
 {
@@ -278,7 +288,7 @@ public class BossAttack_Sword_Start : Action
         bossControl.SetAnimatorBool("move", false);
         bossControl.SetAnimatorBool("attacking", true);
         bossControl.SetAnimatorTrigger("skill");
-        // Debug.Log("剑技能攻击");
+        // Debug.Log("剣術攻撃");
     }
     public override TaskStatus OnUpdate()
     {
@@ -296,14 +306,16 @@ public class BossAttack_Sword_Start : Action
 #endregion
 
 #region 枪攻击相关
-/// <summary>
-/// 枪攻击
-/// </summary>
+///<summary>
+
+////// 銃撃攻撃
+
+///</summary>
 [TaskCategory("BossBaseAttack/Gun")]
 public class BossAttack_Gun : Action
 {
     private BossControl bossControl;
-    public int attackType;  //攻击类型
+    public int attackType;  //アタックタイプ
     public override void OnStart()
     {
         if (bossControl == null)
@@ -314,7 +326,7 @@ public class BossAttack_Gun : Action
         bossControl.SetAnimatorBool("attacking", true);
         bossControl.SetAnimatorTrigger("beforeSkill");
         bossControl.BossAttack_Gun(attackType);
-        // Debug.Log("枪技能攻击");
+        // Debug.Log("ガンスキルアタック");
     }
     public override TaskStatus OnUpdate()
     {
@@ -332,7 +344,7 @@ public class BossAttack_Gun : Action
 
 #region 法杖攻击相关
 /// <summary>
-/// 法杖攻击
+/// スタッフアタック
 /// </summary>
 [TaskCategory("BossBaseAttack/Staff")]
 public class BossAttack_Staff : Action
@@ -348,7 +360,7 @@ public class BossAttack_Staff : Action
         bossControl.SetAnimatorBool("attacking", true);
         bossControl.SetAnimatorTrigger("beforeSkill");
         bossControl.BossAttack_Staff();
-        // Debug.Log("杖技能攻击");
+        // Debug.Log("スタッフスキルアタック");
     }
     public override TaskStatus OnUpdate()
     {
@@ -364,7 +376,7 @@ public class BossAttack_Staff : Action
 }
 
 /// <summary>
-/// 召唤蓄力
+/// チャージ召喚
 /// </summary>
 [TaskCategory("BossBaseAttack/Sunmmon")]
 public class BossAttack_Summon_Start : Action
@@ -382,9 +394,13 @@ public class BossAttack_Summon_Start : Action
     }
 }
 
-/// <summary>
-/// 召唤开始
-/// </summary>
+///<summary>
+
+
+////// 召喚開始
+
+
+///</summary>
 [TaskCategory("BossBaseAttack/Sunmmon")]
 public class BossAttack_Summon_Ready : Action
 {
@@ -397,16 +413,20 @@ public class BossAttack_Summon_Ready : Action
         }
         bossControl.Summon_Ready();
         bossControl.StopMove(3);
-        // Debug.Log("召唤技能释放");
+        // Debug.Log("召喚スキルが発動されました");
     }
 }
 #endregion
 
 #region 回复技能相关
 
-/// <summary>
-/// 回血准备
-/// </summary>
+///<summary>
+
+
+////// 回復の準備
+
+
+///</summary>
 [TaskCategory("BossSkill/Health")]
 public class BossSkill_Health_Start : Action
 {
@@ -423,9 +443,13 @@ public class BossSkill_Health_Start : Action
     }
 }
 
-/// <summary>
-/// 回血开始
-/// </summary>
+///<summary>
+
+
+////// 回復が始まります
+
+
+///</summary>
 [TaskCategory("BossSkill/Health")]
 public class BossSkill_Health_Ready : Action
 {
@@ -438,7 +462,7 @@ public class BossSkill_Health_Ready : Action
         }
         bossControl.RestoreHealth_Ready();
         bossControl.StopMove(3);
-        // Debug.Log("回血技能");
+        // Debug.Log("回復スキル");
     }
     public override TaskStatus OnUpdate()
     {
@@ -448,7 +472,7 @@ public class BossSkill_Health_Ready : Action
 }
 
 /// <summary>
-/// 回盾蓄力
+/// シールドチャージ
 /// </summary>
 [TaskCategory("BossSkill/Shield")]
 public class BossSkill_Shield_Start : Action
@@ -467,7 +491,7 @@ public class BossSkill_Shield_Start : Action
 }
 
 /// <summary>
-/// 回盾开始
+/// シールドの開始
 /// </summary>
 [TaskCategory("BossSkill/Shield")]
 public class BossSkill_Shield_Ready : Action
@@ -481,7 +505,7 @@ public class BossSkill_Shield_Ready : Action
         }
         bossControl.RestoreShield_Ready();
         bossControl.StopMove(3);
-        // Debug.Log("回盾技能");
+        // Debug.Log("シールドスキルのリターン");
     }
     public override TaskStatus OnUpdate()
     {
@@ -504,9 +528,13 @@ public class BossSkill_Shield_End : Action
     }
 }
 
-/// <summary>
-/// 狂暴蓄力
-/// </summary>
+///<summary>
+
+
+////// 激しく力を蓄える
+
+
+///</summary>
 [TaskCategory("BossSkill/Rage")]
 public class BossSkill_Rage_Start : Action
 {
@@ -523,9 +551,13 @@ public class BossSkill_Rage_Start : Action
     }
 }
 
-/// <summary>
-/// 狂暴开始
-/// </summary>
+///<summary>
+
+
+////// 暴走が始まる
+
+
+///</summary>
 [TaskCategory("BossSkill/Rage")]
 public class BossSkill_Rage_Ready : Action
 {
@@ -538,7 +570,7 @@ public class BossSkill_Rage_Ready : Action
         }
         bossControl.Rage_Ready();
         bossControl.StopMove(3);
-        // Debug.Log("狂暴技能释放");
+        // Debug.Log("狂暴スキルが発動されました");
     }
 }
 #endregion
@@ -548,7 +580,7 @@ public class BossSkill_Rage_Ready : Action
 #region 状态相关
 
 /// <summary>
-/// 判断Boss是否转阶段
+/// ボスがフェーズを移行したかどうかを判断します
 /// </summary>
 [TaskCategory("BossBaseState")]
 public class BossState_StageChange : Conditional
@@ -568,8 +600,8 @@ public class BossState_StageChange : Conditional
         {
             bossControl.SetAnimatorBool("move", false);
             bossControl.ChangeStage_Start();
-            // Debug.Log("转阶段开始");
-            return TaskStatus.Success;  //进入转阶段虚弱
+            // Debug.Log("フェーズ移行の開始");
+            return TaskStatus.Success;  //移行期に入り、弱体化しています。
         }
         else
         {
@@ -579,15 +611,15 @@ public class BossState_StageChange : Conditional
 }
 
 /// <summary>
-/// 判断Boss转阶段结束
+/// ボスのフェーズ移行が終了したかどうかを判断する
 /// </summary>
 [TaskCategory("BossBaseState")]
 public class BossState_StageChange_End : Action
 {
     private BossControl bossControl;
     public SharedInt curStage;
-    [Header("进入阶段2需要扣除的血条数")] public int stage2HealthBarCount = 1;
-    [Header("进入阶段3需要扣除的血条数")] public int stage3HealthBarCount = 3;
+    [Header("ステージ2に進むために減らす必要があるヘルスバーの数")] public int stage2HealthBarCount = 1;
+    [Header("ステージ3に進むために減らす必要があるヒットポイントの数")] public int stage3HealthBarCount = 3;
     public override void OnStart()
     {
         if (bossControl == null)
@@ -600,7 +632,7 @@ public class BossState_StageChange_End : Action
         {
             bossControl.BossStageChange();
         }
-        // Debug.Log("转阶段结束");
+        // Debug.Log("フェーズ移行が完了しました");
     }
     public override TaskStatus OnUpdate()
     {
@@ -616,7 +648,7 @@ public class BossState_StageChange_End : Action
 }
 
 /// <summary>
-/// Boss是否真正开始转阶段
+/// ボスは本当にフェーズシフトを開始したのですか？
 /// </summary>
 [TaskCategory("BossBaseState")]
 public class BossState_StageChangeReal : Action
@@ -633,7 +665,7 @@ public class BossState_StageChangeReal : Action
 }
 
 /// <summary>
-/// Boss结束真正的转阶段
+/// ボスは本当のフェーズチェンジを終了しました。
 /// </summary>
 [TaskCategory("BossBaseState")]
 public class BossState_StageChangeRealEnd : Action
@@ -646,14 +678,14 @@ public class BossState_StageChangeRealEnd : Action
             bossControl = gameObject.GetComponent<BossControl>();
         }
         bossControl.StageChangeReal_End();
-        //刷新boss血条盾条
+        //ボスのHPバーとシールドバーをリフレッシュします
         BattleMainPanel battleMainPanel = PanelManager.Instance.GetPanel("BattleMainPanel") as BattleMainPanel;
         battleMainPanel.SetBossInfoAreaVisble(true);
     }
 }
 
 /// <summary>
-/// 判断Boss是否可打断
+/// ボスが中断可能かどうかを判断してください。
 /// </summary>
 [TaskCategory("BossBaseState")]
 public class BossBaseState_CanHit : Conditional
@@ -680,8 +712,8 @@ public class BossBaseState_CanHit : Conditional
 }
 
 /// <summary>
-/// 判断Boss与玩家的距离远或近
-/// 释放不同系列技能
+/// ボスとプレイヤーの距離が遠いか近いかを判断する
+/// 異なるシリーズのスキルを解放する
 /// </summary>
 [TaskCategory("BossCheck")]
 public class BossCheckDistence : Conditional
@@ -690,7 +722,7 @@ public class BossCheckDistence : Conditional
     public SharedTransform boss;
     private Transform tf_Player;
     private Transform tf_Boss;
-    [Header("远近距离分界")]
+    [Header("遠近距離の境界")]
     public float limit = 10.0f;
     public bool isFar = true;
     public override void OnStart()
@@ -700,7 +732,7 @@ public class BossCheckDistence : Conditional
     }
     public override TaskStatus OnUpdate()
     {
-        //小于limit说明在近距离，使用近战攻击
+        //limitより小さいということは近距離にいるということなので、近接攻撃を使用します。
         if ((tf_Player.position - tf_Boss.position).magnitude < limit)
         {
             return isFar ? TaskStatus.Failure : TaskStatus.Success;
@@ -713,14 +745,14 @@ public class BossCheckDistence : Conditional
 }
 
 /// <summary>
-/// 判断Boss是否持有所需Buff
+/// ボスが必要なバフを持っているかどうかを判断します
 /// </summary>
 [TaskCategory("BossCheck")]
 public class BossCheckBuff : Conditional
 {
     BossControl bossControl;
-    [Header("之后的技能是否需要Buff才能释放")] public bool needBuff;
-    [Header("如果需要 那么需要哪个Buff")] public E_BuffKind buff;
+    [Header("その後のスキルは、バフが必要で発動できますか？")] public bool needBuff;
+    [Header("必要な場合、どのBuffが必要ですか？")] public E_BuffKind buff;
     public override void OnStart()
     {
         if (bossControl == null)
@@ -742,13 +774,13 @@ public class BossCheckBuff : Conditional
 }
 
 /// <summary>
-/// 判断Boss当前阶段是否满足需求
+/// ボスの現在の段階が要求を満たしているかどうかを判断します
 /// </summary>
 [TaskCategory("BossCheck")]
 public class BossCheckStage : Conditional
 {
-    private SharedInt curStage; //当前阶段
-    [Header("能够进入后续阶段的阶段数 注意：阶段数为0 1 2 3 4阶段，判定成功的条件是当前阶段数大于等于targetStage。")]
+    private SharedInt curStage; //現在の段階
+    [Header("進むことができるステージ数 注：ステージ数は0 1 2 3 4の5段階で、成功の判断条件は現在のステージ数がtargetStage以上であること。")]
     public int targetStage;
     public override void OnStart()
     {
@@ -761,7 +793,7 @@ public class BossCheckStage : Conditional
 }
 
 /// <summary>
-/// Boss受击
+/// ボスが攻撃を受ける
 /// </summary>
 [TaskCategory("BossBaseState")]
 public class BossBaseState_GetHit : Action
@@ -774,13 +806,13 @@ public class BossBaseState_GetHit : Action
             bossControl = gameObject.GetComponent<BossControl>();
         }
         bossControl.SetAnimatorTrigger("hurt");
-        bossControl.ResetCanInter();    //重置可打断状态
-        // Debug.Log("打断Boss读条技能！");
+        bossControl.ResetCanInter();    //中断可能状態をリセットします
+        // Debug.Log("ボスのチャージスキルを中断しました！");
     }
 }
 
 /// <summary>
-/// Boss死亡逻辑
+/// ボスの死亡ロジック
 /// </summary>
 [TaskCategory("BossBaseState")]
 public class BossBaseState_Die : Conditional
@@ -817,9 +849,13 @@ public enum BossCDType
     canRage
 }
 
-/// <summary>
-/// 设置单个Boss技能CD
-/// </summary>
+///<summary>
+
+
+////// 単一ボスのスキルCDを設定する
+
+
+///</summary>
 [TaskCategory("BossCD")]
 public class BossCDSet : Action
 {
@@ -857,12 +893,12 @@ public class BossCDSet : Action
 }
 
 /// <summary>
-/// 重置Boss单个技能的CD
+/// ボスの各スキルのCDをリセットする
 /// </summary>
 [TaskCategory("BossCD")]
 public class BossOneCDReset : Action
 {
-    [Header("需要重置CD的技能")]
+    [Header("CDをリセットする必要があるスキル")]
     public BossCDType bossCDType;
     protected BossControl bossControl;
     public override void OnStart()
@@ -941,7 +977,7 @@ public class BossAllCDSet : Action
 }
 
 /// <summary>
-/// CD获取基类
+/// CDが基底クラスを取得します
 /// </summary>
 public class BossCDConditional : Conditional
 {
@@ -956,7 +992,7 @@ public class BossCDConditional : Conditional
 }
 
 /// <summary>
-/// BOSS向玩家冲刺CD
+/// ボスがプレイヤーにダッシュCD
 /// </summary>
 [TaskCategory("BossCD")]
 public class BossCanDodgeToPlayer : BossCDConditional
@@ -968,7 +1004,7 @@ public class BossCanDodgeToPlayer : BossCDConditional
 }
 
 /// <summary>
-/// BOSS向玩家闪现CD
+/// ボスがプレイヤーにフラッシュCDを向ける
 /// </summary>
 [TaskCategory("BossCD")]
 public class BossCanFlashToPlayer : BossCDConditional
@@ -980,7 +1016,7 @@ public class BossCanFlashToPlayer : BossCDConditional
 }
 
 /// <summary>
-/// BOSS背向玩家闪现CD
+/// ボスがプレイヤーに背を向けてフラッシュCDを使う
 /// </summary>
 [TaskCategory("BossCD")]
 public class BossCanFlashBackPlayer : BossCDConditional
@@ -992,7 +1028,7 @@ public class BossCanFlashBackPlayer : BossCDConditional
 }
 
 /// <summary>
-/// BOSS普通攻击CD
+/// ボスの通常攻撃のクールダウン
 /// </summary>
 [TaskCategory("BossCD")]
 public class BossAttackCD_Normal : BossCDConditional
@@ -1004,7 +1040,7 @@ public class BossAttackCD_Normal : BossCDConditional
 }
 
 /// <summary>
-/// BOSS剑技能攻击CD
+/// ボスの剣技攻撃のクールダウン
 /// </summary>
 [TaskCategory("BossCD")]
 public class BossAttackCD_SwordSkill : BossCDConditional
@@ -1016,7 +1052,7 @@ public class BossAttackCD_SwordSkill : BossCDConditional
 }
 
 /// <summary>
-/// BOSS枪攻击1CD
+/// ボスの銃攻撃1CD
 /// </summary>
 [TaskCategory("BossCD")]
 public class BossAttackCD_Shot01 : BossCDConditional
@@ -1028,7 +1064,7 @@ public class BossAttackCD_Shot01 : BossCDConditional
 }
 
 /// <summary>
-/// BOSS枪攻击2CD
+/// ボスの銃攻撃2CD
 /// </summary>
 [TaskCategory("BossCD")]
 public class BossAttackCD_Shot02 : BossCDConditional
@@ -1041,7 +1077,7 @@ public class BossAttackCD_Shot02 : BossCDConditional
 
 
 /// <summary>
-/// BOSS杖攻击CD
+/// ボスの杖攻撃CD
 /// </summary>
 [TaskCategory("BossCD")]
 public class BossAttackCD_Staff : BossCDConditional
@@ -1053,7 +1089,7 @@ public class BossAttackCD_Staff : BossCDConditional
 }
 
 /// <summary>
-/// Boss召唤攻击CD
+/// ボスの召喚攻撃のクールダウン
 /// </summary>
 [TaskCategory("BossCD")]
 public class BossAttackCD_Summon : BossCDConditional
@@ -1065,7 +1101,7 @@ public class BossAttackCD_Summon : BossCDConditional
 }
 
 /// <summary>
-/// Boss回血CD
+/// ボスのHP回復CD
 /// </summary>
 [TaskCategory("BossCD/Skill")]
 public class BossBuffCD_Health : BossCDConditional
@@ -1077,7 +1113,7 @@ public class BossBuffCD_Health : BossCDConditional
 }
 
 /// <summary>
-/// Boss回盾CD
+/// ボスのシールドのCD
 /// </summary>
 [TaskCategory("BossCD/Skill")]
 public class BossBuffCD_Shield : BossCDConditional
@@ -1089,7 +1125,7 @@ public class BossBuffCD_Shield : BossCDConditional
 }
 
 /// <summary>
-/// Boss狂暴CD
+/// ボスの暴走CD
 /// </summary>
 [TaskCategory("BossCD/Skill")]
 public class BossBuffCD_Rage : BossCDConditional

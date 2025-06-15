@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [System.Serializable]
-public enum E_BuffKind //属于哪一种Buff
+public enum E_BuffKind //あなたはどの種類のバフに属していますか？
 {
     HpUp = 4,
     Damage = 2,
@@ -16,48 +16,37 @@ public enum E_BuffKind //属于哪一种Buff
 public interface I_BuffBase
 {
     /// <summary>
-    /// バフの基本クラス
-    /// </summary>
-    /// <summary>
-    /// 添加到实体的时候的逻辑
+    /// エンティティを追加する際のロジック
     /// </summary>
     public void OnAdd(GameObject _buffKeeper);
         
     /// <summary>
-    /// バフの初期化
+    /// それぞれのエンティティフレームに従って更新します。
     /// </summary>
-    /// <summary>
-    /// 跟随实体每一帧进行更新
-    /// </summary>
-    public void OnUpdate(float deltaTime);//需要时间变量
-    /// <summary>
-    /// バフの更新
-    /// </summary>
-    /// <summary>
-    /// 当从实体移除时
-    /// </summary>
+    public void OnUpdate(float deltaTime);//時間変数が必要です
+
+    ///<summary>
+    ////// エンティティが削除されるとき
+    ///</summary>
     public void OnRemove();
     /// <summary>
-    /// 得到是哪种Buff
+    /// あなたはどの種類のバフを得ましたか？
     /// </summary>
     /// <returns></returns>
     public E_BuffKind GetBuffType();
     /// <summary>
-    /// 得到Buff的持有者
+    /// バフを得た所有者
     /// </summary>
     /// <returns></returns>
     public GameObject GetBuffKeeper();
-    /// <summary>
-    /// 得到当前角色类型
-    /// </summary>
+    ///<summary>
+    ////// 現在の役割タイプを取得する
+    ///</summary>
     /// <returns></returns>
     public E_ChararcterType GetChararcterType();
-    /// <summary>
-    /// 得到当前Buff的等级
-    /// </summary>
+    ///<summary>
+    ////// 現在のBuffのレベルを取得する
+    ///</summary>
     /// <returns></returns>
     public int GetLevel();
-    /// <summary>
-    /// バフの終了
-    /// </summary>
 }

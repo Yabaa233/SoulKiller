@@ -5,11 +5,11 @@ using UnityEngine;
 
 public class EffectManager : singleton<EffectManager>
 {
-    [Header("暂存剑攻击特效的节点")]
+    [Header("剣攻撃特殊効果のノードを一時保存する")]
     public Transform attackEffectParent;
     public ParticleSystem currentAttackEffect;
     public Transform playerMagicRange;
-    [Header("复活特效预制体")]
+    [Header("復活特殊効果のプレハブ")]
     public GameObject ResurgenceEffect;
 
     protected override void Awake()
@@ -22,9 +22,9 @@ public class EffectManager : singleton<EffectManager>
 
     #region 玩家相关特效
     /// <summary>
-    /// 设置玩家复活特效
+    /// プレイヤーの復活エフェクトを設定する
     /// </summary>
-    /// <param name="pos"> 出生特效显示位置 </param>
+    /// <param name="pos"> 誕生特殊効果の表示位置 </param>
     public void SetResurgenceEffect(Vector3 pos)
     {
         GameObject resurgenceEffect = Instantiate(ResurgenceEffect, pos, Quaternion.identity, transform);
@@ -33,10 +33,10 @@ public class EffectManager : singleton<EffectManager>
     }
 
     /// <summary>
-    /// 显示冲刺特效
+    /// スプリントエフェクトを表示する
     /// </summary>
-    /// <param name="pos"> 显示位置 </param>
-    /// <param name="dir"> 显示方向 </param>
+    /// <param name="pos"> 表示位置 </param>
+    /// <param name="dir"> 表示方向 </param>
     public void SetDashEffect(Vector3 pos, Vector3 dir)
     {
         // GameObject effect_Dash = ObjectPool.Instance.GetObject("Effect_PlayerDash", transform, true);
@@ -48,15 +48,19 @@ public class EffectManager : singleton<EffectManager>
         // effect_DashBoom.transform.LookAt(dir);
         effect_DashBoom.SetActive(true);
         effect_DashTrail.SetActive(true);
-        StartCoroutine(RecycleEffect("Effect_PlayerDashBoom", effect_DashBoom));     //播完自动回收到对象池
-        StartCoroutine(RecycleEffect("Effect_PlayerDashTrail", 1.0f, effect_DashTrail));     //播完自动回收到对象池
+        StartCoroutine(RecycleEffect("Effect_PlayerDashBoom", effect_DashBoom));     //再生が終了したら自動的にオブジェクトプールに回収されます。
+        StartCoroutine(RecycleEffect("Effect_PlayerDashTrail", 1.0f, effect_DashTrail));     //再生が終了したら自動的にオブジェクトプールに回収されます。
     }
 
-    /// <summary>
-    /// 射击时相关配置
-    /// </summary>
-    /// <param name="pos"> 特效和子弹生成位置 </param>
-    /// <param name="target"> 射击目标点 </param>
+    ///<summary>
+
+
+    ////// 射撃時の関連設定
+
+
+    ///</summary>
+    /// <param name="pos"> 特殊効果と弾の生成位置 </param>
+    /// <param name="target"> 射撃目標点 </param>
     public void SetBullet(Vector3 pos, Vector3 target, int buffLevel)
     {
         GameObject effect_Bullet = ObjectPool.Instance.GetObject("Effect_PlayerShot", transform, true);
@@ -68,14 +72,14 @@ public class EffectManager : singleton<EffectManager>
         bullet.SetActive(true);
         effect_Bullet.SetActive(true);
         bullet.GetComponent<PlayerBullet>().Shot((target - pos).normalized, buffLevel);
-        StartCoroutine(RecycleEffect("Effect_PlayerShot", effect_Bullet));     //播完自动回收到对象池
+        StartCoroutine(RecycleEffect("Effect_PlayerShot", effect_Bullet));     //再生が終了したら自動的にオブジェクトプールに回収されます。
     }
 
     /// <summary>
-    /// 玩家射击命中效果
+    /// プレイヤーのショットヒット効果
     /// </summary>
-    /// <param name="pos"> 特效生成位置 </param>
-    /// <param name="effectRecycleTime"> 特效回收时间 </param>
+    /// <param name="pos"> 特殊効果の生成位置 </param>
+    /// <param name="effectRecycleTime"> エフェクトリサイクル時間 </param>
     public void SetBulletHit(Vector3 pos, float effectRecycleTime)
     {
         GameObject effect_BulletHit = ObjectPool.Instance.GetObject("PlayerBulletHit", transform, true);
@@ -84,26 +88,34 @@ public class EffectManager : singleton<EffectManager>
         StartCoroutine(RecycleEffect("PlayerBulletHit", effectRecycleTime, effect_BulletHit));
     }
 
-    /// <summary>
-    /// 发射魔法球
-    /// </summary>
-    /// <param name="pos"> 法球出现的位置 </param>
-    /// <param name="magicBallSize"> 法球爆炸范围 </param>
+    ///<summary>
+
+
+    ////// 魔法の球を放つ
+
+
+    ///</summary>
+    /// <param name="pos"> 法球が出現する位置 </param>
+    /// <param name="magicBallSize"> 魔法球の爆発範囲 </param>
     public void SetMagicBall(Vector3 pos, float magicBallSize)
     {
         GameObject effect_Magic = ObjectPool.Instance.GetObject("Effect_PlayerMagic", transform, true);
         effect_Magic.GetComponent<PlayerMagic>().SetScale(magicBallSize);
         effect_Magic.transform.position = pos;
         effect_Magic.GetComponent<PlayerMagic>().StartMagic();
-        StartCoroutine(RecycleEffect("Effect_PlayerMagic", effect_Magic));     //播完自动回收到对象池
+        StartCoroutine(RecycleEffect("Effect_PlayerMagic", effect_Magic));     //再生が終了したら自動的にオブジェクトプールに回収されます。
     }
 
-    /// <summary>
-    /// 攻击特效显示
-    /// </summary>
-    /// <param name="effect"> 特效预制体 </param>
+    ///<summary>
+
+
+    ////// 攻撃特効の表示
+
+
+    ///</summary>
+    /// <param name="effect"> エフェクトのプレハブ </param>
     /// <param name="pos"> 生成位置 </param>
-    /// <param name="dir"> 生成朝向 </param>
+    /// <param name="dir"> 生成方向 </param>
     public void SetAttackEffect(GameObject effect, Vector3 pos, Quaternion dir)
     {
         GameObject Effect_Attack = Instantiate(effect, pos, dir, attackEffectParent);
@@ -112,20 +124,28 @@ public class EffectManager : singleton<EffectManager>
             currentAttackEffect.Play();
         }
         currentAttackEffect = Effect_Attack.transform.Find("ParticleSystem").GetComponent<ParticleSystem>();
-        StartCoroutine(DestroyEffect(Effect_Attack));   //播完自动删除
+        StartCoroutine(DestroyEffect(Effect_Attack));   //再生後自動的に削除されます
     }
 
-    /// <summary>
-    /// 暂停攻击特效
-    /// </summary>
+    ///<summary>
+
+
+    ////// 攻撃エフェクトを一時停止します
+
+
+    ///</summary>
     public void PauseAttackEffect()
     {
         if (currentAttackEffect != null) currentAttackEffect.Pause();
     }
 
-    /// <summary>
-    /// 重启攻击特效
-    /// </summary>
+    ///<summary>
+
+
+    ////// 再起動攻撃特効
+
+
+    ///</summary>
     public void PlayAttackEffect()
     {
         if (currentAttackEffect != null) currentAttackEffect.Play();
@@ -134,20 +154,24 @@ public class EffectManager : singleton<EffectManager>
 
     #region Boss相关特效
 
-    /// <summary>
-    /// 攻击特效显示
-    /// </summary>
-    /// <param name="effect"> 特效预制体 </param>
+    ///<summary>
+
+
+    ////// 攻撃特効の表示
+
+
+    ///</summary>
+    /// <param name="effect"> エフェクトのプレハブ </param>
     /// <param name="pos"> 生成位置 </param>
-    /// <param name="dir"> 生成朝向 </param>
+    /// <param name="dir"> 生成方向 </param>
     public void SetBossAttackEffect(GameObject effect, Vector3 pos, Quaternion dir)
     {
         GameObject Effect_Attack = Instantiate(effect, pos, dir, attackEffectParent);
-        StartCoroutine(DestroyEffect(Effect_Attack));   //播完自动删除
+        StartCoroutine(DestroyEffect(Effect_Attack));   //再生後自動的に削除されます
     }
 
     /// <summary>
-    /// Boss射击子弹
+    /// ボスが弾を撃つ
     /// </summary>
     /// <param name="gun"></param>
     public void Boss_SetBullet(Transform gun, BossControl bossControl)
@@ -172,26 +196,26 @@ public class EffectManager : singleton<EffectManager>
 
         bullet1.GetComponent<BossBullet>().Shot(bullet1.transform.forward, bossControl);
         bullet2.GetComponent<BossBullet>().Shot(bullet2.transform.forward, bossControl);
-        StartCoroutine(RecycleEffect("Effect_BossShot", effect_Bullet));     //播完自动回收到对象池
+        StartCoroutine(RecycleEffect("Effect_BossShot", effect_Bullet));     //再生が終了したら自動的にオブジェクトプールに回収されます。
     }
 
     /// <summary>
-    /// Boss法术攻击蓄力特效
+    /// ボスの魔法攻撃蓄積特殊効果
     /// </summary>
-    /// <param name="staff"> 特效显示位置 </param>
+    /// <param name="staff"> 特効表示位置 </param>
     public void Boss_SetMagic_Start(Transform staff)
     {
-        // Debug.Log("Boss法术蓄力");
+        // Debug.Log("ボスの魔法チャージ");
     }
 
     /// <summary>
-    /// Boss法术攻击
+    /// ボスの魔法攻撃
     /// </summary>
-    /// <param name="position"> 攻击位置 </param>
-    /// <param name="bossControl"> Boss脚本，用于获取Buff等级 </param>
+    /// <param name="position"> 攻撃位置 </param>
+    /// <param name="bossControl"> ボススクリプト、Buffレベルの取得に使用 </param>
     public void Boss_SetMagic_Shot(Vector3 position, BossControl bossControl)
     {
-        // Debug.Log("Boss发射一个法术");
+        // Debug.Log("ボスが魔法を放つ");
         int type = UnityEngine.Random.Range(1, 3);
         // Debug.Log(type);
         if (type == 1)
@@ -209,30 +233,42 @@ public class EffectManager : singleton<EffectManager>
     }
     #endregion
 
-    /// <summary>
-    /// 对外辅助销毁特效
-    /// </summary>
-    /// <param name="effect">待删除的特效</param>
+    ///<summary>
+
+
+    ////// 外部補助破壊特殊効果
+
+
+    ///</summary>
+    /// <param name="effect">削除する特殊効果</param>
     public void LetDestroyEffect(GameObject effect)
     {
         StartCoroutine(DestroyEffect(effect));
     }
 
-    /// <summary>
-    /// 对外辅助回收延迟特效
-    /// </summary>
-    /// <param name="poolKey">特效待回收到的池子</param>
-    /// <param name="effect">待回收特效</param>
-    /// <param name="time">延迟时间</param>
+    ///<summary>
+
+
+    ////// 外部助成によるリサイクル遅延効果
+
+
+    ///</summary>
+    /// <param name="poolKey">エフェクトが回収されるプール</param>
+    /// <param name="effect">回収待ちの特殊効果</param>
+    /// <param name="time">遅延時間</param>
     public void LetRecycleEffect(string poolKey, GameObject effect, float time)
     {
         StartCoroutine(RecycleEffect(poolKey, time, effect));
     }
 
-    /// <summary>
-    /// 播放完自动删除
-    /// </summary>
-    /// <param name="effect"> 待删除特效物体 </param>
+    ///<summary>
+
+
+    ////// 再生後に自動的に削除されます
+
+
+    ///</summary>
+    /// <param name="effect"> 削除待ちの特殊効果オブジェクト </param>
     /// <returns></returns>
     IEnumerator DestroyEffect(GameObject effect)
     {
@@ -245,11 +281,15 @@ public class EffectManager : singleton<EffectManager>
         yield break;
     }
 
-    /// <summary>
-    /// 播放完自动回收对象池
-    /// </summary>
-    /// <param name="poolKey"> 对象池索引 </param>
-    /// <param name="effect"> 待回收特效物体 </param>
+    ///<summary>
+
+
+    ////// 再生が完了したら、自動的にオブジェクトプールを回収します。
+
+
+    ///</summary>
+    /// <param name="poolKey"> オブジェクトプールのインデックス </param>
+    /// <param name="effect"> 回収待ちの特殊効果オブジェクト </param>
     /// <returns></returns>
     IEnumerator RecycleEffect(string poolKey, GameObject effect)
     {
@@ -263,13 +303,19 @@ public class EffectManager : singleton<EffectManager>
     }
 
 
-    /// <summary>
-    /// 经过固定时间后回收特效
-    /// 用于播放结束时间不固定的特效回收
-    /// </summary>
-    /// <param name="poolKey"> 对象池索引 </param>
-    /// <param name="time"> 延迟回收时间 </param>
-    /// <param name="effect"> 待回收特效物体 </param>
+    ///<summary>
+
+
+
+    ////// 特定の時間後に特殊効果を回収します
+    /// 終了時間が不確定な特殊効果の再生に使用されます
+
+
+
+    ///</summary>
+    /// <param name="poolKey"> オブジェクトプールのインデックス </param>
+    /// <param name="time"> 延期回収時間 </param>
+    /// <param name="effect"> 回収待ちの特殊効果オブジェクト </param>
     /// <returns></returns>
     IEnumerator RecycleEffect(string poolKey, float time, GameObject effect)
     {

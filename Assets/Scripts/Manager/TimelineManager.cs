@@ -5,20 +5,20 @@ using UnityEngine.Playables;
 
 public class TimelineManager : singleton<TimelineManager>
 {
-    //需要通过Timeline控制的物体
-    [Header("通过Timeline打开的大门")] public RoomTrigger door;
+    //タイムラインで制御する必要があるオブジェクト
+    [Header("タイムラインで開いた扉")] public RoomTrigger door;
     public PlayableDirector currentPlayableDirector;
     public List<PlayableDirector> playableDirectors;
-    public int index = 0;//自动播放控制
+    public int index = 0;//自動再生制御
 
-    protected new void Awake() {//所有的PlayableDirector都往这里注册
+    protected new void Awake() {//すべてのPlayableDirectorがここに登録されます。
        base.Awake();
        Transform mainTimeLine =  GameObject.Find("MainTimeLine").transform;
        PlayableDirector[] playableArrs = mainTimeLine.GetComponentsInChildren<PlayableDirector>();
        playableDirectors = new List<PlayableDirector>(playableArrs);
        if(playableDirectors.Count == 0)
        {
-            Debug.LogWarning("没有timeline导演类可以获取");
+            Debug.LogWarning("タイムラインディレクタークラスを取得できません");
        }
        else
        {
@@ -28,14 +28,14 @@ public class TimelineManager : singleton<TimelineManager>
     }
 
     /// <summary>
-    /// 将Timeline跳转至
+    /// タイムラインをジャンプさせる
     /// </summary>
-    /// <param name="index">索引</param>
+    /// <param name="index">インデックス</param>
     public void changePlayableTO(int index)
     {
         if(index >= playableDirectors.Count)
         {
-            Debug.LogWarning("索引超出数组限制");
+            Debug.LogWarning("インデックスが配列の範囲を超えています");
             return;
         }
         if(currentPlayableDirector != playableDirectors[index])
@@ -52,9 +52,13 @@ public class TimelineManager : singleton<TimelineManager>
         }
     }
 
-    /// <summary>
-    /// 播放当前的TimeLine，并且播放结束后会自动切换到下一个
-    /// </summary>
+    ///<summary>
+
+
+    ////// 現在のタイムラインを再生し、再生が終了したら自動的に次に切り替わります。
+
+
+    ///</summary>
     public void PlayCurrentPlayableDirector()
     {
         if(index >= playableDirectors.Count)
@@ -64,31 +68,45 @@ public class TimelineManager : singleton<TimelineManager>
         
         changePlayableTO(index);
         currentPlayableDirector.Play();
-        ///现在并不会让它暂停
+        ///今、それを一時停止させるつもりはありません。
         /// 
         index ++ ;
     }
 
-    /// <summary>
-    /// 暂停当前的TimeLIne
-    /// </summary>
+    ///<summary>
+
+
+    ////// 現在のTimeLIneを一時停止します
+
+
+    ///</summary>
     public void PauseCurrentPlayableDirector()
     {
         currentPlayableDirector.Pause();
     }
 
-    /// <summary>
-    /// 继续播放当前的Timeline
-    /// </summary>
+    ///<summary>
+
+
+    ////// 現在のタイムラインの再生を続けます
+
+
+    ///</summary>
     public void ResumeCurrentPlayableDirector()
     {
         currentPlayableDirector.Resume();
     }
 
 
-    /// <summary>
-    /// 停止当前timeline的播放
-    /// </summary>
+    ///<summary>
+
+
+
+    ////// 現在のタイムラインの再生を停止します
+
+
+
+    ///</summary>
     public void StopCurrentPlayableDirector()
     {
         currentPlayableDirector.Stop();

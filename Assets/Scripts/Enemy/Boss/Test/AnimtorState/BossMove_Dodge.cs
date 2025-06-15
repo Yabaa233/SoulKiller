@@ -5,17 +5,17 @@ using UnityEngine;
 public class BossMove_Dodge : StateMachineBehaviour
 {
     private BossControl boss;
-    [Header("冲刺攻击Node")]
+    [Header("スプリントアタックNode")]
     public ComboNode comboNode;
-    [Header("抬手动作占比")]
+    [Header("手を挙げる動作の割合")]
     public float speedUpPer = 0.4f;
-    [Header("期望冲刺动画的抬手播放速度")]
+    [Header("スプリントアニメーションの手を挙げる再生速度を期待しています")]
     public float animSpeed = 1.5f;
-    [Header("开始停止百分比")]
+    [Header("開始停止パーセンテージ")]
     public float stopPer = 0.75f;
-    [Header("冲刺力度")]
+    [Header("スプリント力")]
     public float dodgePower = 2.0f;
-    [Header("停止力度")]
+    [Header("停止力")]
     public float stopPower = 2.0f;
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -33,16 +33,16 @@ public class BossMove_Dodge : StateMachineBehaviour
     {
         if (stateInfo.normalizedTime < speedUpPer)
         {
-            boss.UpdatePlayerPosition();    //更新角色位置坐标
+            boss.UpdatePlayerPosition();    //キャラクターの位置座標を更新する
             animator.speed = animSpeed / stateInfo.speed;
             boss.StopMove(stopPower);
         }
-        else if (stateInfo.normalizedTime > speedUpPer && stateInfo.normalizedTime < stopPer)  //持续冲刺
+        else if (stateInfo.normalizedTime > speedUpPer && stateInfo.normalizedTime < stopPer)  //持続的なスプリント
         {
             animator.speed = stateInfo.speed;
             boss.DodgeToPlayer(dodgePower);
         }
-        else if (stateInfo.normalizedTime > stopPer)     //冲刺结束,停止
+        else if (stateInfo.normalizedTime > stopPer)     //スプリントが終了し、停止します。
         {
             boss.StopMove(stopPower);
         }

@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-/// <summary>
-/// ��ʾ���������壬���������ѡ������
-/// xushi
-/// </summary>
+///<summary>
+
+////// 申し訳ありませんが、提供された内容を認識できず、翻訳することができません。
+
+///</summary>
 public class Btn_LevelUp : BasePanel
 {
     static readonly string path = "UI/Item/Btn_LevelUp";
@@ -28,9 +29,9 @@ public class Btn_LevelUp : BasePanel
     //��һ������buff�ĵȼ��������Ƿ��ٴ�������
     int abandonBuffLevel;
 
-    //底部发光
+    //底部からの発光
     GameObject light;
-    //背景选中状态
+    //背景選択状態
     GameObject selectBack;
     //背景
     GameObject back;
@@ -106,7 +107,7 @@ public class Btn_LevelUp : BasePanel
 
 
         GameManager.Instance.currentPlayer.characterBuffManager.RefreshData();
-        BuffDataManager.Instance.RefreshBuff();//新增刷新Buff
+        BuffDataManager.Instance.RefreshBuff();//新規リフレッシュバフを追加
 
         PanelManager.Instance.Close(PanelManager.Instance.GetPanel("SelectPanel").UIType);
         // Debug.Log("buff������");
@@ -114,7 +115,7 @@ public class Btn_LevelUp : BasePanel
         if (abandonBuffLevel - 2 > 0)
         {
             abandonBuffLevel--;
-            PanelManager.Instance.Open(new SelectPanel(), null, "进阶", abandonBuffLevel);
+            PanelManager.Instance.Open(new SelectPanel(), null, "Advanced", abandonBuffLevel);
         }
         //Time.timeScale = 1.0f;
         FMODUnity.RuntimeManager.PlayOneShot("event:/UI/ItemSelect");

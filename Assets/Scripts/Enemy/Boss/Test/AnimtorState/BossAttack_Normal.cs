@@ -5,9 +5,9 @@ using UnityEngine;
 public class BossAttack_Normal : StateMachineBehaviour
 {
     public BossControl boss;
-    [Header("抬手动作占比")]
+    [Header("手を挙げる動作の割合")]
     public float speedUpPer = 0.5f;
-    [Header("期望抬手动画播放速度")]
+    [Header("手を挙げるアニメーションの再生速度を期待しています")]
     public float animSpeed = 0.02f;
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -15,7 +15,7 @@ public class BossAttack_Normal : StateMachineBehaviour
         boss = animator.GetComponent<BossControl>();
         // animator.SetBool("attacking", true);
         animator.ResetTrigger("normalAttack");
-        //FMODUnity.RuntimeManager.PlayOneShot("event:/BOSS/吟唱蓄力");
+        //FMODUnity.RuntimeManager.PlayOneShot("イベント：/BOSS/チャージングソング");
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks

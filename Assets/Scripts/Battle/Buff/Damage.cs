@@ -6,38 +6,38 @@ using System;
 [Serializable]
 public class Damage : I_BuffBase
 {
-    [Header("外部传参获得数据部分")]
-    //存当前角色的引用
-    [Tooltip("当前角色引用")]GameObject buffKeeper;
-    //存当前角色的BuffManager
-    [Tooltip("当前角色Buff管理器")]CharacterBuffManager characterBuffManager;
-    //当前BUFF种类
-    [Tooltip("当前Buff类型")]E_BuffKind buffType;
-    //当前角色的类型
-    [Tooltip("当前角色类型")]E_ChararcterType chararcterType;
+    [Header("Obtaining data part through external parameter passing")]
+    //現在のキャラクターの参照を保存する
+    [Tooltip("Current role reference")]GameObject buffKeeper;
+    //現在のキャラクターのBuffManagerを保存します
+    [Tooltip("Current Role Buff Manager")]CharacterBuffManager characterBuffManager;
+    //現在のBUFFの種類
+    [Tooltip("Current Buff Type")]E_BuffKind buffType;
+    //現在のキャラクタータイプ
+    [Tooltip("Current role type")]E_ChararcterType chararcterType;
 
-    [Tooltip("当前Buff等级")]public int currentLevel;
+    [Tooltip("Current Buff Level")]public int currentLevel;
 
-    [Header("Buff数据部分")]
-    [Tooltip("存放技能等级函数")]public Action<CharacterData> realEffect;
-    [Tooltip("函数等级列表")] public List<Action<CharacterData>> levelEffect;
+    [Header("Buff data section")]
+    [Tooltip("Store Skill Level Function")]public Action<CharacterData> realEffect;
+    [Tooltip("Function Level List")] public List<Action<CharacterData>> levelEffect;
 
 
     public Damage(E_ChararcterType _chararcterType,int level = 1)
     {  
-        //赋值
+        //代入
         this.currentLevel = level;
         buffType = E_BuffKind.Damage;
         chararcterType = _chararcterType;
 
-        //初始化列表
+        //初期化リスト
         levelEffect = new List<Action<CharacterData>>();
 
     }
     public void OnAdd(GameObject _buffKeeper)
     {
         this.buffKeeper = _buffKeeper;
-        Init();//初始化Buff赋值
+        Init();//Buffの初期化と代入
         switch(chararcterType)
         {
             case E_ChararcterType.player:PlayerDamageUp();break;
@@ -94,11 +94,11 @@ public class Damage : I_BuffBase
 
         if(currentLevel > levelEffect.Count)
         {
-            Debug.Log("赋予的等级超过Buff当前等级限制");
+            Debug.Log("The assigned level exceeds the current level limit of the Buff.");
             return;
         }
 
-        for(int i=0;i<currentLevel;i++)//根据技能等级添加效果
+        for(int i=0;i<currentLevel;i++)//スキルレベルに応じて効果を追加する
         {
             realEffect += levelEffect[i];
         }
@@ -112,7 +112,7 @@ public class Damage : I_BuffBase
     }
 
 
-///////得到不同类型敌人的数据，然后施加Buff
+///////異なるタイプの敵のデータを取得し、その後、バフを適用します。
     private void PlayerDamageUp()
     {
         PlayerControl playerControl = buffKeeper.GetComponent<PlayerControl>();
@@ -136,7 +136,7 @@ public class Damage : I_BuffBase
 
         realEffect(characterData);
     }
-/////////Buff移除时还原属性状态
+/////////バフが削除された時、属性状態を元に戻します。
     private void PlayerDamageRemove()
     {
         PlayerControl playerControl = buffKeeper.GetComponent<PlayerControl>();
@@ -165,7 +165,7 @@ public class Damage : I_BuffBase
     }
 
 
-/////////Buff的具体效果实现
+/////////Buffの具体的な効果の実現
     private void level1DamageUp(CharacterData characterData)
     {
         if(chararcterType == E_ChararcterType.player)
@@ -185,7 +185,7 @@ public class Damage : I_BuffBase
         }
     }
 
-    private void level2DamageUp(CharacterData characterData)//第一段暴击率增幅
+    private void level2DamageUp(CharacterData characterData)//最初のクリティカルヒット率の増加幅
     {
         if(chararcterType == E_ChararcterType.player)
         {
@@ -201,7 +201,7 @@ public class Damage : I_BuffBase
         }
     }
     
-    private void level3DamageUp(CharacterData characterData)//第二段暴击率增幅
+    private void level3DamageUp(CharacterData characterData)//第二段階のクリティカルヒット率の上昇幅
     {
         if(chararcterType == E_ChararcterType.player)
         {
@@ -217,7 +217,7 @@ public class Damage : I_BuffBase
         }
     }
 
-    private void level4DamageUp(CharacterData characterData)//第三段暴击伤害增幅
+    private void level4DamageUp(CharacterData characterData)//第三段落のクリティカルダメージ増加
     {
         if(chararcterType == E_ChararcterType.player)
         {

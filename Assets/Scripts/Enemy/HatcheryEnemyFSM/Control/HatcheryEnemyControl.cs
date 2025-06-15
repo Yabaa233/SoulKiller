@@ -6,9 +6,9 @@ using UnityEngine.AI;
 
 public class HatcheryEnemyControl : BaseEnemyControl
 {
-    [Header("敌人状态机相关")]
+    [Header("敵のステートマシン関連")]
     public HatcheryEnemyFSM enemyFSM;
-    [Header("敌人攻击状态SO模板")]
+    [Header("敵の攻撃状態SOテンプレート")]
     public HatcheryEmyStateData_SO tempEnemyStateData;
     public HatcheryEmyStateData_SO TempEnemyStateData
     {
@@ -23,7 +23,7 @@ public class HatcheryEnemyControl : BaseEnemyControl
     }
 
     protected new void Start() {
-        // デバッグログ("既に実行中");
+        // "すでに実行中"のデバッグログ
         base.Start();
     }
     void EnemyInit(string strTag)
@@ -36,9 +36,9 @@ public class HatcheryEnemyControl : BaseEnemyControl
         enemyBody = transform.Find("body");
         baseEnemyFSM = enemyFSM;
         agent = GetComponent<NavMeshAgent>();
-        /*print("组件初始化");*/
-        //自身の属性を設定
-        enemyData.currentComboAttack = 1;//攻撃倍率を設定
+
+        //自身の属性を設定する
+        enemyData.currentComboAttack = 1;//攻撃倍率を設定する
         transform.tag = strTag;
         enemyData = new CharacterData(Instantiate(tempCharaterData));
         room = transform.parent.parent.parent.GetComponent<FirstRoomTrigger>();
@@ -46,7 +46,7 @@ public class HatcheryEnemyControl : BaseEnemyControl
         characterBuffManager = new CharacterBuffManager();
         enemyData = new CharacterData(Instantiate(tempCharaterData));
         characterBuffManager.Init(E_ChararcterType.enemy);
-        /*print("自身属性初始化");*/
+
         //データの同期
         enemyFSM.parameter.enemyData = enemyData;
         enemyFSM.parameter.enemyStateData = tempEnemyStateData;
@@ -54,12 +54,12 @@ public class HatcheryEnemyControl : BaseEnemyControl
         enemyFSM.parameter._mainCamera = _mainCamera;
         enemyFSM.parameter.body = enemyBody;
     }
-    protected new void Update()//Update管理
+    protected new void Update()//更新管理
     {
         base.Update();
         characterBuffManager.OnUpdate(Time.deltaTime);
     }
-    public override void Damaged(float damage,bool isCritical = false)//被ダメージマーク
+    public override void Damaged(float damage,bool isCritical = false)//ダメージマークを受けました
     {
         base.Damaged(damage,isCritical);
         enemyFSM.parameter.getHit = true;

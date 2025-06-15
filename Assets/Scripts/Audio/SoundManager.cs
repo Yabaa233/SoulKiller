@@ -2,34 +2,34 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//使用说明
-//1：将此组件挂在场景中的空物体上，listener挂在玩家/摄像机身上（建议，如果使用3D音效的话）
-//2：音频资源放在\Assets\Resources\sounds文件夹下
-//3：直接使用SoundManager.play+***函数，音效使用play_effect，音乐使用play_music,参数为sounds/"名称"
-//5：例如SoundManager.play_effect("sounds/按钮类1－mcx20070509");
-//6：确定该音效不会再出现后可以clear
-//7：3D音效使用play_effect3D,额外传入音频自身位置参数
+//使用説明
+//1：このコンポーネントをシーン内の空のオブジェクトに取り付け、リスナーをプレイヤー/カメラに取り付けます（3Dサウンドを使用する場合は推奨）。
+//2：オーディオリソースは\Assets\Resources\soundsフォルダに置いてください。
+//3：SoundManager.play+***関数を直接使用し、効果音はplay_effectを、音楽はplay_musicを使用します。パラメータはsounds/"名称"です。
+//5：例えば、SoundManager.play_effect("サウンド/ボタン類1-mcx20070509");
+//6：その音効が二度と現れないことを確認した後、クリアすることができます。
+//7：3D音効果はplay_effect3Dを使用し、音声自体の位置パラメータを追加で渡します。
 //8:
 public class SoundManager:MonoBehaviour
 {
-    // (1) 声音根节点的物体;
-    // (2) 保证这个节点在场景切换的时候不会删除，这样就不用再初始化一次;
-    // (3) 所有播放声音的生源节点，都是在这个节点下
-    static GameObject sound_play_object;//这个就是根节点
-    static bool is_music_mute = false;//存放当前全局背景音乐是否静音的变量
-    static bool is_effect_mute = false;//存放当前音效是否静音的变量
-    static  float music_volume = 1;//存放全局音乐音量
-    static  float effect_volume = 1;//存放全局音效音量
+    // (1) 音声のルートノードのオブジェクト;
+    // (2) このノードがシーン切替時に削除されないことを保証し、再度初期化する必要がなくなります。
+    // (3) すべての音声を再生するソースノードは、このノードの下にあります。
+    static GameObject sound_play_object;//これがルートノードです。
+    static bool is_music_mute = false;//現在のグローバルバックグラウンドミュージックがミュートかどうかを保存する変数
+    static bool is_effect_mute = false;//現在の音声がミュートかどうかを保存する変数
+    static  float music_volume = 1;//グローバル音楽ボリュームの保存
+    static  float effect_volume = 1;//グローバルサウンドエフェクトボリュームの保存
 
-    // url --> AudioSource 映射, 区分音乐，音效
-    static Dictionary<string, AudioSource> musics = null;//音乐表
-    static Dictionary<string, AudioSource> effects = null;//音效表
+    // url --> AudioSource マッピング、音楽と効果音の区別
+    static Dictionary<string, AudioSource> musics = null;//音楽表
+    static Dictionary<string, AudioSource> effects = null;//効果音表
 
     private void Awake()
     {     
         sound_play_object = this.gameObject;
-        init();//初始化音乐音效管理
-        GameObject.DontDestroyOnLoad(this.gameObject);//场景切换的时候不会删除SoundManager
+        init();//音楽と効果音の管理を初期化する
+        GameObject.DontDestroyOnLoad(this.gameObject);//シーンが切り替わる時、SoundManagerは削除されません。
     }
 
     private void Update()
@@ -37,87 +37,101 @@ public class SoundManager:MonoBehaviour
         //set_volume(music_volume,effect_volume);
     }
 
-    //初始化
+    //初期化
     public static void init()
     {
 
-        //sound_play_object = new GameObject("sound_play_object");//初始化根节点
-        sound_play_object.AddComponent<SoundScan>();//把声音检测组件挂载到根节点下
-        GameObject.DontDestroyOnLoad(sound_play_object);//场景切换的时候不会删除根节点
+        //sound_play_object = new GameObject("sound_play_object");//ルートノードを初期化します
+        sound_play_object.AddComponent<SoundScan>();//音声検出コンポーネントをルートノードにマウントしてください。
+        GameObject.DontDestroyOnLoad(sound_play_object);//シーンを切り替える際に、ルートノードは削除されません。
 
 
-        //初始化音乐表和音效表
+        //音楽テーブルと効果音テーブルの初期化
         musics = new Dictionary<string, AudioSource>();
         effects = new Dictionary<string, AudioSource>();
 
-        // 从本地来加载这个开关
-        if (PlayerPrefs.HasKey("music_mute"))//判断is_music_mute有没有保存在本地
+        // このスイッチをローカルからロードします
+        if (PlayerPrefs.HasKey("music_mute"))//is_music_muteがローカルに保存されているかどうかを判断してください。
         {
             int value = PlayerPrefs.GetInt("music_mute");
-            is_music_mute = (value == 1);//int转换bool，如果value==1，返回true，否则就是false
+            is_music_mute = (value == 1);//intをboolに変換します。value==1の場合、trueを返し、それ以外の場合はfalseを返します。
         }
 
-        // 从本地来加载这个开关
-        if (PlayerPrefs.HasKey("effect_mute"))//判断is_effect_mute有没有保存在本地
+        // このスイッチをローカルからロードします
+        if (PlayerPrefs.HasKey("effect_mute"))//is_effect_muteがローカルに保存されているかどうかを判断してください。
         {
             int value = PlayerPrefs.GetInt("effect_mute");
-            is_effect_mute = (value == 1);//int转换bool，如果value==1，返回true，否则就是false
+            is_effect_mute = (value == 1);//intをboolに変換します。value==1の場合、trueを返し、それ以外の場合はfalseを返します。
         }
     }
 
 
 
 
-    /// <summary>
-    /// 播放指定背景音乐的接口
-    /// </summary>
+    ///<summary>
+
+
+
+
+
+    ////// 指定のバックグラウンドミュージックを再生するインターフェース
+
+
+
+
+
+    ///</summary>
     /// <param name="url"></param>
     /// <param name="is_loop"></param>
     public static void play_music(string url,float startPercent=0, float volume=1, bool is_loop = true)
     {
         AudioSource audio_source = null;
-        if (musics.ContainsKey(url))//判断是否已经在背景音乐表里面了
+        if (musics.ContainsKey(url))//既にバックグラウンドミュージック表にあるかどうかを判断してください。
         {
-            audio_source = musics[url];//是就直接赋值过去
+            audio_source = musics[url];//そのまま代入してください。
         }
-        else//不是就新建一个空节点，节点下再新建一个AudioSource组件
+        else//新しい空のノードを作成し、そのノードの下に新しいAudioSourceコンポーネントを作成するわけではありません。
         {
-            GameObject s = new GameObject(url);//创建一个空节点
-            s.transform.parent = sound_play_object.transform;//加入节点到场景中
+            GameObject s = new GameObject(url);//空のノードを作成する
+            s.transform.parent = sound_play_object.transform;//ノードをシーンに追加する
 
-            audio_source = s.AddComponent<AudioSource>();//空节点添加组件AudioSource
-            AudioClip clip = Resources.Load<AudioClip>(url);//代码加载一个AudioClip资源文件
-            audio_source.clip = clip;//设置组件的clip属性为clip
-            audio_source.loop = is_loop;//设置组件循环播放
-            audio_source.playOnAwake = true;//再次唤醒时播放声音
-            audio_source.spatialBlend = 0.0f;//设置为2D声音
+            audio_source = s.AddComponent<AudioSource>();//空のノードにAudioSourceコンポーネントを追加する
+            AudioClip clip = Resources.Load<AudioClip>(url);//コードはAudioClipリソースファイルをロードします。
+            audio_source.clip = clip;//コンポーネントのclip属性をclipに設定します。
+            audio_source.loop = is_loop;//コンポーネントをループ再生に設定する
+            audio_source.playOnAwake = true;//再度目覚める時に音を再生する
+            audio_source.spatialBlend = 0.0f;//2Dサウンドに設定する
             audio_source.volume = volume * music_volume;
 
-            musics.Add(url, audio_source);//加入到背景音乐字典中，下次就可以直接赋值了
+            musics.Add(url, audio_source);//バックグラウンドミュージックの辞書に追加しましたので、次回からは直接値を設定できます。
         }
         audio_source.mute = is_music_mute;
         audio_source.enabled = true;
         audio_source.time = startPercent * audio_source.clip.length;
-        audio_source.Play();//开始播放
+        audio_source.Play();//再生を開始します
     }
 
-    /// <summary>
-    /// 停止播放指定背景音乐的接口
-    /// </summary>
+    ///<summary>
+
+
+    ////// 指定したバックグラウンドミュージックの再生を停止するインターフェース
+
+
+    ///</summary>
     /// <param name="url"></param>
     public static void stop_music(string url)
     {
         AudioSource audio_source = null;
-        if (!musics.ContainsKey(url))//判断是否已经在背景音乐表里面了
+        if (!musics.ContainsKey(url))//既にバックグラウンドミュージック表にあるかどうかを判断してください。
         {
-            return;//没有这个背景音乐就直接返回
+            return;//このバックグラウンドミュージックがなければ、直接戻ってください。
         }
-        audio_source = musics[url];//有就把audio_source直接赋值过去
-        audio_source.Stop();//停止播放
+        audio_source = musics[url];//それがあれば、audio_sourceを直接割り当ててください。
+        audio_source.Stop();//再生を停止
     }
 
     /// <summary>
-    ///停止播放所有背景音乐的接口
+    ///すべてのバックグラウンド音楽の再生を停止するインターフェース
     /// </summary>
     public static void stop_all_music()
     {
@@ -127,62 +141,68 @@ public class SoundManager:MonoBehaviour
         }
     }
 
-    /// <summary>
-    ///删除指定背景音乐和它的节点
-    /// </summary>
+    ///<summary>
+
+
+    ////// 指定されたバックグラウンドミュージックとそのノードを削除します
+
+
+    ///</summary>
     /// <param name="url"></param>
     public static void clear_music(string url)
     {
         AudioSource audio_source = null;
-        if (!musics.ContainsKey(url))//判断是否已经在背景音乐表里面了
+        if (!musics.ContainsKey(url))//既にバックグラウンドミュージック表にあるかどうかを判断してください。
         {
-            return;//没有这个背景音乐就直接返回
+            return;//このバックグラウンドミュージックがなければ、直接戻ってください。
         }
-        audio_source = musics[url];//有就把audio_source直接赋值过去
-        musics[url] = null;//指定audio_source组件清空
-        GameObject.Destroy(audio_source.gameObject);//删除掉挂载指定audio_source组件的节点
+        audio_source = musics[url];//それがあれば、audio_sourceを直接割り当ててください。
+        musics[url] = null;//audio_sourceコンポーネントをクリアに指定します
+        GameObject.Destroy(audio_source.gameObject);//指定のaudio_sourceコンポーネントがマウントされているノードを削除します
     }
 
     /// <summary>
-    ///切换背景音乐静音开关
+    ///バックグラウンドミュージックのミュートスイッチを切り替える
     /// </summary>
     public static void switch_music()
     {
-        // 切换静音和有声音的状态
+        // ミュートとサウンドの状態を切り替える
         is_music_mute = !is_music_mute;
 
-        //把当前是否静音写入本地
-        int value = (is_music_mute) ? 1 : 0;//bool转换int
+        //現在のミュート状態をローカルに書き込む
+        int value = (is_music_mute) ? 1 : 0;//boolをintに変換
         PlayerPrefs.SetInt("music_mute", value);
 
-        // 遍历所有背景音乐的AudioSource元素
+        // すべてのバックグラウンドミュージックのAudioSource要素を走査します。
         foreach (AudioSource s in musics.Values)
         {
-            s.mute = is_music_mute;//设置为当前的状态
+            s.mute = is_music_mute;//現在の状態に設定する
         }
     }
-    /// <summary>
-    /// 设置音乐播放开启或关闭
-    /// </summary>
+    ///<summary>
+
+    ////// 音楽再生をオンまたはオフに設定する
+
+    ///</summary>
     /// <param name="to"></param>
     public static void switch_music_to(bool to)
     {
-        // 切换静音和有声音的状态
+        // ミュートとサウンドの状態を切り替える
         is_music_mute = to;
 
-        //把当前是否静音写入本地
-        int value = (is_music_mute) ? 1 : 0;//bool转换int
+        //現在のミュート状態をローカルに書き込む
+        int value = (is_music_mute) ? 1 : 0;//boolをintに変換
         PlayerPrefs.SetInt("music_mute", value);
 
-        // 遍历所有背景音乐的AudioSource元素
+        // すべてのバックグラウンドミュージックのAudioSource要素を走査します。
         foreach (AudioSource s in musics.Values)
         {
-            s.mute = is_music_mute;//设置为当前的状态
+            s.mute = is_music_mute;//現在の状態に設定する
         }
     }
 
     /// <summary>
-    /// 接口：当我的界面的静音按钮要显示的时候，到底是显示关闭，还是开始状态;
+    /// インターフェース：私のインターフェースのミュートボタンが表示されるとき、それは「オフ」を表示するべきか、それとも「開始」状態を表示するべきか。
     /// </summary>
     /// <returns></returns>
     public static bool music_is_off()
@@ -194,50 +214,52 @@ public class SoundManager:MonoBehaviour
 
 
 
-    //接下来开始是音效的接口
-    //播放指定音效的接口
-    /// <summary>
-    /// 播放指定音效的接口
-    /// </summary>
+    //次に始まるのは、サウンドエフェクトのインターフェースです。
+    //指定の音効を再生するインターフェース
+    ///<summary>
+
+    ////// 指定された音響効果を再生するインターフェース
+
+    ///</summary>
     /// <param name="url"></param>
     /// <param name="is_loop"></param>
     public static void play_effect(string url, float startPercent=0, float volume = 1,bool is_loop = false)
     {
         AudioSource audio_source = null;
-        if (effects.ContainsKey(url))//判断是否已经在音效表里面了
+        if (effects.ContainsKey(url))//既に音響表の中にあるかどうかを判断してください。
         {
-            audio_source = effects[url];//是就直接赋值过去
+            audio_source = effects[url];//そのまま代入してください。
             if (audio_source.isPlaying)
             {
-                GameObject s = new GameObject(url);//创建一个空节点
-                s.transform.parent = sound_play_object.transform;//加入节点到场景中
+                GameObject s = new GameObject(url);//空のノードを作成する
+                s.transform.parent = sound_play_object.transform;//ノードをシーンに追加する
                 Destroy(s, 3);
-                audio_source = s.AddComponent<AudioSource>();//空节点添加组件AudioSource
-                AudioClip clip = Resources.Load<AudioClip>(url);//代码加载一个AudioClip资源文件
-                audio_source.clip = clip;//设置组件的clip属性为clip
-                audio_source.loop = is_loop;//设置组件循环播放
-                audio_source.playOnAwake = true  ;//再次唤醒时播放声音
-                audio_source.spatialBlend = 0.0f;//设置为2D声音
+                audio_source = s.AddComponent<AudioSource>();//空のノードにAudioSourceコンポーネントを追加する
+                AudioClip clip = Resources.Load<AudioClip>(url);//コードはAudioClipリソースファイルをロードします。
+                audio_source.clip = clip;//コンポーネントのclip属性をclipに設定します。
+                audio_source.loop = is_loop;//コンポーネントをループ再生に設定する
+                audio_source.playOnAwake = true  ;//再度目覚める時に音を再生する
+                audio_source.spatialBlend = 0.0f;//2Dサウンドに設定する
                 audio_source.volume = volume * effect_volume;
 
             }
 
 
         }
-        else//不是就新建一个空节点，节点下再新建一个AudioSource组件
+        else//新しい空のノードを作成し、そのノードの下に新しいAudioSourceコンポーネントを作成するわけではありません。
         {
-            GameObject s = new GameObject(url);//创建一个空节点
-            s.transform.parent = sound_play_object.transform;//加入节点到场景中
+            GameObject s = new GameObject(url);//空のノードを作成する
+            s.transform.parent = sound_play_object.transform;//ノードをシーンに追加する
 
-            audio_source = s.AddComponent<AudioSource>();//空节点添加组件AudioSource
-            AudioClip clip = Resources.Load<AudioClip>(url);//代码加载一个AudioClip资源文件
-            audio_source.clip = clip;//设置组件的clip属性为clip
-            audio_source.loop = is_loop;//设置组件循环播放
-            audio_source.playOnAwake = true  ;//再次唤醒时播放声音
-            audio_source.spatialBlend = 0.0f;//设置为2D声音
+            audio_source = s.AddComponent<AudioSource>();//空のノードにAudioSourceコンポーネントを追加する
+            AudioClip clip = Resources.Load<AudioClip>(url);//コードはAudioClipリソースファイルをロードします。
+            audio_source.clip = clip;//コンポーネントのclip属性をclipに設定します。
+            audio_source.loop = is_loop;//コンポーネントをループ再生に設定する
+            audio_source.playOnAwake = true  ;//再度目覚める時に音を再生する
+            audio_source.spatialBlend = 0.0f;//2Dサウンドに設定する
             audio_source.volume = volume * effect_volume;
 
-            effects.Add(url, audio_source);//加入到音效字典中，下次就可以直接赋值了
+            effects.Add(url, audio_source);//サウンドエフェクト辞書に追加し、次回からは直接値を設定できます。
            
 
         }
@@ -245,32 +267,34 @@ public class SoundManager:MonoBehaviour
         audio_source.enabled = true;
         //audio_source.SetScheduledStartTime(percent * audio_source.clip.length);
         //audio_source.SetScheduledEndTime( audio_source.clip.length);
-        //audio_source.PlayScheduled(percent * audio_source.clip.length);//开始播放
+        //audio_source.PlayScheduled(percent * audio_source.clip.length);//再生を開始する
         audio_source.time = startPercent * audio_source.clip.length;
         audio_source.Play();
 
     }
 
 
-    //停止播放指定音效的接口
-    /// <summary>
-    /// 停止播放指定音效的接口
-    /// </summary>
+    //指定された音響効果の再生を停止するインターフェース
+    ///<summary>
+
+    ////// 指定された音響効果の再生を停止するインターフェース
+
+    ///</summary>
     /// <param name="url"></param>
     public static void stop_effect(string url)
     {
         AudioSource audio_source = null;
-        if (!effects.ContainsKey(url))//判断是否已经在音效表里面了
+        if (!effects.ContainsKey(url))//既に音響表の中にあるかどうかを判断してください。
         {
-            return;//没有这个背景音乐就直接返回
+            return;//このバックグラウンドミュージックがなければ、直接戻ってください。
         }
-        audio_source = effects[url];//有就把audio_source直接赋值过去
-        audio_source.Stop();//停止播放
+        audio_source = effects[url];//それがあれば、audio_sourceを直接割り当ててください。
+        audio_source.Stop();//再生を停止
     }
 
-    //停止播放所有音效的接口
+    //すべての音声を停止するインターフェース
     /// <summary>
-    /// 停止播放所有音效的接口
+    /// すべての音声を停止するインターフェース
     /// </summary>
     public static void stop_all_effect()
     {
@@ -280,74 +304,78 @@ public class SoundManager:MonoBehaviour
         }
     }
 
-    //删除指定音效和它的节点
-    /// <summary>
-    /// 删除指定音效和它的节点
-    /// </summary>
+    //指定された音響効果とそのノードを削除します
+    ///<summary>
+
+    ////// 指定された音響効果とそのノードを削除します
+
+    ///</summary>
     /// <param name="url"></param>
     public static void clear_effect(string url)
     {
         AudioSource audio_source = null;
-        if (!effects.ContainsKey(url))//判断是否已经在音效表里面了
+        if (!effects.ContainsKey(url))//既に音響表の中にあるかどうかを判断してください。
         {
-            return;//没有这个音效就直接返回
+            return;//このサウンドエフェクトがなければ、直接戻ってください。
         }
-        audio_source = effects[url];//有就把audio_source直接赋值过去
-        effects[url] = null;//指定audio_source组件清空
-        GameObject.Destroy(audio_source.gameObject);//删除掉挂载指定audio_source组件的节点
+        audio_source = effects[url];//それがあれば、audio_sourceを直接割り当ててください。
+        effects[url] = null;//audio_sourceコンポーネントをクリアに指定します
+        GameObject.Destroy(audio_source.gameObject);//指定のaudio_sourceコンポーネントがマウントされているノードを削除します
     }
 
-    //切换音效静音开关
+    //サウンドエフェクトのミュートスイッチを切り替える
     /// <summary>
-    /// 切换音效静音开关
+    /// サウンドエフェクトのミュートスイッチを切り替える
     /// </summary>
     public static void switch_effect()
     {
-        // 切换静音和有声音的状态
+        // ミュートとサウンドの状態を切り替える
         is_effect_mute = !is_effect_mute;
 
-        //把当前是否静音写入本地
-        int value = (is_effect_mute) ? 1 : 0;//bool转换int
+        //現在のミュート状態をローカルに書き込む
+        int value = (is_effect_mute) ? 1 : 0;//boolをintに変換
         PlayerPrefs.SetInt("effect_mute", value);
 
-        // 遍历所有音效的AudioSource元素
+        // すべての音響効果のAudioSource要素を走査する
         foreach (AudioSource s in effects.Values)
         {
-            s.mute = is_effect_mute;//设置为当前的状态
+            s.mute = is_effect_mute;//現在の状態に設定する
         }
     }
     /// <summary>
-    /// 设置音效播放开启或关闭
+    /// サウンドエフェクトの再生をオンまたはオフに設定します
     /// </summary>
     /// <param name="to"></param>
     public static void switch_effect(bool to)
     {
-        // 切换静音和有声音的状态
+        // ミュートとサウンドの状態を切り替える
         is_effect_mute = to;
 
-        //把当前是否静音写入本地
-        int value = (is_effect_mute) ? 1 : 0;//bool转换int
+        //現在のミュート状態をローカルに書き込む
+        int value = (is_effect_mute) ? 1 : 0;//boolをintに変換
         PlayerPrefs.SetInt("effect_mute", value);
 
-        // 遍历所有音效的AudioSource元素
+        // すべての音響効果のAudioSource要素を走査する
         foreach (AudioSource s in effects.Values)
         {
-            s.mute = is_effect_mute;//设置为当前的状态
+            s.mute = is_effect_mute;//現在の状態に設定する
         }
     }
-    //当我的界面的静音按钮要显示的时候，到底是显示关闭，还是开始状态;
-    /// <summary>
-    /// 当我的界面的静音按钮要显示的时候，到底是显示关闭，还是开始状态;
-    /// </summary>
+    //私のインターフェースのミュートボタンが表示されるとき、結局はオフ表示にするべきか、それとも開始状態にするべきか。
+    ///<summary>
+
+    ////// 私のインターフェースにミュートボタンが表示されるとき、結局はオフ表示にすべきなのか、それとも開始状態にすべきなのか。
+
+    ///</summary>
     /// <returns></returns>
     public static bool effect_is_off()
     {
         return is_effect_mute;
     }
 
-    //播放3D的音效
+    //3D音響効果を再生する
     /// <summary>
-    /// 播放3D的音效
+    /// 3D音響効果を再生する
     /// </summary>
     /// <param name="url"></param>
     /// <param name="pos"></param>
@@ -363,14 +391,14 @@ public class SoundManager:MonoBehaviour
         {
             GameObject s = new GameObject(url);
             s.transform.parent = sound_play_object.transform;
-            s.transform.position = pos;//3D音效的位置
+            s.transform.position = pos;//3D音響の位置
 
             audio_source = s.AddComponent<AudioSource>();
             AudioClip clip = Resources.Load<AudioClip>(url);
             audio_source.clip = clip;
             audio_source.loop = is_loop;
             audio_source.playOnAwake = true;
-            audio_source.spatialBlend = 1.0f; // 3D音效
+            audio_source.spatialBlend = 1.0f; // 3Dサウンドエフェクト
             audio_source.volume = volume * effect_volume;
 
             effects.Add(url, audio_source);
@@ -385,43 +413,43 @@ public class SoundManager:MonoBehaviour
 
 
 
-    //优化策略接口
+    //最適化戦略インターフェース
     public static void disable_over_audio()
     {
-        //遍历背景音乐表
+        //バックグラウンドミュージック表を走査する
         foreach (AudioSource s in musics.Values)
         {
-            if (!s.isPlaying)//判断是否在播放
+            if (!s.isPlaying)//再生中かどうかを判断する
             {
-                s.enabled = false;//不在播放就直接隐藏
+                s.enabled = false;//再生していない場合は直接非表示にします
             }
         }
 
-        //遍历音效表
+        //サウンドエフェクト表を走査する
         foreach (AudioSource s in effects.Values)
         {
-            if (!s.isPlaying)//判断是否在播放
+            if (!s.isPlaying)//再生中かどうかを判断する
             {
-                s.enabled = false;//不在播放就直接隐藏
+                s.enabled = false;//再生していない場合は直接非表示にします
             }
         }
     }
 
     /// <summary>
-    /// 设置音量
+    /// ボリュームを設定する
     /// </summary>
     /// <param name="m_value"></param>
     /// <param name="e_value"></param>
     public static void set_volume(float m_value,float e_value)
     {
-        //遍历背景音乐表
+        //バックグラウンドミュージック表を走査する
         foreach (AudioSource s in musics.Values)
         {
             s.volume = m_value/100;
             PlayerPrefs.SetFloat("music_volume", m_value);
         }
 
-        //遍历音效表
+        //サウンドエフェクト表を走査する
         foreach (AudioSource s in effects.Values)
         {
             s.volume = e_value/100;
@@ -431,7 +459,7 @@ public class SoundManager:MonoBehaviour
 
     public static void clear_all()
     {
-        //遍历背景音乐表
+        //バックグラウンドミュージック表を走査する
         foreach (AudioSource s in musics.Values)
         {
             if(s.enabled == false)
@@ -442,7 +470,7 @@ public class SoundManager:MonoBehaviour
            
         }
 
-        //遍历音效表
+        //サウンドエフェクト表を走査する
         foreach (AudioSource s in effects.Values)
         {
             if (s.enabled == false)
@@ -453,26 +481,30 @@ public class SoundManager:MonoBehaviour
     }
 }
 
-/// <summary>
-/// 播放完毕后关闭组件，优化性能
-/// </summary>
+///<summary>
+
+
+////// 再生が完了した後、コンポーネントを閉じてパフォーマンスを最適化します。
+
+
+///</summary>
 public class SoundScan : MonoBehaviour
 {
 
     // Use this for initialization
     void Start()
     {
-        //固定一个节奏去扫描，每隔0.5s扫描一次
+        //一定のリズムでスキャンし、0.5秒ごとに一度スキャンします。
         this.InvokeRepeating("scan", 0, 0.5f);
         //this.InvokeRepeating("autoClear", 0, 15f);
 
     }
 
 
-    //定时器函数
+    //タイマー関数
     void scan()
     {
-        SoundManager.disable_over_audio();//调用隐藏AudioSource组件接口
+        SoundManager.disable_over_audio();//隠されたAudioSourceコンポーネントインターフェースを呼び出す
     }
 
     void autoClear()

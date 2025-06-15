@@ -4,18 +4,18 @@ using UnityEngine;
 
 public class BossShadowDestroy : MonoBehaviour
 {
-    public float force;   //击退力度
-    public float downSpeed = 5.0f; //下落速度
-    public float damage = 10.0f;    //伤害值
+    public float force;   //Repelling force
+    public float downSpeed = 5.0f; //Falling speed
+    public float damage = 10.0f;    //ダメージ値
     private Rigidbody rb;
     private void Awake()
     {
-        //组件获取
+        //コンポーネントの取得
         rb = GetComponent<Rigidbody>();
     }
     private void Update()
     {
-        //位置更新
+        //位置情報の更新
         rb.velocity += Vector3.down * downSpeed;
     }
     private void OnTriggerEnter(Collider other)
@@ -28,7 +28,7 @@ public class BossShadowDestroy : MonoBehaviour
             Vector3 forceVector = (other.gameObject.transform.position - gameObject.transform.position).normalized;
             forceVector[1] = 0;
             other.gameObject.GetComponent<Rigidbody>().AddForce(forceVector * force, ForceMode.Impulse);
-            //回收
+            //リサイクル
             transform.parent.GetComponent<BossShadowGenerate>().ShadowRecycle();
         }
         if (other.name == "Shadow" && other.transform.parent.gameObject == transform.parent.gameObject)

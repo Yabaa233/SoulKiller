@@ -6,16 +6,16 @@ using UnityEngine.Playables;
 [System.Serializable]
 public class BossAnimatorBehavior : PlayableBehaviour
 {
-    private PlayableDirector playableDirector;//获取Timeline对象上的导演组件
+    private PlayableDirector playableDirector;//Timelineオブジェクト上のディレクターコンポーネントを取得します。
     public E_BossClipState bossClipState;
     private bool isClipPlayed;
 
     public override void OnPlayableCreate(Playable playable)
     {
-        playableDirector = playable.GetGraph().GetResolver() as PlayableDirector;//需要解析之后进行类型转换，有点类似让粒子系统可以变成一个可挂载的脚本
+        playableDirector = playable.GetGraph().GetResolver() as PlayableDirector;//解析後に型変換を行う必要があり、それは粒子システムをマウント可能なスクリプトに変えることに少し似ています。
     }
 
-    //类似Mono中的Update方法，每一帧都会进行调用
+    //MonoのUpdateメソッドのように、各フレームで呼び出されます。
     public override void ProcessFrame(Playable playable, FrameData info, object playerData)
     {
         if(isClipPlayed == false && info.weight > 0)
@@ -31,7 +31,7 @@ public class BossAnimatorBehavior : PlayableBehaviour
 
 
 
-    /////所有的调用方法
+    /////すべての呼び出し方法
     public void Boss_Dodge()
     {
 

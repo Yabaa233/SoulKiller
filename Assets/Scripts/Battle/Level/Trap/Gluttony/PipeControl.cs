@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class PipeControl : MonoBehaviour
 {
-    [Header("最大生命值")]
+    [Header("Maximum Health Points")]
     public float maxHealth;
-    [Header("当前生命值")]
+    [Header("Current Health Points")]
     public float curHealth;
-    [Header("打爆特效")]
+    [Header("Explosive special effects")]
     public GameObject effect;
-    [Tooltip("受到近战攻击时伤害值")] public float getSwordDamage = 20.0f;
-    [Tooltip("受到子弹攻击时伤害值")] public float getShotDamage = 1.0f;
-    [Tooltip("受到魔法攻击时伤害值")] public float getMagicDamage = 15.0f;
+    [Tooltip("Damage value when attacked in close combat")] public float getSwordDamage = 20.0f;
+    [Tooltip("Damage value when hit by a bullet")] public float getShotDamage = 1.0f;
+    [Tooltip("Damage value when attacked by magic")] public float getMagicDamage = 15.0f;
     private StateBar stateBar;
     private void Start()
     {

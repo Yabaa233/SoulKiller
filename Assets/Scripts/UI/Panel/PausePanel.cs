@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-/// <summary>
-/// ��ͣ���棬��Ϸ�ڵ����ͣ
-/// </summary>
+///<summary>
+
+////// 申し訳ありませんが、この内容は乱文のようで、翻訳することができません。
+
+///</summary>
 public class PausePanel : BasePanel
 {
     static readonly string path = "UI/Panel/PausePanel";

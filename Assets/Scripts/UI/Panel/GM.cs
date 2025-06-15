@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 /// <summary>
-/// 用来进行UI测试的窗口
+/// UIテストを行うためのウィンドウ
 /// xushi
 /// </summary>
 public class GM : BasePanel
@@ -34,8 +34,8 @@ public class GM : BasePanel
         //removeBuff = UITool.GetOrAddComponentInChildren<Button>("Btn_Buff7");
 
         openBuffInfo.onClick.AddListener(() => { PanelManager.Instance.Open(new BuffInfoPanel()); });
-        openSelectAbandon.onClick.AddListener(() => { PanelManager.Instance.Open(new SelectPanel(), null, "舍弃"); });
-        openSelectLevelUp.onClick.AddListener(() => { PanelManager.Instance.Open(new SelectPanel(), null, "进阶"); });
+        openSelectAbandon.onClick.AddListener(() => { PanelManager.Instance.Open(new SelectPanel(), null, "Abandon"); });
+        openSelectLevelUp.onClick.AddListener(() => { PanelManager.Instance.Open(new SelectPanel(), null, "Advanced"); });
         //openTipsPanel.onClick.AddListener(() => { PanelManager.Instance.Open(new TipsPanel()); });
         //openBottonTips.onClick.AddListener(() => { PanelManager.Instance.Open(new BottomTips()); });
 

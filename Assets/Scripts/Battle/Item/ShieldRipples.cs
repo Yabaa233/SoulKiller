@@ -59,13 +59,13 @@ public class ShieldRipples : MonoBehaviour
         if(chararcterType == E_ChararcterType.player)
         {
             disableTag = "PlayerWeapon";
-            //炸盾伤害
+            //爆発シールドダメージ
             if(isBoom && collider.tag == "EmyBody" && ableBoom)
             {
                 calcuDamagewithType(collider);
             }
 
-            //周期性伤害
+            //定期的なダメージ
             if(chararcterType == E_ChararcterType.player && isAoe)
             {
                 FMODUnity.RuntimeManager.PlayOneShot("event:/Player/shierdBO");
@@ -82,7 +82,7 @@ public class ShieldRipples : MonoBehaviour
             disableTag = "EmyWeapon";
         }
 
-        //屏蔽攻击的tag
+        //攻撃をブロックするタグ
         if(collider.tag == disableTag || collider.tag == "Ground")
         {
             return;
@@ -126,16 +126,20 @@ public class ShieldRipples : MonoBehaviour
 /// </summary>
     public void ShieldDamage()
     {
-        //切换判定区域
+        //判断領域の切り替え
         sphereCollider.enabled = false;
         AoeCollider.enabled = false;
         boxCollider.enabled = true;
         isBoom = true;
     }
 
-/// <summary>
-/// 現在のシールドを破壊
-/// </summary>
+///<summary>
+
+
+////// 現在のシールドを破壊する
+
+
+///</summary>
     public void DestroyShield()
     {
         StartCoroutine(EffectPlay());

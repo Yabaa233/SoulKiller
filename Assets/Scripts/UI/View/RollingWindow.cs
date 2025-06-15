@@ -10,56 +10,56 @@ public class RollingWindow : BasePanel
     static readonly string path = "UI/Panel/RollingWindow";
     public RollingWindow() : base(new UIType(path)) { }
 
-    //选项预制体
+    //選択肢プレファブ体
     private GameObject optionPrefab;
-    //选项组的父对象
+    //オプショングループの親オブジェクト
     private GameObject optionGroup;
-    //选项组
+    //オプショングループ
     private Transform[] options;
-    //选项总数
+    //選択肢の総数
     [Range(0,20)]
     private int optionNUm;
-    //选项总数的一半
+    //選択肢の総数の半分
     private float halfNum;
-    //选项和选项位置
+    //選択肢と選択肢の位置
     private Dictionary<Transform,Vector3> OptionP = new Dictionary<Transform, Vector3>();
-    //调整层级顺序的字典
+    //階層順序を調整する辞書
     private Dictionary<Transform,int> OptionS = new Dictionary<Transform, int>();
-    //旋转中心
+    //回転中心
     private Vector3 center = Vector3.zero;
-    //旋转半径
+    //回転半径
     private float R = 50f;
-    //旋转速度
+    //回転速度
     [Range(1f,100f)]
     private float speed;
-    //y轴的偏移量，让每一个元素都能被看到
+    //y軸のオフセット量、すべての要素が見えるようにします。
     private float yOffet;
     //最小透明度
     [Range(0,1)]
     public float minAlpha;
 
-    //选中项的缩放程度
+    //選択項目のズームレベル
     [Range(1,5)]
     public float firstS;
     [Range(0,1)]
-    public float minS;//最小缩放程度
+    public float minS;//最小スケール度
     [Range(0,1)]
-    public float tempS;//旋转过程中的缩放程度
+    public float tempS;//回転過程におけるスケーリングの程度
     [Range(0,0.5f)]
-    public float smoothSTime;//缩放的平滑时间
+    public float smoothSTime;//ズームのスムーズな時間
 
-    Coroutine currentPIE;//当前正在移动的协程
-    Coroutine[] SIE2;//所有的缩放协程
+    Coroutine currentPIE;//現在移動中のコルーチン
+    Coroutine[] SIE2;//すべてのスケーリングコルーチン
 
-    //边框颜色部分
-    Image[] border;//选项边框
-    [ColorUsage(true,false)]//第一个参数为是否显示Alpha通道，第二个参数为是否开启HDR
-    public Color originColor;//初始边框颜色
+    //枠線の色部分
+    Image[] border;//選択肢の枠線
+    [ColorUsage(true,false)]//最初のパラメータはAlphaチャンネルを表示するかどうか、二番目のパラメータはHDRを有効にするかどうかです。
+    public Color originColor;//初期の枠線の色
     [ColorUsage(true,false)]
-    public Color firstColor;//选中边框的颜色
+    public Color firstColor;//選択した枠線の色
 
-    private Button leftButton;//左按钮
-    private Button rightButton;//右按钮
+    private Button leftButton;//左ボタン
+    private Button rightButton;//右ボタン
 
     public override void OnInit()
     {
@@ -68,26 +68,26 @@ public class RollingWindow : BasePanel
     }
 
 
-    //重写函数部分
+    //関数部分の書き換え
     public override void OnShow(params object[] para)
     {
-        ////组件绑定
+        ////コンポーネントのバインディング
         //optionGroup = skin.transform.Find("Option").gameObject;
         //optionPrefab = optionGroup.transform.Find("Item").gameObject;
         //leftButton = skin.transform.Find("LeftButton").gameObject.GetComponent<Button>();
         //rightButton = skin.transform.Find("RightButton").gameObject.GetComponent<Button>();
 
-        //组件绑定
+        //コンポーネントのバインディング
         optionGroup = UITool.FindChildGameObject("Option");
         optionPrefab = UITool.FindChildGameObject("Item");
         leftButton = UITool.GetOrAddComponentInChildren<Button>("LeftButton");
         rightButton = UITool.GetOrAddComponentInChildren<Button>("RightButton");
 
-        //添加监听
+        //リスナーを追加する
         leftButton.onClick.AddListener(TurnLeft);
         rightButton.onClick.AddListener(TurnRight);
 
-        //数据初始化
+        //データの初期化
         optionNUm = 4;
         yOffet = 40;
         speed = 8;
@@ -99,19 +99,19 @@ public class RollingWindow : BasePanel
         originColor = Color.white;
         firstColor = Color.black;
 
-        //初始化各种数组
+        //各種の配列を初期化する
         SIE2 = new Coroutine[optionNUm];
         options = new Transform[optionNUm];
         border = new Image[optionNUm];
 
-        //生成逻辑
+        //生成ロジック
         Generate();
     }
     
     public void Generate()
     {
-        Debug.Log("生成了循环UI");
-        for(int i=0;i<optionNUm - 1;i++)//-1是因为第一个已经生成了，用来当作预制体模板
+        Debug.Log("サイクリックUIが生成されました");
+        for(int i=0;i<optionNUm - 1;i++)//-1は、最初のものがすでに生成され、プレファブテンプレートとして使用するためです。
         {
             GameObject go = GameObject.Instantiate(optionPrefab,Vector3.zero,Quaternion.identity,optionGroup.transform);
             go.name = i.ToString();
@@ -126,11 +126,11 @@ public class RollingWindow : BasePanel
             SetBorderColor(i,originColor);
         }
 
-        InitPos();//初始化位置
-        InitSibling();//对位置进行排列
-        SetAlpha();//设置元素透明度
-        SetFristColor();//设置元素颜色
-        // MonoHelper.Instance.StartCoroutine(SetScale());//设置缩放比例大小，暂时不需要这个功能
+        InitPos();//初期位置
+        InitSibling();//位置を整列する
+        SetAlpha();//要素の透明度を設定する
+        SetFristColor();//要素の色を設定する
+        // MonoHelper.Instance.StartCoroutine(SetScale());//スケールを設定する、現在はこの機能は不要
     }
 
     public void InitPos()
@@ -139,13 +139,13 @@ public class RollingWindow : BasePanel
 
         for(int i=0;i<optionNUm;i++)
         {
-            //设置对应的角度
+            //対応する角度を設定する
             angle = (360.0f/(float)optionNUm)* i *Mathf.Deg2Rad;
 
             float x = Mathf.Sin(angle) * R;
             float z = -Mathf.Cos(angle) * R;
 
-            //设置对应的偏移量
+            //対応するオフセットを設定する
             float y = 0;
             if(i!=0)
             {
@@ -156,7 +156,7 @@ public class RollingWindow : BasePanel
                 }
             }
 
-            //初始化位置和字典
+            //位置と辞書の初期化
             Vector3 temp = options[i].localPosition = new Vector3(0f,y,z);
             OptionP.Add(options[i],temp);
         }
@@ -164,10 +164,10 @@ public class RollingWindow : BasePanel
 
     public void InitSibling()
     {
-        //设置顺序
+        //順序を設定する
         for(int i=0;i<optionNUm;i++)
         {
-            //没有过半
+            //まだ半分も経っていません
             if( i <= halfNum)
             {
                 //偶数
@@ -181,19 +181,19 @@ public class RollingWindow : BasePanel
                     options[i].SetSiblingIndex((int)((optionNUm-1)/2) - i);
                 }
             }
-            else//过半
+            else//半分以上
             {
                 options[i].SetSiblingIndex(options[optionNUm - i].GetSiblingIndex());
             }
         }
-        //添加到字典
+        //辞書に追加する
         for(int i = 0;i<optionNUm;i++)
         {
             OptionS.Add(options[i],options[i].GetSiblingIndex());
         }
     }
 
-    //获取当前选项Index
+    //現在の選択肢のインデックスを取得する
     public int GetFirst()
     {
         for(int i = 0;i<optionNUm;i++)
@@ -203,13 +203,13 @@ public class RollingWindow : BasePanel
                 return i;
             }
         }
-        //没有找到的标识
+        //見つからない識別子
         return 233;
     }
 
     public void TurnLeft()
     {
-        Debug.Log("点击了按钮事件");
+        Debug.Log("ボタンイベントをクリックしました");
         MonoHelper.Instance.StartCoroutine(MoveLeft());
     }
 
@@ -228,10 +228,10 @@ public class RollingWindow : BasePanel
             tf.localPosition = Vector3.MoveTowards(tf.localPosition,target,tempspeed *Time.deltaTime);
             yield return null;
         }
-        //更新字典里的位置
+        //辞書の位置を更新する
         OptionP[tf] = target;
 
-        //设置透明度
+        //透明度を設定する
         SetAlpha();
 
         yield return null;
@@ -239,13 +239,13 @@ public class RollingWindow : BasePanel
 
     IEnumerator MoveLeft()
     {
-        //避免协程冲突
+        //コルーチンの競合を避ける
         if(currentPIE !=null)
         {
             yield return currentPIE;
         }
 
-        //暂时不开启缩放功能
+        //一時的にズーム機能をオフにします。
         // for(int i = 0;i<optionNUm;i++)
         // {
         //     if(SIE2[i] != null)
@@ -254,7 +254,7 @@ public class RollingWindow : BasePanel
         //     }
         // }
         
-        //重置属性区域
+        //属性領域をリセット
         int first = GetFirst();
         SetBorderColor(first,originColor);
         // ReSetScale();
@@ -288,7 +288,7 @@ public class RollingWindow : BasePanel
         
         // MonoHelper.Instance.StartCoroutine(SetScale());
 
-        SetFristColor();//设置元素颜色
+        SetFristColor();//要素の色を設定する
 
 
         yield return null; 
@@ -302,7 +302,7 @@ public class RollingWindow : BasePanel
             yield return currentPIE;
         }
 
-        //暂时不开启缩放功能
+        //一時的にズーム機能をオフにします。
         // for(int i = 0;i<optionNUm;i++)
         // {
         //     if(SIE2[i] != null)
@@ -312,22 +312,22 @@ public class RollingWindow : BasePanel
         // }
 
 
-        //重置属性区域
+        //属性領域をリセット
         int first = GetFirst();
         SetBorderColor(first,originColor);
         // ReSetScale();
         
-        //存储信息：最后
+        //情報の保存：最後
         Vector3 p = OptionP[options[optionNUm - 1]];
         int s = OptionS[options[optionNUm - 1]];
         Vector3 targetP;
 
-        //从最后一个开始循环
+        //最後のものからループを開始します
         for(int i = optionNUm - 1;i>=0;i--)
         {
             if(i ==0 )
             {
-                //确定目标的移动位置
+                //目標の移動位置を確定する
                 targetP = p;
                 OptionS[options[i]] = s;
             }
@@ -343,19 +343,19 @@ public class RollingWindow : BasePanel
 
         // MonoHelper.Instance.StartCoroutine(SetScale());
 
-        SetFristColor();//设置元素颜色
+        SetFristColor();//要素の色を設定する
 
 
         yield return null;
     }
 
-    private void SetAlpha()//根据Z值动态生成透明度
+    private void SetAlpha()//Z値に基づいて透明度を動的に生成する
     {
-        //计算Z值的七点，即当前选项，透明度最大
+        //Z値を計算する7つのポイント、つまり現在の選択肢、透明度が最大です。
         float startz = center.z - R;
         foreach(var option in OptionP)
         {
-            //计算透明度
+            //透明度を計算する
             float val = 1 - Mathf.Abs(option.Value.z - startz) / (2*R)*(1-minAlpha);
 
             Image[] img = option.Key.GetComponentsInChildren<Image>();
@@ -373,7 +373,7 @@ public class RollingWindow : BasePanel
 
         for(int i =0;i<optionNUm;i++)
         {
-            //当前选项的放大率是单独设置的
+            //現在のオプションの拡大率は個別に設定されています。
             if(i == first)
             {
                 SIE2[i] = MonoHelper.Instance.StartCoroutine(ChangeScale(options[i],firstS));
@@ -397,11 +397,11 @@ public class RollingWindow : BasePanel
         }
     }
 
-    // 缩放处理的协程
+    // ズーム処理のコルーチン
     IEnumerator ChangeScale(Transform tf,float targetS)
     {
         float temp = 0;
-        while(Mathf.Abs(tf.localScale.x - targetS) > 0.001)//由于有可能永远都无法达到相同的缩放程度，所以这里主要是小于某个范围就行
+        while(Mathf.Abs(tf.localScale.x - targetS) > 0.001)//同じスケールに到達できない可能性があるため、ここでは主にある範囲より小さいことが重要です。
         {
             float s = Mathf.SmoothDamp(tf.localScale.x,targetS,ref temp,smoothSTime);
             tf.localScale = Vector3.one * s;
@@ -411,11 +411,11 @@ public class RollingWindow : BasePanel
     }
 
 
-    //让整体居中显示，避免上下空间差距过大
+    //全体を中央に表示させ、上下の空間の差が大きすぎるのを避けてください。
     IEnumerator AlignCenter()
     {
-        //确保缩放已经完成了
-        //暂时不开启缩放功能
+        //拡大縮小が完了したことを確認してください。
+        //一時的にズーム機能をオフにします。
         // for(int i = 0;i<optionNUm;i++)
         // {
         //     if(SIE2[i] != null)
@@ -425,13 +425,13 @@ public class RollingWindow : BasePanel
         // }
 
         float a = options[0].GetComponent<RectTransform>().rect.height * options[0].localScale.x / 2f;
-        //如果为偶数的话
+        //偶数であれば
         if(optionNUm % 2 == 0)
         {
             float b = options[(int)halfNum].GetComponent<RectTransform>().rect.height * options[(int)halfNum].localScale.x / 2f;
             optionGroup.transform.localPosition = new Vector3(0,(-halfNum * yOffet + a - b)/2f,0);
         }
-        //如果是奇数
+        //奇数であるなら
         else
         {
             int temp = (optionNUm - 1) /2;
@@ -442,14 +442,14 @@ public class RollingWindow : BasePanel
         yield return null;
     }
 
-    private void SetBorderColor(int i,Color c)//设置颜色的方法
+    private void SetBorderColor(int i,Color c)//色の設定方法
     {
         border[i].color = c; 
     }
 
-    private void SetFristColor()//设置第一个颜色
+    private void SetFristColor()//最初の色を設定する
     {
-        //设置边框颜色
+        //枠線の色を設定する
         int first = GetFirst();
         SetBorderColor(first,firstColor);
     }

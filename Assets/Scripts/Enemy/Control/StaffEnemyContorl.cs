@@ -6,7 +6,7 @@ using UnityEngine.AI;
 
 public class StaffEnemyContorl : BaseEnemyControl
 {
-    [Header("敵の状態機関連")]
+    [Header("敵の状態機関に関連する")]
     public long_DistanceFSM enemyFSM;
     public Transform firePoint;
 
@@ -42,10 +42,10 @@ public class StaffEnemyContorl : BaseEnemyControl
         orientationObject = transform.Find("OrientationObject");
         firePoint = transform.Find("firepoint");
 
-        //自身の属性の設定
+        //自分の属性の設定
         transform.tag = tagStr;
 
-        //初期化いくつかの関連状態
+        //いくつかの関連する状態を初期化します
         characterBuffManager = new CharacterBuffManager();
         enemyData = new CharacterData(Instantiate(tempCharaterData));
         characterBuffManager.Init(E_ChararcterType.enemy);
@@ -75,7 +75,7 @@ public class StaffEnemyContorl : BaseEnemyControl
         base.Update();
         //各管理クラスのUpdateメソッド
         characterBuffManager.OnUpdate(Time.deltaTime);
-        // characterBuffManager.AddBuff(new HpUp(gameObject,characterBuffManager.type));//加血方法
+        // characterBuffManager.AddBuff(new HpUp(gameObject,characterBuffManager.type));//HPを上げる方法
         if(enemyFSM.parameter.ableAttact)
         {
             warningArea.enabled = false;
@@ -96,9 +96,11 @@ public class StaffEnemyContorl : BaseEnemyControl
         base.Die();
         enemyFSM.parameter.isDead = true;
     }
-/// <summary>
-/// 追跡目標の設定
-/// </summary>
+///<summary>
+
+////// 追跡目標の設定
+
+///</summary>
 /// <param name="transform"></param>
     public override void SetTarget(Transform transform)
     {

@@ -4,9 +4,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-/// <summary>
-/// 部屋のトリガー
-/// </summary>
+///<summary>
+
+
+////// 部屋のトリガー
+
+
+///</summary>
 public enum E_RoomType
 {
     enemy,
@@ -16,24 +20,24 @@ public enum E_RoomType
 
 public class RoomTrigger : MonoBehaviour
 {
-    [Header("怪物加载策略")]
+    [Header("Monster Loading Strategy")]
     public List<float> loadPolicy = new List<float>();
-    [Header("该地图是否已被加载过")]
+    [Header("Has this map been loaded before?")]
     public bool lorded = false;
-    [Header("该地图是否已通关")]
+    [Header("Has this map been cleared?")]
     public bool cleared = false;
     public E_RoomType roomType = E_RoomType.enemy;
     public E_BuffKind buffKind;
-    protected Transform enemys;   //小怪生成最顶层父物体
-    public int enemyCount;  //小怪数量
-    public Func<bool> clearCheck;   //检查大罪关通关条件
-    public GameObject crimeRoomPrefab;  //大罪关卡机关预制体
-    public Transform resurrectionPoint;    //玩家死亡后的复活点 只有大罪关卡需要配置
-    private GameObject curCrimeRoom;    //当前的大罪关卡
-    protected GameObject closeCollider;   //封闭时碰撞体
-    protected GameObject openCollider;    //开放时碰撞体
-    private GameObject clearTrigger;    //通关传送门
-    public UnityAction ClearScenc;        //通关清理场景
+    protected Transform enemys;   //小さなモンスターは最上位の親オブジェクトを生成します。
+    public int enemyCount;  //モンスターの数
+    public Func<bool> clearCheck;   //大罪の関のクリア条件を確認してください
+    public GameObject crimeRoomPrefab;  //大罪のステージメカニズムのプレファブ
+    public Transform resurrectionPoint;    //プレイヤーが死亡した後の復活ポイントは、大罪のレベルだけ設定が必要です。
+    private GameObject curCrimeRoom;    //現在の大罪のステージ
+    protected GameObject closeCollider;   //閉鎖時の衝突体
+    protected GameObject openCollider;    //オープン時のコリジョンボディ
+    private GameObject clearTrigger;    //クリアポータル
+    public UnityAction ClearScenc;        //クリアシーンの整理
     private void Awake()
     {
         enemys = transform.Find("Enemys");
@@ -57,18 +61,26 @@ public class RoomTrigger : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 开启通路
-    /// </summary>
+    ///<summary>
+
+
+    ////// 道を開く
+
+
+    ///</summary>
     public void OpenWallCollider()
     {
         openCollider.SetActive(true);
         closeCollider.SetActive(false);
     }
 
-    /// <summary>
-    /// 关闭通路
-    /// </summary>
+    ///<summary>
+
+
+    ////// 通路を閉じる
+
+
+    ///</summary>
     public void CloseWallCollider()
     {
         openCollider.SetActive(false);
@@ -76,9 +88,9 @@ public class RoomTrigger : MonoBehaviour
     }
 
     /// <summary>
-    /// 玩家进入，开始加载小怪或Boss
+    /// プレイヤーが入場し、モンスターやボスのロードを開始します。
     /// </summary>
-    /// <param name="other"> 进入Trigger的物体信息 </param>
+    /// <param name="other"> トリガーに入るオブジェクトの情報 </param>
     virtual protected void OnTriggerEnter(Collider other)
     {
         if (!lorded && other.tag == "Player")
@@ -101,17 +113,17 @@ public class RoomTrigger : MonoBehaviour
             }
             else
             {
-                //加载Boss
+                //ボスをロード中
                 RoomManager.Instance.LoadBoss(enemys);
                 FmodManager.Instance.PlayBGM(FmodManager.Instance.BGMPathDefinitions[0].ambientAudioType);
 
             }
-            CloseWallCollider();    //玩家进入，关闭通路
+            CloseWallCollider();    //プレイヤーが入場し、通路を閉じます。
         }
     }
 
     /// <summary>
-    /// 玩家撞墙，提示玩家没有通关大罪关
+    /// プレイヤーが壁にぶつかると、プレイヤーが大罪のステージをまだクリアしていないことを示します。
     /// </summary>
     private void OnCollisionEnter(Collision other)
     {
@@ -120,11 +132,11 @@ public class RoomTrigger : MonoBehaviour
         {
             if (!lorded && other.transform.tag == "Player")
             {
-                // Debug.Log("没有通关所有大罪关");
+                // Debug.Log("You have not cleared all levels of the deadly sins.");
                 Vector3 dir = GameManager.Instance.currentPlayer.transform.position - other.GetContact(0).point;
                 dir.y = 0;
                 GameManager.Instance.currentPlayer.rb.AddForce(dir.normalized * 1000, ForceMode.Impulse);
-                PanelManager.Instance.Open(new BottomTips(), null, "你的罪恶尚未洗清....【还有未通关的大罪关卡】");
+                PanelManager.Instance.Open(new BottomTips(), null, "Your sins have not yet been absolved.... [There are still major sin levels that have not been cleared.]");
             }
         }
     }
@@ -132,7 +144,7 @@ public class RoomTrigger : MonoBehaviour
     protected void Start()
     {
         // if (loadPolicy.Count == 1) return;
-        /// 计算生成策略
+        /// 計算生成戦略
         for (int i = 1; i < loadPolicy.Count; i++)
         {
             loadPolicy[i] += loadPolicy[i - 1];
@@ -148,9 +160,13 @@ public class RoomTrigger : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 重置房间信息
-    /// </summary>
+    ///<summary>
+
+
+    ////// 部屋の情報をリセットします
+
+
+    ///</summary>
     public void ResetRoom()
     {
         lorded = false;
@@ -164,7 +180,7 @@ public class RoomTrigger : MonoBehaviour
             RoomManager.Instance.DestroyEnemy(enemys);
             Destroy(curCrimeRoom);
             curCrimeRoom = null;
-            clearCheck = null;  //清空事件监听
+            clearCheck = null;  //イベントリスナーをクリアする
         }
         else if (roomType == E_RoomType.boss)
         {
@@ -178,16 +194,20 @@ public class RoomTrigger : MonoBehaviour
         OpenWallCollider();
     }
 
-    /// <summary>
-    /// 小怪死亡，同时判断是否通关
-    /// </summary>
+    ///<summary>
+
+
+    ////// 小さなモンスターが死亡し、同時にクリアしたかどうかを判断します。
+
+
+    ///</summary>
     virtual public void EnemyDie()
     {
         enemyCount--;
-        // Debug.Log("小怪死亡");
+        // Debug.Log("The monster has died.");
         if (enemyCount == 0)
         {
-            Debug.Log("小怪全部死亡");
+            Debug.Log("All the monsters are dead.");
             if (roomType == E_RoomType.enemy)
             {
                 Clear();
@@ -201,11 +221,11 @@ public class RoomTrigger : MonoBehaviour
     }
 
     /// <summary>
-    /// 机关全部被破坏，同时判断小怪是否全部死亡
+    /// すべての装置が破壊され、同時にモンスターがすべて死んだかどうかを判断します。
     /// </summary>
     public void TrapClear()
     {
-        Debug.Log("机关全部破坏");
+        Debug.Log("All mechanisms are destroyed.");
         if (enemyCount == 0)
         {
             Clear();
@@ -213,7 +233,7 @@ public class RoomTrigger : MonoBehaviour
     }
 
     /// <summary>
-    /// 玩家击败所有小怪和全部机关后逻辑
+    /// プレイヤーがすべてのモンスターとすべての装置を倒した後のロジック
     /// </summary>
     protected void Clear()
     {
@@ -244,12 +264,12 @@ public class RoomTrigger : MonoBehaviour
         // Time.timeScale = 0.1f;
         StartCoroutine(GameManager.Instance.PlayerStop(1.5f));
         CM_Effect.Instance.CM_TransitionDim(8, 1.2f);
-        Invoke("ResetTime", 2f);  //延迟1秒调用重置时间
+        Invoke("ResetTime", 2f);  //リセット時間を1秒遅らせて呼び出します
         OpenWallCollider();
     }
 
     /// <summary>
-    /// 缓速播放结束 显示通关UI
+    /// スロープレイが終了し、クリアUIが表示されます
     /// </summary>
     protected void ResetTime()
     {
@@ -269,24 +289,28 @@ public class RoomTrigger : MonoBehaviour
     }
 
     /// <summary>
-    /// 显示小怪通关UI
+    /// ミニモンスタークリアUIを表示する
     /// </summary>
     private void ShowEnemyRoomClearUI()
     {
-        PanelManager.Instance.Open(new SelectPanel(), null, "进阶");
+        PanelManager.Instance.Open(new SelectPanel(), null, "Advanced");
     }
 
-    /// <summary>
-    /// 显示大罪通关UI
-    /// </summary>
+    ///<summary>
+
+
+    ////// 大罪クリアUIを表示します
+
+
+    ///</summary>
     private void ShowCrimeRoomClearUI()
     {
         BuffDataManager.Instance.RecordBuffList();
-        PanelManager.Instance.Open(new SelectPanel(), null, "舍弃");
+        PanelManager.Instance.Open(new SelectPanel(), null, "Abandon");
     }
 
     /// <summary>
-    /// 显示Boss通关特效
+    /// ボスクリアの特殊エフェクトを表示する
     /// </summary>
     private void ShowBossRoomClear()
     {

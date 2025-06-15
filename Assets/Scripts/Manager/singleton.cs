@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class singleton<T> : MonoBehaviour where T : singleton<T>
 {
-    private static T instance;  //创建单例
+    private static T instance;  //シングルトンを作成する
     public static T Instance
     {
         get { return instance; }
     }
 
-    protected virtual void Awake()  //允许子类继承和修改
+    protected virtual void Awake()  //サブクラスが継承および修正を許可する
     {
         if (instance != null)
         {
@@ -22,12 +22,12 @@ public class singleton<T> : MonoBehaviour where T : singleton<T>
         }
     }
 
-    public static bool IsInitialized    //判断单例是否已经生成
+    public static bool IsInitialized    //シングルトンがすでに生成されているかどうかを判断する
     {
         get { return instance != null; }
     }
 
-    protected virtual void OnDestroy()  //在被销毁时设置为空
+    protected virtual void OnDestroy()  //破壊される時に空に設定します
     {
         if(instance == this)    instance = null;
     }

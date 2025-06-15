@@ -4,40 +4,40 @@ using UnityEngine;
 using UnityEngine.AI;
 using System;
 
-//敌人状态的注册
+//敵の状態の登録
 public enum E_EnemyStateType
 {
     Idle,   //静止
-    Chase,  //追击
-    Attack, //攻击
-    Hit,    //受到攻击
+    Chase,  //追撃
+    Attack, //攻撃
+    Hit,    //攻撃を受ける
     Dead,   //死亡
-    Shot,   //射击
-    Find, //发现状态
-    Storage,//蓄力状态
-    Dizzy,//眩晕状态
-    Boom,//自爆状态
-    Jump,//跳跃状态
-    MoveAfter,//走位状态
+    Shot,   //射撃
+    Find, //状態を発見する
+    Storage,//蓄積状態
+    Dizzy,//めまい状態
+    Boom,//自爆状態
+    Jump,//ジャンプ状態
+    MoveAfter,//位置決め状態
 }
 
 
-//敌人的所有参数
+//敵のすべてのパラメータ
 [Serializable]
 public class EnemyParameter
 {
-    public CharacterData enemyData;//得到一份基础属性引用
-    public Animator animator;//动画控制器
-    public GameObject _mainCamera;//相机位置
-    public Transform body;//身体部分
-    public EzEmyStateData_SO enemyStateData;//得到一份属性状态引用
+    public CharacterData enemyData;//基本属性の参照を取得する
+    public Animator animator;//アニメーションコントローラー
+    public GameObject _mainCamera;//カメラの位置
+    public Transform body;//体の部分
+    public EzEmyStateData_SO enemyStateData;//属性状態の参照を取得する
     public Transform target;
     public bool ableChase;
-    public bool getHit; //受到攻击
-    public NavMeshAgent agent;//导航组件
-    public Transform enemyPos;//自己的位置
-    public bool isDead;//是否已经死亡
-    public bool isDash;//是否已经冲刺过
+    public bool getHit; //攻撃を受ける
+    public NavMeshAgent agent;//ナビゲーションコンポーネント
+    public Transform enemyPos;//自分の位置
+    public bool isDead;//あなたはすでに死んでいますか？
+    public bool isDash;//あなたはすでにスプリントを行ったことがありますか？
 }
 
 public class EnemyFSM : BaseEnemyFSM
@@ -47,7 +47,7 @@ public class EnemyFSM : BaseEnemyFSM
     
     public CDClass DashCD = new CDClass();
 
-    private void Start() {//在这里注册所有的状态机
+    private void Start() {//ここで全ての状態機械を登録してください。
         DashCD.maxCDTime = 3f;
         rb = GetComponent<Rigidbody>();
         GameManager.Instance.CDList.Add(DashCD);
@@ -62,17 +62,21 @@ public class EnemyFSM : BaseEnemyFSM
         states.Add(E_EnemyStateType.Hit, new Enemy_HitState(this));
 
         
-        TranstionState(E_EnemyStateType.Idle); //初始化状态为Idle，设置初始状态为待机状态
+        TranstionState(E_EnemyStateType.Idle); //初期状態はIdleに設定し、初期状態を待機状態に設定します。
     }
 
-    private void Update() {//在这里执行当前的状态机Update
+    private void Update() {//ここで現在のステートマシンの更新を実行します。
         FaceToCamera();
         currentState.OnUpDate();
     }
 
-    /// <summary>
-    /// 让敌人朝向玩家的左右
-    /// </summary>
+    ///<summary>
+
+
+    ////// 敵をプレイヤーの左右に向けてください。
+
+
+    ///</summary>
     public void RotateToTarget()
     {
         float  weight = parameter.target.transform.position.x - transform.position.x;
@@ -91,7 +95,7 @@ public class EnemyFSM : BaseEnemyFSM
     }
 
     /// <summary>
-    /// 让物体指向玩家方向
+    /// オブジェクトをプレイヤーの方向に向けます
     /// </summary>
     /// <param name="other"></param>
     public void FaceToTarget()
@@ -101,32 +105,32 @@ public class EnemyFSM : BaseEnemyFSM
         transform.rotation = Quaternion.LookRotation(lookVector);
     }
 
-    private void OnTriggerEnter(Collider other) {//第一个敌人的状态机为见到了玩家就直接追击不停止
-        // Debug.Log("触发碰撞器");
+    private void OnTriggerEnter(Collider other) {//最初の敵の状態マシンは、プレイヤーを見つけるとすぐに追いかけて止まりません。
+        // Debug.Log("コライダーがトリガーされました");
         if(other.tag == "Player")
         {
             if(parameter.ableChase == false)
             {
-                // Debug.Log("触发状态");
+                // Debug.Log("トリガー状態");
                 parameter.ableChase = true;
             }
             else
             {   
-                // Debug.Log("掉血");
+                // Debug.Log("血を失う");
                 GameManager.Instance.EnemyAttack(parameter.enemyPos.gameObject.GetComponent<BaseEnemyControl>());
             }
         }
     }
 
     private void OnCollisionEnter(Collision other) {
-        // Debug.Log("产生碰撞");
+        // Debug.Log("衝突が発生しました");
         if(other.transform.tag == "Player")
         {
             
         }
     }
 
-    // private void OnDrawGizmos() //在这里绘制距离相关的支持
+    // private void OnDrawGizmos() //ここでは距離関連のサポートを描画します
     // {
     //     Gizmos.color = Color.red;
     //     Gizmos.DrawSphere(transform.position,10f);

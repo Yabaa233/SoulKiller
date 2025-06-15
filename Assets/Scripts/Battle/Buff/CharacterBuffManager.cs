@@ -13,20 +13,20 @@ public enum E_ChararcterType
 [System.Serializable]
 public class CharacterBuffManager
 {
-    [Header("現在のキャラクタータイプ")]
+    [Header("Current character type")]
     public E_ChararcterType type;
     [SerializeField]
-    [Tooltip("現在のキャラクターが保持するBUffリスト")] public List<I_BuffBase> characterKeepBuffList = new List<I_BuffBase>();
+    [Tooltip("The Buff list currently held by the character.")] public List<I_BuffBase> characterKeepBuffList = new List<I_BuffBase>();
     [SerializeField]
-    [Tooltip("文字と対応するインデックスの配列")] public Dictionary<E_BuffKind, I_BuffBase> indexDictionary = new Dictionary<E_BuffKind, I_BuffBase>();
-    //実際には最初からこの方法を使用してすべてのBuffを保存する！
+    [Tooltip("An array of text and corresponding indices")] public Dictionary<E_BuffKind, I_BuffBase> indexDictionary = new Dictionary<E_BuffKind, I_BuffBase>();
+    //実際には、最初からこの方法を使ってすべてのバフを保存するんだ！
     // [SerializeField]
-    // [Tooltip("継続的なBuff保存場所")]public Dictionary<E_BuffKind,List<I_BuffBase>> timeBuffDictionary = new Dictionary<E_BuffKind, List<I_BuffBase>>();
+    // [Tooltip("Storage location for persistent Buff")]public Dictionary<E_BuffKind,List<I_BuffBase>> timeBuffDictionary = new Dictionary<E_BuffKind, List<I_BuffBase>>();
 
-    //実体のあるBuffがある場所
-    [Header("シールド実体")] public ShieldRipples shieldRipples;
+    //実体のあるバフが存在する場所
+    [Header("Shield Entity")] public ShieldRipples shieldRipples;
     /// <summary>
-    /// バフマネージャーからすべてのバフタイプを取得し、バフリストを初期化します
+    /// バフマネージャーからすべてのバフタイプを取得し、バフリストを初期化します。
     /// </summary>
     public void Init(E_ChararcterType _type)
     {
@@ -40,7 +40,7 @@ public class CharacterBuffManager
     /// <param name="gameObject">オブジェクト</param>
     public void AddBuff(I_BuffBase buff, GameObject gameObject,bool isKeppBuff = false)
     {
-        if(isKeppBuff)//もし継続的なBuffなら
+        if(isKeppBuff)//もし継続的なバフなら
         {
             if (!indexDictionary.ContainsKey(buff.GetBuffType()))
             {
@@ -53,11 +53,11 @@ public class CharacterBuffManager
                 buff.OnAdd(gameObject);//一時的な追加方法
             }
         }
-        else//もし継続的でないなら
+        else//もし継続的でなければ
         {
             if (indexDictionary.ContainsKey(buff.GetBuffType()))
             {
-                Debug.LogWarning("追加失敗、既に存在するBuffを追加しようとしています");
+                Debug.LogWarning("Failed to append, trying to add an already existing Buff.");
                 return;
             }
             buff.OnAdd(gameObject);//一時的な追加方法
@@ -72,21 +72,21 @@ public class CharacterBuffManager
     /// <param name="buff">バフインスタンス</param>
     public void RemoveBuff(I_BuffBase buff)
     {
-        // Debug.Log("REMOVE1を呼び出し");
+        // Debug.Log("Call REMOVE1.");
         buff.OnRemove();
         characterKeepBuffList.Remove(buff);
         indexDictionary.Remove(buff.GetBuffType());
     }
     /// <summary>
-    /// バフを削除する方法、バフのタイプだけ知っているとき
+    /// バフを削除する方法、バフのタイプだけを知っている場合
     /// </summary>
     /// <param name="buffKind">バフタイプ</param>
     public void RemoveBuff(E_BuffKind buffKind)
     {
-        // Debug.Log("rEMOVE2を呼び出し");
+        // Debug.Log("Call rEMOVE2.");
         if (!indexDictionary.ContainsKey(buffKind))
         {
-            Debug.LogWarning("対応するバフが存在しないため削除できません");
+            Debug.LogWarning("Cannot delete because there is no corresponding buff.");
             return;
         }
         I_BuffBase buff = indexDictionary[buffKind];
@@ -95,9 +95,13 @@ public class CharacterBuffManager
         indexDictionary.Remove(buffKind);
     }
 
-    /// <summary>
-    /// 現在のキャラクターに特定のバフがあるかどうかを確認します
-    /// </summary>
+    ///<summary>
+
+
+    ////// 現在のキャラクターが特定のバフを持っているかどうかを確認します。
+
+
+    ///</summary>
     /// <param name="buffKind">バフタイプの列挙</param>
     /// <returns></returns>
     public bool FindBuff(E_BuffKind buffKind)
@@ -113,46 +117,46 @@ public class CharacterBuffManager
     }
 
     /// <summary>
-    /// 反射を使用して対応するBuffを対応するレベルにアップグレードします
+    /// リフレクションを使用して、対応するBuffを対応するレベルにアップグレードします。
     /// </summary>
-    /// <param name="buffKind">Buff类型</param>
-    /// <param name="level">等级</param>
-    /// <param name="gameObject">持有Buff的对象</param>
+    /// <param name="buffKind">バフの種類</param>
+    /// <param name="level">レベル</param>
+    /// <param name="gameObject">バフを持つオブジェクト</param>
     public void BuffLevelTo(E_BuffKind buffKind, int level, GameObject gameObject)
     {
         if (!indexDictionary.ContainsKey(buffKind))
         {
-            Debug.LogWarning("没有对应的Buff,无法进行升级");
+            Debug.LogWarning("There is no corresponding Buff, unable to upgrade.");
             return;
         }
-        //得到一些变量
+        //いくつかの変数を取得する
         I_BuffBase buff = indexDictionary[buffKind];
         GameObject buffKeeper = buff.GetBuffKeeper();
         E_ChararcterType chararcterType = buff.GetChararcterType();
-        //执行一次移除
+        //一度削除を実行する
         buff.OnRemove();
         characterKeepBuffList.Remove(buff);
         indexDictionary.Remove(buffKind);
 
-        //通过反射重新构建一次Buff
+        //リフレクションを通じてBuffを再構築します
         Assembly assembly = Assembly.GetExecutingAssembly();
         Type t = buff.GetType();
         object[] o = {chararcterType, level};
         I_BuffBase obj = assembly.CreateInstance(t.ToString(), true, BindingFlags.Default, null, o, null, null) as I_BuffBase;
         AddBuff(obj, gameObject);
         BuffDataManager.Instance.playerBuffList = new List<I_BuffBase>(characterKeepBuffList);
-        gameObject.GetComponent<PlayerControl>().PlayerBuffRebuild(BuffDataManager.Instance.playerBuffList);//需要同步一下数据
-        // Debug.Log("Buff已经升级");
+        gameObject.GetComponent<PlayerControl>().PlayerBuffRebuild(BuffDataManager.Instance.playerBuffList);//データを同期する必要があります。
+        // Debug.Log("Buffがアップグレードされました");
     }
 
     /// <summary>
-    /// 重建Buff列表并且赋值
+    /// Buffリストを再構築し、値を割り当てます
     /// </summary>
-    /// <param name="newBuffList">新Buff列表</param>
-    /// <param name="gameObject">要加给哪个物体</param>
+    /// <param name="newBuffList">新しいBuffリスト</param>
+    /// <param name="gameObject">どのオブジェクトに追加するか</param>
     public void BuffReBuild(List<I_BuffBase> newBuffList, GameObject gameObject)
     {
-        // Debug.Log("调用Rebuild");
+        // Debug.Log("Call Rebuild");
         foreach (var buff in characterKeepBuffList)
         {
             buff.OnRemove();
@@ -166,17 +170,17 @@ public class CharacterBuffManager
             buff.OnAdd(gameObject);
             characterKeepBuffList.Add(buff);
             indexDictionary.Add(buff.GetBuffType(), buff);
-            //塞进结构体里面传递
+            //構造体に詰めて渡す
             S_BuffKindAndLevel s = new S_BuffKindAndLevel();
             s.buffKind = buff.GetBuffType();
             s.level = buff.GetLevel();
             currentBuffDic.Add(s);
         }
 
-        //同步单例类里面的数据，这样就不用在其它地方单独同步
+        //同期シングルトンクラス内のデータを同期することで、他の場所で個別に同期する必要がなくなります。
         if (newBuffList.Count == 0)
         {
-            Debug.LogWarning("新的Buff个数为0,请确认");
+            Debug.LogWarning("The number of new Buffs is 0, please confirm.");
             // BuffDataManager.Instance.playerCurrentBuff.Clear();
             // BuffDataManager.Instance.enemyCurrentBuff.Clear();
         }
@@ -187,21 +191,21 @@ public class CharacterBuffManager
             {
                 BuffDataManager.Instance.playerCurrentBuff.Clear();
                 BuffDataManager.Instance.playerCurrentBuff = currentBuffDic;
-                //同步单例类的数据存储
+                //同期シングルトンクラスのデータストレージ
                 BuffDataManager.Instance.playerBuffList = new List<I_BuffBase>(characterKeepBuffList);
             }
             else if (chararcterType == E_ChararcterType.enemy)
             {
                 BuffDataManager.Instance.enemyCurrentBuff.Clear();
                 BuffDataManager.Instance.enemyCurrentBuff = currentBuffDic;
-                //同步单例类的数据存储
+                //同期シングルトンクラスのデータストレージ
                 BuffDataManager.Instance.enemyBuffList = new List<I_BuffBase>(characterKeepBuffList);
             }
         }
         
     }
     /// <summary>
-    /// 移除所有的Buff
+    /// すべてのバフを削除します
     /// </summary>
     public void RemoveAllBuff()
     {
@@ -213,11 +217,11 @@ public class CharacterBuffManager
         indexDictionary.Clear();
     }
     /// <summary>
-    /// 同步玩家/敌人/Boss和数据类的数据交互
+    /// プレイヤー/敵/Bossおよびデータクラスのデータ交換を同期します
     /// </summary>
     public void RefreshData()
     {
-        // Debug.Log("调用Refresh");
+        // Debug.Log("Call Refresh");
         List<S_BuffKindAndLevel> currentBuffDic = new List<S_BuffKindAndLevel>();
         foreach (var buff in characterKeepBuffList)
         {
@@ -228,7 +232,7 @@ public class CharacterBuffManager
         }
         if (currentBuffDic.Count == 0)
         {
-            Debug.LogWarning("新的Buff个数为0,请确认");
+            Debug.LogWarning("The number of new Buffs is 0, please confirm.");
             // BuffDataManager.Instance.playerCurrentBuff.Clear();
             // BuffDataManager.Instance.enemyCurrentBuff.Clear();
         }
@@ -239,90 +243,98 @@ public class CharacterBuffManager
             {
                 BuffDataManager.Instance.playerCurrentBuff.Clear();
                 BuffDataManager.Instance.playerCurrentBuff = currentBuffDic;
-                //同步单例类的数据存储
+                //同期シングルトンクラスのデータストレージ
                 BuffDataManager.Instance.playerBuffList = new List<I_BuffBase>(characterKeepBuffList);
             }
             else if (chararcterType == E_ChararcterType.enemy)
             {
                 BuffDataManager.Instance.enemyCurrentBuff.Clear();
                 BuffDataManager.Instance.enemyCurrentBuff = currentBuffDic;
-                //同步单例类的数据存储
+                //同期シングルトンクラスのデータストレージ
                 BuffDataManager.Instance.enemyBuffList = new List<I_BuffBase>(characterKeepBuffList);
             }
         }
 
     }
-    /// <summary>
-    /// 分发对应的Update事件
-    /// </summary>
+    ///<summary>
+
+    ////// 対応するUpdateイベントを配布します
+
+    ///</summary>
     public void OnUpdate(float deltaTime)
     {
         List<I_BuffBase> characterKeepBuffListFuzhu = new List<I_BuffBase>(characterKeepBuffList);
         foreach (var buff in characterKeepBuffListFuzhu)
         {
-            buff.OnUpdate(deltaTime);//在这里对应调用每一个Buff的方法
+            buff.OnUpdate(deltaTime);//ここでは、各Buffのメソッドを対応するように呼び出します。
         }
     }
 
     /// <summary>
-    /// 清空所有减益状态，现在只有掉血Buff所以可以单独修改
+    /// すべてのデバフをクリアし、現在はHP減少のバフのみとなっているため、個別に修正することが可能です。
     /// </summary>
     public void ClearDebuff()
     {
-        //掉血Buff移除
+        //血を失うバフが削除されました
         RemoveBuff(E_BuffKind.HpItemBuff);
     }
 
 
-    /// /////////一些特殊Buff的实现部分
+    /// 一部の特別なバフの実装
 
 
-    /// <summary>
-    /// 吸血返还的生命值
-    /// </summary>
-    /// <param name="damage">当次攻击的伤害值</param>
+    ///<summary>
+
+
+
+    ////// 吸血によって回復するライフポイント
+
+
+
+    ///</summary>
+    /// <param name="damage">この攻撃のダメージ値</param>
     public void ReturnHP(float damage)
     {
         if (!indexDictionary.ContainsKey(E_BuffKind.HpUp))
         {
-            // Debug.LogWarning("没有找到HpBuff,无法吸血");
+            // Debug.LogWarning("HpBuff cannot be found, unable to drain health.");
             return;
         }
-        //如果强制转换不安全的话，可以通过GetLevel判断当前技能等级是否>=吸血开启等级
+        //強制的な変換が安全でない場合、GetLevelを通じて現在のスキルレベルが吸血開始レベル以上であるかどうかを判断することができます。
         HpUp buff = indexDictionary[E_BuffKind.HpUp] as HpUp;
         buff.ReturnHp(damage);
     }
 
     /// <summary>
-    /// 得到玩家冲刺应当有的次数
+    /// プレイヤーがスプリントすべき回数を得る
     /// </summary>
     public int GetDogeTimes()
     {
         if (!indexDictionary.ContainsKey(E_BuffKind.SpeedBuff))
         {
-            return 1;//如果没有该Buff的话就只能冲刺一次
+            return 1;//そのバフがなければ、ダッシュは一度だけしかできません。
         }
         SpeedBuff buff = indexDictionary[E_BuffKind.SpeedBuff] as SpeedBuff;
         return buff.GetDogeTimes();
     }
 
     /// <summary>
-    /// 判定是否有护盾的接口,true代表有护盾，false代表没有护盾
+    /// シールドの有無を判断するインターフェースで、trueはシールドが存在することを示し、falseはシールドが存在しないことを示します。
     /// </summary>
-    /// <param name="characterData">攻击方的数据</param>
-    /// <param name="damage">该次攻击伤害</param>
+    /// <param name="characterData">攻撃者のデータ</param>
+    /// <param name="damage">この攻撃のダメージ</param>
     /// <returns></returns>
     public bool CalcuSheild(CharacterData attackData,float damage)
     {
         bool result = false;
-        if(!indexDictionary.ContainsKey(E_BuffKind.ShieldBuff))//如果没有护盾，则返回
+        if(!indexDictionary.ContainsKey(E_BuffKind.ShieldBuff))//シールドがなければ、戻ってください。
         {
-            // Debug.Log("没有护盾了");
+            // Debug.Log("シールドがなくなりました");
             return result;
         }
         if(shieldRipples == null)
         {
-            // Debug.LogWarning("Buff已经被删除了");
+            // Debug.LogWarning("The buff has already been removed.");
             return result;
         }
         if(shieldRipples.currentHealth<=0)
@@ -331,20 +343,20 @@ public class CharacterBuffManager
         }
         ShieldBuff buff = indexDictionary[E_BuffKind.ShieldBuff] as ShieldBuff;
         FMODUnity.RuntimeManager.PlayOneShot("event:/Monster/NorMal/shierdHit");
-        //反伤
+        //反撃ダメージ
         if(buff.GetLevel()>=4 && type == E_ChararcterType.player)
         {
             buff.DamageReflect(attackData,damage);
         }
 
-        //如果有盾
+        //もし盾があれば
         if(shieldRipples.currentHealth >0)
         {
             result = true;
         }
-        //对盾造成伤害
+        //シールドにダメージを与える
         shieldRipples.currentHealth -= damage;
-        //破碎
+        //壊れた
         if(shieldRipples.currentHealth <= 0)
         {
             shieldRipples.currentHealth = 0;
@@ -353,7 +365,7 @@ public class CharacterBuffManager
                 shieldRipples.isTrue = false;
                 shieldRipples.DestroyShield();
             }
-            if(type == E_ChararcterType.player && buff.GetLevel()>=2 && shieldRipples.isTrue)//玩家的盾破碎后造成伤害
+            if(type == E_ChararcterType.player && buff.GetLevel()>=2 && shieldRipples.isTrue)//プレイヤーの盾が壊れた後、ダメージを与える
             {
                 shieldRipples.ShieldDamage();
                 FMODUnity.RuntimeManager.PlayOneShot("event:/Monster/NorMal/shierdBoom");
@@ -361,9 +373,9 @@ public class CharacterBuffManager
                 // shieldRipples.SetShieldVisble(false);
             }
             // RemoveBuff(buff);
-            //销毁护盾条
+            //シールドバーを破壊する
             // shieldRipples.DestroyShield();
-            //设置可见性
+            //表示設定を行う
             // shieldRipples.isTrue = false;
             // shieldRipples.SetShieldVisble(false);
             // shieldRipples = null;
@@ -372,54 +384,58 @@ public class CharacterBuffManager
         return result;
     }
 
-    /// <summary>
-    /// 判断当前护盾是否还在生效,true代表生效，false代表没生效
-    /// </summary>
+    ///<summary>
+
+
+    ////// 現在のシールドがまだ有効かどうかを判断します。trueは有効を意味し、falseは無効を意味します。
+
+
+    ///</summary>
     /// <returns></returns>
     public bool HasShield()
     {
-        if(!indexDictionary.ContainsKey(E_BuffKind.ShieldBuff))//如果没有护盾，则返回
+        if(!indexDictionary.ContainsKey(E_BuffKind.ShieldBuff))//シールドがなければ、戻ってください。
         {
-            // Debug.Log("没有护盾了");
+            // Debug.Log("シールドがなくなりました");
             return false;
         }
         if(shieldRipples == null)
         {
-            // Debug.LogWarning("Buff已经被删除了");
+            // Debug.LogWarning("The buff has already been removed.");
             return false;
         }
         return shieldRipples.isTrue;
     }
 
     /// <summary>
-    /// 返回玩家可以连击的次数
+    /// プレイヤーがコンボを出せる回数を返します
     /// </summary>
     /// <returns></returns>
     public int PlayerSwordTimes()
     {
         if(type != E_ChararcterType.player)
         {
-            Debug.LogWarning("注意,你正在为非玩家角色获取连击次数");
+            Debug.LogWarning("Be aware, you are obtaining combo counts for a non-player character.");
             return 0;
         }
         
         if (!indexDictionary.ContainsKey(E_BuffKind.SwordBuff))
         {
-            return 2;//当前的策划案是不能丢弃剑，所以最低是两次连击次数
+            return 2;//現在の企画案では、剣を捨てることはできないため、少なくとも2回の連続攻撃が必要となります。
         }
 
         SwordBuff buff = indexDictionary[E_BuffKind.SwordBuff] as SwordBuff;
         return buff.GetPlayerTimes();
     }
     /// <summary>
-    /// 返回角色剑Buff等级
+    /// キャラクターの剣のバフレベルを返します
     /// </summary>
     /// <returns></returns>
     public int PlayerSwordLevel()
     {
         if(type != E_ChararcterType.player)
         {
-            Debug.LogWarning("注意,你正在为非玩家角色获取剑等级");
+            Debug.LogWarning("Be aware, you are leveling up the sword for a non-player character.");
             return 0;
         }
         if (!indexDictionary.ContainsKey(E_BuffKind.SwordBuff))
@@ -431,14 +447,14 @@ public class CharacterBuffManager
     }
 
     /// <summary>
-    /// 返回玩家当前枪的Buff等级,0代表没有这个Buff
+    /// プレイヤーの現在の銃のBuffレベルを返します。0はこのBuffがないことを示します。
     /// </summary>
     /// <returns></returns>
     public int PlayerGunBuffLevel()
     {
         if(type != E_ChararcterType.player)
         {
-            Debug.LogWarning("注意,你正在为非玩家角色获取枪械Buff等级");
+            Debug.LogWarning("Be aware, you are obtaining firearm Buff levels for a non-player character.");
             return 0;
         }
         if(!indexDictionary.ContainsKey(E_BuffKind.GunBuff))
@@ -451,14 +467,14 @@ public class CharacterBuffManager
     }
 
     /// <summary>
-    /// 返回玩家当前法杖的Buff等级，0代表没有这个Buff
+    /// プレイヤーの現在の杖のBuffレベルを返します。0はこのBuffが存在しないことを意味します。
     /// </summary>
     /// <returns></returns>
     public int PlayerStaffBuffLevel()
     {
         if(type != E_ChararcterType.player)
         {
-            Debug.LogWarning("注意,你正在为非玩家角色获取法杖Buff等级");
+            Debug.LogWarning("Attention, you are obtaining the staff Buff level for a non-player character.");
             return 0;
         }
         if(!indexDictionary.ContainsKey(E_BuffKind.StaffBuff))
@@ -471,14 +487,14 @@ public class CharacterBuffManager
     }
 
     /// <summary>
-    /// 回复护盾值
+    /// シールド値を回復する
     /// </summary>
-    /// <param name="raise">护盾的回复量</param>
+    /// <param name="raise">シールドの回復量</param>
     public void RaiseShieldHP(float raise)
     {
         if(!indexDictionary.ContainsKey(E_BuffKind.ShieldBuff))
         {
-            Debug.LogWarning("当前角色没有护盾");
+            Debug.LogWarning("The current character has no shield.");
             return;
         }
         shieldRipples.currentHealth += raise;
@@ -495,10 +511,10 @@ public class CharacterBuffManager
     }
 
     /// <summary>
-    /// 添加HpItemBuff,做一层封装，通过这个函数可以减少创建buff的次数
+    /// HpItemBuffを追加し、さらなるラッパーを作成します。この関数を使用すると、buffの作成回数を減らすことができます。
     /// </summary>
-    /// <param name="chararcterType">角色类型</param>
-    /// <param name="gameObject">Buff持有者</param>
+    /// <param name="chararcterType">キャラクタータイプ</param>
+    /// <param name="gameObject">バフ保持者</param>
     public void AddHpItemBuff(E_ChararcterType chararcterType,GameObject gameObject)
     {
         HpItemBuff hpItemBuff;
@@ -513,7 +529,7 @@ public class CharacterBuffManager
         AddBuff(hpItemBuff,gameObject,true);
     }
     
-    //这个是为了以后如果有其他的道具Buff准备的接口，方法为传入类型，如果字典里没有实例，则创建，否则直接再调用一次Add
+    //これは、将来他のアイテムのBuffが存在する可能性に備えたインターフェースで、メソッドはタイプを入力します。辞書にインスタンスが存在しない場合は作成し、存在する場合はAddを再度呼び出します。
     public void AddItemBuff(E_BuffKind buffKind)
     {
 

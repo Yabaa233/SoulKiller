@@ -31,23 +31,23 @@ public class SelectPanel : BasePanel
 
     //????????????��????
     GameObject LeftFocusGO;
-    //舍弃能力标题
+    //能力タイトルを放棄する
     GameObject titleAbondon;
-    //升级能力标题
+    //能力タイトルのアップグレード
     GameObject titleLevelUp;
 
-    //舍弃能力背景
+    //能力背景を放棄する
     GameObject backCardAbondon;
-    //升级能力背景
+    //能力向上の背景
     GameObject backCardLevelUP;
 
     //??????
     //??????????buff???????????????????????
     int abandonBuffLevel;
-    //操作提示文字
+    //操作ヒントテキスト
     Text textTips;
 
-    //打开abandon的协程
+    //abandonのコルーチンを開く
     Coroutine openAbandon;
 
     public override void OnShow(params object[] para)
@@ -91,15 +91,15 @@ public class SelectPanel : BasePanel
         if (para.Length == 2)
             abandonBuffLevel = (int)para[1];
 
-        if ((string)para[0] == "舍弃")
+        if ((string)para[0] == "Abandon")
         {
             InitAbandonBuff();
-            textTips.text = "长按舍弃";
+            textTips.text = "長押しで放棄";
         }
         else
         {
             InitLevelUp();
-            textTips.text = "点击升级";
+            textTips.text = "アップグレードをクリックしてください";
         }
 
 
@@ -131,7 +131,7 @@ public class SelectPanel : BasePanel
         //???????buff?????4??
         if (BuffDataManager.Instance.playerCurrentBuff.Count < 4)
         {
-            Debug.Log("返回" + BuffDataManager.Instance.playerCurrentBuff.Count);
+            Debug.Log("戻る" + BuffDataManager.Instance.playerCurrentBuff.Count);
             Close();
             return;
         }
@@ -183,7 +183,7 @@ public class SelectPanel : BasePanel
     }
 
     /// <summary>
-    /// 延迟调用btn_abandon打开
+    /// btn_abandonの呼び出しを遅延させて開く
     /// </summary>
     /// <returns></returns>
     IEnumerator LateOpenAbandon(List<S_BuffKindAndLevel> buffShowList)

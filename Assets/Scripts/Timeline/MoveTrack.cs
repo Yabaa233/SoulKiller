@@ -4,9 +4,9 @@ using UnityEngine;
 using UnityEngine.Timeline;
 
 
-//自定义移动轨道
-[TrackColor(238/255f,255/255f,27/255f)]//轨道颜色
-[TrackClipType(typeof(MoveClip))]//选择可以放置到轨道上的类型
+//カスタム移動軌道
+[TrackColor(238/255f,255/255f,27/255f)]//軌道の色
+[TrackClipType(typeof(MoveClip))]//軌道上に配置できるタイプを選択してください。
 public class MoveTrack : TrackAsset
 {
 

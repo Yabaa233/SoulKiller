@@ -5,11 +5,11 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 /// <summary>
-/// UI的管理工具，获取某个子对象的组件
+/// UIの管理ツール、特定の子オブジェクトのコンポーネントを取得
 /// </summary>
 public class UITool 
 {
-    //当前的活动面板
+    //現在のアクティビティパネル
     GameObject activePanel;
 
     public UITool(GameObject panel)
@@ -17,16 +17,20 @@ public class UITool
         activePanel = panel;
     }
 
-    //返回当前UI对象
+    //現在のUIオブジェクトを返す
     public GameObject GetUI()
     {
         return activePanel;
     }
 
-    /// <summary>
-    /// 给当前的活动面板获取或添加一个组件
-    /// </summary>
-    /// <typeparam name="T">组件类型</typeparam>
+    ///<summary>
+
+
+    ////// 現在のアクティビティパネルにコンポーネントを取得または追加します
+
+
+    ///</summary>
+    /// <typeparam name="T">コンポーネントタイプ</typeparam>
     /// <returns></returns>
     public T GetOrAddComponent<T>() where T : Component
     {
@@ -36,10 +40,14 @@ public class UITool
         return activePanel.GetComponent<T>();
     }
 
-    /// <summary>
-    /// 根据名称查找一个子对象
-    /// </summary>
-    /// <param name="name">子对象名称</param>
+    ///<summary>
+
+
+    ////// 名前でサブオブジェクトを検索する
+
+
+    ///</summary>
+    /// <param name="name">子オブジェクト名</param>
     /// <returns></returns>
     public GameObject FindChildGameObject(string name)
     {
@@ -53,15 +61,19 @@ public class UITool
             }
         }
 
-        Debug.LogWarning($"{activePanel.name}里找不到名为{name}的子对象");
+        Debug.LogWarning($"{activePanel.name}内には{name}という名前のサブオブジェクトが見つかりません");
         return null;
     }
 
-    /// <summary>
-    /// 根据名称获取一个子对象的组件
-    /// </summary>
-    /// <typeparam name="T">组件类型</typeparam>
-    /// <param name="name">子对象的名称</param>
+    ///<summary>
+
+
+    ////// 名前に基づいて子オブジェクトのコンポーネントを取得します。
+
+
+    ///</summary>
+    /// <typeparam name="T">コンポーネントタイプ</typeparam>
+    /// <param name="name">子オブジェクトの名前</param>
     /// <returns></returns>
     public T GetOrAddComponentInChildren<T>(string name) where T : Component
     {
@@ -79,11 +91,11 @@ public class UITool
     public  delegate void MyMehod(BaseEventData pd);
 
     /// <summary>
-    /// 绑定eventTrigger监听方法
+    /// eventTriggerのリスナーメソッドをバインドする
     /// </summary>
-    /// <param name="obj">物体</param>
-    /// <param name="eventTriggerType">触发类型</param>
-    /// <param name="myMehod">调用方法</param>
+    /// <param name="obj">オブジェクト</param>
+    /// <param name="eventTriggerType">トリガータイプ</param>
+    /// <param name="myMehod">メソッドを呼び出す</param>
     public void addTriggersListener(EventTriggerType eventTriggerType, MyMehod myMehod,GameObject obj=null)
     {
         if (obj == null)
@@ -96,24 +108,24 @@ public class UITool
         trigger = obj.GetComponent<EventTrigger>();
 
         
-        //添加监听
+        //リスナーを追加する
         if (trigger.triggers.Count == 0)
         {
-            //初始化entry容器
+            //エントリーコンテナを初期化する
             trigger.triggers = new List<EventTrigger.Entry>();
         }
-        //实例化委托
+        //デリゲートのインスタンス化
         UnityAction<BaseEventData> callBack = new UnityAction<BaseEventData>(myMehod);
-        //实例化entry对象
+        //エントリーオブジェクトのインスタンス化
         EventTrigger.Entry entry = new EventTrigger.Entry();
-        //指定事件触发类型
+        //指定イベントトリガータイプ
         entry.eventID = eventTriggerType;
-        //添加监听
+        //リスナーを追加する
         entry.callback.AddListener(callBack) ;
 
         trigger.triggers.Add(entry);
 
-        //添加拖拽屏蔽
+        //ドラッグアンドドロップのブロックを追加する
         if(obj.GetComponent<ScrollTool>()==null)
             obj.AddComponent<ScrollTool>();
     }

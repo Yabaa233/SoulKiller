@@ -41,7 +41,7 @@ public class GetBuffPanel : BasePanel
         buffImage3.sprite = data[2].buffSprite;
 
         //����ʱ��
-        time.text = "ͨ通关时间" + ToTimeFormat(GameManager.Instance.GetClearTime());
+        time.text = "通関時間" + ToTimeFormat(GameManager.Instance.GetClearTime());
 
         MonoHelper.Instance.StartCoroutine(SlowTime());
     }

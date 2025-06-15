@@ -6,38 +6,38 @@ using BehaviorDesigner.Runtime;
 [System.Serializable]
 public class BossCD
 {
-    [Header("普通攻撃CD")]
+    [Header("通常攻撃CD")]
     public CDClass canNormalAttack = new CDClass();
-    [Header("スキル攻撃CD")]
+    [Header("スキル攻撃のクールダウン")]
     public CDClass canSkillAttack = new CDClass();
-    [Header("槍スキル1攻撃CD")]
+    [Header("銃スキル1攻撃CD")]
     public CDClass canGunAttack1 = new CDClass();
-    [Header("槍スキル2攻撃CD")]
+    [Header("銃スキル2攻撃CD")]
     public CDClass canGunAttack2 = new CDClass();
-    [Header("杖スキル攻撃CD")]
+    [Header("杖スキル攻撃のCD")]
     public CDClass canStaffAttack = new CDClass();
-    [Header("召喚スキル攻撃CD")]
+    [Header("召喚スキル攻撃のCD")]
     public CDClass canSummonAttack = new CDClass();
     [Header("ステップCD")]
     public CDClass canDodge = new CDClass();
     [Header("フラッシュCD")]
     public CDClass canFlash = new CDClass();
-    [Header("逆フラッシュCD")]
+    [Header("リバースフラッシュCD")]
     public CDClass canBackFlash = new CDClass();
-    [Header("回血CD")]
+    [Header("ヘルスリジェネレーションCD")]
     public CDClass canRestoreHealth = new CDClass();
-    [Header("回盾CD")]
+    [Header("バックシールドCD")]
     public CDClass canRestoreShield = new CDClass();
     [Header("狂暴CD")]
     public CDClass canRage = new CDClass();
 
     public void InitCD()
     {
-        GameManager.Instance.CDList.Add(canNormalAttack);   //普攻
+        GameManager.Instance.CDList.Add(canNormalAttack);   //通常攻撃
         canNormalAttack.curTime = 0;
         canNormalAttack.flag = false;
 
-        GameManager.Instance.CDList.Add(canSkillAttack);    //近戦連撃
+        GameManager.Instance.CDList.Add(canSkillAttack);    //近接連続攻撃
         canSkillAttack.curTime = 0;
         canSkillAttack.flag = false;
 
@@ -45,11 +45,11 @@ public class BossCD
         canGunAttack1.curTime = 0;
         canGunAttack1.flag = false;
 
-        GameManager.Instance.CDList.Add(canGunAttack2);     //射撃2
+        GameManager.Instance.CDList.Add(canGunAttack2);     //シューティング2
         canGunAttack2.curTime = 0;
         canGunAttack2.flag = false;
 
-        GameManager.Instance.CDList.Add(canStaffAttack);    //杖
+        GameManager.Instance.CDList.Add(canStaffAttack);    //ステッキ
         canStaffAttack.curTime = 0;
         canStaffAttack.flag = false;
 
@@ -65,15 +65,15 @@ public class BossCD
         canFlash.curTime = 0;
         canFlash.flag = false;
 
-        GameManager.Instance.CDList.Add(canBackFlash);      //逆フラッシュ
+        GameManager.Instance.CDList.Add(canBackFlash);      //リバースフラッシュ
         canBackFlash.curTime = 0;
         canBackFlash.flag = false;
 
-        GameManager.Instance.CDList.Add(canRestoreHealth);  //回血
+        GameManager.Instance.CDList.Add(canRestoreHealth);  //回復
         canRestoreHealth.curTime = 0;
         canRestoreHealth.flag = false;
 
-        GameManager.Instance.CDList.Add(canRestoreShield);  //回盾
+        GameManager.Instance.CDList.Add(canRestoreShield);  //バックシールド
         canRestoreShield.curTime = 0;
         canRestoreShield.flag = false;
 
@@ -84,27 +84,27 @@ public class BossCD
     public void ClearnCD()
     {
         if (GameManager.Instance == null) return;
-        GameManager.Instance.CDList.Remove(canNormalAttack);   //普攻
+        GameManager.Instance.CDList.Remove(canNormalAttack);   //通常攻撃
 
-        GameManager.Instance.CDList.Remove(canSkillAttack);    //近戦連撃
+        GameManager.Instance.CDList.Remove(canSkillAttack);    //近接連続攻撃
 
         GameManager.Instance.CDList.Remove(canGunAttack1);     //射撃1
 
-        GameManager.Instance.CDList.Remove(canGunAttack2);     //射撃2
+        GameManager.Instance.CDList.Remove(canGunAttack2);     //シューティング2
 
-        GameManager.Instance.CDList.Remove(canStaffAttack);    //杖
+        GameManager.Instance.CDList.Remove(canStaffAttack);    //ステッキ
 
-        GameManager.Instance.CDList.Remove(canSummonAttack);   //召喚 
+        GameManager.Instance.CDList.Remove(canSummonAttack);   //召喚
 
         GameManager.Instance.CDList.Remove(canDodge);          //ステップ
 
         GameManager.Instance.CDList.Remove(canFlash);          //フラッシュ
 
-        GameManager.Instance.CDList.Remove(canBackFlash);      //逆フラッシュ
+        GameManager.Instance.CDList.Remove(canBackFlash);      //リバースフラッシュ
 
-        GameManager.Instance.CDList.Remove(canRestoreHealth);  //回血
+        GameManager.Instance.CDList.Remove(canRestoreHealth);  //回復
 
-        GameManager.Instance.CDList.Remove(canRestoreShield);  //回盾
+        GameManager.Instance.CDList.Remove(canRestoreShield);  //バックシールド
 
         GameManager.Instance.CDList.Remove(canRage);  //狂暴
     }
@@ -123,64 +123,64 @@ public enum E_BossAttackMode
 public class BossControl : MonoBehaviour
 {
     [Header("BossCD")] public BossCD bossCD;
-    [Header("Boss的Buff管理器")] public CharacterBuffManager characterBuffManager = new CharacterBuffManager();
-    [Header("Boss属性模板")] public CharacterData_SO tempCharaterData;
-    [Header("Boss属性")] public CharacterData bossData;
-    [Header("Boss基础移动速度")] public float baseSpeed;
-    [Header("Boss受击震动次数")] public float bossHurtCount;
-    [Header("Boss受击震动单次时间")] public float bossHurtTime;
-    [Header("Boss受击与伤害值关联反比例系数")] public float bossHurtPer;
-    [Header("受击时震动与伤害的比例曲线")] public AnimationCurve hurtEffCurve;
+    [Header("ボスのバフマネージャー")] public CharacterBuffManager characterBuffManager = new CharacterBuffManager();
+    [Header("ボス属性テンプレート")] public CharacterData_SO tempCharaterData;
+    [Header("ボス属性")] public CharacterData bossData;
+    [Header("ボスの基本的な移動速度")] public float baseSpeed;
+    [Header("ボスが被弾した回数")] public float bossHurtCount;
+    [Header("ボスが一回の衝撃で揺れる時間")] public float bossHurtTime;
+    [Header("ボスが受けるダメージと反比例する係数")] public float bossHurtPer;
+    [Header("打撃時の振動とダメージの比率曲線")] public AnimationCurve hurtEffCurve;
 
-    [Header("Boss攻击模式")] public E_BossAttackMode bossAttackMode = E_BossAttackMode.init;
-    [Header("Boss浮游炮")] public AutoGunControl autoGunControl;
-    [Header("Boss身体模型")] public Transform bossBody;
-    [Header("当前ComboNode")] public ComboNode comboNode;
-    [Header("目标Player")] public GameObject targetPlayer;
-    [Header("Boss的Buff情况")] public int swordBuffLevel, gunBuffLevel, staffBuffLevel;
-    [Header("Boss的材质")] public Material mtr;
-    [Header("场地尺寸 用于控制反向闪现的距离")] public float roomSize;
+    [Header("ボス攻撃モード")] public E_BossAttackMode bossAttackMode = E_BossAttackMode.init;
+    [Header("ボス浮遊砲")] public AutoGunControl autoGunControl;
+    [Header("ボスの体型モデル")] public Transform bossBody;
+    [Header("現在のComboNode")] public ComboNode comboNode;
+    [Header("目標のプレイヤー")] public GameObject targetPlayer;
+    [Header("ボスのバフ状態")] public int swordBuffLevel, gunBuffLevel, staffBuffLevel;
+    [Header("ボスの素材")] public Material mtr;
+    [Header("フィールドサイズは、逆転フラッシュの距離を制御するために使用されます。")] public float roomSize;
 
-    [Header("各种状态")]
-    [Tooltip("是否死亡")] public bool isDead;
-    [Tooltip("是否可受击")] public bool canGetHit;
-    [Tooltip("是否可以打断")] public bool canInter;
-    [Tooltip("是否被打断了")] public bool interTrigger;
-    [Tooltip("是否处于狂暴")] public bool isRageing;
-    [Tooltip("是否正在受击")] public bool isHurting;
-    [Tooltip("是否锁血")] public bool lockHealth = false;
-    [Tooltip("当前阶段")] public int stage;
+    [Header("さまざまな状態")]
+    [Tooltip("あなたは死んだのですか？")] public bool isDead;
+    [Tooltip("あなたは打撃を受けることができますか？")] public bool canGetHit;
+    [Tooltip("邪魔してもいいですか？")] public bool canInter;
+    [Tooltip("中断されましたか？")] public bool interTrigger;
+    [Tooltip("あなたは激怒していますか？")] public bool isRageing;
+    [Tooltip("あなたは打たれていますか？")] public bool isHurting;
+    [Tooltip("血液をロックしましたか？")] public bool lockHealth = false;
+    [Tooltip("現在の段階")] public int stage;
 
-    [Header("设置的内容")]
-    [Tooltip("场上是否存在召唤物")] public bool hasFlower;
-    [Tooltip("场上的召唤物")] public GameObject bossFlower;
-    [Tooltip("攻击特效出现位置补偿")] public Vector3 effectAtkPos = new Vector3(0.0f, 3.0f, 1.0f);
-    [Tooltip("回血技能每秒回血量")] public float HealthReplyVolume = 10;
-    [Tooltip("回盾技能每秒回盾量")] public float ShieldReplyVolume = 5;
-    [Tooltip("狂暴持续时间")] public float rageTime;
-    [Tooltip("激光花预制")] public GameObject bossFlowerPrefab;
-    private Transform bossEffectParent; //Boss吟唱、转阶段、拖尾特效的挂载节点
-    private GameObject bossDashTrailEff;   //boss冲刺拖尾特效
-    private GameObject bossSingingEff;      //boss吟唱特效
-    private GameObject bossStageChangeEff; //boss转阶段特效
-    private GameObject bossAngryStateEff;  //boss狂暴持续特效
-    private GameObject bossWeakStateEff;    //boss虚弱特效
-    private GameObject bossDeadStateEff;    //boss死亡特效
-    private float curRageTime; //已狂暴时间
-    private Transform roomCenter;   //场景中心
-    private Transform flowerTransform;   //花的出生点
-    private BehaviorTree behaviorTree;  //行为树插件
-    public BehaviorTree BehaviorTree { get { return behaviorTree; } }   //对外获取用
-    private Animator animator;  //动画状态机
-    private Rigidbody rb;   //刚体
-    private Collider weaponTrigger; //武器碰撞体
-    private Transform attackRangeHint; //攻击范围提示
-    private Transform orientationObject; //脚底的朝向光圈
-    //临时变量，防止重复创建
-    private Vector3 dir;    //Boss移动方向
-    private Vector3 attackDir;  //Boss此次攻击的方向
-    private float NextStageHealth;  //下一阶段血量值
-    private int canUseBuffCount = 2;    //可以使用的Buff数量，在指定血量管数时提升
+    [Header("設定の内容")]
+    [Tooltip("フィールド上に召喚物は存在していますか？")] public bool hasFlower;
+    [Tooltip("フィールド上の召喚されたもの")] public GameObject bossFlower;
+    [Tooltip("攻撃特効の出現位置補正")] public Vector3 effectAtkPos = new Vector3(0.0f, 3.0f, 1.0f);
+    [Tooltip("HP回復スキルの毎秒のHP回復量")] public float HealthReplyVolume = 10;
+    [Tooltip("シールド回復スキルは、毎秒シールドを回復します。")] public float ShieldReplyVolume = 5;
+    [Tooltip("狂暴持続時間")] public float rageTime;
+    [Tooltip("レーザーフラワーのプレファブ")] public GameObject bossFlowerPrefab;
+    private Transform bossEffectParent; //ボスの詠唱、フェーズの変更、トレイルエフェクトのマウントノード
+    private GameObject bossDashTrailEff;   //ボスのダッシュ残像エフェクト
+    private GameObject bossSingingEff;      //ボスの詠唱特効
+    private GameObject bossStageChangeEff; //ボスのフェーズ変更特殊効果
+    private GameObject bossAngryStateEff;  //ボスの暴走状態が続く特殊効果
+    private GameObject bossWeakStateEff;    //ボスの弱体化効果
+    private GameObject bossDeadStateEff;    //ボスの死亡エフェクト
+    private float curRageTime; //すでに暴走時間が経過しています。
+    private Transform roomCenter;   //シーンセンター
+    private Transform flowerTransform;   //花の生まれた場所
+    private BehaviorTree behaviorTree;  //アクションツリープラグイン
+    public BehaviorTree BehaviorTree { get { return behaviorTree; } }   //使用して外部から取得するために
+    private Animator animator;  //アニメーションステートマシン
+    private Rigidbody rb;   //剛体
+    private Collider weaponTrigger; //武器の衝突体
+    private Transform attackRangeHint; //攻撃範囲のヒント
+    private Transform orientationObject; //あなたの足元が光の輪に向かっています
+    //一時変数、重複作成を防ぐ
+    private Vector3 dir;    //ボスの移動方向
+    private Vector3 attackDir;  //ボスの今回の攻撃方向
+    private float NextStageHealth;  //次の段階のヒットポイント値
+    private int canUseBuffCount = 2;    //使用可能なバフの数は、指定されたHP量に応じて増加します。
 
     private void Awake()
     {
@@ -209,26 +209,26 @@ public class BossControl : MonoBehaviour
 
     void Start()
     {
-        //注册
+        //登録
         GameManager.Instance.currentBoss = this;
         GameManager.Instance.BossDie += BossState_Die;
-        //初始化Buff
+        //バフを初期化する
         characterBuffManager.Init(E_ChararcterType.boss);
         // characterBuffManager.AddBuff(new ShieldBuff(E_ChararcterType.boss, 4), this.gameObject);
         // characterBuffManager.AddBuff(new HpUp(E_ChararcterType.boss, 4), this.gameObject);
-        //初始化浮游炮
+        //フロート砲の初期化
         autoGunControl.AutoGunInit();
-        //初始化武器类型
+        //武器タイプの初期化
         ChangeWeaponType(E_BossAttackMode.normal);
-        //关闭碰撞体
+        //コライダーを閉じる
         weaponTrigger.enabled = false;
-        //初始化一些数值
+        //いくつかの数値を初期化します
         BossValueInit();
-        //注册CD
+        //CDを登録する
         bossCD.InitCD();
-        //初始化行为树
+        //アクションツリーの初期化
         BehaviorTreeInit();
-        //通知UI显示BossInfo
+        //BossInfoのUI表示を通知します
         PanelManager.Instance.SetBossUIVisble(true);
     }
 
@@ -261,26 +261,30 @@ public class BossControl : MonoBehaviour
         {
             Destroy(bossFlower);
         }
-        PanelManager.Instance.SetBossUIVisble(false);//通知UI关闭
+        PanelManager.Instance.SetBossUIVisble(false);//UIを閉じる通知
     }
 
     /// <summary>
-    /// 初始化一些数值
+    /// いくつかの数値を初期化します
     /// </summary>
     public void BossValueInit()
     {
-        canGetHit = true;   //允许受击
-        canInter = false;   //不允许打断
-        interTrigger = false;   //不被打断
-        isRageing = false;  //不处于狂暴
-        hasFlower = false;  //没有花
+        canGetHit = true;   //打撃を受けることを許可する
+        canInter = false;   //邪魔しないでください
+        interTrigger = false;   //邪魔されないでください
+        isRageing = false;  //暴走していない
+        hasFlower = false;  //花がありません
         NextStageHealth = bossData.maxHealth * 0.8f;
         mtr.SetFloat("_dissolve", 0);
     }
 
-    /// <summary>
-    /// 初始化行为树
-    /// </summary>
+    ///<summary>
+
+
+    ////// アクションツリーの初期化
+
+
+    ///</summary>
     public void BehaviorTreeInit()
     {
         targetPlayer = GameManager.Instance.currentPlayer.gameObject;
@@ -292,17 +296,17 @@ public class BossControl : MonoBehaviour
 
     #region Animator相关控制
     /// <summary>
-    /// 设置动画状态机中的Bool变量
+    /// アニメーションステートマシンのBool変数を設定する
     /// </summary>
-    /// <param name="name"> 名称 </param>
-    /// <param name="value"> 值 </param>
+    /// <param name="name"> 名前 </param>
+    /// <param name="value"> 値 </param>
     public void SetAnimatorBool(string name, bool value)
     {
         animator.SetBool(name, value);
     }
 
     /// <summary>
-    /// 获取动画状态机中的bool变量值
+    /// アニメーションステートマシン内のbool変数の値を取得する
     /// </summary>
     /// <param name="name"></param>
     /// <returns></returns>
@@ -312,28 +316,28 @@ public class BossControl : MonoBehaviour
     }
 
     /// <summary>
-    /// 设置动画状态机中的Trigger变量
+    /// アニメーションステートマシンのTrigger変数を設定します
     /// </summary>
-    /// <param name="name"> 名称 </param>
+    /// <param name="name"> 名前 </param>
     public void SetAnimatorTrigger(string name)
     {
         animator.SetTrigger(name);
     }
 
     /// <summary>
-    /// 重置动画状态机中的Trigger变量
+    /// アニメーションステートマシンでトリガー変数をリセットします。
     /// </summary>
-    /// <param name="name"> 名称 </param>
+    /// <param name="name"> 名前 </param>
     public void ResetAnimatorTrigger(string name)
     {
         animator.ResetTrigger(name);
     }
 
     /// <summary>
-    /// 设置动画状态机中的Int变量
+    /// アニメーションステートマシンのInt変数を設定する
     /// </summary>
-    /// <param name="name"> 名称 </param>
-    /// <param name="value"> 值 </param>
+    /// <param name="name"> 名前 </param>
+    /// <param name="value"> 値 </param>
     public void SetAnimatorInt(string name, int value)
     {
         animator.SetInteger(name, value);
@@ -347,11 +351,11 @@ public class BossControl : MonoBehaviour
 
     #region 控制相关
     /// <summary>
-    /// 移动到Player
+    /// プレイヤーに移動します
     /// </summary>
-    /// <param name="stoppingDistance"> 停止距离 </param>
-    /// <param name="moveSpeed"> 移动速度 </param>
-    /// <returns>是否已接近Player</returns>
+    /// <param name="stoppingDistance"> 停止距離 </param>
+    /// <param name="moveSpeed"> 移動速度 </param>
+    /// プレイヤーに近づいたかどうか
     public bool MoveToPlayer(float stoppingDistance, float moveSpeed)
     {
         dir = targetPlayer.transform.position - transform.position;
@@ -361,19 +365,23 @@ public class BossControl : MonoBehaviour
             rb.velocity = dir * moveSpeed * baseSpeed;
             RotateToTarget(Vector3.Dot(transform.right, dir) > 0 ? -1 : 1);
             animator.SetFloat("speed", rb.velocity.magnitude);
-            return false;  //没追到一直追，可以被技能中断
+            return false;  //追い続けても追いつけない、スキルによって中断されることが可能です。
         }
         else
         {
             animator.SetFloat("speed", rb.velocity.magnitude);
-            return true;  //追到结束
+            return true;  //最後まで追い求める
         }
     }
 
-    /// <summary>
-    /// 改变朝向
-    /// </summary>
-    /// <param name="scaleX"> x方向缩放 控制左右朝向 </param>
+    ///<summary>
+
+
+    ////// 方向を変える
+
+
+    ///</summary>
+    /// <param name="scaleX"> X方向のスケーリング 左右の向きを制御 </param>
     public void RotateToTarget(int scaleX)
     {
         Vector3 targetScale = bossBody.localScale;
@@ -382,20 +390,24 @@ public class BossControl : MonoBehaviour
     }
 
     /// <summary>
-    /// Boss停止移动
+    /// ボスが動きを停止しました
     /// </summary>
-    /// <param name="power"> 移动衰减倍率 </param>
+    /// <param name="power"> 移動減衰率 </param>
     public void StopMove(float power)
     {
         rb.velocity /= power;
         animator.SetFloat("speed", rb.velocity.magnitude);
     }
 
-    /// <summary>
-    /// 变换攻击类型
-    /// 变换浮游炮显示
-    /// </summary>
-    /// <param name="target"> 浮游炮攻击模式 </param>
+    ///<summary>
+
+
+    ////// 攻撃タイプを変更する
+    /// 変換浮遊砲表示
+
+
+    ///</summary>
+    /// <param name="target"> 浮遊砲攻撃モード </param>
     public void ChangeWeaponType(E_BossAttackMode targetMode)
     {
         if (bossAttackMode == targetMode) return;
@@ -403,9 +415,13 @@ public class BossControl : MonoBehaviour
         autoGunControl.ChangeMode(targetMode);
     }
 
-    /// <summary>
-    /// 调整光圈朝向
-    /// </summary>
+    ///<summary>
+
+
+    ////// アパーチャの向きを調整する
+
+
+    ///</summary>
     public void OrientationObjectLookAt()
     {
         Vector3 targetPoint = targetPlayer.transform.position;
@@ -414,18 +430,22 @@ public class BossControl : MonoBehaviour
     }
 
     /// <summary>
-    /// 向玩家冲刺
+    /// プレイヤーに突進する
     /// </summary>
     public void DodgeToPlayer_Start()
     {
         canGetHit = false;
-        bossDashTrailEff.SetActive(true);   //冲刺拖尾开启
+        bossDashTrailEff.SetActive(true);   //スプリントフィニッシュが始まりました
         animator.SetTrigger("dodge");
     }
 
-    /// <summary>
-    /// 持续向指定方向冲刺
-    /// </summary>
+    ///<summary>
+
+
+    ////// 指定された方向に向かって持続的にスプリントします
+
+
+    ///</summary>
     public void DodgeToPlayer(float dodgePower)
     {
         rb.velocity = attackDir.normalized * dodgePower * baseSpeed;
@@ -433,16 +453,16 @@ public class BossControl : MonoBehaviour
     }
 
     /// <summary>
-    /// 冲刺结束
+    /// スプリントが終了しました
     /// </summary>
     public void DodgeOver()
     {
-        bossDashTrailEff.SetActive(false);  //冲刺拖尾关闭
+        bossDashTrailEff.SetActive(false);  //スプリントの終了を迫る
         canGetHit = true;
     }
 
     /// <summary>
-    /// 向玩家闪现
+    /// プレイヤーにフラッシュする
     /// </summary>
     public void FlashToPlayer_Start()
     {
@@ -452,7 +472,7 @@ public class BossControl : MonoBehaviour
     }
 
     /// <summary>
-    /// 闪现协程
+    /// コルーチンのフラッシュ
     /// </summary>
     IEnumerator FlashToPlayer()
     {
@@ -478,7 +498,7 @@ public class BossControl : MonoBehaviour
     }
 
     /// <summary>
-    /// 向场中闪现
+    /// フィールドにフラッシュ
     /// </summary>
     public void FlashBackToPlayer_Start()
     {
@@ -488,7 +508,7 @@ public class BossControl : MonoBehaviour
     }
 
     /// <summary>
-    /// 向场中闪现协程
+    /// コルーチンをフィールドにフラッシュします
     /// </summary>
     IEnumerator FlashToRoomCenter()
     {
@@ -523,41 +543,41 @@ public class BossControl : MonoBehaviour
 
     #region 战斗相关
     /// <summary>
-    /// Boss进入枪攻击状态
+    /// ボスが銃撃状態に入ります。
     /// </summary>
     /// <param name="type"></param>
     public void BossAttack_Gun(int type)
     {
         autoGunControl.GunAttack(type);
-        bossSingingEff.SetActive(true); //吟唱特效
+        bossSingingEff.SetActive(true); //詠唱特効
     }
 
     /// <summary>
-    /// 玩家退出枪攻击状态
+    /// プレイヤーはガンアタックの状態を終了します。
     /// </summary>
     public void BossAttack_Gun_End()
     {
-        bossSingingEff.SetActive(false); //吟唱特效
+        bossSingingEff.SetActive(false); //詠唱特効
     }
     /// <summary>
-    /// Boss进入杖攻击状态
+    /// ボスが杖攻撃モードに入ります。
     /// </summary>
     public void BossAttack_Staff()
     {
         autoGunControl.StaffAttack();
-        bossSingingEff.SetActive(true); //吟唱特效
+        bossSingingEff.SetActive(true); //詠唱特効
     }
 
     /// <summary>
-    /// 玩家退出杖攻击状态
+    /// プレイヤーは杖攻撃の状態を終了します。
     /// </summary>
     public void BossAttack_Staff_End()
     {
-        bossSingingEff.SetActive(false); //吟唱特效
+        bossSingingEff.SetActive(false); //詠唱特効
     }
 
     /// <summary>
-    /// 更新玩家角色坐标
+    /// プレイヤーキャラクターの座標を更新する
     /// </summary>
     public void UpdatePlayerPosition()
     {
@@ -565,9 +585,13 @@ public class BossControl : MonoBehaviour
         RotateToTarget(Vector3.Dot(transform.right, attackDir) > 0 ? -1 : 1);
     }
 
-    /// <summary>
-    /// 设置武器碰撞体大小、位置
-    /// </summary>
+    ///<summary>
+
+
+    ////// 武器の衝突体のサイズと位置を設定する
+
+
+    ///</summary>
     public void SetWeaponTrigger()
     {
         Vector3 temp = attackDir;
@@ -580,8 +604,8 @@ public class BossControl : MonoBehaviour
     }
 
     /// <summary>
-    /// 开启触发器
-    /// 开启特效
+    /// トリガーを起動する
+    /// 特殊効果を開始します
     /// </summary>
     public void OpenTrigger()
     {
@@ -591,7 +615,7 @@ public class BossControl : MonoBehaviour
     }
 
     /// <summary>
-    /// 设置Boss攻击提示范围
+    /// ボスの攻撃範囲のヒントを設定する
     /// </summary>
     public void SetAttackRangeHint()
     {
@@ -609,7 +633,7 @@ public class BossControl : MonoBehaviour
     }
 
     /// <summary>
-    /// 创建Boss特效
+    /// ボスエフェクトを作成する
     /// </summary>
     public void CreateEffect()
     {
@@ -621,17 +645,17 @@ public class BossControl : MonoBehaviour
     }
 
     /// <summary>
-    /// 关闭触发器
+    /// トリガーを閉じる
     /// </summary>
     public void CloseTrigger()
     {
         weaponTrigger.enabled = false;
         attackRangeHint.gameObject.SetActive(false);
-        // Debug.Log("关闭");
+        // Debug.Log("クローズ");
     }
 
     /// <summary>
-    /// Boss攻击碰撞逻辑
+    /// ボスの攻撃衝突ロジック
     /// </summary>
     /// <param name="other"></param>
     private void OnTriggerEnter(Collider other)
@@ -644,7 +668,7 @@ public class BossControl : MonoBehaviour
     }
 
     /// <summary>
-    /// Boss受伤时的受击震动效果
+    /// ボスがダメージを受けた時のヒットショックエフェクト
     /// </summary>
     /// <param name="damage"></param>
     /// <returns></returns>
@@ -680,7 +704,7 @@ public class BossControl : MonoBehaviour
     }
 
     /// <summary>
-    /// 显示Boss受击特效
+    /// ボスがダメージを受ける特殊効果を表示する
     /// </summary>
     private void ShowBossGetHitEffect()
     {
@@ -690,21 +714,25 @@ public class BossControl : MonoBehaviour
         EffectManager.Instance.LetRecycleEffect("Enemy_Attacked", enemyGetHit, 1.5f);
     }
 
-    /// <summary>
-    /// 受伤逻辑 转阶段逻辑
-    /// </summary>
+    ///<summary>
+
+
+    ////// ダメージロジック 変換フェーズロジック
+
+
+    ///</summary>
     public void Damaged(float damage, bool isCritical = false)
     {
         if (isDead) return;
         ShowBossGetHitEffect();
-        PanelManager.Instance.GenerateDamageNum(damage, transform, isCritical);//产生伤害数字 
+        PanelManager.Instance.GenerateDamageNum(damage, transform, isCritical);//ダメージ数値を生成する
         if (!isHurting)
         {
             StartCoroutine(IE_BossHurt(damage));
         }
         if (bossData.currentHealth < NextStageHealth)
         {
-            stage++;   //换阶段
+            stage++;   //フェーズチェンジ
             NextStageHealth = (4 - stage) * 0.2f * bossData.maxHealth;
         }
 
@@ -716,92 +744,124 @@ public class BossControl : MonoBehaviour
     }
 
     /// <summary>
-    /// 准备召唤 播放动画
+    /// アニメーションの再生を呼び出す準備をしています
     /// </summary>
     public void Summon_Start()
     {
         animator.SetTrigger("beforeSkill");
-        bossSingingEff.SetActive(true); //吟唱特效
+        bossSingingEff.SetActive(true); //詠唱特効
         FMODUnity.RuntimeManager.PlayOneShot("event:/BOSS/beforeSkill");
     }
 
-    /// <summary>
-    /// 召唤开始 生成大花
-    /// </summary>
+    ///<summary>
+
+
+    ////// 召喚開始 大きな花を生成
+
+
+    ///</summary>
     public void Summon_Ready()
     {
         bossFlower = Instantiate(bossFlowerPrefab, flowerTransform.position, bossFlowerPrefab.transform.rotation);
         bossFlower.SetActive(true);
-        bossSingingEff.SetActive(false); //吟唱特效
+        bossSingingEff.SetActive(false); //詠唱特効
     }
 
-    /// <summary>
-    /// 真正的转阶段开始
-    /// </summary>
+    ///<summary>
+
+
+    ////// 本当のフェーズシフトが始まります
+
+
+    ///</summary>
     public void StageChangeReal_Start()
     {
         canInter = false;
         interTrigger = false;
         canGetHit = false;
         animator.SetTrigger("beforeSkill");
-        bossStageChangeEff.SetActive(true); //吟唱特效
+        bossStageChangeEff.SetActive(true); //詠唱特効
     }
 
-    /// <summary>
-    /// 真正的转阶段结束
-    /// </summary>
+    ///<summary>
+
+
+    ////// 本当のフェーズチェンジが終了しました
+
+
+    ///</summary>
     public void StageChangeReal_End()
     {
         canGetHit = true;
-        bossStageChangeEff.SetActive(false); //吟唱特效
+        bossStageChangeEff.SetActive(false); //詠唱特効
     }
 
-    /// <summary>
-    /// 准备狂暴 播放动画
-    /// </summary>
+    ///<summary>
+
+
+    ////// 準備が整ったら、アニメーションを再生します
+
+
+    ///</summary>
     public void Rage_Start()
     {
         animator.SetTrigger("beforeSkill");
-        bossSingingEff.SetActive(true); //吟唱特效
+        bossSingingEff.SetActive(true); //詠唱特効
     }
 
-    /// <summary>
-    /// 狂暴开始 增加暴击率
-    /// </summary>
+    ///<summary>
+
+
+    ////// 狂暴が始まり、クリティカル率が上昇します。
+
+
+    ///</summary>
     public void Rage_Ready()
     {
         isRageing = true;
-        bossAngryStateEff.SetActive(true);  //开始狂暴
+        bossAngryStateEff.SetActive(true);  //暴走を開始する
         bossData.currentCritical += 0.6f;
-        bossSingingEff.SetActive(false); //吟唱特效
+        bossSingingEff.SetActive(false); //詠唱特効
     }
 
-    /// <summary>
-    /// 狂暴结束 恢复暴击率
-    /// </summary>
+    ///<summary>
+
+
+    ////// 狂暴終了　クリティカル率回復
+
+
+    ///</summary>
     public void Rage_End()
     {
         isRageing = false;
-        bossAngryStateEff.SetActive(false);  //开始狂暴
+        bossAngryStateEff.SetActive(false);  //暴走を開始する
         curRageTime = 0;
         bossData.currentCritical -= 0.6f;
         bossCD.canRage.flag = false;
-        // Debug.Log("狂暴结束");
+        // Debug.Log("大暴走終了");
     }
 
-    /// <summary>
-    /// 回血准备 可以打断
-    /// </summary>
+    ///<summary>
+
+
+    ////// 回復の準備ができており、中断も可能です。
+
+
+    ///</summary>
     public void RestoreHealth_Start()
     {
         canInter = true;
         animator.SetTrigger("beforeSkill");
-        bossSingingEff.SetActive(true); //吟唱特效
+        bossSingingEff.SetActive(true); //詠唱特効
     }
 
-    /// <summary>
-    /// 回血开始 不可以打断
-    /// </summary>
+    ///<summary>
+
+
+    ////// 復元が開始されました。これは中断できません。
+
+
+    ///</summary>
     public void RestoreHealth_Ready()
     {
         canInter = false;
@@ -809,21 +869,21 @@ public class BossControl : MonoBehaviour
         bossCD.canRestoreHealth.curTime = 0;
         bossData.currentHealth += Time.deltaTime * HealthReplyVolume;
         bossData.currentHealth = Mathf.Min(bossData.currentHealth, bossData.maxHealth);
-        bossSingingEff.SetActive(false); //吟唱特效
+        bossSingingEff.SetActive(false); //詠唱特効
     }
 
     /// <summary>
-    /// 回盾准备 可以打断
+    /// シールドリターンの準備ができており、中断可能です。
     /// </summary>
     public void RestoreShield_Start()
     {
         canInter = true;
         animator.SetTrigger("beforeSkill");
-        bossSingingEff.SetActive(true); //吟唱特效
+        bossSingingEff.SetActive(true); //詠唱特効
     }
 
     /// <summary>
-    /// 回盾开始 不可以打断
+    /// シールドの開始、中断不可
     /// </summary>
     public void RestoreShield_Ready()
     {
@@ -835,30 +895,36 @@ public class BossControl : MonoBehaviour
     }
 
     /// <summary>
-    /// 回盾结束 取消无敌
+    /// シールド終了、無敵キャンセル
     /// </summary>
     public void RestoreShield_End()
     {
         canGetHit = true;
-        bossSingingEff.SetActive(false); //吟唱特效
+        bossSingingEff.SetActive(false); //詠唱特効
     }
 
-    /// <summary>
-    /// 重置可打断状态
-    /// </summary>
+    ///<summary>
+
+
+    ////// 中断可能状態をリセットします
+
+
+    ///</summary>
     public void ResetCanInter()
     {
         canInter = false;
         interTrigger = false;
         animator.SetBool("attacking", false);
-        bossSingingEff.SetActive(false); //吟唱特效
+        bossSingingEff.SetActive(false); //詠唱特効
     }
     #endregion
 
     #region 状态相关
-    /// <summary>
-    /// 真正的转阶段逻辑
-    /// </summary>
+    ///<summary>
+
+    ////// 真のフェーズトランジションロジック
+
+    ///</summary>
     public void BossStageChange()
     {
         canUseBuffCount++;
@@ -866,7 +932,7 @@ public class BossControl : MonoBehaviour
     }
 
     /// <summary>
-    /// 切换阶段开始，停止浮游炮
+    /// フェーズの切り替えを開始し、浮遊砲を停止します。
     /// </summary>
     public void ChangeStage_Start()
     {
@@ -874,34 +940,34 @@ public class BossControl : MonoBehaviour
         {
             bossWeakStateEff.SetActive(true);
             animator.SetTrigger("stageChange");
-            CloseTrigger(); //关闭武器碰撞体
+            CloseTrigger(); //武器のコリジョンボディを閉じる
             bossDashTrailEff.SetActive(false);
             bossSingingEff.SetActive(false);
             bossStageChangeEff.SetActive(false);
-            bossData.currentDefend = +6; //受伤减轻
+            bossData.currentDefend = +6; //私の怪我が軽減する
             autoGunControl.my_StopAllCoroutines();
             animator.SetBool("attacking", false);
         }
     }
 
     /// <summary>
-    /// 切换阶段结束，恢复浮游炮，更新Buff
+    /// フェーズの切り替えが終了し、浮遊砲を回復し、Buffを更新します。
     /// </summary>
     public void ChangeStage_End()
     {
         CloseTrigger();
         bossWeakStateEff.SetActive(false);
-        bossData.currentDefend = 0; //受伤减轻恢复
+        bossData.currentDefend = 0; //怪我の軽減と回復
         autoGunControl.ResetStates();
     }
 
     /// <summary>
-    /// Boss死亡逻辑
+    /// ボスの死亡ロジック
     /// </summary>
     public void BossState_Die()
     {
         animator.SetTrigger("die");
-        GameManager.Instance.currentPlayer.lockHealth = true;   //Boss死亡 玩家锁血
+        GameManager.Instance.currentPlayer.lockHealth = true;   //ボスが死亡し、プレイヤーのHPが固定されました。
         CloseTrigger();
         bossDashTrailEff.SetActive(false);
         bossSingingEff.SetActive(false);

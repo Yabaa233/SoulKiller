@@ -3,32 +3,32 @@
 // using UnityEngine;
 
 
-//暂时不使用
+//一時的に使用しない
 // public class WindowManager : singleton<WindowManager>
 // {
-//     //维护所有窗口的字典类
+//     //すべてのウィンドウを維持する辞書クラス
 //     Dictionary<WindowType,BaseWindow> windowDIc = new Dictionary<WindowType, BaseWindow>();
 
-//     //构造函数 做初始化
+//     // コンストラクタ 初期化を行う
 //     public WindowManager()
 //     {
-//         //往字典中填充注册相关窗口
+//         //辞書に登録関連ウィンドウを埋め込む
 //         windowDIc.Add(WindowType.TestWindow,new TestWindow());
 //         windowDIc.Add(WindowType.RollingWindow,new RollingWindow());
 //     }
 
 
     
-//     //提供给面板的自动注册方法
+//     //パネルに提供される自動登録方法
 //     public void RegisterUI(WindowType windowType,BaseWindow baseWindow)
 //     {
-//         if(windowDIc.ContainsKey(windowType))//如果已经注册过了
+//         if(windowDIc.ContainsKey(windowType))//すでに登録されている場合
 //         {
 //             return;
 //         }
 //         else
 //         {
-//             windowDIc.Add(windowType,baseWindow);//注册到字典中
+//             windowDIc.Add(windowType,baseWindow);//辞書に登録する
 //         }
 //     }
 
@@ -44,7 +44,7 @@
 //         }
 //     }
 
-//     //打开窗口方法
+//     //ウィンドウを開く方法
 //     public BaseWindow OpenWindow(WindowType type)
 //     {
 //         BaseWindow window;
@@ -60,7 +60,7 @@
 //         }
 //     }
 
-//     //关闭窗口方法
+//     //ウィンドウを閉じる方法
 //     public void CloseWindow(WindowType type)
 //     {
 //         BaseWindow window;
@@ -73,7 +73,7 @@
 //             Debug.LogError($"Close Error{type}");
 //         }
 //     }
-//     //预加载方法
+//     //プリロード方法
 //     public void PreLoadWindow(ScenesType type)
 //     {
 //         foreach(var item in windowDIc.Values)
@@ -85,7 +85,7 @@
 //         }
 //     }
 
-//     //隐藏掉某个类型的所有窗口
+//     //特定のタイプのすべてのウィンドウを非表示にする
 //     public void HideALLWindow(ScenesType type,bool isDestroy = false)
 //     {
 //         foreach(var item in windowDIc.Values)
@@ -104,7 +104,7 @@
 //         }
 //     }
 
-//     //强制卸载所有的窗口
+//     //すべてのウィンドウを強制的にアンインストールします
 //     public void ForceCloseWindow(ScenesType type)
 //     {
 //         foreach(var item in windowDIc.Values)

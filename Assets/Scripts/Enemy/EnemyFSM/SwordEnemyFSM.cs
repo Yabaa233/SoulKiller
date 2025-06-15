@@ -9,24 +9,26 @@ using UnityEngine.AI;
 public class SwordEnemyParameter
 {
     public CharacterData enemyData;
-    public Animator animator;//动画控制器
-    public GameObject _mainCamera;//相机位置
-    public Transform body;//身体部分
+    public Animator animator;//アニメーションコントローラー
+    public GameObject _mainCamera;//カメラの位置
+    public Transform body;//体の部分
     public SwordEmyStateData_SO enemyStateData;
     public Transform target;
     public Transform orientationObject;
     public float moveSpeed;
     public bool ableAttact;
     public bool getHit;
-    public NavMeshAgent agent;//导航组件
-    public Transform enemyPos;//自己的位置
-    public bool isDead;//是否已经死亡
-    public bool isDash;//是否施加过冲刺
-    public bool isDizzy;//是否撞到了墙体
+    public NavMeshAgent agent;//ナビゲーションコンポーネント
+    public Transform enemyPos;//自分の位置
+    public bool isDead;//あなたはすでに死んでいますか？
+    public bool isDash;//スプリントを適用したことがありますか？
+    public bool isDizzy;//壁にぶつかりましたか？
 }
-/// <summary>
-/// 剣の敵のFSM
-/// </summary>
+///<summary>
+
+////// 剣の敵のFSM
+
+///</summary>
 public class SwordEnemyFSM : BaseEnemyFSM
 {
     public SwordEnemyParameter parameter;
@@ -44,7 +46,7 @@ public class SwordEnemyFSM : BaseEnemyFSM
         GameManager.Instance.CDList.Add(AttackCD);
         AttackCD.flag = true;
 
-        //得到相应的组件
+        //対応するコンポーネントを取得する
         states.Add(E_EnemyStateType.Idle,new SwordEnemy_IdleState(this));
         states.Add(E_EnemyStateType.Chase,new SwordEnemy_ChaseState(this));
         states.Add(E_EnemyStateType.Storage,new SwordEnemy_StorageState(this));
@@ -53,12 +55,12 @@ public class SwordEnemyFSM : BaseEnemyFSM
         states.Add(E_EnemyStateType.Dead,new SwordEnemy_DeadState(this));
 
 
-        TranstionState(E_EnemyStateType.Idle); //初始化状态为Idle，设置初始状态为待机状态
+        TranstionState(E_EnemyStateType.Idle); //初期状態はIdleに設定し、初期状態を待機状態に設定します。
     }
     /// <summary>
     /// FSMの更新
     /// </summary>
-    private void Update() {//在这里执行当前的状态机Update
+    private void Update() {//ここで現在のステートマシンの更新を実行します。
         FaceToCamera();
         currentState.OnUpDate();
     }
@@ -67,9 +69,13 @@ public class SwordEnemyFSM : BaseEnemyFSM
         currentState.OnLateUpDade();
     }
 
-    /// <summary>
-    /// 让敌人朝向玩家的左右
-    /// </summary>
+    ///<summary>
+
+
+    ////// 敵をプレイヤーの左右に向けてください。
+
+
+    ///</summary>
     public void RotateToTarget()
     {
         float  weight = parameter.target.transform.position.x - transform.position.x;
@@ -86,9 +92,13 @@ public class SwordEnemyFSM : BaseEnemyFSM
         parameter.body.transform.rotation = rotation;
     }
 
-    /// <summary>
-    /// 让父物体指向玩家方向
-    /// </summary>
+    ///<summary>
+
+
+    ////// 親オブジェクトをプレイヤーの方向に向けます
+
+
+    ///</summary>
     /// <param name="other"></param>
     public void FaceToTarget()
     {
@@ -99,7 +109,7 @@ public class SwordEnemyFSM : BaseEnemyFSM
     }
     private void OnTriggerEnter(Collider other) 
     {
-        // Debug.Log("父物体的检测被调用");
+        // Debug.Log("親オブジェクトの検出が呼び出されました");
         if(other.tag == "Player")
         {
             if(parameter.ableAttact == false)
@@ -109,7 +119,7 @@ public class SwordEnemyFSM : BaseEnemyFSM
             else
             {
                 GameManager.Instance.EnemyAttack(parameter.enemyPos.gameObject.GetComponent<BaseEnemyControl>());
-                // Debug.Log("攻击了玩家");
+                // Debug.Log("プレイヤーが攻撃されました");
             }
         }
 

@@ -3,44 +3,46 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
-/// <summary>
-/// ÉèÖÃ½çÃæ
+///<summary>
+
+////// è¨­å®šã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹
 /// xushi
-/// </summary>
+
+///</summary>
 public class SettingPanel : BasePanel
 {
     static readonly string path = "UI/Panel/Setting";
 
     public SettingPanel() : base(new UIType(path)) { }
 
-    //¶¥²¿Ò³Ç©
-    //»­Ãæ ¿ØÖÆ ÉùÒô
+    //ãƒˆãƒƒãƒ—ã‚¿ãƒ–
+    //ç”»é¢åˆ¶å¾¡ éŸ³å£°
     GameObject video,control,sound;
-    //×óÒÆ ÓÒÒÆ
+    //å·¦ã«ç§»å‹• å³ã«ç§»å‹•
     Button moveLeft,moveRight;
 
-    //Ãæ°å:»­Ãæ£¬¿ØÖÆ£¬ÉùÒô
+    //ãƒ‘ãƒãƒ«ï¼šç”»é¢ã€åˆ¶å¾¡ã€éŸ³å£°
     GameObject videoPanel, controlPanel, soundPanel;
 
-    //Ö÷ÒôÁ¿
+    //ãƒ¡ã‚¤ãƒ³ãƒœãƒªãƒ¥ãƒ¼ãƒ 
     Slider mainSound;
-    //Ö÷ÒôÁ¿¾²Òô
+    //ãƒ¡ã‚¤ãƒ³ãƒœãƒªãƒ¥ãƒ¼ãƒ ãƒŸãƒ¥ãƒ¼ãƒˆ
     Toggle mainSoundM;
-    //ÒôĞ§ÒôÁ¿
+    //ã‚µã‚¦ãƒ³ãƒ‰ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã®éŸ³é‡
     Slider effect;
-    //ÒôĞ§¾²Òô
+    //ã‚µã‚¦ãƒ³ãƒ‰ãƒŸãƒ¥ãƒ¼ãƒˆ
     Toggle effectM;
-    //ÒôÀÖÒôÁ¿
+    //éŸ³æ¥½ã®éŸ³é‡
     Slider music;
-    //ÒôÀÖ¾²Òô
+    //éŸ³æ¥½ã‚’ãƒŸãƒ¥ãƒ¼ãƒˆã«ã™ã‚‹
     Toggle musicM;
-    //ÖØÖÃ°´Å¥ //·µ»Ø°´Å¥
+    //ãƒªã‚»ãƒƒãƒˆãƒœã‚¿ãƒ³ // æˆ»ã‚‹ãƒœã‚¿ãƒ³
     Button reset, quit;
 
     List<GameObject> panelList;
 
     Area_MainBuff area_MainBuff;
-    //×°ÊÎÏß
+    //è£…é£¾ç·š
     GameObject line;
 
     public override void OnInit()
@@ -74,13 +76,13 @@ public class SettingPanel : BasePanel
 
         line = UITool.FindChildGameObject("Image_LIne");
 
-        //³õÊ¼»¯
+        //åˆæœŸåŒ–
         panelList = new List<GameObject>();
         panelList.Add(videoPanel);
         panelList.Add(controlPanel);
         panelList.Add(soundPanel);
 
-        //³õÊ¼´ò¿ª½çÃæ
+        //åˆæœŸã®é–‹ãã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹
         if (para.Length == 1)
         {
             if ((int)para[0] == 1)
@@ -94,7 +96,7 @@ public class SettingPanel : BasePanel
         }
 
 
-        //¼àÌı
+        //ç›£è¦–
         video.GetComponent<Button>().onClick.AddListener(openVideo);
         sound.GetComponent<Button>().onClick.AddListener(openSound);
         control.GetComponent<Button>().onClick.AddListener(openControl);
@@ -142,7 +144,7 @@ public class SettingPanel : BasePanel
         
     }
 
-    //ESC¹Ø±ÕÃæ°å
+    //ESCã§ãƒ‘ãƒãƒ«ã‚’é–‰ã˜ã‚‹
     public void EscClose(KeyCode keyCode)
     {
         if (keyCode == KeyCode.Escape)
@@ -151,7 +153,7 @@ public class SettingPanel : BasePanel
         }
     }
 
-    ////areaÖØĞÂ¼àÌı°´¼ü
+    ////ã‚¨ãƒªã‚¢ãŒã‚­ãƒ¼å…¥åŠ›ã‚’å†åº¦ãƒªãƒƒã‚¹ãƒ³ã—ã¾ã™
     //IEnumerator ReListen()
     //{
     //    float firstTime = Time.realtimeSinceStartup;
@@ -162,11 +164,11 @@ public class SettingPanel : BasePanel
     //    PanelManager.Instance.KeyBoardUpdateAction += area_MainBuff.OpenBuffInfo;
     //}
 
-    //¶¥À¸Ò³Ç©ÇĞ»»Ãæ°å
+    //ãƒˆãƒƒãƒ—ãƒãƒ¼ã‚¿ãƒ–ã§ãƒ‘ãƒãƒ«ã‚’åˆ‡ã‚Šæ›¿ãˆã¾ã™
     public void openControl()
     {
         line.SetActive(true);
-        //ºóĞø¸ÄÎª¶¯»­ÇĞ»»
+        //ãã®å¾Œã€ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³åˆ‡ã‚Šæ›¿ãˆã«å¤‰æ›´ã—ã¾ã™ã€‚
         videoPanel.SetActive(false);
         soundPanel.SetActive(false);
         controlPanel.SetActive(true);
@@ -181,7 +183,7 @@ public class SettingPanel : BasePanel
     public void openVideo()
     {
         line.SetActive(true);
-        //ºóĞø¸ÄÎª¶¯»­ÇĞ»»
+        //ãã®å¾Œã€ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³åˆ‡ã‚Šæ›¿ãˆã«å¤‰æ›´ã—ã¾ã™ã€‚
         videoPanel.SetActive(true);
         soundPanel.SetActive(false);
         controlPanel.SetActive(false);
@@ -196,7 +198,7 @@ public class SettingPanel : BasePanel
     public void openSound()
     {
         line.SetActive(true);
-        //ºóĞø¸ÄÎª¶¯»­ÇĞ»»
+        //ãã®å¾Œã€ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³åˆ‡ã‚Šæ›¿ãˆã«å¤‰æ›´ã—ã¾ã™ã€‚
         videoPanel.SetActive(false);
         soundPanel.SetActive(true);
         controlPanel.SetActive(false);
@@ -208,7 +210,7 @@ public class SettingPanel : BasePanel
         video.GetComponent<Image>().color = new Color(1, 1, 1, 1f);
         sound.GetComponent<Image>().color = new Color(1, 1, 1, 0.2f);
     }
-    //×óÓÒÇĞ»»½çÃæ
+    //å·¦å³ã§ç”»é¢ã‚’åˆ‡ã‚Šæ›¿ãˆã‚‹
     public void MoveLeft()
     {
         //Debug.Log("left");
@@ -281,7 +283,7 @@ public class SettingPanel : BasePanel
         //line.SetActive(false);
         //FMODUnity.RuntimeManager.PlayOneShot("event:/UI/panelOpen");
     }
-    //°´¼ü¼ì²â·½·¨
+    //ã‚­ãƒ¼æ¤œå‡ºæ–¹æ³•
     public void PanelSwitch(KeyCode keyCode)
     {
         if (keyCode == KeyCode.Q)
@@ -290,9 +292,9 @@ public class SettingPanel : BasePanel
             MoveLeft();
     }
 
-    //µ÷ÕûÒôÁ¿
+    //ãƒœãƒªãƒ¥ãƒ¼ãƒ ã‚’èª¿æ•´ã™ã‚‹
 
-    //¾²Òô
-    //·µ»Ø
+    //ãƒŸãƒ¥ãƒ¼ãƒˆ
+    //æˆ»ã‚‹
 
 }

@@ -6,44 +6,44 @@ using System;
 [Serializable]
 public class HpUp : I_BuffBase
 {
-    [Header("外部传参获得数据部分")]
-    //存当前角色的引用
-    [Tooltip("当前角色引用")] GameObject buffKeeper;
-    //存当前角色的BuffManager
-    [Tooltip("当前角色Buff管理器")] CharacterBuffManager characterBuffManager;
-    //当前BUFF种类
-    [Tooltip("当前Buff类型")] E_BuffKind buffType;
-    //当前角色的类型
-    [Tooltip("当前角色类型")] E_ChararcterType chararcterType;
+    [Header("Obtaining data part through external parameter passing")]
+    //現在のキャラクターの参照を保存する
+    [Tooltip("Current role reference")] GameObject buffKeeper;
+    //現在のキャラクターのBuffManagerを保存します
+    [Tooltip("Current Role Buff Manager")] CharacterBuffManager characterBuffManager;
+    //現在のBUFFの種類
+    [Tooltip("Current Buff Type")] E_BuffKind buffType;
+    //現在のキャラクタータイプ
+    [Tooltip("Current role type")] E_ChararcterType chararcterType;
 
-    [Tooltip("当前Buff等级")] public int currentLevel;
+    [Tooltip("Current Buff Level")] public int currentLevel;
 
-    [Header("Buff数据部分")]
-    [Tooltip("存放数据")] CharacterData characterData;
-    [Tooltip("存放技能等级函数")] public Action<CharacterData> realEffect;
-    [Tooltip("函数等级列表")] public List<Action<CharacterData>> levelEffect;
-    [Tooltip("是否开启吸血")] public bool isHpSteal;
+    [Header("Buff data section")]
+    [Tooltip("Store data")] CharacterData characterData;
+    [Tooltip("Store Skill Level Function")] public Action<CharacterData> realEffect;
+    [Tooltip("Function Level List")] public List<Action<CharacterData>> levelEffect;
+    [Tooltip("Is the vampirism enabled?")] public bool isHpSteal;
 
 
     public HpUp(E_ChararcterType _chararcterType, int level = 1)
     {
-        //赋值
+        //代入
         this.currentLevel = level;
         buffType = E_BuffKind.HpUp;
         chararcterType = _chararcterType;
-        isHpSteal = false;//默认不开启吸血
+        isHpSteal = false;//デフォルトでは、吸血はオフに設定されています。
 
-        //初始化列表
+        //初期化リスト
         levelEffect = new List<Action<CharacterData>>();
     }
 
 
-    //添加血量增幅
+    //体力を増幅する機能を追加する
     public void OnAdd(GameObject _buffKeeper)
     {
         this.buffKeeper = _buffKeeper;
-        // Debug.Log("HpUp被添加");
-        //翻倍当前血量和最大血量
+        // Debug.Log("HpUp has been added.");
+        //現在の体力と最大体力を倍にします
         Init();
         switch (chararcterType)
         {
@@ -107,18 +107,20 @@ public class HpUp : I_BuffBase
 
         if (currentLevel > levelEffect.Count)
         {
-            Debug.Log("赋予的等级超过Buff当前等级限制");
+            Debug.Log("The assigned level exceeds the current level limit of the Buff.");
             return;
         }
 
-        for (int i = 0; i < currentLevel; i++)//根据技能等级添加效果
+        for (int i = 0; i < currentLevel; i++)//スキルレベルに応じて効果を追加する
         {
             realEffect += levelEffect[i];
         }
     }
-    /// <summary>
-    /// 赋值完之后清空委托
-    /// </summary>
+    ///<summary>
+
+    ////// 割り当てた後で、委託をクリアします。
+
+    ///</summary>
     public void ClearDelegate()
     {
         for (int i = currentLevel - 1; i >= 0; i--)
@@ -127,7 +129,7 @@ public class HpUp : I_BuffBase
         }
     }
 
-    //具体操作
+    //具体的な操作
     private void PlayerHpUp()
     {
         PlayerControl playerControl = buffKeeper.GetComponent<PlayerControl>();
@@ -154,7 +156,7 @@ public class HpUp : I_BuffBase
 
         realEffect(characterData);
     }
-    ////Buff移除的时候还原属性状态
+    ////バフが削除された時に属性状態を復元します
 
     private void PlayerHpUpRemove()
     {
@@ -186,7 +188,7 @@ public class HpUp : I_BuffBase
         isHpSteal = false;
     }
 
-    ////////////Buff具体实现
+    ////////////Buffの具体的な実装
     public void level1HpUp(CharacterData characterData)
     {
         if (chararcterType == E_ChararcterType.player)
@@ -243,7 +245,7 @@ public class HpUp : I_BuffBase
         }
     }
 
-    public void level4HpUp(CharacterData characterData)//ToDo 等级四的操作
+    public void level4HpUp(CharacterData characterData)//ToDo レベル4の操作
     {
         if (chararcterType == E_ChararcterType.player)
         {
@@ -261,16 +263,22 @@ public class HpUp : I_BuffBase
         }
     }
 
-    ///////////特殊机制的实现
+    ///////////特別なメカニズムの実装
 
 
-    /// <summary>
-    /// 吸血
-    /// </summary>
-    /// <param name="damage">当次伤害值</param>
+    ///<summary>
+
+
+
+    ////// 吸血
+
+
+
+    ///</summary>
+    /// <param name="damage">一回のダメージ値</param>
     public void ReturnHp(float damage)
     {
-        if (!isHpSteal)//没有开启HpSteal
+        if (!isHpSteal)//HpStealは有効になっていません
         {
             return;
         }
@@ -286,7 +294,7 @@ public class HpUp : I_BuffBase
         float returnHp = damage * steal;
         characterData.currentHealth += returnHp;
 
-        if (characterData.currentHealth > characterData.maxHealth)//如果吸血超过了上限，则归位
+        if (characterData.currentHealth > characterData.maxHealth)//上限を超えて吸血した場合、元の位置に戻ります。
         {
             characterData.currentHealth = characterData.maxHealth;
         }

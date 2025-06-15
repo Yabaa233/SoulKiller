@@ -5,15 +5,15 @@ using UnityEngine;
 public class PlayerDodgeAttack : StateMachineBehaviour
 {
     private PlayerControl currentPlayer;    //現在のキャラクター
-    public ComboNode curComboNode;    //現在の攻撃のコンボ
-    [Header("ステップ開始の時間点")]
+    public ComboNode curComboNode;    //現在の攻撃コンボ
+    [Header("ステップが開始する時間点")]
     public float dodgeStartPer = 0.4f;
-    [Header("ステップ速度")]
+    [Header("ステップの速度")]
     public float dodgeSpeed = 1.0f;
     private bool dodged = false;
     private Vector3 resDir = new Vector3();
     [Header("移動可能なパーセンテージ")] public float movePercent = 0.95f;  //アニメーション終了のパーセンテージ
-    [Header("攻撃に繋げられるパーセンテージ")] public float attackPercent = 0.5f;  //アニメーション終了のパーセンテージ
+    [Header("攻撃につながるパーセンテージ")] public float attackPercent = 0.5f;  //アニメーション終了のパーセンテージ
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -22,7 +22,7 @@ public class PlayerDodgeAttack : StateMachineBehaviour
             currentPlayer = animator.gameObject.GetComponent<PlayerControl>();
         }
         currentPlayer.PlayerAttackMove_Plunge();
-        currentPlayer.ChangeCombo(curComboNode);    //PlayerのComboNodeを切り替え
+        currentPlayer.ChangeCombo(curComboNode);    //プレイヤーのComboNodeを切り替えます
         dodged = false;
     }
 
@@ -32,17 +32,17 @@ public class PlayerDodgeAttack : StateMachineBehaviour
         {
             dodged = true;
             resDir = (currentPlayer.targetPoint - currentPlayer.transform.position).normalized * dodgeSpeed;
-            currentPlayer.PlayerAttackMove_Plunge();    //向きを再設定
+            currentPlayer.PlayerAttackMove_Plunge();    //方向を再設定します
             currentPlayer.OpenTrigger();
             currentPlayer.CreateEffect();
             currentPlayer.PlayerForceMove(resDir);
         }
         if (stateInfo.normalizedTime > attackPercent)
         {
-            //各状態を回復
+            //すべての状態を回復します。
             animator.SetBool("canAttack", true);
         }
-        if (stateInfo.normalizedTime > movePercent) //少し硬直時間を残す
+        if (stateInfo.normalizedTime > movePercent) //まだ少し硬直時間が残っています
         {
             animator.SetBool("canDodge", true);
             animator.SetBool("canMove", true);

@@ -5,7 +5,7 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 /// <summary>
-/// �ڽ�ɫbuffչʾ��壬��ʾbuff���������
+/// キャラクターのバフ表示パネルで、バフのアップグレード状況を表示します。
 /// xushi
 /// </summary>
 public class Btn_Buff : BasePanel
@@ -14,24 +14,24 @@ public class Btn_Buff : BasePanel
 
     public Btn_Buff() : base(new UIType(path)) { }
 
-    //buffͼƬ
+    //バフ画像
     Image img;
 
-    //ͼ����ϸ��Ϣ
+    //アイコンの詳細情報
     GameObject buffInfo;
-    //ͼ����ϸ��Ϣ����
+    //アイコンの詳細情報テキスト
     Text buffInfoT;
 
-    //�������ͣչʾ��Ϣ ������
+    //渡されたホバー表示情報 親オブジェクト
     GameObject buffInfoParent;
 
-    //��ǰUI�õ���Э��
+    //現在のUIで使用されているコルーチン
     Coroutine openBuffInfo;
 
-    //��ǰbuff�ȼ���Ϣ
+    //現在のバフレベル情報
     BuffLevelData levelData;
 
-    //��ǰ�Ƿ����չʾ����
+    //現在、詳細を表示することは可能ですか？
     bool canShow = true;
 
     public override void OnShow(params object[] para)
@@ -42,7 +42,7 @@ public class Btn_Buff : BasePanel
         UITool.addTriggersListener(EventTriggerType.PointerEnter, PointerEnter);
         UITool.addTriggersListener(EventTriggerType.PointerExit, PointerExit);
 
-        //���ݸ�ui����ʾ���
+        //親UIの表示コンポーネントを伝達します
         if (para.Length!=0)
         {
             if (para.Length == 3)
@@ -97,23 +97,23 @@ public class Btn_Buff : BasePanel
         OpenInfo();
     }
 
-    //��ͣ����ϸ��Ϣ
+    //ホバーで詳細情報を開く
     public void OpenInfo()
     {
         buffInfoT.text = levelData.levelDescribe;
         //buffInfo.transform.GetComponent<Image>().sprite = img.sprite;
-        //��ʾ��ϸ��Ϣ
+        //詳細情報を表示する
         buffInfo.transform.SetParent(buffInfo.transform.parent.parent.parent.parent);
         buffInfo.SetActive(true);
     }
-    //�ر���ϸ��Ϣ
+    //詳細情報を閉じる
     public void CloseInfo()
     {
         buffInfo.transform.SetParent(buffInfoParent.transform);
         buffInfo.SetActive(false);
     }
 
-    //����canShow
+    //canShowを変更する
     public void SwitchShow(bool a)
     {
         canShow = a;

@@ -4,15 +4,17 @@ using UnityEngine;
 
 
 [CreateAssetMenu(menuName = "ScriptableObject/Battle/GunEmyStateData")]
-/// <summary>
-/// 第二类敌人的攻击描述文件
-/// </summary>
+///<summary>
+
+////// 第二種類の敵の攻撃記述ファイル
+
+///</summary>
 public class GunEmyStateData_SO : longEmyStateData_SO
 {
-    // [Header("攻击距离")]
+    // [Header("攻撃距離")]
     // public float attackDistance;
-    // [Header("攻击间隔")]
+    // [Header("攻撃間隔")]
     // public float attackSpeed;
-    // [Header("基础移动速度")]
+    // [Header("基本移動速度")]
     // public float moveSpeed;
 }

@@ -5,25 +5,25 @@ using System;
 
 public class ShieldBuff : I_BuffBase
 {
-    [Header("外部传参获得数据部分")]
-    //存当前角色的引用
-    [Tooltip("当前角色引用")]GameObject buffKeeper;
-    //存当前角色的BuffManager
-    [Tooltip("当前角色Buff管理器")]CharacterBuffManager characterBuffManager;
-    //当前BUFF种类
-    [Tooltip("当前Buff类型")]E_BuffKind buffType;
-    //当前角色的类型
-    [Tooltip("当前角色类型")]E_ChararcterType chararcterType;
+    [Header("Obtaining data part through external parameter passing")]
+    //現在のキャラクターの参照を保存する
+    [Tooltip("Current role reference")]GameObject buffKeeper;
+    //現在のキャラクターのBuffManagerを保存します
+    [Tooltip("Current Role Buff Manager")]CharacterBuffManager characterBuffManager;
+    //現在のBUFFの種類
+    [Tooltip("Current Buff Type")]E_BuffKind buffType;
+    //現在のキャラクタータイプ
+    [Tooltip("Current role type")]E_ChararcterType chararcterType;
 
-    [Tooltip("当前Buff等级")]public int currentLevel;
+    [Tooltip("Current Buff Level")]public int currentLevel;
 
-    [Header("Buff数据部分")]
-    [Tooltip("存放技能等级函数")]public Action<CharacterData> realEffect;
-    [Tooltip("函数等级列表")] public List<Action<CharacterData>> levelEffect;
+    [Header("Buff data section")]
+    [Tooltip("Store Skill Level Function")]public Action<CharacterData> realEffect;
+    [Tooltip("Function Level List")] public List<Action<CharacterData>> levelEffect;
 
-    [Tooltip("护盾类型")] public GameObject sheildPrefab;
-    [Tooltip("缓存护盾的控制器")] public ShieldRipples shieldRipples;
-    [Tooltip("缓存当前数据")]public CharacterData characterData;
+    [Tooltip("Shield Type")] public GameObject sheildPrefab;
+    [Tooltip("Controller of the Cache Shield")] public ShieldRipples shieldRipples;
+    [Tooltip("Cache the current data.")]public CharacterData characterData;
 
     public ShieldBuff(E_ChararcterType _chararcterType,int level = 1)
     {
@@ -31,7 +31,7 @@ public class ShieldBuff : I_BuffBase
         buffType = E_BuffKind.ShieldBuff;
         chararcterType = _chararcterType;
 
-        //初始化列表
+        //初期化リスト
         levelEffect = new List<Action<CharacterData>>();
     }
 
@@ -98,19 +98,23 @@ public class ShieldBuff : I_BuffBase
 
         if(currentLevel > levelEffect.Count)
         {
-            Debug.Log("赋予的等级超过Buff当前等级限制");
+            Debug.Log("The assigned level exceeds the current level limit of the Buff.");
             return;
         }
 
-        for(int i=0;i<currentLevel;i++)//根据技能等级添加效果
+        for(int i=0;i<currentLevel;i++)//スキルレベルに応じて効果を追加する
         {
             realEffect += levelEffect[i];
         }
     }
 
-    /// <summary>
-    /// 赋值完之后清空委托
-    /// </summary>
+    ///<summary>
+
+
+    ////// 割り当てた後で、委託をクリアします。
+
+
+    ///</summary>
     public void ClearDelegate()
     {
         for (int i = currentLevel - 1; i >= 0; i--)
@@ -120,7 +124,7 @@ public class ShieldBuff : I_BuffBase
     }
 
 
-/// 得到不同的类型然后添加Buff
+/// 異なるタイプを得た後、Buffを追加します。
     private void PlayerShieldUp()
     {
         PlayerControl playerControl = buffKeeper.GetComponent<PlayerControl>();
@@ -143,12 +147,12 @@ public class ShieldBuff : I_BuffBase
         characterData = bossControl.bossData;
         realEffect(null);
     }
-///////Buff移除的时候还原状态
+///////バフが削除されたときに状態を復元します
     public void PlayerShieldRemove()
     {
         GameObject.Destroy(sheildPrefab);
         shieldRipples = null;
-        Physics.IgnoreLayerCollision(8,12,false);//还原忽略的碰撞
+        Physics.IgnoreLayerCollision(8,12,false);//無視された衝突を復元する
     }
 
     public void EnemyShieldRemove()
@@ -157,7 +161,7 @@ public class ShieldBuff : I_BuffBase
         enemyControl.SetShieldVisble(false);
         GameObject.Destroy(sheildPrefab);
         shieldRipples = null;
-        Physics.IgnoreLayerCollision(6,12,false);//还原忽略的碰撞t
+        Physics.IgnoreLayerCollision(6,12,false);//無視された衝突tを復元します
     }
 
     public void bossShieldRemove()
@@ -167,7 +171,7 @@ public class ShieldBuff : I_BuffBase
     }
 
 
-////////Buff具体效果实现
+////////Buffの具体的な効果の実装
     private void level1ShieldUp(CharacterData characterData)
     {
         if(chararcterType == E_ChararcterType.player)
@@ -175,11 +179,11 @@ public class ShieldBuff : I_BuffBase
             sheildPrefab = GameObject.Instantiate(BuffDataManager.Instance.playerShield,buffKeeper.transform);
             shieldRipples = sheildPrefab.GetComponent<ShieldRipples>();
             shieldRipples.chararcterType = E_ChararcterType.player;
-            buffKeeper.GetComponent<PlayerControl>().characterBuffManager.shieldRipples = shieldRipples;//挂载实体
+            buffKeeper.GetComponent<PlayerControl>().characterBuffManager.shieldRipples = shieldRipples;//エンティティをマウントする
             shieldRipples.maxHealth = BuffDataManager.Instance.playerShieldStartHp;
             shieldRipples.currentHealth = BuffDataManager.Instance.playerShieldStartHp;
 
-            //忽略玩家武器和护盾的碰撞
+            //プレイヤーの武器とシールドの衝突を無視する
             Physics.IgnoreLayerCollision(8,12,true);
         }
         else if(chararcterType == E_ChararcterType.enemy)
@@ -194,7 +198,7 @@ public class ShieldBuff : I_BuffBase
             BaseEnemyControl enemyControl = buffKeeper.GetComponent<BaseEnemyControl>();
             characterData = enemyControl.enemyData;
             enemyControl.SetShieldVisble(true);
-            //忽略敌人武器和护盾的碰撞
+            //敵の武器と盾の衝突を無視する
             Physics.IgnoreLayerCollision(6,12,true);
         }
         else if(chararcterType == E_ChararcterType.boss)
@@ -207,10 +211,10 @@ public class ShieldBuff : I_BuffBase
             shieldRipples.currentHealth = BuffDataManager.Instance.bossShieldStartHp;
             sheildPrefab.transform.GetChild(0).localScale *= 3;
         }
-        //将护盾位置抬高
+        //シールドの位置を上げる
         if(sheildPrefab == null)
         {
-            Debug.LogWarning("没有添加上护盾");
+            Debug.LogWarning("The shield has not been added.");
             return;
         }
         float radius = sheildPrefab.GetComponent<SphereCollider>().radius;
@@ -271,7 +275,7 @@ public class ShieldBuff : I_BuffBase
         }
     }
 
-//////一些特殊实现
+//////いくつかの特別な実装
     public void DamageReflect(CharacterData attackData, float damage)
     {
         float reflectDamage = damage * BuffDataManager.Instance.damageReflectPercent;

@@ -2,61 +2,63 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 /// <summary>
-/// ´¢´æËùÓĞµÄbuffĞÅÏ¢
+/// ã™ã¹ã¦ã®ãƒãƒ•æƒ…å ±ã‚’ä¿å­˜ã™ã‚‹
 /// xushi
 /// </summary>
 [CreateAssetMenu(menuName = "ScriptableObject/UI/BuffInfoList")]
 public class BuffInfoListSO : ScriptableObject
 {
-    //buffÁĞ±í
+    //ãƒãƒ•ãƒªã‚¹ãƒˆ
     public List<BuffItemData> buffItems;
 
 }
 /// <summary>
-/// ´¢´æbuffµÄÍ¼±ê¡¢ÃèÊöµÈĞÅÏ¢
+/// ãƒãƒ•ã®ã‚¢ã‚¤ã‚³ãƒ³ã€èª¬æ˜ãªã©ã®æƒ…å ±ã‚’ä¿å­˜ã—ã¾ã™ã€‚
 /// </summary>
 [System.Serializable]
 public class BuffItemData
 {
-    //buffÃû³Æ
+    //ãƒãƒ•å
     public string buffName;
-    //buffÖÖÀà
+    //ãƒãƒ•ã®ç¨®é¡
     public E_BuffKind buffKind;
-    //buffÍ¼±ê
+    //ãƒãƒ•ã‚¢ã‚¤ã‚³ãƒ³
     public Sprite buffSprite;
-    //buffÃèÊö
+    //ãƒãƒ•ã®èª¬æ˜
     [TextArea]
     public string buffDescribe;
-    //buff¹ÊÊÂ±³¾°
+    //ãƒãƒ•ã®ã‚¹ãƒˆãƒ¼ãƒªãƒ¼ãƒãƒƒã‚¯ã‚°ãƒ©ã‚¦ãƒ³ãƒ‰
     [TextArea]
     public string buffStory;
-    //buffµÈ¼¶
+    //ãƒãƒ•ãƒ¬ãƒ™ãƒ«
     public List<BuffLevelData> buffLevelDatas;
 
-    //¹Ø¿¨Ïà¹Ø
-    //Ê¤ÀûÌõ¼ş
+    //ã‚¹ãƒ†ãƒ¼ã‚¸é–¢é€£
+    //å‹åˆ©æ¡ä»¶
     [TextArea]
     public string Levelcondition;
-    //¹Ø¿¨ÌáÊ¾
+    //ã‚¹ãƒ†ãƒ¼ã‚¸ã®ãƒ’ãƒ³ãƒˆ
     [TextArea]
     public string LevelTips;
 
-    //buffÎÄ×ÖÍ¼±ê
+    //ãƒãƒ•ãƒ†ã‚­ã‚¹ãƒˆã‚¢ã‚¤ã‚³ãƒ³
     public Sprite buffSpriteText;
 }
-/// <summary>
-/// ´¢´æbuffµ±Ç°µÈ¼¶µÄĞÅÏ¢
-/// </summary>
+///<summary>
+
+////// ç¾åœ¨ã®ãƒãƒ•ãƒ¬ãƒ™ãƒ«ã®æƒ…å ±ã‚’ä¿å­˜ã™ã‚‹
+
+///</summary>
 [System.Serializable]
 public class BuffLevelData
 {
-    //µ±Ç°µÈ¼¶
+    //ç¾åœ¨ã®ãƒ¬ãƒ™ãƒ«
     public int curLevel;
-    //µÈ¼¶Ãû³Æ
+    //ãƒ©ãƒ³ã‚¯å
     public string levelName;
-    //µÈ¼¶Í¼±ê
+    //ãƒ©ãƒ³ã‚¯ã‚¢ã‚¤ã‚³ãƒ³
     public Sprite levelSprite;
-    //µÈ¼¶ÃèÊö
+    //ãƒ¬ãƒ™ãƒ«ã®èª¬æ˜
     [TextArea]
     public string levelDescribe;
 }

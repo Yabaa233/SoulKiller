@@ -7,7 +7,7 @@ public class PlayerHeavyAttack : StateMachineBehaviour
     private PlayerControl currentPlayer;    //現在のキャラクター
     public ComboNode comboNode; //キャラクターのコンボノード
     [Range(0.0f, 10.0f)]
-    [Tooltip("この値が大きいほど制動速度が速い")] public float attackStopLerpValue = 0.005f; //攻撃制動補間用
+    [Tooltip("この値が大きいほど、制動速度は速くなります。")] public float attackStopLerpValue = 0.005f; //攻撃制動補間用
     public bool dodged = false;    //重撃ダッシュ状態かどうか
     public float dodgePower = 50f;
     public float stopTime = 1.0f;
@@ -19,17 +19,17 @@ public class PlayerHeavyAttack : StateMachineBehaviour
         }
         animator.SetBool("canMove", false);
         animator.SetBool("canDodge", false);
-        currentPlayer.ChangeCombo(comboNode);    //PlayerのComboNodeを切り替え
+        currentPlayer.ChangeCombo(comboNode);    //プレイヤーのComboNodeを切り替えます
         currentPlayer.CloseTrigger();   //攻撃トリガーを閉じる
-        currentPlayer.PlayerBaseRotate_Attack();   //攻撃で向きを変更
+        currentPlayer.PlayerBaseRotate_Attack();   //攻撃で方向を変える
         currentPlayer.PlayerAttackMove_Plunge();
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        currentPlayer.PlayerStopMove(attackStopLerpValue);  //制動
-        currentPlayer.GetPlayerInput_MouseRotate(); //向きを変更
+        currentPlayer.PlayerStopMove(attackStopLerpValue);  //ブレーキ
+        currentPlayer.GetPlayerInput_MouseRotate(); //方向を変える
         if (!dodged && Input.GetKey(KeyCode.Space))
         {
             currentPlayer.PlayerBaseMove_Dodge(dodgePower);

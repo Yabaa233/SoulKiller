@@ -36,8 +36,7 @@ public class HatcheryEnemy_IdleState : IState
     public void OnEnter()
     {
         parameter.animator.Play("Idle");
-        /*parameter.intervalTime = Time.time;*/
-        ///待機状態、第一状態として設定:1.待機 2.逃走
+
     }
     public void OnUpDate()
     {
@@ -59,16 +58,18 @@ public class HatcheryEnemy_IdleState : IState
     }
     public void OnLateUpDade()
     {
-        ///最初のフレーム実行
+        ///最初のフレームの実行
     }
     public void OnExit()
     {
-        ///状態終了
+        ///ステータスが終了しました
     }
 }
-/// <summary>
-/// 敵の状態、攻撃を受けると逃走状態に切り替わる
-/// </summary>
+///<summary>
+
+////// 敵の状態、攻撃を受けると逃走状態に切り替わる
+
+///</summary>
 public class HatcheryEnemy_ProductionState : IState
 {
     private HatcheryEnemyFSM manager;
@@ -83,7 +84,7 @@ public class HatcheryEnemy_ProductionState : IState
     public void OnEnter()
     {
         parameter.animator.Play("Attack");
-        beginProductionTime = Time.time;///生産開始時間を記録
+        beginProductionTime = Time.time;///生産開始時間を記録する
         
     }
     public void OnUpDate()
@@ -96,9 +97,8 @@ public class HatcheryEnemy_ProductionState : IState
         if (Time.time >= needTime + beginProductionTime)
         {
             
-            ///1体の敵を生成
-            GameObject son = manager.SonProduction(parameter.sonBorn);///生成位置は事前に設定された位置を使用        
-            /*FMODUnity.RuntimeManager.PlayOneShot("event:/Monster/NorMal/duiduiBorn");                                                                        ///敵を生成した後に敵の音を再生*/
+            ///1体の敵を生成する
+            GameObject son = manager.SonProduction(parameter.sonBorn);///生成位置は事前に設定された位置を使用します。
             son.transform.parent = manager.transform.parent;
             manager.gameObject.GetComponent<HatcheryEnemyControl>().room.enemyCount++;
             son.SetActive(true);
@@ -108,11 +108,11 @@ public class HatcheryEnemy_ProductionState : IState
     }
     public void OnLateUpDade()
     {
-        ///最初のフレーム実行
+        ///最初のフレームの実行
     }
     public void OnExit()
     {
-        ///生産が終了したらIdle状態に戻る
+        ///生産が終了したら、アイドル状態に戻ります。
     }
 
 }
@@ -131,7 +131,7 @@ public class HatcheryEnemy_HitState : IState
     {
         parameter.animator.Play("Hit");
         nextTime = Time.time;
-        ///ダメージ処理は既にcontrolスクリプトに移動したため省略、parameter.enemyData.currentHealth -= 1;///この部分はplayerのAttack値に置き換える必要がある
+        ///ダメージ処理は既にcontrolスクリプトに移行されているため、省略します。parameter.enemyData.currentHealth -= 1; ///この部分はplayerのAttack値に置き換える必要があります。
     }
     public void OnUpDate()
     {
@@ -155,7 +155,7 @@ public class HatcheryEnemy_HitState : IState
     }
     public void OnLateUpDade()
     {
-        //最初のフレーム実行
+        //最初のフレームの実行
     }
     public void OnExit()
     {
@@ -171,7 +171,7 @@ public class HatcheryEnemy_DeadState : IState
         manager = _manager;
         parameter = _manager.parameter;
     }
-    //TODO:母体の死亡処理
+    //TODO：母体の死亡処理
     public void OnEnter()
     {
         parameter.isDead = true;

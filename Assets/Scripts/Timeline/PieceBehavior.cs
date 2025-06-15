@@ -4,32 +4,32 @@ using UnityEngine;
 using UnityEngine.Playables;
 public class PieceBehavior : PlayableBehaviour
 {
-    private PlayableDirector playableDirector;//获取Timeline对象上的导演组件
+    private PlayableDirector playableDirector;//Timelineオブジェクト上のディレクターコンポーネントを取得します。
 
 
-    //棋子轨道切片需要的属性
-    [Header("需要操作的棋子")] public GameObject gameObject;
+    //チェスピースの軌道スライスに必要な属性
+    [Header("操作が必要なチェスの駒")] public GameObject gameObject;
 
     private Material pieceMaterial;
-    public bool isRetryPlay;//是否是反播
+    public bool isRetryPlay;//逆再生ですか？
     private bool isClipPlayed;
     private float startFloat;
     private float endFloat;
 
     public override void OnPlayableCreate(Playable playable)
     {
-       playableDirector = playable.GetGraph().GetResolver() as PlayableDirector;//需要解析之后进行类型转换，有点类似让粒子系统可以变成一个可挂载的脚本
+       playableDirector = playable.GetGraph().GetResolver() as PlayableDirector;//解析後に型変換を行う必要があり、それは粒子システムをマウント可能なスクリプトに変えることに少し似ています。
     }
 
-    //类似MonoBehavior中的Update方法，每一帧都会进行调用
+    //MonoBehaviorのUpdateメソッドのように、各フレームで呼び出されます。
     public override void ProcessFrame(Playable playable, FrameData info, object playerData)
     {
-        if(isClipPlayed == false && info.weight > 0) //如果当前片段还没有播放，说明需要初始化  TO总感觉可以放到其他地方做初始化
+        if(isClipPlayed == false && info.weight > 0) //現在のフラグメントがまだ再生されていない場合、初期化が必要であることを示します。TOは他の場所で初期化を行うことが可能だと感じています。
         {
             pieceMaterial = gameObject.GetComponent<Renderer>().material;
             if(pieceMaterial == null)
             {
-                Debug.Log("没有东西");
+                Debug.Log("何もない");
             }
             startFloat = 0;
             endFloat = 60;
@@ -43,7 +43,7 @@ public class PieceBehavior : PlayableBehaviour
         float x = (float)playable.GetDuration();
         if(x < 0.001f)
         {
-            Debug.LogWarning("不能除这么小的数");
+            Debug.LogWarning("これほど小さい数を除算することはできません。");
             x = 1;
         }
         float percent = (float)playable.GetTime()/x;

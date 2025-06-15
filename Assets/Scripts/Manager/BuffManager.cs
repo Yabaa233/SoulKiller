@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-//某一大类Buff的所有小类
+//ある大きなカテゴリのBuffのすべてのサブカテゴリ
 public enum BuffType
 {
     Buff1,
@@ -11,43 +11,43 @@ public enum BuffType
     Buff3,
 }
 
-//创建一个委托类型，同时配置好各差异函数，将函数作为形参传入BuffBase中，BuffBase中设置委托变量接收此函数
+//デリゲートタイプを作成し、各差分関数を設定します。関数をBuffBaseに形式パラメータとして渡します。BuffBaseでは、この関数を受け取るためのデリゲート変数を設定します。
 public delegate void BuffFunction();
 
-//BallBuff的存储方式 类型——概率
+//BallBuffの保存方法 タイプ - 確率
 [System.Serializable]
 public struct BuffItem
 {
-    public BuffType type;   //类型
-    public float probability;   //概率
-    public Sprite sprite;   //贴图
+    public BuffType type;   //タイプ
+    public float probability;   //確率
+    public Sprite sprite;   //画像を貼り付ける
 }
 
 [System.Serializable]
 public class BuffManager : singleton<BuffManager>
 {
-    [Header("某类Buff的概率")]
+    [Header("ある種類のバフの確率")]
     public float isxxxBuff = 0.4f;
-    [Header("另一类Buff的概率")]
+    [Header("もう一つの種類のBuffの確率")]
     public float isxxxxBuff = 0.3f;
-    [Header("另一类Buff的概率")]
+    [Header("もう一つの種類のBuffの確率")]
     public float isxxxxxBuff = 0.3f;
 
-    [Header("各种Buff对应概率")]
-    [SerializeField] public List<BuffItem> ballBuffs;    //用户配置每种Buff的接口
-    [Header("Buff预制体")]
-    public GameObject BuffPrefab;       //用户配置Buff预制体接口
-    public Dictionary<BuffType, BuffFunction> Dic_BuffFunction; //存储和查询各buff的功能函数
-    private List<float> BuffProbabilitys;    //每个Buff的概率，用于动态创建Buff
-    private Queue<BuffFunction> Que_BuffFunction = new Queue<BuffFunction>();   //委托队列，依次处理
+    [Header("各種バフの対応確率")]
+    [SerializeField] public List<BuffItem> ballBuffs;    //各種Buffのインターフェースを設定するユーザー
+    [Header("Buffプレハブ体")]
+    public GameObject BuffPrefab;       //ユーザーがBuffプレファブインターフェースを設定します
+    public Dictionary<BuffType, BuffFunction> Dic_BuffFunction; //各種のバフを保存し、照会する機能関数
+    private List<float> BuffProbabilitys;    //各Buffの確率、動的にBuffを作成するために使用されます。
+    private Queue<BuffFunction> Que_BuffFunction = new Queue<BuffFunction>();   //委託キュー、順次処理
 
-    private bool Processing;   //是否正在处理Buff
+    private bool Processing;   //Buffは処理中ですか？
 
     protected override void Awake()
     {
         base.Awake();
         BuffProbabilitys = new List<float>();
-        //初始化Buff队列
+        //Buffキューの初期化
         Dic_BuffFunction = new Dictionary<BuffType, BuffFunction>();
 
         #region 初始化分配各Buff出现概率
@@ -56,7 +56,7 @@ public class BuffManager : singleton<BuffManager>
         #endregion
 
         #region 初始化Buff函数字典
-        //BuffFunction初始化
+        //BuffFunctionの初期化
         Dic_BuffFunction.Add(BuffType.Buff1, BuffFunction_BuffType_Buff1);
         Dic_BuffFunction.Add(BuffType.Buff2, BuffFunction_BuffType_Buff2);
         Dic_BuffFunction.Add(BuffType.Buff3, BuffFunction_BuffType_Buff3);
@@ -67,7 +67,7 @@ public class BuffManager : singleton<BuffManager>
         foreach (var i in ballBuffs)
         {
             curProbability += i.probability;
-            BuffProbabilitys.Add(curProbability);   //对应索引对应概率
+            BuffProbabilitys.Add(curProbability);   //対応するインデックスに対応する確率
         }
         #endregion
 
@@ -79,17 +79,17 @@ public class BuffManager : singleton<BuffManager>
         
         #endregion
     }
-    //清空队列
+    //キューをクリアする
     private void Update()
     {
-        if (Processing) return; //如果正在处理Buff，直接返回
+        if (Processing) return; //Buffを処理中の場合、直接に戻ってください。
         if (Que_BuffFunction.Count != 0)
         {
             Que_BuffFunction.Dequeue()();
-            Debug.Log("执行一个BallBuff");
+            Debug.Log("BallBuffを実行する");
         }
     }
-    //根据配置的各种Buff的概率选择性进入对应的Buff获取函数
+    //設定された各種Buffの確率に基づいて、対応するBuff取得関数に選択的に入る
     public void GetBuff(Vector3 position, Transform parent)
     {
         float rand = Random.Range(0f, isxxxxxBuff);
@@ -99,31 +99,31 @@ public class BuffManager : singleton<BuffManager>
         }
         else if (rand < isxxxxBuff)
         {
-            //另一种Buff
+            //もう一つのBuff
             // GetRandomBuffType(position, parent);
         }
         else
         {
-            //另一种Buff
+            //もう一つのBuff
             // GetRandomBuffType(position, parent);
         }
     }
 
-    //随机生成一个Buff
-    //如果随机出来的值比BuffProbabilitys中最后一个值还大说明没有随机到Buff
+    //ランダムにバフを生成する
+    //ランダムに生成された値がBuffProbabilitysの最後の値よりも大きい場合、Buffがランダムに選ばれていないことを意味します。
     public void GetRandomBuffType(Vector3 Pos, Transform parent)
     {
         float rand = Random.Range(0f, BuffProbabilitys.Last());
-        if (rand > BuffProbabilitys.Last()) //如果比最后一个值还大，说明没有buff出现
+        if (rand > BuffProbabilitys.Last()) //最後の値よりも大きければ、buffが出現していないことを示します。
         {
             return;
         }
-        for (int i = 0; i < BuffProbabilitys.Count; i++)    //遍历概率列表，找到并掉落对应Buff
+        for (int i = 0; i < BuffProbabilitys.Count; i++)    //確率リストを走査し、対応するBuffを見つけてドロップします。
         {
             if (rand < BuffProbabilitys[i])
             {
                 GameObject newBallBuff = Instantiate(BuffPrefab, Pos, Quaternion.identity, parent);
-                //查询字典获取事件执行的内容并初始化对应Buff
+                //辞書を参照してイベントの実行内容を取得し、対応するBuffを初期化します。
                 // newBallBuff.GetComponent<BuffBase>().Init();
                 break;
             }
@@ -131,11 +131,11 @@ public class BuffManager : singleton<BuffManager>
         return;
     }
 
-    //清空当前场景中的所有BUFF
+    //現在のシーンのすべてのBUFFをクリアします。
     public void ClearBuffs()
     {
         int i = 0;
-        //清空Buff队列
+        //Buffキューをクリアする
         Que_BuffFunction.Clear();
         while (i < transform.childCount)
         {
@@ -145,7 +145,7 @@ public class BuffManager : singleton<BuffManager>
 
     //***********************************
     //
-    //            BuffType具体实现
+    // BuffTypeの具体的な実装
     //
     //***********************************
     public void BuffFunction_BuffType_Buff1()

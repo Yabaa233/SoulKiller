@@ -42,10 +42,10 @@ public class Area_MainBuff : BasePanel
     //����
      GameObject shieldGO;
 
-    ////是否已经打开能力面板
+    ////能力パネルはすでに開いていますか？
     //public bool isOpenBuff=false;
     //public bool isOpenPause=false;
-    ////是否刚刚关闭能力面板
+    ////先ほど能力パネルを閉じましたか？
     //public bool isBuffClosing=false;
     //public bool isOpenClosing = false;
 
@@ -85,9 +85,13 @@ public class Area_MainBuff : BasePanel
         PanelManager.Instance.KeyBoardUpdateAction -= OpenBuffInfo;
     }
 
-    /// <summary>
-    /// 重新刷新界面按钮显示
-    /// </summary>
+    ///<summary>
+
+
+    ////// 画面を更新するボタンが表示されます
+
+
+    ///</summary>
     public void RefreshBuffButton()
     {
         attackSwordGO.SetActive(false);
@@ -167,14 +171,14 @@ public class Area_MainBuff : BasePanel
             maxBullet.text = ((int)num).ToString();
     }
 
-    //打开能力面板
+    //能力パネルを開く
     public void OpenBuffInfo(KeyCode keyCode)
     {
         
         if (keyCode == KeyCode.Escape)
         {
             PanelManager.Instance.Open(new PausePanel());
-            //打开面板则停止当前的监听
+            //パネルを開くと現在の監視が停止します。
             PanelManager.Instance.KeyBoardUpdateAction -= OpenBuffInfo;
         }
         
@@ -182,7 +186,7 @@ public class Area_MainBuff : BasePanel
         {
             PanelManager.Instance.Open(new BuffInfoPanel());
 
-            //打开面板则停止当前的监听
+            //パネルを開くと現在の監視が停止します。
             PanelManager.Instance.KeyBoardUpdateAction -= OpenBuffInfo;
         }
     }

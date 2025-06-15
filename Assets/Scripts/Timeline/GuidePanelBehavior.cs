@@ -7,9 +7,9 @@ using UnityEngine.Playables;
 [System.Serializable]
 public class GuidePanelBehavior : PlayableBehaviour
 {
-    private PlayableDirector playableDirector;//获取Timeline对象上的导演组件
+    private PlayableDirector playableDirector;//Timelineオブジェクト上のディレクターコンポーネントを取得します。
 
-    [Header("对应的图片")]public Sprite guideImage;
+    [Header("対応する画像")]public Sprite guideImage;
     [TextArea(8,1)] public string guideLineText;
     
     private GuidePanel guidePanel;
@@ -17,14 +17,14 @@ public class GuidePanelBehavior : PlayableBehaviour
 
     public override void OnPlayableCreate(Playable playable)
     {
-        playableDirector = playable.GetGraph().GetResolver() as PlayableDirector;//需要解析之后进行类型转换，有点类似让粒子系统可以变成一个可挂载的脚本
+        playableDirector = playable.GetGraph().GetResolver() as PlayableDirector;//解析後に型変換を行う必要があり、それは粒子システムをマウント可能なスクリプトに変えることに少し似ています。
     }
 
     public override void ProcessFrame(Playable playable, FrameData info, object playerData)
     {
         if(isClipPlayed == false && info.weight > 0)
         {
-            Debug.Log("正在创建");
+            Debug.Log("作成中です");
             PanelManager.Instance.Open(new GuidePanel());
             isClipPlayed = true;
         }

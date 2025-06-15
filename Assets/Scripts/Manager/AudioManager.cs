@@ -4,23 +4,25 @@ using UnityEngine;
 using UnityEngine.Audio;
 
 /// <summary>
-/// 音频管理器，存储所有音频并且可以随意播放和暂停
+/// オーディオマネージャー、すべてのオーディオを保存し、自由に再生や一時停止が可能です。
 /// </summary>
 public class AudioManager : MonoBehaviour
 {
-    /// <summary>
-    /// 单个音频信息存储
-    /// </summary>
+    ///<summary>
+
+    ////// 単一のオーディオ情報の保存
+
+    ///</summary>
     public class Sound
     {
-        [Tooltip("音频剪辑")]
+        [Tooltip("オーディオクリップ")]
         public AudioClip clip;
-        [Header("音频分组")]
+        [Header("オーディオグループ")]
         public AudioMixerGroup outputGroup;
-        [Tooltip("音频音量")]
+        [Tooltip("オーディオボリューム")]
         [Range(0 ,1)]
         public float volume;
-        [Header("音频是否开具播放")]
+        [Header("オーディオは再生されていますか？")]
         public bool playOnAwake;
         public bool loop;
     }

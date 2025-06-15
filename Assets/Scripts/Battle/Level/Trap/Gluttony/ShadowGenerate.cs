@@ -7,13 +7,13 @@ public class ShadowGenerate : MonoBehaviour
 {
     public bool trapStart;
     public bool trapShadow = true;
-    [Header("间隔时间")]
+    [Header("Interval Time")]
     public float intervalTime;
-    [Header("蓄力时间")]
+    [Header("Charging time")]
     public float entryTime;
-    [Header("铲子停滞时间")]
+    [Header("Shovel Downtime")]
     public float holdTime;
-    [Header("订阅事件组件")]
+    [Header("Subscription Event Component")]
     public GameObject coreGameObject;
     private float startTime, endTime;
     private GameObject shadow, knife;
@@ -26,7 +26,7 @@ public class ShadowGenerate : MonoBehaviour
         knife = transform.GetChild(1).gameObject;
     }
     /// <summary>
-    /// 注册核心机关的事件与关卡进入事件
+    /// コア機関の登録イベントとステージ入場イベント
     /// </summary>
     private void OnEnable()
     {
@@ -41,13 +41,13 @@ public class ShadowGenerate : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if ((!trapStart && !isConduct) || (!trapShadow && !isConduct)) return;//是否在陷阱开启状态与关卡进入状态，都false则陷阱关闭
-        if (!isDown)//掉落厨具是否已经开始启动
+        if ((!trapStart && !isConduct) || (!trapShadow && !isConduct)) return;//トラップが開いている状態とステージに入る状態、どちらもfalseであればトラップは閉じます。
+        if (!isDown)//落とした調理器具の起動はもう始まりましたか？
         {
-            if (Time.time > endTime + intervalTime)//判断时间间隔是否足够
+            if (Time.time > endTime + intervalTime)//時間間隔が十分かどうかを判断します
             {
-                isConduct = true;//陷阱开启状态
-                shadow.transform.position = GameManager.Instance.currentPlayer.transform.position+new Vector3(0,1f,0);//指示特效显示
+                isConduct = true;//トラップが開いている状態
+                shadow.transform.position = GameManager.Instance.currentPlayer.transform.position+new Vector3(0,1f,0);//特殊効果の表示を指示する
                 shadow.SetActive(true);
                 isDown = true;
                 startTime = Time.time;
@@ -55,7 +55,7 @@ public class ShadowGenerate : MonoBehaviour
         }
         else
         {
-            /////攻击指示与厨具同时不存在，说明本次陷阱结束,刷新陷阱开启状态及结束时间
+            /////攻撃指示と調理器具が同時に存在しないことは、この罠が終了したことを示しています。罠の開始状態と終了時間を更新してください。
             if (!shadow.activeSelf && !knife.activeSelf)
             {
                 isDown = false;
@@ -66,7 +66,7 @@ public class ShadowGenerate : MonoBehaviour
             {
                 if (Time.time >= startTime + entryTime)
                 {
-                    if (!knife.activeSelf)//生成厨具
+                    if (!knife.activeSelf)//調理器具を生成する
                     {
                         knife.SetActive(true);
                         knife.GetComponent<Rigidbody>().velocity = Vector3.zero;
@@ -76,16 +76,16 @@ public class ShadowGenerate : MonoBehaviour
                     }
                     else
                     {
-                        if (!shadow.GetComponent<Trap>().isTouch)//攻击指示已经是否已经被接触
+                        if (!shadow.GetComponent<Trap>().isTouch)//攻撃指示はすでに接触されましたか？
                         {
                             knife.GetComponent<Rigidbody>().velocity += Vector3.down * 10;
                         }
                         else
                         {
-                            if(Time.time>= shadow.GetComponent<Trap>().touchTime + holdTime)//大于厨具在地面的时间
+                            if(Time.time>= shadow.GetComponent<Trap>().touchTime + holdTime)//台所用具が地面にある時間よりも長い
                             {
-                                knife.GetComponent<Rigidbody>().velocity += Vector3.up * 3;//反向加速
-                                if (knife.transform.localPosition.y >= knifePosition[1])//判断坐标高度，还原状态
+                                knife.GetComponent<Rigidbody>().velocity += Vector3.up * 3;//逆加速
+                                if (knife.transform.localPosition.y >= knifePosition[1])//座標の高さを判断し、状態を復元します。
                                 {
                                     knife.GetComponent<Rigidbody>().velocity = Vector3.zero;
                                     shadow.GetComponent<Trap>().isTouch = false;

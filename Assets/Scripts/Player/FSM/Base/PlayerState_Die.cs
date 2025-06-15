@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// プレイヤー死亡状態
+/// プレイヤーの死亡状態
 public class PlayerState_Die : StateMachineBehaviour
 {
     private PlayerControl currentPlayer; //現在のキャラクター

@@ -21,6 +21,6 @@ public class PlayerState_Idle : StateMachineBehaviour
     public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         // デバッグログ("OnUpDate Idle");
-        currentPlayer.GetPlayerInput_MouseRotate();    //オーラ回転
+        currentPlayer.GetPlayerInput_MouseRotate();    //オーラの回転
     }
 }

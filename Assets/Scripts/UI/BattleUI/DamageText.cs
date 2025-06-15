@@ -5,9 +5,9 @@ using UnityEngine.UI;
 
 public class DamageText : MonoBehaviour
 {
-    public Text damageText;//伤害数字
-    public float lifeTimer;//存在多久
-    public float upSpeed;//上升速度
+    public Text damageText;//ダメージ数値
+    public float lifeTimer;//どのくらい存在していますか？
+    public float upSpeed;//上昇速度
     void Start()
     {
         damageText = gameObject.GetComponent<Text>();

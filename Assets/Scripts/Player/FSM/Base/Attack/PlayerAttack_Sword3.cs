@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// プレイヤー剣攻撃3
+/// プレイヤーの剣攻撃3
 /// </summary>
 public class PlayerAttack_Sword3 : StateMachineBehaviour
 {
     private PlayerControl currentPlayer;    //現在のキャラクター
-    [Header("冲刺开始的时间点")]
+    [Header("スプリント開始の時点")]
     public float dodgeStartPer = 0.4f;
-    [Header("冲刺速度")]
+    [Header("スプリントスピード")]
     public float dodgeSpeed = 1.0f;
     private bool dodged = false;
     private Vector3 resDir = new Vector3();
@@ -29,7 +29,7 @@ public class PlayerAttack_Sword3 : StateMachineBehaviour
         {
             dodged = true;
             resDir = (currentPlayer.targetPoint - currentPlayer.transform.position).normalized * dodgeSpeed;
-            currentPlayer.PlayerAttackMove_Plunge();    //重新设置朝向
+            currentPlayer.PlayerAttackMove_Plunge();    //方向を再設定する
             currentPlayer.OpenTrigger();
             currentPlayer.CreateEffect();
             currentPlayer.PlayerForceMove(resDir);

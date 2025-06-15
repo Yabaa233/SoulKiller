@@ -5,16 +5,16 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "ScriptableObject/Battle/DashBoomEmyStateData")]
 public class DBoomEmyStateData_SO : ScriptableObject
 {
-    [Header("攻击距离")]
+    [Header("攻撃距離")]
     public float attackDistance;
-    [Header("攻击间隔")]
+    [Header("攻撃間隔")]
     public float attackSpeed;
-    [Header("基础移动速度")]
+    [Header("基本移動速度")]
     public float moveSpeed;
-    [Header("冲刺力度")]
+    [Header("スプリント力")]
     public float dashPower;
-    [Header("自爆延迟")]
+    [Header("自爆遅延")]
     public float boomDelay;
-    [Header("自爆音效")]
+    [Header("自爆音効")]
     public FMODUnity.EventReference boomEffect;
 }

@@ -19,9 +19,9 @@ public class CM_Effect : singleton<CM_Effect>
     public Cinemachine.CinemachineVirtualCamera cinemachine;
     public Cinemachine.CinemachineBasicMultiChannelPerlin config;
 
-    public VolumeProfile volumeProfile;//得到对应的渲染组件
-    public AnimationCurve clearCMCurve;//通关时相机移动曲线
-    //缓存区
+    public VolumeProfile volumeProfile;//対応するレンダリングコンポーネントを取得する
+    public AnimationCurve clearCMCurve;//クリア時のカメラ移動曲線
+    //バッファエリア
     private float bloomIntensity;
     private ColorParameter colorParameter;
     private ClampedFloatParameter clampedFloatParameter;
@@ -38,7 +38,7 @@ public class CM_Effect : singleton<CM_Effect>
     }
     private void Start()
     {
-        // GameManager.Instance.cinemachine = this.cinemachine;    //向GameManger注册
+        // GameManager.Instance.cinemachine = this.cinemachine;    //GameManagerに登録する
         volumeProfile = GameObject.Find("Volume").GetComponent<Volume>().profile;
 
         volumeProfile.TryGet<Vignette>(out vignette);
@@ -46,13 +46,13 @@ public class CM_Effect : singleton<CM_Effect>
         startIntensity = vignette.intensity.value;
 
     }
-    //镜头抖动API
-    //参数:int type:抖屏类型 目前已有类型↓
-    //                  0:随机 1:简单 2:水平随机 3:水平简单 4:竖直随机 5:竖直简单
-    //                 （随机代表每一次抖动幅度随机，简单表示抖动幅度固定）
-    //     float shake_time:抖动时间
-    //     可选参数float Amp（0~N）:抖动的振幅（默认1）
-    //     可选参数float Fre（0~N）:抖动的频率（默认1）
+    //カメラシェイクAPI
+    //パラメータ：int type：画面揺れタイプ 現在のタイプ↓
+    //                  0:ランダム 1:シンプル 2:水平ランダム 3:水平シンプル 4:垂直ランダム 5:垂直シンプル
+    //                 （ランダムは振動幅度が毎回ランダムで、シンプルは振動幅度が固定されていることを示します）
+    //     float shake_time：振動時間
+    //     オプションパラメータfloat Amp（0〜N）：振幅の揺れ（デフォルトは1）
+    //     オプションパラメータfloat Fre（0〜N）：振動の頻度（デフォルトは1）
     public void CM_do_shake(shake_type type, float shake_time, float Amp = 1, float Fre = 1)
     {
         // var cinemachine = GetComponent<Cinemachine.CinemachineVirtualCamera>();
@@ -68,9 +68,9 @@ public class CM_Effect : singleton<CM_Effect>
     }
     IEnumerator shake_timer(Cinemachine.CinemachineBasicMultiChannelPerlin config, float shake_time, float Amp, float Fre)
     {
-        float Amp_lerp = Amp;//当前振幅
-        int frame = (int)(60 * shake_time);//总帧数
-        float Amp_frame = Amp / frame;//每帧变化
+        float Amp_lerp = Amp;//現在の振幅
+        int frame = (int)(60 * shake_time);//総フレーム数
+        float Amp_frame = Amp / frame;//各フレームの変化
         while (frame > 0)
         {
             yield return null;
@@ -86,10 +86,10 @@ public class CM_Effect : singleton<CM_Effect>
     }
     IEnumerator shake_timer2(Cinemachine.CinemachineBasicMultiChannelPerlin config, float shake_time, float Amp, float Fre)
     {
-        float timef = 0.1f;//时间单位
-        float Amp_lerp = Amp;//当前振幅
-        int frame = (int)(shake_time / timef);//总执行次数
-        float Amp_frame = Amp / frame;//每次变化
+        float timef = 0.1f;//時間単位
+        float Amp_lerp = Amp;//現在の振幅
+        int frame = (int)(shake_time / timef);//合計実行回数
+        float Amp_frame = Amp / frame;//毎回の変化
         while (frame > 0)
         {
             yield return new WaitForSeconds(timef);
@@ -105,11 +105,11 @@ public class CM_Effect : singleton<CM_Effect>
     }
 
     /// <summary>
-    /// 将Bloom效果设置到
+    /// ブルーム効果を設定する
     /// </summary>
-    /// <param name="intensity">强度值</param>
-    /// <param name="needRevert">是否需要复原</param>
-    /// <param name="keeptime">持续时间</param>
+    /// <param name="intensity">強度値</param>
+    /// <param name="needRevert">元に戻す必要があるか</param>
+    /// <param name="keeptime">持続時間</param>
     public void SetBloomIntensity(float intensity, bool needRevert = false, float keeptime = 1)
     {
         Bloom bloom;
@@ -131,11 +131,11 @@ public class CM_Effect : singleton<CM_Effect>
     }
 
     /// <summary>
-    /// 调整ColorAdjusting的颜色
+    /// ColorAdjustingの色を調整する
     /// </summary>
-    /// <param name="color">调整至该颜色</param>
-    /// <param name="needRevert">是否需要还原效果</param>
-    /// <param name="keeptime">效果持续时间</param>
+    /// <param name="color">この色に調整する</param>
+    /// <param name="needRevert">効果を元に戻す必要があるかどうか</param>
+    /// <param name="keeptime">効果持続時間</param>
     public void SetColorAdjusting(float intensity, bool needRevert = false, float keeptime = 1)
     {
         ColorAdjustments colorAdjustments;
@@ -180,9 +180,9 @@ public class CM_Effect : singleton<CM_Effect>
     }
 
     /// <summary>
-    /// 设置相机跟随玩家
+    /// カメラをプレイヤーに追従させる設定
     /// </summary>
-    /// <param name="playerTF"> 待跟随玩家物体的tf </param>
+    /// <param name="playerTF"> フォローすべきプレイヤーオブジェクトのtf </param>
     public void SetFollwerPlayer(Transform playerTF)
     {
         CM_Effect.Instance.cinemachine.LookAt = playerTF;
@@ -190,12 +190,18 @@ public class CM_Effect : singleton<CM_Effect>
     }
 
 
-    /// <summary>
-    /// 设置屏闪
-    /// </summary>
-    /// <param name="color">闪烁颜色</param>
-    /// <param name="hurtSpeed">闪烁速度</param>
-    /// <param name="maxIntensity">闪烁最大值，0~1</param>
+    ///<summary>
+
+
+
+    ////// 画面の点滅を設定する
+
+
+
+    ///</summary>
+    /// <param name="color">点滅色</param>
+    /// <param name="hurtSpeed">点滅速度</param>
+    /// <param name="maxIntensity">点滅の最大値、0〜1</param>
     public void PlayerGetDamaged(Color color,float hurtSpeed,float maxIntensity)
     {
         
@@ -210,7 +216,7 @@ public class CM_Effect : singleton<CM_Effect>
         {
             damageCoroutine = StartCoroutine(VignetteDamageBack(hurtSpeed,maxIntensity,vignette));
         }
-        else//这里做覆盖操作
+        else//ここでカバー操作を行います。
         {
             StopCoroutine(damageCoroutine);
             // vignette.color.value = color;
@@ -249,15 +255,15 @@ public class CM_Effect : singleton<CM_Effect>
         }
         vignette.color.value = storeColor;
         vignette.intensity.value = startIntensity;
-        // Debug.Log("已经还原");
+        // Debug.Log("It has already been restored.");
         yield break;
     }
 
     /// <summary>
-    /// 相机移动
+    /// カメラ移動
     /// </summary>
-    /// <param name="targetSize"> 目标正交尺寸 </param>
-    /// <param name="time"> 期望到位时间 </param>
+    /// <param name="targetSize"> 目標の直交サイズ </param>
+    /// <param name="time"> 到着予定時間 </param>
     /// <returns></returns>
     public void CM_TransitionDim(float targetSize, float time)
     {
@@ -272,7 +278,7 @@ public class CM_Effect : singleton<CM_Effect>
         while (curTime < time)
         {
             cinemachine.m_Lens.OrthographicSize += Time.deltaTime * setp * clearCMCurve.Evaluate(curTime / time);
-            // Debug.Log("镜头比例" + clearCMCurve.Evaluate(curTime / time));
+            // Debug.Log("カメラの比率" + clearCMCurve.Evaluate(curTime / time));
             curTime += Time.deltaTime;
             yield return null;
         }

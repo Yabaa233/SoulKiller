@@ -3,19 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
 
-/// 移动轨道切片
+/// 移動軌道スライス
 [System.Serializable]
 public class MoveClip : PlayableAsset
 {
-    //公开引用
-    [Header("需要移动的物体")]public ExposedReference<GameObject> moveObject;//移动的物体
-    [Header("物体开始移动的位置")]public ExposedReference<Transform> startPos;//开始位置
-    [Header("物体结束移动的位置")]public ExposedReference<Transform> endPos;//结束位置
-    [Header("是否是玩家")] public bool isPlayer;
-    [Header("是否是Boss")] public bool isBoss;
-    [Header("开启浮动")]public bool startFloat;
-    [Header("浮动范围")]public float floatRange;
-    [Header("浮动频率")]public float HZ;
+    //公開引用
+    [Header("移動が必要な物体")]public ExposedReference<GameObject> moveObject;//動く物体
+    [Header("物体が移動を開始する位置")]public ExposedReference<Transform> startPos;//開始位置
+    [Header("物体が移動を終える位置")]public ExposedReference<Transform> endPos;//終了位置
+    [Header("プレイヤーですか？")] public bool isPlayer;
+    [Header("ボスですか？")] public bool isBoss;
+    [Header("フロートを開始する")]public bool startFloat;
+    [Header("浮動範囲")]public float floatRange;
+    [Header("フローティングレート")]public float HZ;
     public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
     {
         var playable = ScriptPlayable<MoveClipBehavior>.Create(graph);

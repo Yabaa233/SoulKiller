@@ -5,11 +5,11 @@ using UnityEngine.AI;
 
 public class EnemyControl : BaseEnemyControl
 {
-    [Header("敌人状态机相关")]
+    [Header("敵のステートマシン関連")]
     public EnemyFSM enemyFSM;
 
-    //属性状态描述类文件
-    [Header("敌人攻击状态SO模板")]
+    //属性状態記述クラスファイル
+    [Header("敵の攻撃状態SOテンプレート")]
     public EzEmyStateData_SO tempEnemyStateData; 
     public EzEmyStateData_SO TempEnemyStateData 
     {
@@ -30,13 +30,17 @@ public class EnemyControl : BaseEnemyControl
         SetTarget(GameManager.Instance.currentPlayer.transform);
     }
 
-    /// <summary>
-    /// 初始化敌人上的功能组件
-    /// </summary>
+    ///<summary>
+
+
+    ////// 敵の機能コンポーネントを初期化する
+
+
+    ///</summary>
     /// <param name="tagStr"></param>
     private void EnemyInit(string tagStr)
     {
-        //组件获取
+        //コンポーネントの取得
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
         enemyFSM = transform.GetComponent<EnemyFSM>();
@@ -50,20 +54,20 @@ public class EnemyControl : BaseEnemyControl
 
         baseEnemyFSM  = enemyFSM;
 
-        //设置自身属性
+        //自身の属性を設定する
         transform.tag = tagStr;
 
-        //初始化一些相关状态
+        //関連状態の初期化を行います
         characterBuffManager = new CharacterBuffManager();
         enemyData = new CharacterData(Instantiate(tempCharaterData));
         characterBuffManager.Init(E_ChararcterType.enemy);
         baseEnemyFSM = enemyFSM;
-        enemyData.currentComboAttack = 1;//设置攻击倍率
-        // agent.speed = tempEnemyStateData.moveSpeed;//设置移动速度
+        enemyData.currentComboAttack = 1;//攻撃倍率を設定する
+        // agent.speed = tempEnemyStateData.moveSpeed;//移動速度を設定します
 
 
-        //做数据同步
-        // Debug.Log("数据已经同步");
+        //データ同期を行う
+        // Debug.Log("データはすでに同期されています。");
         enemyFSM.parameter.enemyData = enemyData;
         enemyFSM.parameter.enemyStateData = tempEnemyStateData;
         enemyFSM.parameter.animator = animator;
@@ -75,7 +79,7 @@ public class EnemyControl : BaseEnemyControl
 
     protected new void Update() {
         base.Update();
-        //各个管理类的Update方法
+        //各管理クラスのUpdateメソッド
         characterBuffManager.OnUpdate(Time.deltaTime);
         if(enemyFSM.parameter.ableChase)
         {
@@ -86,7 +90,7 @@ public class EnemyControl : BaseEnemyControl
         }
 
 
-        /// 测试Buff
+        /// バフのテスト
         // if(enemyData.currentHealth <75)
         // {
         //     // characterBuffManager.RemoveBuff(E_BuffKind.HpUp);
@@ -107,9 +111,13 @@ public class EnemyControl : BaseEnemyControl
         enemyFSM.parameter.isDead = true;
     }
 
-/// <summary>
-/// 设置追踪目标
-/// </summary>
+///<summary>
+
+
+////// 追跡目標を設定する
+
+
+///</summary>
 /// <param name="transform"></param>
     public override void SetTarget(Transform transform)
     {
