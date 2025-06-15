@@ -2,21 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// 弾のテスト
-/// </summary>
+///<summary>
+
+
+////// 弾丸のテスト
+
+
+///</summary>
 public class BulletTest : MonoBehaviour
 {
-    //移动速度
+    //移動速度
     public float speed = 20f;
-    public GameObject shotter;//发射人
+    public GameObject shotter;//Launcher
     public GameObject muzzlePrefab;
 	public GameObject hitPrefab;
     public List<GameObject> trails;
-    //物理
+    //物理学
     Rigidbody myRigidbody;
 
-    //初始化
+    //初期化
     public void Awake()
     {
         myRigidbody = gameObject.AddComponent<Rigidbody>();
@@ -39,7 +43,7 @@ public class BulletTest : MonoBehaviour
 
     private void Start()
     {
-        //特效资源接入
+        //特殊効果リソースの接続
         // if(muzzlePrefab != null)
         // {
         //     var muzzleVFX = Instantiate (muzzlePrefab, transform.position, Quaternion.identity);
@@ -57,8 +61,8 @@ public class BulletTest : MonoBehaviour
         // myRigidbody.velocity = transform.forward * speed;
     }
 
-    private void OnEnable() {//确保来回激活之后速度相同
-        // //特效资源接入
+    private void OnEnable() {//往復活性化後に速度が同じであることを確認してください。
+        // //特殊効果リソースの接続
         if(muzzlePrefab != null)
         {
             var muzzleVFX = Instantiate (muzzlePrefab, transform.position, Quaternion.identity);
@@ -83,8 +87,8 @@ public class BulletTest : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        // Debug.Log("进入检测");
-        //特效处理
+        // Debug.Log("Begin detection");
+        //特殊効果処理
         if(trails.Count > 0)
         {
             for (int i = 0; i < trails.Count; i++)
@@ -120,7 +124,7 @@ public class BulletTest : MonoBehaviour
                 Destroy(hitVFX, ps.main.duration);
         }
 
-        //伤害计算 
+        //ダメージ計算
         if (other.gameObject.layer == LayerMask.NameToLayer("Obstacle"))
         {
             StartCoroutine(DestroyParticle(0f));
@@ -135,7 +139,7 @@ public class BulletTest : MonoBehaviour
                     GameManager.Instance.EnemyAttack(shotter.GetComponent<BaseEnemyControl>());
                 }
             }
-            else if (other.gameObject.layer == 12)//打到盾上也要造成一次伤害
+            else if (other.gameObject.layer == 12)//盾に当たっても一度ダメージを与える必要があります。
             {
                 if (shotter != null)
                 {
@@ -147,9 +151,13 @@ public class BulletTest : MonoBehaviour
         StartCoroutine(DestroyParticle(0f));
     }
 
-    /// <summary>
-    /// テストの終了
-    /// </summary>
+    ///<summary>
+
+
+    ////// 試験の終了
+
+
+    ///</summary>
     public IEnumerator DestroyParticle (float waitTime) {
 
 		if (transform.childCount > 0 && waitTime != 0) {

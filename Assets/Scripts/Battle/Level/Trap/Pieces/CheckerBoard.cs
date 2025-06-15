@@ -5,34 +5,34 @@ using UnityEngine;
 [System.Serializable]
 public struct PieceMoveClip
 {
-    [Header("需要运动的棋子")]
+    [Header("The chess piece that needs to be moved")]
     public Piece piece;
-    [Header("需要运动到的位置")]
+    [Header("The position that needs to be moved to.")]
     public Transform targetPoint;
 }
 [System.Serializable]
 public class CheckerBoard : MonoBehaviour
 {
-    [Header("运动点集合")]
+    [Header("Set of Moving Points")]
     [SerializeField] public List<PieceMoveClip> pieceMove;
     [SerializeField] public List<PieceMoveClip> initPosition;
-    [Tooltip("当前阶段")] public int nextStep = 0; //当前阶段
-    [Tooltip("下棋步频")] public float moveCD = 1;    //下棋步频
-    [Tooltip("初始化后静止时间")] public float initWaitTime = 2.0f;  //初始化后静止时间
-    [Tooltip("王破碎特效")] public GameObject kingBreakEff_W;
-    [Tooltip("王后破碎特效")] public GameObject queenBreakEff_W;
-    [Tooltip("王破碎特效")] public GameObject kingBreakEff_B;
-    [Tooltip("王后破碎特效")] public GameObject queenBreakEff_B;
-    [Tooltip("棋子落地特效")] public GameObject pieceDownEff;
+    [Tooltip("現在の段階")] public int nextStep = 0; //現在の段階
+    [Tooltip("チェスのステップ頻度")] public float moveCD = 1;    //チェスのステップ頻度
+    [Tooltip("初期化後の静止時間")] public float initWaitTime = 2.0f;  //初期化後の静止時間
+    [Tooltip("Broken King Special Effects")] public GameObject kingBreakEff_W;
+    [Tooltip("Queen's Shattered Special Effects")] public GameObject queenBreakEff_W;
+    [Tooltip("Broken King Special Effects")] public GameObject kingBreakEff_B;
+    [Tooltip("Queen's Shattered Special Effects")] public GameObject queenBreakEff_B;
+    [Tooltip("Chess Piece Landing Special Effects")] public GameObject pieceDownEff;
     public bool trapStart = false;
-    public bool canNext = false;   //移动棋子是否完成
-    private bool initOver = false;  //初始化棋子位置是否完成
-    private bool needInit = false;  //是否需要初始化
+    public bool canNext = false;   //駒の移動は完了しましたか？
+    private bool initOver = false;  //駒の初期位置の設定は完了しましたか？
+    private bool needInit = false;  //初期化が必要ですか？
     private float CDTime = 0;
     public int kingOrQueenCount = 0;
     public int pieceCount = 0;
-    private Transform pieces;   //全部棋子
-    private RoomTrigger roomTrigger;    //关卡的触发器，用于处理通关逻辑
+    private Transform pieces;   //すべてのチェスピース
+    private RoomTrigger roomTrigger;    //ステージのトリガー、クリアロジックの処理に使用されます
     protected void Awake()
     {
         pieces = transform.Find("Pieces");
@@ -44,16 +44,16 @@ public class CheckerBoard : MonoBehaviour
     private void Start()
     {
         roomTrigger = transform.parent.GetComponent<RoomTrigger>();
-        roomTrigger.clearCheck += () => kingOrQueenCount == 0;  //通关条件
+        roomTrigger.clearCheck += () => kingOrQueenCount == 0;  //クリア条件
         if (initPosition.Count == 0)
         {
-            Debug.LogWarning("当前棋盘没有配置棋子出生点");
+            Debug.LogWarning("The current chessboard does not have a configured spawn point for the chess pieces.");
         }
         if (initPosition.Count != transform.GetChild(0).childCount)
         {
-            Debug.LogWarning("当前棋盘没有配置全部棋子出生点");
+            Debug.LogWarning("The current chessboard does not have all the chess pieces' starting points set up.");
         }
-        StartCoroutine(InitCheckerBoard()); //不为空就初始化位置
+        StartCoroutine(InitCheckerBoard()); //空でなければ位置を初期化します
     }
 
     private void OnEnable()
@@ -74,13 +74,13 @@ public class CheckerBoard : MonoBehaviour
             CDTime += Time.deltaTime;
             if (CDTime > moveCD)
             {
-                //保证当前移动棋子不为空
+                //現在の移動駒が空でないことを保証します
                 while (!pieceMove[nextStep].piece.gameObject.activeSelf)
                 {
-                    //如果棋子全部被破坏就不再运动
+                    //駒がすべて破壊されたら、もう動かない。
                     if (pieceCount == 0)
                     {
-                        Debug.Log("场景中没有棋子了");
+                        Debug.Log("There are no chess pieces left in the scene.");
                         CanNext(false);
                         return;
                     }
@@ -100,17 +100,25 @@ public class CheckerBoard : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 可以执行下一步
-    /// </summary>
+    ///<summary>
+
+
+    ////// あなたは次のステップを実行することができます。
+
+
+    ///</summary>
     public void CanNext(bool can)
     {
         canNext = can;
     }
 
-    /// <summary>
-    /// 下一步棋
-    /// </summary>
+    ///<summary>
+
+
+    ////// 次の一手
+
+
+    ///</summary>
     public void NextStep()
     {
         nextStep = nextStep + 1 == pieceMove.Count ? 0 : nextStep + 1;
@@ -120,9 +128,13 @@ public class CheckerBoard : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 初始化棋子位置
-    /// </summary>
+    ///<summary>
+
+
+    ////// 駒の位置を初期化します
+
+
+    ///</summary>
     IEnumerator InitCheckerBoard()
     {
         initOver = false;
@@ -141,7 +153,7 @@ public class CheckerBoard : MonoBehaviour
     }
 
     /// <summary>
-    /// 确认King和Queen生存数量
+    /// KingとQueenの生存数を確認してください。
     /// </summary>
     public void CheckKingAndQueen()
     {
@@ -153,7 +165,7 @@ public class CheckerBoard : MonoBehaviour
     }
 
     /// <summary>
-    /// 摧毁所有棋子
+    /// すべてのチェスピースを破壊する
     /// </summary>
     public void BreakAllPiece()
     {

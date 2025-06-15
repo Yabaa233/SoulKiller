@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 花の弾
+/// フラワーバレット
 /// </summary>
 public class FlowerBullet : MonoBehaviour
 {
@@ -29,27 +29,33 @@ public class FlowerBullet : MonoBehaviour
             RecycleThis();
         }
     }
-    /// <summary>
-    /// 弾の更新
-    /// </summary>
+    ///<summary>
+
+    ////// 弾丸の更新
+
+    ///</summary>
     private void Update()
     {
         startTime += Time.deltaTime;
         if (startTime >= recycleTime) RecycleThis();
         transform.Translate(target * speed * Time.deltaTime);
     }
-    /// <summary>
-    /// 弾の初期化
-    /// </summary>
+    ///<summary>
+
+    ////// 弾丸の初期化
+
+    ///</summary>
     public void Shot(Vector3 position)
     {
         target = (position + Vector3.up * 2 - transform.position).normalized;
-        Debug.Log("初期方向"+position);
+        Debug.Log("Initial Direction"+position);
         FMODUnity.RuntimeManager.PlayOneShot("event:/Level/JiDu/little");
     }
-    /// <summary>
-    /// 弾の終了
-    /// </summary>
+    ///<summary>
+
+    ////// 弾丸の終了
+
+    ///</summary>
     public void RecycleThis()
     {
         startTime = 0;

@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class ShadowDestroy : MonoBehaviour
 {
-    [Header("击退力度")]
+    [Header("Repelling force")]
     public int force;
-    [Header("机关伤害")]
+    [Header("Institutional harm")]
     public float attack;
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
         {
-            Vector3 forceVector = (other.gameObject.transform.position - gameObject.transform.position) * 1000000000;//这个是专门搞定浮点数误差的
+            Vector3 forceVector = (other.gameObject.transform.position - gameObject.transform.position) * 1000000000;//これは浮動小数点の誤差を専門的に解決するためのものです。
             forceVector[1] = 0;
             if (forceVector == Vector3.zero)
             {
@@ -33,9 +33,9 @@ public class ShadowDestroy : MonoBehaviour
         FMODUnity.RuntimeManager.PlayOneShot("event:/Level/BaoShi/changziGround");
     }
     /// <summary>
-    /// 攻击玩家逻辑
+    /// プレイヤーの攻撃ロジック
     /// </summary>
-    /// <param name="curPlayer"> 获取当前玩家 </param>
+    /// <param name="curPlayer"> 現在のプレイヤーを取得 </param>
     private void AttackPlayer(PlayerControl curPlayer)
     {
         if (!curPlayer.characterBuffManager.CalcuSheild(null, attack))
@@ -44,9 +44,9 @@ public class ShadowDestroy : MonoBehaviour
         }
     }
     /// <summary>
-    /// 攻击小怪逻辑
+    /// モンスター攻撃ロジック
     /// </summary>
-    /// <param name="enemy"> 获取当前小怪 </param>
+    /// <param name="enemy"> 現在のモンスターを取得 </param>
     private float AttackEnemy(BaseEnemyControl enemy)
     {
         if (!enemy.characterBuffManager.CalcuSheild(null, attack))

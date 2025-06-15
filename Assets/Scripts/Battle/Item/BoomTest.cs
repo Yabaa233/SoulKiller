@@ -5,43 +5,48 @@ using UnityEngine;
 
 public class BoomTest : MonoBehaviour
 {
-    public float time = 3;          // 代表从A点出发到B经过的时长
+    public float time = 3;          // A点からBまでの所要時間
     public Transform pointA;        // 点A
     public Transform pointB;        // 点B
-    public GameObject shotter;      // 发射人
+    public GameObject shotter;      // Launcher
     public float g = -10;           // 重力加速度
-    private bool isBoom = false;    // 第一次接触地面，准备爆炸标记
-    private Vector3 speed;          // 初速度向量
-/*    private Vector3 Gravity;        // 重力向量*/
-    private Rigidbody rb;           // 刚体组件
-    private float firstTouchTime;   // 触碰计时
+    private bool isBoom = false;    // 初めて地面に触れ、爆発マークの準備をします。
+    private Vector3 speed;          // 初期速度ベクトル
+
+    private Rigidbody rb;           // 剛体コンポーネント
+    private float firstTouchTime;   // タッチタイミング
     private bool inBlast;
-    /// <summary>
-    /// 使用自行注册pointA和pointB
-    /// </summary>
+    ///<summary>
+
+    ////// 自分でpointAとpointBを登録して使用します。
+
+    ///</summary>
     /*    private void Awake()
         {
             pointA = transform;
             pointB = GameObject.Find("Player").transform;
-        }*/
-    /// <summary>
-    /// 爆発テスト
-    /// </summary>
+        }
+*/
+    ///<summary>
+
+    ////// 爆発テスト
+
+    ///</summary>
     void Start()
     {
         // rb = GetComponent<Rigidbody>();
         // inBlast = false;
         // //gameObject.GetComponent<Collider>().enabled = false;
-        // // 将物体置于A点
+        // // 物体をA点に置く
         // transform.position = pointA.position + new Vector3(0,1,0);
  
-        // // 通过一个式子计算初速度
+        // // 式を使って初速度を計算する
         // speed = new Vector3(
         //     (pointB.position.x - pointA.position.x) / time,
         //     (pointB.position.y - pointA.position.y) / time - 0.5f * g * time, 
         //     (pointB.position.z - pointA.position.z) / time);
  
-        // // 重力初始速度为0
+        // // 重力の初速度は0です
         // rb.AddForce(speed, ForceMode.Impulse);
     }
 
@@ -53,19 +58,19 @@ public class BoomTest : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         inBlast = false;
         //gameObject.GetComponent<Collider>().enabled = false;
-        // 将物体置于A点
+        // 物体をA点に置きます。
         if(pointA != null && pointB != null)
         {
             pointB = GameManager.Instance.currentPlayer.transform;
             transform.position = pointA.position + new Vector3(0,1,0);
     
-            // 通过一个式子计算初速度
+            // 式を使って初速度を計算する
             speed = new Vector3(
                 (pointB.position.x - pointA.position.x) / time,
                 (pointB.position.y - pointA.position.y) / time - 0.5f * g * time, 
                 (pointB.position.z - pointA.position.z) / time);
     
-            // 重力初始速度为0
+            // 重力の初速度は0です
             rb.AddForce(speed, ForceMode.Impulse);
         }
     }
@@ -74,12 +79,14 @@ public class BoomTest : MonoBehaviour
     /// </summary>
     void FixedUpdate()
     {
-        // 重力模拟
-        // transform.Translate(speed * Time.deltaTime); // 模拟位移
+        // 重力シミュレーション
+        // transform.Translate(speed * Time.deltaTime); // 位置のシミュレーション
         // transform.Translate(Gravity * Time.deltaTime);
         ///<summary>
-        ///如果落地时间超过3秒，就启动子物体的trigger，并且在爆炸结束之后回收至对象池
-        /// </summary>
+
+        ////// 着地時間が3秒を超えた場合、サブオブジェクトのトリガーを起動し、爆発が終了した後、オブジェクトプールに回収します。
+
+        ///</summary>
         if (isBoom)
         {
             if (Time.time > firstTouchTime + 3f)
@@ -99,10 +106,12 @@ public class BoomTest : MonoBehaviour
             }
         }
     }
-    /// <summary>
-    /// 接触地面的检测
-    /// 会启动计时与接触标记
-    /// </summary>
+    ///<summary>
+
+    ////// アース検出
+/// タイマーと接触マークの起動が開始されます
+
+    ///</summary>
     /// <param name="collision"></param>
     private void OnCollisionEnter(Collision other)
     {
@@ -124,9 +133,11 @@ public class BoomTest : MonoBehaviour
             }
         }
     }
-    /// <summary>
-    /// 触发检测(多帧)，对playbody进行标记
-    /// </summary>
+    ///<summary>
+
+    ////// 検出をトリガー（複数フレーム）、playbodyにマークを付ける
+
+    ///</summary>
     /// <param name="other"></param>
     private void OnTriggerStay(Collider other)
     {
@@ -135,9 +146,11 @@ public class BoomTest : MonoBehaviour
             inBlast = true;
         }
     }
-    /// <summary>
-    /// 保证同步，退出时更新玩家所处状态
-    /// </summary>
+    ///<summary>
+
+    ////// 同期を保証し、プレイヤーが退出する際に現在の状態を更新します。
+
+    ///</summary>
     /// <param name="other"></param>
     private void OnTriggerExit(Collider other)
     {
@@ -150,15 +163,19 @@ public class BoomTest : MonoBehaviour
     {
         return LayerMask.NameToLayer(LayerName);
     }
-    /// <summary>
-    /// 设置发射者
-    /// </summary>
+    ///<summary>
+
+    ////// 送信者を設定します
+
+    ///</summary>
     /// <param name="gameObject"></param>
     public void SetShotter(GameObject gameObject)
     {
         shotter = gameObject;
     }
-    /// <summary>
-    /// テストの終了
-    /// </summary>
+    ///<summary>
+
+    ////// 試験の終了
+
+    ///</summary>
 }

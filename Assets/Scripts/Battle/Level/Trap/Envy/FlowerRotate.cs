@@ -5,23 +5,23 @@ using UnityEngine.Events;
 
 public class FlowerRotate : MonoBehaviour
 {
-    [Header("光炮粒子特效")]
+    [Header("Light Cannon Particle Effects")]
     public GameObject effect;
-    [Header("大花死亡爆炸特效")]
+    [Header("Large Flower Death Explosion Special Effect")]
     public GameObject boom;
-    [Header("间隔时间")]
+    [Header("Interval Time")]
     public float intervalTime;
-    [Header("大花血量")]
+    [Header("Large Flower's Health Points")]
     public float maxHealth;
     public float currentHealth;
-    [Header("骷髅手臂")]
+    [Header("Skeleton arm")]
     public GameObject hands;
-    [Header("停止通知")]
+    [Header("Stop notifications")]
     public UnityAction broadcastStart, broadcastEnd, broadcastDead, broadcastDestory;
-    [Tooltip("受到近战攻击时伤害值")] public float getSwordDamage = 20.0f;
-    [Tooltip("受到子弹攻击时伤害值")] public float getShotDamage = 1.0f;
-    [Tooltip("受到魔法攻击时伤害值")] public float getMagicDamage = 15.0f;
-    [Header("目标")]
+    [Tooltip("Damage value when attacked in close combat")] public float getSwordDamage = 20.0f;
+    [Tooltip("Damage value when hit by a bullet")] public float getShotDamage = 1.0f;
+    [Tooltip("Damage value when attacked by magic")] public float getMagicDamage = 15.0f;
+    [Header("Objective")]
     private Transform target;
     private float endTimer;
     private Vector3 decline, beginPosition;
@@ -34,7 +34,7 @@ public class FlowerRotate : MonoBehaviour
     {
         kulou = transform.parent.GetChild(0);
         roomTrigger = transform.parent.parent.GetComponent<RoomTrigger>();
-        roomTrigger.clearCheck += () => currentHealth <= 0;  //通关条件
+        roomTrigger.clearCheck += () => currentHealth <= 0;  //クリア条件
         currentHealth = maxHealth;
         decline = new Vector3(0, -7, 0);
         target = GameManager.Instance.currentPlayer.transform;
@@ -78,24 +78,24 @@ public class FlowerRotate : MonoBehaviour
                         {
                             broadcastEnd();
                         }
-                        //关闭粒子特效
+                        //パーティクルエフェクトをオフにする
                         return;
-                        //粒子的碰撞体要关闭
+                        //粒子の衝突装置を閉じる必要があります。
                     }
-                    if (!isWidth)//在粒子特效尚未达到最大宽度时(肯定是初启动状态)
+                    if (!isWidth)//パーティクルエフェクトが最大幅に達していない時（間違いなく初期起動状態）
                     {
                         if (broadcastStart != null)
                         {
                             broadcastStart();
                         }
-                        if (!effect.activeSelf)//还没有启动话要先启动
+                        if (!effect.activeSelf)//まだ起動していない場合は、先に起動してください。
                         {
-                            //播放蓄力动画，切换状态
+                            //力を蓄えるアニメーションを再生し、状態を切り替えます。
                             effect.SetActive(true);
                             effect.GetComponent<LaserController>().LasertShoot();
                         }
                         effect.GetComponent<LaserController>().DrawLine();
-                        if (effect.transform.GetChild(0).GetComponent<LineRenderer>().widthMultiplier >= 10)//宽度达到最大值，可以进入正式的攻击状态
+                        if (effect.transform.GetChild(0).GetComponent<LineRenderer>().widthMultiplier >= 10)//幅が最大値に達し、正式な攻撃状態に入ることができます。
                         {
                             isWidth = true;
                         }

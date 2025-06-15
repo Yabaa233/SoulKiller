@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FirstRoomTrigger : RoomTrigger
 {
-    public Transform bossResurrectionPoint;    //Boss出生点
+    public Transform bossResurrectionPoint;    //ボスの出現地点
     private void Awake()
     {
         enemys = transform.Find("Enemys");
@@ -13,9 +13,13 @@ public class FirstRoomTrigger : RoomTrigger
         enemyCount = enemys.childCount;
     }
 
-    /// <summary>
-    /// 最初の部屋のトリガー
-    /// </summary>
+    ///<summary>
+
+
+    ////// 最初の部屋のトリガー
+
+
+    ///</summary>
     override protected void OnTriggerEnter(Collider other)
     {
         if (!lorded && other.tag == "Player")
@@ -36,8 +40,8 @@ public class FirstRoomTrigger : RoomTrigger
         if (other.tag == "Player")
         {
             (PanelManager.Instance.GetPanel("BattleMainPanel") as BattleMainPanel).FadeChange(false);
-            // Debug.Log("玩家离开");
-            //先恢复Buff为1级
+            // Debug.Log("The player has left.");
+            //まず、Buffをレベル1に回復してください。
             BuffDataManager.Instance.playerBuffList.Clear();
             BuffDataManager.Instance.playerBuffList.Add(new SwordBuff(E_ChararcterType.player, 1));
             BuffDataManager.Instance.playerBuffList.Add(new GunBuff(E_ChararcterType.player, 1));
@@ -51,11 +55,11 @@ public class FirstRoomTrigger : RoomTrigger
             other.gameObject.GetComponent<PlayerControl>().lockHealth = false;
             GameManager.Instance.currentPlayer.characterData.currentHealth = GameManager.Instance.currentPlayer.characterData.maxHealth;
 
-            //记录当前Buff
+            //現在のBuffを記録する
             BuffDataManager.Instance.RecordBuffList();
 
-            //调用Buff选择面板
-            PanelManager.Instance.Open(new SelectPanel(), null, "舍弃");
+            //Buff選択パネルを呼び出す
+            PanelManager.Instance.Open(new SelectPanel(), null, "Abandon");
             GetComponent<Collider>().enabled = false;
         }
     }
@@ -66,11 +70,11 @@ public class FirstRoomTrigger : RoomTrigger
     override public void EnemyDie()
     {
         enemyCount--;
-        // Debug.Log("小怪死亡");
+        // Debug.Log("The monster has died.");
         if (!cleared && enemyCount == 0)
         {
             cleared = true;
-            // Debug.Log("小怪已清除，准备生成Boss");
+            // Debug.Log("The monsters have already been cleared, and the boss is being prepared to spawn.");
             GameObject newBoss = Instantiate(RoomManager.Instance.bossPrefab, bossResurrectionPoint.position,
                 RoomManager.Instance.bossPrefab.transform.rotation, enemys);
             BossControl bossControl = newBoss.GetComponent<BossControl>();

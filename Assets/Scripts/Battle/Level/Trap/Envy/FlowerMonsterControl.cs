@@ -5,10 +5,10 @@ using UnityEngine.Events;
 
 public class FlowerMonsterControl : MonoBehaviour
 {
-    [Header("间隔时间")]
+    [Header("Interval Time")]
     public float intervalTime;
     public Transform target;
-    [Header("大花光炮与死亡事件")]
+    [Header("Big Flower Light Cannon and Death Incident")]
     public GameObject radio;
     private float accumulateTime;
     public bool trapStart, isBoss, isDead;

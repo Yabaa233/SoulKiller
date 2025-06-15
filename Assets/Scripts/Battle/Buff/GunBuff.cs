@@ -6,37 +6,37 @@ using System;
 [Serializable]
 public class GunBuff : I_BuffBase
 {
-    [Header("外部传参获得数据部分")]
-    //存当前角色的引用
-    [Tooltip("当前角色引用")] GameObject buffKeeper;
-    //存当前角色的BuffManager
-    [Tooltip("当前角色Buff管理器")] CharacterBuffManager characterBuffManager;
-    //当前BUFF种类
-    [Tooltip("当前Buff类型")] E_BuffKind buffType;
-    //当前角色的类型
-    [Tooltip("当前角色类型")] E_ChararcterType chararcterType;
+    [Header("Obtaining data part through external parameter passing")]
+    //現在のキャラクターの参照を保存する
+    [Tooltip("Current role reference")] GameObject buffKeeper;
+    //現在のキャラクターのBuffManagerを保存します
+    [Tooltip("Current Role Buff Manager")] CharacterBuffManager characterBuffManager;
+    //現在のBUFFの種類
+    [Tooltip("Current Buff Type")] E_BuffKind buffType;
+    //現在のキャラクターのタイプ
+    [Tooltip("Current role type")] E_ChararcterType chararcterType;
 
-    [Tooltip("当前Buff等级")] public int currentLevel;
+    [Tooltip("Current Buff Level")] public int currentLevel;
 
-    [Header("Buff数据部分")]
-    [Tooltip("存放技能等级函数")] public Action<CharacterData> realEffect;
-    [Tooltip("函数等级列表")] public List<Action<CharacterData>> levelEffect;
+    [Header("Buff data section")]
+    [Tooltip("Store Skill Level Function")] public Action<CharacterData> realEffect;
+    [Tooltip("Function Level List")] public List<Action<CharacterData>> levelEffect;
 
     public GunBuff(E_ChararcterType _chararcterType, int level = 1)
     {
-        //赋值
+        //代入
         this.currentLevel = level;
         buffType = E_BuffKind.GunBuff;
         chararcterType = _chararcterType;
 
-        //初始化列表
+        //初期化リスト
         levelEffect = new List<Action<CharacterData>>();
     }
 
     public void OnAdd(GameObject _buffKeeper)
     {
         this.buffKeeper = _buffKeeper;
-        Init();//初始化Buff赋值
+        Init();//Buffの初期化と代入
         switch (chararcterType)
         {
             case E_ChararcterType.player: PlayerGunBuff(); break;
@@ -97,11 +97,11 @@ public class GunBuff : I_BuffBase
 
         if (currentLevel > levelEffect.Count)
         {
-            Debug.Log("赋予的等级超过Buff当前等级限制");
+            Debug.Log("The assigned level exceeds the current level limit of the Buff.");
             return;
         }
 
-        for (int i = 0; i < currentLevel; i++)//根据技能等级添加效果
+        for (int i = 0; i < currentLevel; i++)//スキルレベルに応じて効果を追加する
         {
             realEffect += levelEffect[i];
         }
@@ -115,7 +115,7 @@ public class GunBuff : I_BuffBase
         }
     }
 
-    ////得到不同类型的敌人数据，然后施加Buff
+    ////異なるタイプの敵のデータを取得し、その後、Buffを適用します。
     private void PlayerGunBuff()
     {
         PlayerControl playerControl = buffKeeper.GetComponent<PlayerControl>();
@@ -139,7 +139,7 @@ public class GunBuff : I_BuffBase
 
         realEffect(characterData);
     }
-    /////在Buff移除的时候还原属性
+    /////Buffが削除されるときに属性を復元します
     private void PlayerGunRemove()
     {
         if (currentLevel >= 3)
@@ -162,7 +162,7 @@ public class GunBuff : I_BuffBase
     {
 
     }
-    //////Buff效果的具体实现
+    //////バフ効果の具体的な実装
     private void level1GunBuff(CharacterData characterData)
     {
         if (chararcterType == E_ChararcterType.player)
@@ -201,7 +201,7 @@ public class GunBuff : I_BuffBase
             float maxAmmo = gunControl.maxAmmunition;
             gunControl.maxAmmunition += BuffDataManager.Instance.playerBulletUpNum;
             float percent = BuffDataManager.Instance.playerBulletUpNum / maxAmmo;
-            //现在不需要加快回填
+            //現在、埋め戻しを速める必要はありません。
             gunControl.autoReloadSpeed *= (1 + percent);
             gunControl.manualReloadSpeed *= (1 + percent);
         }

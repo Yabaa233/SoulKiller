@@ -5,25 +5,25 @@ using System;
 
 public class SpeedBuff : I_BuffBase
 {
-    [Header("外部传参获得数据部分")]
-    //存当前角色的引用
-    [Tooltip("当前角色引用")]GameObject buffKeeper;
-    //存当前角色的BuffManager
-    [Tooltip("当前角色Buff管理器")]CharacterBuffManager characterBuffManager;
-    //当前BUFF种类
-    [Tooltip("当前Buff类型")]E_BuffKind buffType;
-    //当前角色的类型
-    [Tooltip("当前角色类型")]E_ChararcterType chararcterType;
+    [Header("Obtaining data part through external parameter passing")]
+    //現在のキャラクターの参照を保存する
+    [Tooltip("Current role reference")]GameObject buffKeeper;
+    //現在のキャラクターのBuffManagerを保存します
+    [Tooltip("Current Role Buff Manager")]CharacterBuffManager characterBuffManager;
+    //現在のBUFFの種類
+    [Tooltip("Current Buff Type")]E_BuffKind buffType;
+    //現在のキャラクターのタイプ
+    [Tooltip("Current role type")]E_ChararcterType chararcterType;
 
-    [Tooltip("当前Buff等级")]public int currentLevel;
+    [Tooltip("Current Buff Level")]public int currentLevel;
 
-    [Header("Buff数据部分")]
-    [Tooltip("存放技能等级函数")]public Action<CharacterData> realEffect;
-    [Tooltip("函数等级列表")] public List<Action<CharacterData>> levelEffect;
-    [Tooltip("当前可以闪避的次数")]public int ableDoge;
-    [Tooltip("保存的速度")] public Vector2 storeSpeed;
+    [Header("Buff data section")]
+    [Tooltip("Store Skill Level Function")]public Action<CharacterData> realEffect;
+    [Tooltip("Function Level List")] public List<Action<CharacterData>> levelEffect;
+    [Tooltip("The current number of times that can be dodged")]public int ableDoge;
+    [Tooltip("The speed of saving")] public Vector2 storeSpeed;
 
-    // 暂存Control的方案，避免多次GetComponent
+    // Controlのスキームを一時保存し、GetComponentを何度も行うのを避ける。
     public PlayerControl playerControl;
     public BaseEnemyControl  enemyControl;
     public BossControl bossControl;
@@ -36,7 +36,7 @@ public class SpeedBuff : I_BuffBase
         chararcterType = _chararcterType;
         ableDoge = 1;
 
-        //初始化列表
+        //初期化リスト
         levelEffect = new List<Action<CharacterData>>();
     }
 
@@ -49,7 +49,7 @@ public class SpeedBuff : I_BuffBase
             case E_ChararcterType.enemy:EnemySpeedUp();break;
             case E_ChararcterType.boss:BossSpeedUp();break;
         }
-        Init();//出于初始化顺序的原因需要调换一下顺序
+        Init();//初期化の順序の理由で、順序を変更する必要があります。
         realEffect(characterData);
         ClearDelegate();
     }
@@ -103,11 +103,11 @@ public class SpeedBuff : I_BuffBase
         levelEffect.Add(level4SpeedUp);
         if(currentLevel > levelEffect.Count)
         {
-            Debug.Log("赋予的等级超过Buff当前等级限制");
+            Debug.Log("The assigned level exceeds the current level limit of the Buff.");
             return;
         }
 
-        for(int i=0;i<currentLevel;i++)//根据技能等级添加效果
+        for(int i=0;i<currentLevel;i++)//スキルレベルに応じて効果を追加する
         {
             realEffect += levelEffect[i];
         }
@@ -122,7 +122,7 @@ public class SpeedBuff : I_BuffBase
     }
 
 
-//////////得到不同类型敌人的敌人数据，然后施加Buff
+//////////異なるタイプの敵から敵のデータを取得し、その後にBuffを適用します。
     private void PlayerSpeedUp()
     {
         playerControl = buffKeeper.GetComponent<PlayerControl>();
@@ -141,7 +141,7 @@ public class SpeedBuff : I_BuffBase
     {
         bossControl = buffKeeper.GetComponent<BossControl>();
         characterData = bossControl.bossData;
-        //TODO 速度还没存
+        //TODO 速度はまだ保存されていません
     } 
 
 /// <summary>
@@ -151,7 +151,7 @@ public class SpeedBuff : I_BuffBase
     {
         playerControl.speed = storeSpeed;
         ableDoge = 1;
-        // Physics.IgnoreLayerCollision(7,9,false);//重设检测
+        // Physics.IgnoreLayerCollision(7,9,false);//検出をリセット
     }
 
     private void EnemySpeedBuffRemove()
@@ -165,7 +165,7 @@ public class SpeedBuff : I_BuffBase
     }
 
 
-//////////Buff的具体效果实现
+//////////Buffの具体的な効果の実現
     private void level1SpeedUp(CharacterData characterData)
     {
         if(chararcterType == E_ChararcterType.player)
@@ -209,7 +209,7 @@ public class SpeedBuff : I_BuffBase
     {
         if(chararcterType == E_ChararcterType.player)
         {
-            // Debug.LogWarning("注意！现在玩家忽略了单位碰撞体积");
+            // Debug.LogWarning("Attention! The player is currently ignoring the collision volume of the unit.");
             // Physics.IgnoreLayerCollision(7,9);
             float raise = BuffDataManager.Instance.playerlevel3SpeedUp;
             Vector2 speedAdd = new Vector2(raise,raise);
@@ -230,7 +230,7 @@ public class SpeedBuff : I_BuffBase
     {
         if(chararcterType == E_ChararcterType.player)
         {
-            ableDoge = 3;//有一次闪避次数
+            ableDoge = 3;//一度の回避回数
             float raise = BuffDataManager.Instance.playerlevel4SpeedUp;
             Vector2 speedAdd = new Vector2(raise,raise);
             playerControl.speed += speedAdd;
@@ -246,10 +246,10 @@ public class SpeedBuff : I_BuffBase
         }
     }
 
-/////////特殊机制的实现
+/////////特殊なメカニズムの実装
 
     /// <summary>
-    /// 返回冲刺次数
+    /// スプリント回数を返す
     /// </summary>
     /// <returns></returns>
     public int GetDogeTimes()

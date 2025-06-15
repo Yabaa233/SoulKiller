@@ -4,38 +4,38 @@ using UnityEngine;
 
 public class Piece : MonoBehaviour
 {
-    //プレイヤーの攻撃は戦闘システムにカウントされない
-    [Tooltip("最高血量")] public float maxHealth = 100.0f;
-    [Tooltip("現在の血量 被攻撃固定掉血")] public float curHealth = 100.0f;
-    [Tooltip("近戦攻撃時のダメージ値")] public float getSwordDamage = 20.0f;
-    [Tooltip("弾丸攻撃時のダメージ値")] public float getShotDamage = 1.0f;
-    [Tooltip("魔法攻撃時のダメージ値")] public float getMagicDamage = 15.0f;
+    //プレイヤーの攻撃は戦闘システムにカウントされません。
+    [Tooltip("Highest Health Points")] public float maxHealth = 100.0f;
+    [Tooltip("Current HP, fixed damage when attacked.")] public float curHealth = 100.0f;
+    [Tooltip("Damage value during close combat attack")] public float getSwordDamage = 20.0f;
+    [Tooltip("Damage value during bullet attack")] public float getShotDamage = 1.0f;
+    [Tooltip("Damage value during magic attack")] public float getMagicDamage = 15.0f;
 
-    [Tooltip("攻撃力")] public float attack = 10;
-    [Tooltip("プレイヤーを打ち倒す力")] public float forcePower = 10;
-    [Header("上昇関連パラメータ")]
-    [Tooltip("上昇速度")] public float upSpeed = 10.0f;
-    [Tooltip("上昇高度")] public float targetY = 3.0f;
-    [Tooltip("上昇高度")] public float upWait = 1.5f;
-    [Header("水平移動関連パラメータ")]
-    [Tooltip("水平移動速度")] public float mvoeSpeed = 10.0f;
-    [Header("下降関連パラメータ")]
-    [Tooltip("下降速度")] public float downSpeed = 20.0f;
-    [Tooltip("下降待機")] public float downWait = 1.5f;
-    [Tooltip("下降落点位置")] public float downTargetY = 10.0f;
-    [Header("現在の状態関連パラメータ")]
+    [Tooltip("Attack Power")] public float attack = 10;
+    [Tooltip("The power to defeat the player")] public float forcePower = 10;
+    [Header("Rising Related Parameters")]
+    [Tooltip("Rate of ascent")] public float upSpeed = 10.0f;
+    [Tooltip("Ascending altitude")] public float targetY = 3.0f;
+    [Tooltip("Ascending altitude")] public float upWait = 1.5f;
+    [Header("Horizontal Movement Related Parameters")]
+    [Tooltip("Horizontal moving speed")] public float mvoeSpeed = 10.0f;
+    [Header("Decline-related Parameters")]
+    [Tooltip("Descent speed")] public float downSpeed = 20.0f;
+    [Tooltip("ダウン待機")] public float downWait = 1.5f;
+    [Tooltip("Landing point location")] public float downTargetY = 10.0f;
+    [Header("Current state-related parameters")]
     public bool isMoveing = false;
     public bool isAttacking = false;
     [Header("KingまたはQueenかどうか")] public bool isKingOrQueen = false;
     [Header("Kingかどうか")] public bool isKing;
     [Header("Queenかどうか")] public bool isQueen;
-    [Header("白色方かどうか")] public bool isWhite;
+    [Header("Whether it's white or not.")] public bool isWhite;
 
-    [Header("棋子受擊震動回数")] public float pieceHurtCount;
-    [Header("棋子受擊震動單次時間")] public float pieceHurtTime;
-    [Header("棋子受擊與傷害值關聯反比例係數")] public float pieceHurtPer;
-    [Header("受擊時震動與傷害的比例曲線")] public AnimationCurve hurtEffCurve;
-    private IEnumerator moveToTartgetPoint; //現在の移動コルーチンを保存
+    [Header("Number of times the chess piece is hit and vibrates")] public float pieceHurtCount;
+    [Header("Duration of a single vibration when the chess piece is hit")] public float pieceHurtTime;
+    [Header("The coefficient of inverse proportionality between the damage value and the hit taken by the chess piece.")] public float pieceHurtPer;
+    [Header("Vibration and damage ratio curve when hit")] public AnimationCurve hurtEffCurve;
+    private IEnumerator moveToTartgetPoint; //現在の移動コルーチンを保存する
     private bool moveStarted;
     private Collider weapon;    //攻撃範囲
     private CheckerBoard checkerBoard;  //チェッカーボードスクリプト
@@ -72,7 +72,7 @@ public class Piece : MonoBehaviour
     {
         if (moveStarted)
         {
-            Debug.Log("正在移動被摧毀了，恢復canNext");
+            Debug.Log("The movement has been destroyed, restoring canNext.");
             checkerBoard.CanNext(true);
         }
         if (stateBar != null) stateBar.DestroyThis();
@@ -89,9 +89,13 @@ public class Piece : MonoBehaviour
         if (stateBar != null) stateBar.UpdateState(curHealth, maxHealth);
     }
 
-    /// <summary>
-    /// 駒の移動
-    /// </summary>
+    ///<summary>
+
+
+    ////// 駒の移動
+
+
+    ///</summary>
     /// <param name="targetPosition"> 移動先の目標地点 </param>
     public void Move(Vector3 targetPosition)
     {
@@ -101,22 +105,22 @@ public class Piece : MonoBehaviour
     }
 
     /// <summary>
-    /// 移動制御コルーチン
+    /// モバイル制御コルーチン
     /// </summary>
-    /// <param name="target"> 目標地点 </param>
+    /// <param name="target"> 目的地 </param>
     /// <returns></returns>
     IEnumerator MoveToTartgetPoint(Vector3 target)
     {
         float time = 0; //時間計測用
-        //抬起
+        //持ち上げる
         if (pieceDownEff != null) Destroy(pieceDownEff);
-        isMoveing = true;   //移動開始、プレイヤーは攻撃できず、プレイヤーを攻撃することもできない
+        isMoveing = true;   //移動が開始されると、プレイヤーは攻撃することができず、またプレイヤーを攻撃することもできません。
         while (transform.position.y < targetY)
         {
             transform.Translate(Vector3.up * Time.deltaTime * upSpeed, Space.World);
             yield return null;
         }
-        while (time < upWait) //待機
+        while (time < upWait) //スタンバイ
         {
             time += Time.deltaTime;
             yield return null;
@@ -124,7 +128,7 @@ public class Piece : MonoBehaviour
         time = 0;
         //水平移動
         Vector3 curtarget = target;
-        curtarget.y = targetY;  //上下の移動を防止
+        curtarget.y = targetY;  //上下の動きを防止する
         Vector3 dir = curtarget - transform.position;
         while (dir.magnitude > 0.5f)
         {
@@ -134,12 +138,12 @@ public class Piece : MonoBehaviour
         }
         //下降
         isAttacking = true;     //攻撃状態開始
-        while (time < downWait) //下降待機
+        while (time < downWait) //ダウン待機
         {
             time += Time.deltaTime;
             yield return null;
         }
-        weapon.enabled = true;  //コライダーを有効化
+        weapon.enabled = true;  //コライダーを有効にする
         isMoveing = false;  //プレイヤーが攻撃可能になる
         while (transform.position.y > downTargetY)
         {
@@ -147,9 +151,9 @@ public class Piece : MonoBehaviour
             dir = curtarget - transform.position;
             yield return null;
         }
-        checkerBoard.CanNext(true);    //次の駒に進める
-        weapon.enabled = false; //コライダーを無効化
-        isAttacking = false;    //攻撃状態終了
+        checkerBoard.CanNext(true);    //次のピースを進める
+        weapon.enabled = false; //コライダーを無効にする
+        isAttacking = false;    //攻撃状態が終了しました
         pieceDownEff = Instantiate(checkerBoard.pieceDownEff, transform.position, Quaternion.identity, transform);
 
         FMODUnity.RuntimeManager.PlayOneShot("event:/Level/AoMan/qiziGround");
@@ -157,9 +161,13 @@ public class Piece : MonoBehaviour
         yield break;
     }
 
-    /// <summary>
-    /// 駒がダメージを受けた時のヒットシェイク効果
-    /// </summary>
+    ///<summary>
+
+
+    ////// 駒がダメージを受けた時のヒットシェイク効果
+
+
+    ///</summary>
     /// <param name="damage"></param>
     /// <returns></returns>
     IEnumerator IE_PieceHurt(float damage)
@@ -191,10 +199,13 @@ public class Piece : MonoBehaviour
         yield break;
     }
 
-    /// <summary>
-    /// 駒はプレイヤーによって破壊される可能性がある
-    /// プレイヤーを攻撃することもできる
-    /// </summary>
+    ///<summary>
+
+
+    ////// 駒はプレイヤーによって破壊される可能性があります。また、プレイヤーが攻撃することも可能です。
+
+
+    ///</summary>
     /// <param name="other"></param>
     private void OnTriggerEnter(Collider other)
     {
@@ -229,16 +240,16 @@ public class Piece : MonoBehaviour
     }
 
     /// <summary>
-    /// weaponスクリプトから呼び出し用
+    /// weaponスクリプトからの呼び出し用
     /// </summary>
     public void WeaponAttackPlayer()
     {
         GameManager.Instance.TrickAttackPlayer(AttackPlayer);
     }
     /// <summary>
-    /// プレイヤー攻撃ロジック
+    /// プレイヤーの攻撃ロジック
     /// </summary>
-    /// <param name="curPlayer"> 取得現在のプレイヤー </param>
+    /// <param name="curPlayer"> 現在のプレイヤーを取得 </param>
     private void AttackPlayer(PlayerControl curPlayer)
     {
         Vector3 dir = curPlayer.transform.position - transform.position;
@@ -251,17 +262,21 @@ public class Piece : MonoBehaviour
     }
 
     /// <summary>
-    /// weaponスクリプトから呼び出し用
+    /// weaponスクリプトからの呼び出し用
     /// </summary>
     public void WeaponAttackEnemy(BaseEnemyControl baseEnemyControl)
     {
         GameManager.Instance.TrickAttackEnemy(AttackEnemy, baseEnemyControl);
     }
 
-    /// <summary>
-    /// 攻撃小怪邏輯
-    /// </summary>
-    /// <param name="enemy"> 取得現在小怪 </param>
+    ///<summary>
+
+
+    ////// 小さなモンスターの攻撃ロジック
+
+
+    ///</summary>
+    /// <param name="enemy"> 現在のモンスターを取得 </param>
     private float AttackEnemy(BaseEnemyControl enemy)
     {
         Vector3 dir = enemy.transform.position - transform.position;
@@ -276,9 +291,13 @@ public class Piece : MonoBehaviour
         return attack;
     }
 
-    /// <summary>
-    /// 受擊摧毀現在駒
-    /// </summary>
+    ///<summary>
+
+
+    ////// 現在の駒は攻撃で破壊されました。
+
+
+    ///</summary>
     private void BreakThisPiece()
     {
         if (moveToTartgetPoint != null)
@@ -290,9 +309,9 @@ public class Piece : MonoBehaviour
             return;
         }
         isDead = true;
-        if (stateBar != null) stateBar.DestroyThis();   //關閉血條
+        if (stateBar != null) stateBar.DestroyThis();   //ヘルスバーを閉じる
         stateBar = null;
-        gameObject.GetComponent<BoxCollider>().enabled = false; //讓玩家可以通過
+        gameObject.GetComponent<BoxCollider>().enabled = false; //プレイヤーが通過できるようにする
         if (isKingOrQueen)
         {
             BreakKingOrQueen();
@@ -310,7 +329,7 @@ public class Piece : MonoBehaviour
     }
 
     /// <summary>
-    /// 因為King和Queen全部摧毀從而摧毀現在駒
+    /// KingとQueenが全て破壊され、結果として現在の駒も破壊されました。
     /// </summary>
     public void BreakAllPiece_One()
     {
@@ -323,9 +342,9 @@ public class Piece : MonoBehaviour
             return;
         }
         isDead = true;
-        if (stateBar != null) stateBar.DestroyThis();   //關閉血條
+        if (stateBar != null) stateBar.DestroyThis();   //ヘルスバーを閉じる
         stateBar = null;
-        gameObject.GetComponent<BoxCollider>().enabled = false; //讓玩家可以通過
+        gameObject.GetComponent<BoxCollider>().enabled = false; //プレイヤーが通過できるようにする
         if (isKingOrQueen)
         {
             BreakKingOrQueen();
@@ -338,9 +357,13 @@ public class Piece : MonoBehaviour
         checkerBoard.pieceCount--;
     }
 
-    /// <summary>
-    /// 調用王和后的摧毀效果
-    /// </summary>
+    ///<summary>
+
+
+    ////// 王と女王の破壊効果を発動する
+
+
+    ///</summary>
     private void BreakKingOrQueen()
     {
         if (isKing)
@@ -368,9 +391,13 @@ public class Piece : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    /// <summary>
-    /// 調用摧毀效果
-    /// </summary>
+    ///<summary>
+
+
+    ////// 破壊効果を発動する
+
+
+    ///</summary>
     public void BreakEffect()
     {
         pieceMaterial = transform.GetChild(0).gameObject.GetComponent<Renderer>().materials;
@@ -400,9 +427,13 @@ public class Piece : MonoBehaviour
         yield break;
     }
 
-    /// <summary>
-    /// 檢查是否死亡,true代表已經死亡
-    /// </summary>
+    ///<summary>
+
+
+    ////// 死亡しているかどうかを確認します、trueはすでに死亡していることを示します。
+
+
+    ///</summary>
     /// <returns></returns>
     public bool CheckisDead()
     {

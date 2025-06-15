@@ -7,32 +7,34 @@ using UnityEngine.Events;
 
 public class SpitFireControl : MonoBehaviour
 {
-    [Header("间隔时间")]
+    [Header("Interval Time")]
     public float intervalTime;
-    [Header("长嘴时间")]
+    [Header("Long Beak Time")]
     public float halfTime;
-    [Header("喷火时长")]
+    [Header("Flame duration")]
     public float attackTime;
-    [Header("火焰特效")]
+    [Header("Flame special effects")]
     public GameObject fire;
-    [Header("左右机关")]
+    [Header("Left and Right Mechanism")]
     public GameObject left, right;
-    [Header("开始旋转角(z轴)")]
-    public float startRotation;                                 //起始旋转角
-    [Header("结束旋转角(z轴)")]
-    public float endRotation;                                   //结束旋转角
-    [Header("机关启动标记")]
+    [Header("Start rotating angle (Z-axis)")]
+    public float startRotation;                                 //開始回転角
+    [Header("End Rotation Angle (Z-axis)")]
+    public float endRotation;                                   //回転角を終了します
+    [Header("Institution Activation Marker")]
     public bool trapStart;
-    [Header("关卡结束通知")]
+    [Header("Level Completion Notification")]
     public UnityAction DeathNotice;
-    private float startTime, endTime, breakTime, shutUpTime;    //预备喷火的启动时间，喷火结束时间，机关被破坏的时间，每一次闭嘴需要的时间
-    private Transform upperJaw;                                 //上颚
-    private Vector3 upperStart, upperPoint;                     //张嘴的原始坐标，最上界
-    private bool inSpitFire,isDead;                                    //是否在喷火
+    private float startTime, endTime, breakTime, shutUpTime;    //火炎放射の準備開始時間、火炎放射の終了時間、機構が破壊される時間、一回の口を閉じる必要な時間。
+    private Transform upperJaw;                                 //上顎
+    private Vector3 upperStart, upperPoint;                     //口を開ける原始座標、最上限
+    private bool inSpitFire,isDead;                                    //火を吹いていますか？
     private RoomTrigger roomTrigger;
-    /// <summary>
-    /// 初始化赋值
-    /// </summary>
+    ///<summary>
+
+    ////// 初期化代入
+
+    ///</summary>
     private void Awake()
     {
         upperJaw = gameObject.transform.GetChild(0);
@@ -41,19 +43,23 @@ public class SpitFireControl : MonoBehaviour
         breakTime = shutUpTime = 0;
         shutUpTime = halfTime;
     }
-    /// <summary>
-    /// 启动时间
-    /// </summary>
+    ///<summary>
+
+    ////// 起動時間
+
+    ///</summary>
     private void Start()
     {
         startTime = Time.time;
         inSpitFire = true;
         roomTrigger = transform.parent.parent.GetComponent<RoomTrigger>();
-        roomTrigger.clearCheck += () => isDead == true ;  //通关条件
+        roomTrigger.clearCheck += () => isDead == true ;  //クリア条件
     }
-    /// <summary>
-    /// 每次启动，要和事件Trigger绑定
-    /// </summary>
+    ///<summary>
+
+    ////// 起動するたびに、イベントTriggerとバインドする必要があります。
+
+    ///</summary>
     private void OnEnable()
     {
         transform.parent.GetComponent<TrapTrigger>().openTarp += () => trapStart = true;
@@ -61,16 +67,16 @@ public class SpitFireControl : MonoBehaviour
     private void Update()
     {
         if (!trapStart) return;
-        if (left.activeSelf || right.activeSelf)//左右机关是否存在
+        if (left.activeSelf || right.activeSelf)//左右の機関が存在するかどうか
         {
             if (inSpitFire)
             {
-                SpitFire();//处在喷火阶段就执行喷火
+                SpitFire();//火を噴出す段階にあるときに火を噴出すを実行します。
             }
             else
             {
-                fire.SetActive(false);//结束就要关闭火焰
-                if (Time.time >= endTime + intervalTime)//间隔足够时间
+                fire.SetActive(false);//終了するときは、炎を消す必要があります。
+                if (Time.time >= endTime + intervalTime)//十分な時間を間隔に
                 {
                     startTime = Time.time;
                     inSpitFire = true;
@@ -80,10 +86,12 @@ public class SpitFireControl : MonoBehaviour
         else
         {
             ///
-            /// <summary>
-            /// 破坏时间更新，如果在喷火
-            /// 那么就需要将嘴闭上，之后就是空转
-            /// </summary>
+            ///<summary>
+
+            ////// 時間の更新を破壊し、噴火している場合、
+            /// それなら、口を閉じるべきで、その後は無駄骨です。
+
+            ///</summary>
             ///
             if (breakTime == 0)
             {
@@ -101,12 +109,14 @@ public class SpitFireControl : MonoBehaviour
             isDead = true;
         }
     }
-    /// <summary>
-    /// 时间控制，是否大于开始时间+张牙时间+喷火时间+闭嘴时间
-    /// 张嘴控制
-    /// 喷火控制
-    /// 闭嘴控制
-    /// </summary>
+    ///<summary>
+
+    ////// 時間制御、開始時間+口を開く時間+火を吹く時間+口を閉じる時間が大きいかどうか。
+    /// 口を開けて制御してください
+    /// 火炎制御
+    /// 口を閉じて制御してください。
+
+    ///</summary>
     void SpitFire()
     {
         if (Time.time >= startTime + halfTime + attackTime + shutUpTime)
@@ -138,9 +148,11 @@ public class SpitFireControl : MonoBehaviour
             }
         }
     }
-    /// <summary>
-    /// 关火，闭嘴
-    /// </summary>
+    ///<summary>
+
+    ////// 火を消し、口を閉じてください。
+
+    ///</summary>
     void CloseFire()
     {
         if (fire.activeSelf)

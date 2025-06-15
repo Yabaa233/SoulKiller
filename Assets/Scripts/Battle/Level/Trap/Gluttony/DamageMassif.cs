@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class DamageMassif : MonoBehaviour
 {
-    //TODO:火焰地块伤害结算频次
+    //TODO：炎のブロックのダメージ計算の頻度
     [Header("�����˺�")]
     public float attack;
     public GameObject coreGameObject;

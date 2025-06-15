@@ -5,35 +5,35 @@ using System;
 
 
 
-//Hp道具给予的Buff
+//HP道具が与えるバフ
 /// <summary>
 /// HPアイテムバフ
 /// </summary>
 [Serializable]
 public class HpItemBuff : I_BuffBase
 {
-    [Header("外部传参获得数据部分")]
-    //存当前角色的引用
-    [Tooltip("当前角色引用")]GameObject buffKeeper;
-    //存当前角色的BuffManager
-    [Tooltip("当前角色Buff管理器")]CharacterBuffManager characterBuffManager;
-    //当前BUFF种类
-    [Tooltip("当前Buff类型")]E_BuffKind buffType;
-    //当前角色的类型
-    [Tooltip("当前角色类型")]E_ChararcterType chararcterType;
-    //当前Buff叠加的层数->level 这里就不改名称了
-    [Tooltip("当前Buff等级")]public int currentLevel;
-    [Tooltip("掉血Buff的CD")]public CDClass HpItemBuffCD;
-    [Tooltip("掉血Buff的持续时间List")]public List<CDClass> HpItemBuffKeepCDList = new List<CDClass>();
+    [Header("Obtaining data part through external parameter passing")]
+    //現在のキャラクターの参照を保存する
+    [Tooltip("Current role reference")]GameObject buffKeeper;
+    //現在のキャラクターのBuffManagerを保存します
+    [Tooltip("Current Role Buff Manager")]CharacterBuffManager characterBuffManager;
+    //現在のBUFFの種類
+    [Tooltip("Current Buff Type")]E_BuffKind buffType;
+    //現在のキャラクターのタイプ
+    [Tooltip("Current role type")]E_ChararcterType chararcterType;
+    //現在のBuffが重ねられた層の数
+    [Tooltip("Current Buff Level")]public int currentLevel;
+    [Tooltip("The cooldown of the bleeding buff.")]public CDClass HpItemBuffCD;
+    [Tooltip("List of Duration for Blood Loss Buff")]public List<CDClass> HpItemBuffKeepCDList = new List<CDClass>();
 
     public HpItemBuff(E_ChararcterType _chararcterType,int level = 0)
     {
-        //赋值
+        //代入
         this.currentLevel = level;
         buffType = E_BuffKind.HpItemBuff;
         chararcterType = _chararcterType;
 
-        //添加一些统一的CD
+        //統一されたCDをいくつか追加してください。
         HpItemBuffCD = new CDClass();
         HpItemBuffCD.maxCDTime = 1;
         HpItemBuffCD.flag = true;
@@ -43,13 +43,13 @@ public class HpItemBuff : I_BuffBase
 
     public void OnAdd(GameObject _buffKeeper)
     {
-        //添加持续时间
+        //持続時間を追加する
         CDClass temp = new CDClass();
         temp.maxCDTime = 20;
         temp.flag = false;
         HpItemBuffKeepCDList.Add(temp);
         
-        //增加一层层数
+        //レイヤーを一つ追加する
         currentLevel += 1;
 
         this.buffKeeper = _buffKeeper;
@@ -63,8 +63,8 @@ public class HpItemBuff : I_BuffBase
 
     public void OnUpdate(float deltaTime)
     {
-        CDUpdate();//更新当前CD，处理列表
-        if(currentLevel <=0)//没有层数了就移除这个Buff
+        CDUpdate();//現在のCDを更新し、リストを処理します。
+        if(currentLevel <=0)//レイヤーがなくなったら、このBuffを削除してください。
         {
             SelfRemove();
             return;
@@ -81,13 +81,13 @@ public class HpItemBuff : I_BuffBase
         }
     }
 
-    //更新CD
+    //CDを更新する
     /// <summary>
     /// バフの更新
     /// </summary>
     public void CDUpdate()
     {
-        List<CDClass> HpItemFuzhu = new List<CDClass>(HpItemBuffKeepCDList); //遍历辅助数组，移除原数组的元素
+        List<CDClass> HpItemFuzhu = new List<CDClass>(HpItemBuffKeepCDList); //補助配列を走査し、元の配列の要素を削除します。
         foreach (CDClass temp in HpItemFuzhu.ToArray())
         {
             if (!temp.flag && temp.curTime < temp.maxCDTime)
@@ -96,7 +96,7 @@ public class HpItemBuff : I_BuffBase
                 if (temp.curTime > temp.maxCDTime)
                 {
                     HpItemBuffKeepCDList.Remove(temp);
-                    currentLevel -=1 ;//减少一层Buff
+                    currentLevel -=1 ;//バフを一つ減らす
                 }
             }
         }
@@ -155,15 +155,15 @@ public class HpItemBuff : I_BuffBase
         float damage = BuffDataManager.Instance.playerHpReduce * currentLevel;
         characterData.currentHealth -= damage;
 
-        PanelManager.Instance.GenerateDamageNum(damage,playerControl.gameObject.transform,false,true);//产生伤害数字 
+        PanelManager.Instance.GenerateDamageNum(damage,playerControl.gameObject.transform,false,true);//ダメージ数値を生成する
 
-        GameManager.Instance.PlayerHealthCheck();//检查玩家血量
+        GameManager.Instance.PlayerHealthCheck();//プレイヤーのHPをチェックする
     }
 
     /// <summary>
     /// バフの終了
     /// </summary>
-    //自动移除方法
+    //自動削除方法
     public void SelfRemove()
     {
         switch(chararcterType)
@@ -176,7 +176,7 @@ public class HpItemBuff : I_BuffBase
 
     public void PlayerSelfRemove()
     {
-        Debug.Log("执行了移除");
+        Debug.Log("Executed removal");
         PlayerControl playerControl = buffKeeper.GetComponent<PlayerControl>();
         playerControl.characterBuffManager.RemoveBuff(this);
     }

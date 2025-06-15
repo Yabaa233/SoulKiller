@@ -6,31 +6,31 @@ using System;
 [Serializable]
 public class SwordBuff : I_BuffBase
 {
-    [Header("外部传参获得数据部分")]
-    //存当前角色的引用
-    [Tooltip("当前角色引用")]GameObject buffKeeper;
-    //存当前角色的BuffManager
-    [Tooltip("当前角色Buff管理器")]CharacterBuffManager characterBuffManager;
-    //当前BUFF种类
-    [Tooltip("当前Buff类型")]E_BuffKind buffType;
-    //当前角色的类型
-    [Tooltip("当前角色类型")]E_ChararcterType chararcterType;
+    [Header("Obtaining data part through external parameter passing")]
+    //現在のキャラクターの参照を保存する
+    [Tooltip("Current role reference")]GameObject buffKeeper;
+    //現在のキャラクターのBuffManagerを保存します
+    [Tooltip("Current Role Buff Manager")]CharacterBuffManager characterBuffManager;
+    //現在のBUFFの種類
+    [Tooltip("Current Buff Type")]E_BuffKind buffType;
+    //現在のキャラクターのタイプ
+    [Tooltip("Current role type")]E_ChararcterType chararcterType;
 
-    [Tooltip("当前Buff等级")]public int currentLevel;
+    [Tooltip("Current Buff Level")]public int currentLevel;
 
-    [Header("Buff数据部分")]
-    [Tooltip("存放技能等级函数")]public Action<CharacterData> realEffect;
-    [Tooltip("函数等级列表")] public List<Action<CharacterData>> levelEffect;
-    [Tooltip("玩家可以连击的次数")]public int swordComboTime = 2;
+    [Header("Buff data section")]
+    [Tooltip("Store Skill Level Function")]public Action<CharacterData> realEffect;
+    [Tooltip("Function Level List")] public List<Action<CharacterData>> levelEffect;
+    [Tooltip("The number of times a player can combo.")]public int swordComboTime = 2;
 
     public SwordBuff(E_ChararcterType _chararcterType,int level = 1)
     {
-        //赋值
+        //代入
         this.currentLevel = level;
         buffType = E_BuffKind.SwordBuff;
         chararcterType = _chararcterType;
 
-        //初始化列表
+        //初期化リスト
         levelEffect = new List<Action<CharacterData>>();
     }
 
@@ -94,11 +94,11 @@ public class SwordBuff : I_BuffBase
 
         if(currentLevel > levelEffect.Count)
         {
-            Debug.Log("赋予的等级超过Buff当前等级限制");
+            Debug.Log("The assigned level exceeds the current level limit of the Buff.");
             return;
         }
 
-        for(int i=0;i<currentLevel;i++)//根据技能等级添加效果
+        for(int i=0;i<currentLevel;i++)//スキルレベルに応じて効果を追加する
         {
             realEffect += levelEffect[i];
         }
@@ -113,7 +113,7 @@ public class SwordBuff : I_BuffBase
     }
 
 
-/////////得到不同类型的敌人数据，然后施加Buff
+/////////異なるタイプの敵のデータを取得し、その後、Buffを適用します。
     private void PlayerSwordBuff()
     {
         PlayerControl playerControl = buffKeeper.GetComponent<PlayerControl>();
@@ -138,7 +138,7 @@ public class SwordBuff : I_BuffBase
         realEffect(characterData);
     }
 
-//////buFF移除的时候还原状态
+//////buFFが削除されるとき、状態を復元します。
     private void PlayerSwordRemove()
     {
         swordComboTime = 2;
@@ -154,7 +154,7 @@ public class SwordBuff : I_BuffBase
 
     }
 
-///////////Buff的具体效果实现
+///////////Buffの具体的な効果の実現
     private void level1SwordBuff(CharacterData characterData)
     {
         if(chararcterType == E_ChararcterType.player)

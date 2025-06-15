@@ -4,19 +4,23 @@ using UnityEngine;
 
 public class MagicTest : MonoBehaviour
 {
-    /// <summary>
-    /// 魔法テスト
-    /// </summary>
-    /// <summary>
-    /// speed 速度
-    /// shotter:発射者
-    /// target:目標
-    /// </summary>
-    [Header("速度")]
+    ///<summary>
+
+    ////// 魔法のテスト
+
+    ///</summary>
+    ///<summary>
+
+    ////// Speed
+    /// シャッタースピード
+    /// 目标：ターゲット
+
+    ///</summary>
+    [Header("Speed")]
     public float speed;
-    [Header("発射者")]
+    [Header("Launcher")]
     public GameObject shotter;
-    [Header("下落速度")]
+    [Header("Falling speed")]
     public float downVelocity = 0.2f;
     private Vector3 startPos, lastTargetPos, beforePos;
     private float beginTime;
@@ -51,11 +55,11 @@ public class MagicTest : MonoBehaviour
     private void OnEnable()
     {
         Init();
-        //前移動
+        //進行
         myRigidbody.velocity = transform.forward * speed;
         beginTime = Time.time;
 
-        // //特效资源接入
+        // //特殊効果リソースの接続
         if(muzzlePrefab != null)
         {
             var muzzleVFX = Instantiate (muzzlePrefab, transform.position, Quaternion.identity);
@@ -109,7 +113,7 @@ public class MagicTest : MonoBehaviour
     
     private void OnCollisionEnter(Collision other)
     {
-        //特效处理
+        //特殊効果処理
         if(trails.Count > 0)
         {
             for (int i = 0; i < trails.Count; i++)
@@ -158,7 +162,7 @@ public class MagicTest : MonoBehaviour
                     GameManager.Instance.EnemyAttack(shotter.GetComponent<BaseEnemyControl>());
                 }
             }
-            else if (other.gameObject.layer == 12)//打到盾上也要造成一次伤害
+            else if (other.gameObject.layer == 12)//盾に当たっても一度ダメージを与える必要があります。
             {
                 if (shotter != null)
                 {

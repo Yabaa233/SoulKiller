@@ -5,14 +5,14 @@ using UnityEngine.Events;
 
 public class EnvyColumn : MonoBehaviour
 {
-    [Tooltip("死亡事件")] public UnityAction Rely;
-    [Tooltip("大花死亡")] public GameObject bossFlower;
-    [Tooltip("小花所在柱子的血量")] public float currentHealth;
-    [Tooltip("小花最大血量")] public float maxHealth;
-    [Tooltip("替换柱子")] public GameObject column;
-    [Tooltip("受到近战攻击时伤害值")] public float getSwordDamage = 20.0f;
-    [Tooltip("受到子弹攻击时伤害值")] public float getShotDamage = 1.0f;
-    [Tooltip("受到魔法攻击时伤害值")] public float getMagicDamage = 15.0f;
+    [Tooltip("Death event")] public UnityAction Rely;
+    [Tooltip("Large Flower Death")] public GameObject bossFlower;
+    [Tooltip("The health level of the pillar where Xiao Hua is located.")] public float currentHealth;
+    [Tooltip("Little Flower's Maximum Health")] public float maxHealth;
+    [Tooltip("Replace the pillar")] public GameObject column;
+    [Tooltip("Damage value when attacked in close combat")] public float getSwordDamage = 20.0f;
+    [Tooltip("Damage value when hit by a bullet")] public float getShotDamage = 1.0f;
+    [Tooltip("Damage value when attacked by magic")] public float getMagicDamage = 15.0f;
     private StateBar stateBar;
     private bool isDead;
     private void OnEnable()

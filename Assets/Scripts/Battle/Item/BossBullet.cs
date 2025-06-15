@@ -3,19 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// ボスの弾
+/// ボスの弾丸
 /// </summary>
 public class BossBullet : MonoBehaviour
 {
-    [Tooltip("子弹速度")] public float speed = 50.0f;
-    [Tooltip("Boss子弹伤害")] public float damage = 10.0f;
+    [Tooltip("Bullet Speed")] public float speed = 50.0f;
+    [Tooltip("Boss bullet damage")] public float damage = 10.0f;
     public float recycleTime = 3.0f;
     private Vector3 dir;
     private float curTime;
 
-    /// <summary>
-    /// 检测到碰撞到物体就回收自己
-    /// </summary>
+    ///<summary>
+
+
+    ////// オブジェクトとの衝突を検出した場合、自動的に回収します。
+
+
+    ///</summary>
     /// <param name="other"></param>
     private void OnTriggerEnter(Collider other)
     {
@@ -27,9 +31,13 @@ public class BossBullet : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 弾の初期化
-    /// </summary>
+    ///<summary>
+
+
+    ////// 弾丸の初期化
+
+
+    ///</summary>
     private void Update()
     {
         curTime += Time.deltaTime;
@@ -37,17 +45,21 @@ public class BossBullet : MonoBehaviour
         transform.Translate(dir * speed * Time.deltaTime, Space.World);
     }
 
-    /// <summary>
-    /// 设置子弹移动方向和buff等级
-    /// </summary>
-    /// <param name="_dir"> 射击方向 </param>
+    ///<summary>
+
+
+    ////// 弾の移動方向とバフレベルを設定する
+
+
+    ///</summary>
+    /// <param name="_dir"> 射撃の方向 </param>
     public void Shot(Vector3 _dir, BossControl bossControl)
     {
         dir = _dir;
     }
 
     ///// <summary>
-    ///// 回收自己
+    ///// 自分自身をリサイクルする
     ///// </summary>
     //public void RecycleThis()
     //{
@@ -55,9 +67,13 @@ public class BossBullet : MonoBehaviour
     //    ObjectPool.Instance.RecycleObj("BossBullet", gameObject);
     //}
 
-    /// <summary>
-    /// 弾の終了
-    /// </summary>
+    ///<summary>
+
+
+    ////// 弾丸の終了
+
+
+    ///</summary>
     public void RecycleThis()
     {
         curTime = 0;

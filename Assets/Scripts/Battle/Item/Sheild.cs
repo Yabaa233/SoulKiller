@@ -13,10 +13,10 @@ public class Sheild : MonoBehaviour
     public GameObject BreakVFX;
     private Material mat;
 
-    public Transform parent;//配置位置
+    public Transform parent;//設置場所
     new SphereCollider collider;
     //データ部分
-    public float sheildHealthy;//シールドの耐久値
+    public float sheildHealthy;//シールドの耐久性
     public bool IsBreak;
 
     /// <summary>

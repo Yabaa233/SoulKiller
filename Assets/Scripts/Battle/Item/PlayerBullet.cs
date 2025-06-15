@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// プレイヤーの弾
+/// プレイヤーの弾丸
 /// </summary>
 public class PlayerBullet : MonoBehaviour
 {
-    [Tooltip("弾の速度")] public float speed = 2;
+    [Tooltip("Bullet speed")] public float speed = 2;
     public float recycleTime = 3.0f;
     public float hitEffectRecycleTime = 1.5f;
     private Vector3 dir;
@@ -20,9 +20,13 @@ public class PlayerBullet : MonoBehaviour
         firstSpeed = speed;
     }
 
-    /// <summary>
-    /// 物体との衝突を検出したら自身を回収
-    /// </summary>
+    ///<summary>
+
+
+    ////// オブジェクトとの衝突を検出した場合、自動的に回収します。
+
+
+    ///</summary>
     /// <param name="other"></param>
     private void OnTriggerEnter(Collider other)
     {
@@ -40,7 +44,7 @@ public class PlayerBullet : MonoBehaviour
             EffectManager.Instance.SetBulletHit(transform.position, hitEffectRecycleTime);
             GameManager.Instance.currentPlayer.SetSpecifyComboAttack(E_WeaponType.gun, 2f, 0.25f);
             GameManager.Instance.PlayerAttack(other.transform.parent.GetComponent<BaseEnemyControl>(), transform.position);
-            GameManager.Instance.Player_StartShotEffect(this);   //ヒット感の処理開始
+            GameManager.Instance.Player_StartShotEffect(this);   //ヒット感の処理を開始します
         }
         if (other.tag == "BossBody")
         {
@@ -51,13 +55,17 @@ public class PlayerBullet : MonoBehaviour
             EffectManager.Instance.SetBulletHit(transform.position, hitEffectRecycleTime);
             GameManager.Instance.currentPlayer.SetSpecifyComboAttack(E_WeaponType.gun, 2.0f, 0.25f);
             GameManager.Instance.PlayerAttack(other.GetComponent<BossControl>());
-            GameManager.Instance.Player_StartShotEffect(this);   //ヒット感の処理開始
+            GameManager.Instance.Player_StartShotEffect(this);   //ヒット感の処理を開始します
         }
     }
 
-    /// <summary>
-    /// 弾の更新
-    /// </summary>
+    ///<summary>
+
+
+    ////// 弾丸の更新
+
+
+    ///</summary>
     private void Update()
     {
         curTime += Time.deltaTime;
@@ -65,9 +73,13 @@ public class PlayerBullet : MonoBehaviour
         transform.Translate(dir * speed * Time.deltaTime, Space.World);
     }
 
-    /// <summary>
-    /// 弾の初期化
-    /// </summary>
+    ///<summary>
+
+
+    ////// 弾丸の初期化
+
+
+    ///</summary>
     /// <param name="_dir"> 発射方向 </param>
     /// <param name="level"> バフレベル </param>
     public void Shot(Vector3 _dir, int level)
@@ -87,9 +99,13 @@ public class PlayerBullet : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 弾の終了
-    /// </summary>
+    ///<summary>
+
+
+    ////// 弾丸の終了
+
+
+    ///</summary>
     public void RecycleThis()
     {
         curTime = 0;
