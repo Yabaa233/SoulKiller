@@ -9,8 +9,6 @@
 
 主に担当した部分（主人公のアクションや敵のAI）のコードは、以下のファイルパスにあります：
 
-Assets/Scripts/Battle  
-
 Assets/Scripts/Enemy  
 
 Assets/Scripts/Player  
